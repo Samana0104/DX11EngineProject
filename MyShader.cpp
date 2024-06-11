@@ -9,6 +9,11 @@ MyShader::MyShader()
 	_ASSERT(CreateInputLayout());
 }
 
+MyShader::~MyShader()
+{
+	MyShader::ReleaseComponent();
+}
+
 bool MyShader::LoadVertexShader()
 {
 	// HLSL(High Level shader Language) 언어(컴파일 언어) : C언어와 유사함.
@@ -103,10 +108,6 @@ bool MyShader::CreateInputLayout()
 		mVertexLayout.GetAddressOf());
 
 	return !FAILED(hr);
-}
-
-void MyShader::InitComponent()
-{
 }
 
 void MyShader::UpdateComponent()

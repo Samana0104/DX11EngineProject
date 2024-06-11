@@ -6,6 +6,7 @@
 #include <map>
 #include <list>
 #include <algorithm>
+#include <chrono>
 #include <glm/glm.hpp>
 #include <Windows.h>
 #include <wrl.h>
@@ -43,8 +44,8 @@ namespace MyProject
 	protected:
 		static inline MyWindow& mWindow = MyWindow::GetInstance();
 		static inline D3Device& mDevice = D3Device::GetInstance();
+
 	protected:
-		virtual void InitComponent() = 0;
 		virtual void UpdateComponent() = 0;
 		virtual void RenderComponent() = 0;
 		virtual void ReleaseComponent() = 0;

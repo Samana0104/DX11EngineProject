@@ -4,7 +4,8 @@ using namespace MyProject;
 
 MyInput::MyInput()
 {
-	MyInput::InitComponent();
+	ZeroMemory(&mCurrentKeyState, sizeof(KeyState) * 256);
+	mMousePos = { 0, 0 };
 }
 
 KeyState MyInput::GetCurrentKeyState(UINT _key)
@@ -15,12 +16,6 @@ KeyState MyInput::GetCurrentKeyState(UINT _key)
 POINT_L MyInput::GetCurrentMousePos() const
 {
 	return mMousePos;
-}
-
-void MyInput::InitComponent()
-{
-	ZeroMemory(&mCurrentKeyState, sizeof(KeyState) * 256);
-	mMousePos = { 0, 0 };
 }
 
 void MyInput::UpdateComponent()

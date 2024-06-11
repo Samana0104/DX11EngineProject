@@ -1,12 +1,26 @@
 #include "MyWriterFont.h"
 using namespace MyProject;
 
-MyWriterFont::MyWriterFont(std::wstring _fontName, FLOAT _fontSize, COLOR_F	_color)
+MyWriterFont::MyWriterFont(
+			const std::wstring _fontName, 
+			const FLOAT _fontSize, 
+			const std::wstring _localName, 
+			const DWRITE_FONT_WEIGHT _fontWeight, 
+			const DWRITE_FONT_STYLE _fontStyle,
+			const DWRITE_FONT_STRETCH _fontStrech) 
 	:	mFontName(_fontName),
 		mFontSize(_fontSize),
-		mColor(_color)
+		mFontLocalName(_localName),
+		mFontWeight(_fontWeight),
+		mFontStyle(_fontStyle),
+		mFontStretch(_fontStrech)
 {
 	_ASSERT(CreateDevice());
+}
+
+MyWriterFont::~MyWriterFont()
+{
+	MyWriterFont::ReleaseComponent();
 }
 
 bool MyWriterFont::CreateDevice()
@@ -49,11 +63,11 @@ bool MyWriterFont::CreateTextFormat()
 	HRESULT hr = mWriteFactory->CreateTextFormat(
 		mFontName.c_str(),
 		nullptr,
-		DWRITE_FONT_WEIGHT_THIN,
-		DWRITE_FONT_STYLE_NORMAL,
-		DWRITE_FONT_STRETCH_NORMAL,
+		mFontWeight,
+		mFontStyle,
+		mFontStretch,
 		mFontSize,
-		L"ko-kr", // L"en-us"
+		mFontLocalName.c_str(),
 		mWriteFont.GetAddressOf());
 
 	return !FAILED(hr);
@@ -92,23 +106,26 @@ bool MyWriterFont::CreateRenderTarget()
 
 bool MyWriterFont::CreateBrush()
 {
+	COLOR_F color = { 1.f, 1.f, 1.f, 1.f };
 	HRESULT hr = mD2dRT->CreateSolidColorBrush(
-		mColor,
+		color,
 		mDefaultColor.GetAddressOf());
 
 	return !FAILED(hr);
 }
 
-void MyWriterFont::DrawTexts(std::wstring msg, RECT_F _pos)
+void MyWriterFont::DrawTexts(std::wstring _msg, POINT_F _pos, COLOR_F _color)
 {
-	mD2dRT->BeginDraw();
-	mDefaultColor->SetColor(mColor);
-	mD2dRT->DrawText(msg.c_str(), msg.size(), mWriteFont.Get(),&_pos, mDefaultColor.Get());
-	mD2dRT->EndDraw();
-}
+	RECT_F rc = { 
+		_pos.x, 
+		_pos.y, 
+		mWindow.GetWindowSizeF().x, 
+		mWindow.GetWindowSizeF().y };
 
-void MyWriterFont::InitComponent()
-{
+	mD2dRT->BeginDraw();
+	mDefaultColor->SetColor(_color);
+	mD2dRT->DrawText(_msg.c_str(), _msg.size(), mWriteFont.Get(),&rc, mDefaultColor.Get());
+	mD2dRT->EndDraw();
 }
 
 void MyWriterFont::UpdateComponent()

@@ -42,9 +42,6 @@
     <ClInclude Include="MyWriterFont.h">
       <Filter>Engine\Font</Filter>
     </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="MyMesh2D.h">
       <Filter>Engine\Mesh</Filter>
     </ClInclude>
@@ -69,20 +66,26 @@
     <ClInclude Include="MyWindow.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="FontManager.h">
+    <ClInclude Include="MyMeshHandler.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="MeshManager.h">
+    <ClInclude Include="MyResourceHandler.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Engine\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureManager.h">
+    <ClInclude Include="MyTextureHandler.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MyObject.h">
+      <Filter>Engine\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFontHandler.h">
+      <Filter>Engine\Font</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -122,20 +125,23 @@
     <ClCompile Include="MyWindow.cpp">
       <Filter>Engine\Core</Filter>
     </ClCompile>
-    <ClCompile Include="FontManager.cpp">
+    <ClCompile Include="MyMeshHandler.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="MeshManager.cpp">
+    <ClCompile Include="MyResourceHandler.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Engine\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
+    <ClCompile Include="MyTextureHandler.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MyObject.cpp">
+      <Filter>Engine\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFontHandler.cpp">
+      <Filter>Engine\Font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,5 +151,9 @@
     <FxCompile Include="PixelShader.hlsl">
       <Filter>Engine\HLSL</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

@@ -10,7 +10,7 @@ namespace MyProject
 		vec2	mScale	    = { 1.f, 1.f };
 		float	mAngle		= 0.f;
 
-		vec2		CalculateTRS(const vec2& _pos, const vec2 &_rectSize);
+		vec2		CalculateTRS(const vec2& _pos);
 
 		static vec2		PixelToNDC(const vec2 &_pos, const vec2 &_rectSize);
 		static vec2		DescartesToPolar(const vec2 _pos);

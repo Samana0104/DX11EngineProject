@@ -8,6 +8,11 @@ MyMesh2D::MyMesh2D(MeshShape _meshShape, const std::wstring& _textureName)
 	//InitTransformer();
 }
 
+MyProject::MyMesh2D::~MyMesh2D()
+{
+	MyMesh2D::ReleaseComponent();
+}
+
 void MyMesh2D::ReserveVertexSize(size_t _size)
 {
 	if (_size <= 2)
@@ -67,7 +72,7 @@ void MyMesh2D::CalculateTransform()
 
 	for (size_t i = 0; i < mVertices.size(); i++)
 	{
-		copyVertices[i] = mTransfomer.CalculateTRS(mVertices[i], windowSize);
+		copyVertices[i] = mTransfomer.CalculateTRS(mVertices[i]);
 	}
 
 	for (size_t i = 0; i < mIndices.size(); i++)
@@ -140,10 +145,6 @@ void MyMesh2D::SetScale(const vec2 _scale)
 	CalculateTransform();
 }
 
-void MyMesh2D::InitComponent()
-{
-}
-
 void MyMesh2D::UpdateComponent()
 {
 }
@@ -161,4 +162,7 @@ void MyMesh2D::RenderComponent()
 
 void MyMesh2D::ReleaseComponent()
 {
+	mSRV->Release();
+	mTexture->Release();
+	mVertexBuffer->Release();
 }

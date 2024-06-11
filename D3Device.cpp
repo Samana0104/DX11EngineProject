@@ -82,3 +82,8 @@ void  D3Device::DeleteDevice()
 	mContext->Release();
 	mRTV->Release();
 }
+
+D3Device::~D3Device()
+{
+	DeleteDevice();
+}

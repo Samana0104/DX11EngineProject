@@ -8,7 +8,6 @@ namespace MyProject
 	public:
 		Box2D(POINT_F _size, const std::wstring _textureName);
 
-		virtual void InitComponent() override;
 		virtual void UpdateComponent() override;
 		virtual void RenderComponent() override;
 		virtual void ReleaseComponent() override;

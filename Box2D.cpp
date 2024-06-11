@@ -14,11 +14,6 @@ Box2D::Box2D(POINT_F _size, const std::wstring _textureName)
 	_ASSERT(CreateVertexBuffer());
 }
 
-void Box2D::InitComponent()
-{
-	MyMesh2D::InitComponent();
-}
-
 void Box2D::UpdateComponent()
 {
 }
@@ -30,4 +25,5 @@ void Box2D::RenderComponent()
 
 void Box2D::ReleaseComponent()
 {
+	MyMesh2D::ReleaseComponent();
 }

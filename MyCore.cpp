@@ -53,17 +53,9 @@ void MyCore::GamePostRender()
 	mDevice.mSwapChain->Present(0, 0);
 }
 
-void MyCore::DebugRender()
-{
-	/*m_Timer.DebugTimer();
-	m_Input.DebugMousePos();
-	m_Input.KeyTest();*/
-}
-
 void MyCore::GameInit()
 {
-	mTimer.InitComponent();
-	mInput.InitComponent();
+	mTimer.InitTimer();
 	InitViewPort();
 	InitComponent();
 }
@@ -84,7 +76,7 @@ void MyCore::GameRun()
 		if (!mWindow.WindowRun())
 			break;
 
-		if (!mTimer.HasPassedFrame())
+		if (mTimer.HasPassedTime())
 		{
 			GameFrame();
 			GameRender();
@@ -93,27 +85,13 @@ void MyCore::GameRun()
 	GameRelease();
 }
 
-void MyProject::MyCore::DrawTextForDebuging() const
+void MyCore::DrawTextForDebuging() const
 {
+	/* 작성예정 */
 }
 
-void MyCore::CreateTextComponent(const std::string key, std::wstring _fontName, FLOAT _fontSize, COLOR_F _color)
-{
-	AddTextComponent(key, std::make_shared<MyWriterFont>(_fontName, _fontSize, _color));
-}
-
-void MyCore::AddTextComponent(const std::string _key, std::shared_ptr<MyWriterFont> _fonts)
-{
-	mGameFonts.insert(std::make_pair(_key, _fonts));
-}
-
-MyWriterFont& MyCore::GetTextComponent(const std::string _key)
-{
-	return *mGameFonts[_key];
-}
 
 D3D11_VIEWPORT&	MyCore::GetViewPort()
 {
 	return mViewPort;
 }
-

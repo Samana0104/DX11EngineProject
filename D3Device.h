@@ -20,19 +20,19 @@ namespace MyProject
 
 		bool CreateDeviceAndSwapChain();
 		bool CreateRenderTargetView();
+		void DeleteDevice();
 
 	public:
-		/* singleton */
-		static D3Device& GetInstance();
-
 		ComPtr<ID3D11Device>			mD3dDevice;
 		ComPtr<ID3D11DeviceContext>		mContext;
 		ComPtr<IDXGISwapChain>			mSwapChain;
 		ComPtr<ID3D11RenderTargetView>	mRTV;
 	
 	public:
+		~D3Device();
+
+		static D3Device& GetInstance();
 		bool CreateDevice();
-		void DeleteDevice();
 	};
 
 #define INITIALIZE_DEVICE(WIN_INSTANCE, WIDTH, HEIGHT) CREATE_WINDOW(WIN_INSTANCE, WIDTH, HEIGHT) _ASSERT(D3Device::GetInstance().CreateDevice());

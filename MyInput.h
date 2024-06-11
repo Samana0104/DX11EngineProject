@@ -12,7 +12,7 @@ namespace MyProject
 		KEY_HOLD
 	};
 
-	class MyInput : protected Component
+	class MyInput : public Component
 	{
 	private:
 		static const int PUSHED_KEY = 0x8000;
@@ -25,7 +25,6 @@ namespace MyProject
 		KeyState	GetCurrentKeyState(UINT _key);
 		POINT_L		GetCurrentMousePos() const;
 
-		virtual void InitComponent() override;
 		virtual void UpdateComponent() override;
 		virtual void RenderComponent() override;
 		virtual void ReleaseComponent() override;

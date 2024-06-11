@@ -44,6 +44,7 @@ namespace MyProject
 
 	protected:
 		MyMesh2D(const MeshShape _meshShape, const std::wstring& _textureName);
+		virtual ~MyMesh2D();
 
 		void ReserveVertexSize(size_t _size);
 		void AddVertexAndColorAndUV(const vec2 _vertex, const vec4 _color, const vec2 _uv);
@@ -60,7 +61,6 @@ namespace MyProject
 		void SetRotation(const float _angle);
 		void SetScale(const vec2 _scale);
 
-		virtual void InitComponent() override;
 		virtual void UpdateComponent() override;
 		virtual void RenderComponent() override;
 		virtual void ReleaseComponent() override;

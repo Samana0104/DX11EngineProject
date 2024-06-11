@@ -1,37 +1,43 @@
 #pragma once
 #include "Component.h"
 
+using namespace std::chrono;
+
 namespace MyProject
 {
-	class MyTimer : protected Component
+	class MyTimer : public Component
 	{
 	private:
-		float	mGameTimeTick;
-		float   mDeltaTime;
+		time_point<steady_clock>	mPreTimeTick;
+		time_point<steady_clock>	mCurrentTimeTick;
+		duration<float, std::milli>	mTickToMilli;
+
+		float	mSecondPerFrame;
+		float	mOneSecond;
 		float	mSecondTime;
-		float   mSecondPerFrame;
-		DWORD	mPreTimeTick;
-		DWORD	mCurrentTimeTick;
+		float	mGameTimeTick;
+		float	mDeltaTime;
 
-		int mCurrentFPS;
-		int	mFPS;
-		int	mLimitedMaxFPS;
-		int mCurrentMaxFPS;
-
-	private:
+		float	mMaxFPSTime;
+		int		mMaxFPS;
+		int		mFPS;
+		int		mCurrentFPS;
 
 	public:
-		MyTimer(int _limitedMaxFPS = 60);
 		std::wstring   m_csBuffer;
 
+	public:
+		MyTimer(int _maxFPS = 100);
+		~MyTimer();
+
+		void	InitTimer();
 
 		float	GetDeltaTime() const;
 		bool	HasPassedTime();
-		bool	HasPassedFrame();
-		void	SetMaxFPS(int _fps);
+
+		void	SetMasFPS(int _fps);
 		int		GetMaxFPS()	const;
 
-		virtual void InitComponent() override;
 		virtual void UpdateComponent() override;
 		virtual void RenderComponent() override;
 		virtual void ReleaseComponent() override;

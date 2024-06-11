@@ -7,6 +7,8 @@ namespace MyProject
 	class MyWindow
 	{
 	private:
+		const static int inline WINDOW_START_POS_X = 0;
+		const static int inline WINDOW_START_POS_Y = 0;
 		static bool inline	mIsActivate = false;
 		static POINT inline	mWindowSize = { 0, 0 };
 
@@ -23,11 +25,6 @@ namespace MyProject
 		MyWindow& operator=(MyWindow&&) = delete;
 
 		void CreateRegisterClass(HINSTANCE _hInstance);
-
-	public:
-		const static int inline WINDOW_START_POS_X = 0;
-		const static int inline WINDOW_START_POS_Y = 0;
-
 	public:
 		/* singleton */
 		static MyWindow& GetInstance();

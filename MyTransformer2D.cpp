@@ -1,7 +1,7 @@
 #include "MyTransformer2D.h"
 using namespace MyProject;
 
-vec2 MyTransformer2D::CalculateTRS(const vec2& _pos, const vec2 &_rectSize)
+vec2 MyTransformer2D::CalculateTRS(const vec2& _pos)
 {
 	const vec2 scaledVec = MyTransformer2D::ResizeScale(_pos, mScale);
 	const vec2 rotatedVec = MyTransformer2D::RotateAsAngle(scaledVec, mAngle);

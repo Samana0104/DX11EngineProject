@@ -13,12 +13,12 @@ namespace MyProject
 		
 	public:
 		MyShader();
+		virtual ~MyShader();
 
 		bool LoadVertexShader();
 		bool LoadPixelShader();
 		bool CreateInputLayout();
 
-		virtual void InitComponent() override;
 		virtual void UpdateComponent() override;
 		virtual void RenderComponent() override;
 		virtual void ReleaseComponent() override;

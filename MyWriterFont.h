@@ -4,7 +4,7 @@
 
 namespace MyProject
 {
-	class MyWriterFont : protected Component
+	class MyWriterFont : public Component
 	{
 	private:
 		ComPtr<ID2D1Factory>			mD2dFactory;
@@ -14,8 +14,12 @@ namespace MyProject
 		ComPtr<ID2D1SolidColorBrush>	mDefaultColor;
 
 		std::wstring	mFontName;
+		std::wstring	mFontLocalName;
 		float			mFontSize;
-		COLOR_F			mColor;
+
+		DWRITE_FONT_WEIGHT	 mFontWeight;
+		DWRITE_FONT_STYLE	 mFontStyle;
+		DWRITE_FONT_STRETCH	 mFontStretch;
 
 	private:
 		bool	CreateDevice();
@@ -26,11 +30,17 @@ namespace MyProject
 		bool	CreateBrush();
 
 	public:
-		MyWriterFont(std::wstring _fontName, FLOAT _fontSize, COLOR_F _color);
+		MyWriterFont(
+			const std::wstring _fontName, 
+			const FLOAT _fontSize, 
+			const std::wstring _localName = L"ko-kr",
+			const DWRITE_FONT_WEIGHT _fontWeight = DWRITE_FONT_WEIGHT_THIN, 
+			const DWRITE_FONT_STYLE _fontStyle = DWRITE_FONT_STYLE_NORMAL,
+			const DWRITE_FONT_STRETCH _fontStrech = DWRITE_FONT_STRETCH_NORMAL);
+		virtual ~MyWriterFont();
 
-		void DrawTexts(std::wstring msg, RECT_F	pos);
+		void DrawTexts(std::wstring _msg, POINT_F _pos, COLOR_F _color);
 
-		virtual void InitComponent() override;
 		virtual void UpdateComponent() override;
 		virtual void RenderComponent() override;
 		virtual void ReleaseComponent() override;
