@@ -1,5 +1,6 @@
 #pragma once
 #include "MyWindow.h"
+#include "Singleton.h"
 #include <wrl.h>
 #include <d3d11.h>
 
@@ -9,18 +10,11 @@ using namespace Microsoft::WRL;
 
 namespace MyProject
 {
-	class D3Device
+	class D3Device : public Singleton<D3Device>
 	{
 	private:
-		D3Device() = default;
-		D3Device(const D3Device&) = delete;
-		D3Device(D3Device&&) = delete;
-		D3Device& operator=(const D3Device&) = delete;
-		D3Device& operator=(D3Device&&) = delete;
-
 		bool CreateDeviceAndSwapChain();
 		bool CreateRenderTargetView();
-		void DeleteDevice();
 
 	public:
 		ComPtr<ID3D11Device>			mD3dDevice;
@@ -31,7 +25,6 @@ namespace MyProject
 	public:
 		~D3Device();
 
-		static D3Device& GetInstance();
 		bool CreateDevice();
 	};
 

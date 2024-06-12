@@ -8,6 +8,12 @@ vec2 MyTransformer2D::CalculateTRS(const vec2& _pos)
 	return rotatedVec + mLocation;
 }
 
+vec2 MyTransformer2D::WorldToNDC(const vec2& _pos, const vec2& _rectSize, float _aspect)
+{
+	//const vec2 normalizedVec = 
+	return vec2();
+}
+
 vec2 MyTransformer2D::PixelToNDC(const vec2& _pos, const vec2 &_rectSize)
 {
 	const vec2 normalizedVec = _pos / _rectSize;

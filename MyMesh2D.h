@@ -6,6 +6,7 @@ namespace MyProject
 {
 	enum class MeshShape
 	{
+		CUSTOM=0,
 		BOX=1,
 		SPEHERE=2
 	};
@@ -35,8 +36,6 @@ namespace MyProject
 		std::vector<vec2>		mUV;
 		std::vector<MyVertex2D>	mRenderVertices;
 		
-		ComPtr<ID3D11ShaderResourceView>	mSRV;
-		ComPtr<ID3D11Resource>				mTexture;
 		ComPtr<ID3D11Buffer>				mVertexBuffer;
 
 		MeshShape	mMeshShape;
@@ -46,13 +45,14 @@ namespace MyProject
 		MyMesh2D(const MeshShape _meshShape, const std::wstring& _textureName);
 		virtual ~MyMesh2D();
 
-		void ReserveVertexSize(size_t _size);
+		void ReserveVertexSize(size_t _vertexCount);
 		void AddVertexAndColorAndUV(const vec2 _vertex, const vec4 _color, const vec2 _uv);
 		void AddVertexIndex(std::initializer_list<size_t> _index);
+		void SetVertexBuffer();
+
 		bool CreateVertexBuffer();
 
 	public:
-		bool CreateTexure(const std::wstring& _textureName);
 		void InitTransformer();
 		void Move(const vec2 _pos);
 		void Rotate(const float _angle);

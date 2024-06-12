@@ -1,12 +1,6 @@
 #include "MyWindow.h"
 using namespace MyProject;
 
-MyWindow& MyWindow::GetInstance()
-{
-	static MyWindow _myWindow;
-	return _myWindow;
-}
-
 void MyWindow::CreateRegisterClass(HINSTANCE _hInstance) 
 {
 	WNDCLASS wc = {};

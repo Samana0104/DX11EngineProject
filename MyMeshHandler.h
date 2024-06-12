@@ -1,5 +1,10 @@
 #pragma once
-class MyMeshHandler
+
+namespace MyProject
 {
-};
+	class MyMeshHandler
+	{
+
+	};
+}
 

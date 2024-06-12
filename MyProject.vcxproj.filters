@@ -31,6 +31,21 @@
     <Filter Include="Engine\Object">
       <UniqueIdentifier>{fc4fb03b-f87c-4063-87ff-ea18f8129b72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Texture">
+      <UniqueIdentifier>{286d40a3-7ce8-4812-b08a-2494b994f4ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resources">
+      <UniqueIdentifier>{bba2f93a-7a91-4e7c-893a-21ccf6c0b6fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resources\Textures">
+      <UniqueIdentifier>{70c7b20e-d26d-4ba6-978e-95ce57bafbdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resources\Fonts">
+      <UniqueIdentifier>{c71176ab-5e9e-40ec-ad47-45b1ab795aa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resources\Meshes">
+      <UniqueIdentifier>{a0b14784-4a82-451f-9fb3-17e5a8764e1f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyTimer.h">
@@ -66,26 +81,35 @@
     <ClInclude Include="MyWindow.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="MyMeshHandler.h">
+    <ClInclude Include="MyResourceManger.h">
       <Filter>Engine\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="MyResourceHandler.h">
-      <Filter>Engine\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="MyTextureHandler.h">
-      <Filter>Engine\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Engine\Object</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="MyObject.h">
-      <Filter>Engine\Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="MyFontHandler.h">
       <Filter>Engine\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="MyDefaultFont.h">
+      <Filter>Engine\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MyMeshHandler.h">
+      <Filter>Engine\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTextureHandler.h">
+      <Filter>Engine\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="MyDefaultMesh.h">
+      <Filter>Engine\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="MyObject.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Handler.h">
+      <Filter>Engine\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -125,23 +149,20 @@
     <ClCompile Include="MyWindow.cpp">
       <Filter>Engine\Core</Filter>
     </ClCompile>
-    <ClCompile Include="MyMeshHandler.cpp">
+    <ClCompile Include="MyResourceManger.cpp">
       <Filter>Engine\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="MyResourceHandler.cpp">
-      <Filter>Engine\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="MyTextureHandler.cpp">
-      <Filter>Engine\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Engine\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="MyObject.cpp">
-      <Filter>Engine\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="MyFontHandler.cpp">
       <Filter>Engine\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="MyMeshHandler.cpp">
+      <Filter>Engine\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTextureHandler.cpp">
+      <Filter>Engine\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="MyObject.cpp">
+      <Filter>Engine\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -151,9 +172,5 @@
     <FxCompile Include="PixelShader.hlsl">
       <Filter>Engine\HLSL</Filter>
     </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

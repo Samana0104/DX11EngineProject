@@ -1,6 +1,16 @@
 #include "MyFontHandler.h"
 using namespace MyProject;
 
+MyFontHandler::MyFontHandler()
+{
+	CreateDefaultFonts();
+}
+
+void MyFontHandler::CreateDefaultFonts()
+{
+	CreateTextComponent(DefaultFont::DEBUG, L"¸¼Àº °íµñ", 25);
+}
+
 void MyFontHandler::CreateTextComponent(
 			const std::string _key, 
 			const std::wstring _fontName, 
@@ -11,32 +21,25 @@ void MyFontHandler::CreateTextComponent(
 			const DWRITE_FONT_STRETCH _fontStrech)
 {
 	auto _font = std::make_shared<MyWriterFont>(_fontName, _fontSize, _localName, _fontWeight, _fontStyle, _fontStrech);
-	mFonts.insert(std::make_pair(_key, _font));
+	AddComponent(_key, _font);
 }
 
-void MyFontHandler::AddTextComponent(const std::string _key, std::shared_ptr<MyWriterFont> _font)
+void MyFontHandler::AddTextComponent(const std::string _key, std::shared_ptr<MyWriterFont>& _font)
 {
-	mFonts.insert(std::make_pair(_key, _font));
+	if (!AddComponent(_key, _font))
+	{
+		MessageBoxA(NULL,
+			"exist Font[Key Error]",
+			"Font Error", MB_OK);
+	}
 }
 
-void MyFontHandler::DrawTextAsKey(std::string _key, std::wstring _msg, POINT_F _pos, COLOR_F _color)
+void MyFontHandler::DrawTextAsKey(const std::string _key, wstringV _msg, POINT_F _pos, COLOR_F _color)
 {
-	mFonts.at(_key)->DrawTexts(_msg, _pos, _color);
+	GetComponent(_key)->DrawTexts(_msg, _pos, _color);
 }
 
 std::shared_ptr<MyWriterFont>& MyFontHandler::GetTextComponent(const std::string _key)
 {
-	return mFonts.at(_key);
-}
-
-void MyProject::MyFontHandler::UpdateComponent()
-{
-}
-
-void MyProject::MyFontHandler::RenderComponent()
-{
-}
-
-void MyProject::MyFontHandler::ReleaseComponent()
-{
+	return GetComponent(_key);
 }

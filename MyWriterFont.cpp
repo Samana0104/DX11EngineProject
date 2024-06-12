@@ -110,21 +110,20 @@ bool MyWriterFont::CreateBrush()
 	HRESULT hr = mD2dRT->CreateSolidColorBrush(
 		color,
 		mDefaultColor.GetAddressOf());
-
 	return !FAILED(hr);
 }
 
-void MyWriterFont::DrawTexts(std::wstring _msg, POINT_F _pos, COLOR_F _color)
+void MyWriterFont::DrawTexts(const wstringV _msg, POINT_F _pos, COLOR_F _color) const
 {
 	RECT_F rc = { 
 		_pos.x, 
 		_pos.y, 
-		mWindow.GetWindowSizeF().x, 
-		mWindow.GetWindowSizeF().y };
+		mWindow.GetWindowSizeF().x*2, 
+		mWindow.GetWindowSizeF().y*2 };
 
 	mD2dRT->BeginDraw();
 	mDefaultColor->SetColor(_color);
-	mD2dRT->DrawText(_msg.c_str(), _msg.size(), mWriteFont.Get(),&rc, mDefaultColor.Get());
+	mD2dRT->DrawText(_msg.data(), _msg.size(), mWriteFont.Get(),&rc, mDefaultColor.Get());
 	mD2dRT->EndDraw();
 }
 

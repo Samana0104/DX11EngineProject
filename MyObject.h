@@ -1,12 +1,14 @@
 #pragma once
 #include "Component.h"
+#include "MyTransformer2D.h"
 
 namespace MyProject
 {
 	class MyObject : public Component
 	{
 	private:
-		std::string mTextureKey;
-		std::string mMeshKey;
+		MyTransformer2D		mTransform;
+		std::string			mTextureKey;
+		std::string			mMeshKey;
 	};
 }

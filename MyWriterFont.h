@@ -1,6 +1,5 @@
 #pragma once
 #include "Component.h"
-#include "D3Device.h"
 
 namespace MyProject
 {
@@ -39,7 +38,7 @@ namespace MyProject
 			const DWRITE_FONT_STRETCH _fontStrech = DWRITE_FONT_STRETCH_NORMAL);
 		virtual ~MyWriterFont();
 
-		void DrawTexts(std::wstring _msg, POINT_F _pos, COLOR_F _color);
+		void DrawTexts(const wstringV _msg, POINT_F _pos, COLOR_F _color) const;
 
 		virtual void UpdateComponent() override;
 		virtual void RenderComponent() override;

@@ -58,12 +58,6 @@ bool D3Device::CreateRenderTargetView()
 	return !FAILED(hr);
 }
 
-D3Device& MyProject::D3Device::GetInstance()
-{
-	static D3Device _device;
-	return _device;
-}
-
 bool D3Device::CreateDevice()
 {
 	if (!CreateDeviceAndSwapChain())
@@ -75,15 +69,10 @@ bool D3Device::CreateDevice()
 	return true;
 }
 
-void  D3Device::DeleteDevice()
+D3Device::~D3Device()
 {
 	mSwapChain->Release();
 	mD3dDevice->Release();
 	mContext->Release();
 	mRTV->Release();
-}
-
-D3Device::~D3Device()
-{
-	DeleteDevice();
 }

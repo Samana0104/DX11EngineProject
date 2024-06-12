@@ -1,10 +1,11 @@
 #pragma once
 #include <Windows.h>
 #include <glm\glm.hpp>
+#include "Singleton.h"
 
 namespace MyProject
 {
-	class MyWindow
+	class MyWindow : public Singleton<MyWindow>
 	{
 	private:
 		const static int inline WINDOW_START_POS_X = 0;
@@ -18,17 +19,9 @@ namespace MyProject
 		RECT		mClientWindowRect;
 
 	private:
-		MyWindow() = default;
-		MyWindow(const MyWindow&) = delete;
-		MyWindow(MyWindow&&) = delete;
-		MyWindow& operator=(const MyWindow&) = delete;
-		MyWindow& operator=(MyWindow&&) = delete;
-
 		void CreateRegisterClass(HINSTANCE _hInstance);
-	public:
-		/* singleton */
-		static MyWindow& GetInstance();
 
+	public:
 		bool	CreateWin(LONG _xSize, LONG _ySize);
 		bool	WindowRun() const; 
 		bool	IsActivate() const;

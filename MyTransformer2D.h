@@ -12,6 +12,7 @@ namespace MyProject
 
 		vec2		CalculateTRS(const vec2& _pos);
 
+		static vec2		WorldToNDC(const vec2& _pos, const vec2& _rectSize, float _aspect);
 		static vec2		PixelToNDC(const vec2 &_pos, const vec2 &_rectSize);
 		static vec2		DescartesToPolar(const vec2 _pos);
 		static vec2		PolarToDescartes(const vec2 _pos);

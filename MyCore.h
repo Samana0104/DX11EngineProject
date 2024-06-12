@@ -42,7 +42,7 @@ namespace MyProject
 
 	public:
 		void GameRun();
-		void DrawTextForDebuging() const;
+		void DrawTextForDebuging(const wstringV _msg);
 
 		D3D11_VIEWPORT& GetViewPort();
 	};

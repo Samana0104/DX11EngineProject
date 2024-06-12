@@ -1,10 +1,13 @@
 #pragma once
-#include "Component.h"
+#include "Handler.h"
+#include "MyTexture.h"
 
 namespace MyProject
 {
-	class MyTextureHandler
+	class MyTextureHandler : public Handler<MyTexture>
 	{
-	};
+	private:
 
+	public:
+	};
 }

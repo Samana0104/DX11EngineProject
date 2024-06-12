@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -151,8 +151,10 @@
     <ClInclude Include="Box2D.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="D3Device.h" />
+    <ClInclude Include="Handler.h" />
+    <ClInclude Include="MyDefaultFont.h" />
+    <ClInclude Include="MyDefaultMesh.h" />
     <ClInclude Include="MyFontHandler.h" />
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="MyMeshHandler.h" />
     <ClInclude Include="MyInput.h" />
     <ClInclude Include="MyCore.h" />
@@ -163,7 +165,8 @@
     <ClInclude Include="MyTransformer2D.h" />
     <ClInclude Include="MyWindow.h" />
     <ClInclude Include="MyWriterFont.h" />
-    <ClInclude Include="MyResourceHandler.h" />
+    <ClInclude Include="MyResourceManger.h" />
+    <ClInclude Include="Singleton.h" />
     <ClInclude Include="Sphere2D.h" />
     <ClInclude Include="MyTextureHandler.h" />
   </ItemGroup>
@@ -171,7 +174,6 @@
     <ClCompile Include="Box2D.cpp" />
     <ClCompile Include="D3Device.cpp" />
     <ClCompile Include="MyFontHandler.cpp" />
-    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MyMeshHandler.cpp" />
     <ClCompile Include="MyCore.cpp" />
@@ -183,7 +185,7 @@
     <ClCompile Include="MyTransformer2D.cpp" />
     <ClCompile Include="MyWindow.cpp" />
     <ClCompile Include="MyWriterFont.cpp" />
-    <ClCompile Include="MyResourceHandler.cpp" />
+    <ClCompile Include="MyResourceManger.cpp" />
     <ClCompile Include="Sphere2D.cpp" />
     <ClCompile Include="MyTextureHandler.cpp" />
   </ItemGroup>
@@ -204,10 +206,6 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VSMain</EntryPointName>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VSMain</EntryPointName>
     </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

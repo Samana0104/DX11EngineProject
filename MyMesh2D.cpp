@@ -4,7 +4,6 @@ using namespace MyProject;
 MyMesh2D::MyMesh2D(MeshShape _meshShape, const std::wstring& _textureName)
 	: mMeshShape(_meshShape)
 {
-	_ASSERT(CreateTexure(_textureName));
 	//InitTransformer();
 }
 
@@ -13,16 +12,16 @@ MyProject::MyMesh2D::~MyMesh2D()
 	MyMesh2D::ReleaseComponent();
 }
 
-void MyMesh2D::ReserveVertexSize(size_t _size)
+void MyMesh2D::ReserveVertexSize(size_t _vertexCount)
 {
-	if (_size <= 2)
-		_size = 3;
+	if (_vertexCount <= 2)
+		_vertexCount = 3;
 
-	mVertices.reserve(_size);
-	mColors.reserve(_size);
-	mUV.reserve(_size);
-	mRenderVertices.reserve((_size-2)*3); // -> 삼각형 갯수 
-	mIndices.reserve((_size-2)*3);
+	mVertices.reserve(_vertexCount);
+	mColors.reserve(_vertexCount);
+	mUV.reserve(_vertexCount);
+	mRenderVertices.reserve((_vertexCount-2)*3); // -> 삼각형 갯수 
+	mIndices.reserve((_vertexCount-2)*3);
 }
 
 void MyMesh2D::AddVertexAndColorAndUV(const vec2 _vertex, const vec4 _color, const vec2 _uv)
@@ -39,6 +38,15 @@ void MyMesh2D::AddVertexIndex(std::initializer_list<size_t> _index)
 		mIndices.push_back(idx);
 		mRenderVertices.push_back({ mVertices[idx], mColors[idx], mUV[idx] });
 	}
+}
+
+void MyMesh2D::SetVertexBuffer()
+{
+	UINT StartSlot = 0;
+	UINT NumBuffers = 1;
+	UINT pStrides = sizeof(MyVertex2D); // 1개의 정점 크기
+	UINT pOffsets = 0; // 버퍼에 시작 인덱스
+	mDevice.mContext->IASetVertexBuffers(StartSlot, NumBuffers, mVertexBuffer.GetAddressOf(), &pStrides, &pOffsets);
 }
 
 bool MyMesh2D::CreateVertexBuffer()
@@ -87,17 +95,6 @@ void MyMesh2D::CalculateTransform()
 	mDevice.mContext->UpdateSubresource(mVertexBuffer.Get(),0, NULL, &mRenderVertices.at(0), 0, 0);
 }
 
-bool MyMesh2D::CreateTexure(const std::wstring& _textureName)
-{
-	HRESULT hr =
-		DirectX::CreateWICTextureFromFile(
-			mDevice.mD3dDevice.Get(),
-			_textureName.c_str(),
-			mTexture.GetAddressOf(),//&m_pTexture
-			mSRV.GetAddressOf());
-
-	return !FAILED(hr);
-}
 
 void MyMesh2D::InitTransformer()
 {
@@ -151,18 +148,10 @@ void MyMesh2D::UpdateComponent()
 
 void MyMesh2D::RenderComponent()
 {
-	UINT StartSlot = 0;
-	UINT NumBuffers = 1;
-	UINT pStrides = sizeof(MyVertex2D); // 1개의 정점 크기
-	UINT pOffsets = 0; // 버퍼에 시작 인덱스
-	mDevice.mContext->IASetVertexBuffers(StartSlot, NumBuffers, mVertexBuffer.GetAddressOf(), &pStrides, &pOffsets);
-	mDevice.mContext->PSSetShaderResources(0, 1, mSRV.GetAddressOf());
 	mDevice.mContext->Draw(mRenderVertices.size(), 0);
 }
 
 void MyMesh2D::ReleaseComponent()
 {
-	mSRV->Release();
-	mTexture->Release();
 	mVertexBuffer->Release();
 }

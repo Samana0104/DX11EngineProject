@@ -85,9 +85,9 @@ void MyCore::GameRun()
 	GameRelease();
 }
 
-void MyCore::DrawTextForDebuging() const
+void MyCore::DrawTextForDebuging(const wstringV _msg)
 {
-	/* 작성예정 */
+	mFont.DrawTextAsKey(DefaultFont::DEBUG, _msg, { 10, 10 }, { 1.f, 1.f, 1.f, 1.f });
 }
 
 

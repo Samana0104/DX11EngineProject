@@ -56,7 +56,7 @@ public:
 			mTimer.SetMasFPS(30);
 		}
 
-		test = 100 * mTimer.GetDeltaTime();
+		test = 101 * mTimer.GetDeltaTime();
 
 		myBox.Rotate(0.5f);
 		myBox.SetPosition({myPos.x, myPos.y});
@@ -72,7 +72,9 @@ public:
 		//}
 		myBox.RenderComponent();
 		myBox2.RenderComponent();
-		mFont.DrawTextAsKey("font_1", mTimer.m_csBuffer, { myPos.x, myPos.y }, { 0.f, 1.f, 1.f, 1.f });
+		//mFont.DrawTextAsKey("font_1", mTimer.m_csBuffer, {myPos.x, myPos.y}, {0.f, 1.f, 1.f, 1.f});
+		//mFont.DrawTextAsKey("font_1", std::to_wstring(mTimer.GetElapsedTime()), {myPos.x, myPos.y}, {0.f, 1.f, 1.f, 1.f});
+		DrawTextForDebuging(mTimer.m_csBuffer);
 	}
 
 	virtual void ReleaseComponent() override
