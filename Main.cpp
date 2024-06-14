@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "MyCore.h"
 using namespace MyProject;
 
@@ -5,22 +6,21 @@ class Sample : public MyCore
 {
 public:
 	POINT_F myPos;
-	Box2D	myBox;
-	Box2D	myBox2;
+	//Box2D	myBox;
+	//Box2D	myBox2;
 	float	test;
 
 	Sample()
 		: myPos({ 0, 0 }),
-		myBox({ 200, 200 }, L"KGCA1.png"),
-		myBox2({ 300, 200 }, L"KGCA1.png"),
+		//myBox({ 200, 200 }, L"KGCA1.png"),
+		//myBox2({ 300, 200 }, L"KGCA1.png"),
 		test(1)
 	{
-		
 	}
 
 	virtual void InitComponent() override
 	{
-		myBox2.SetPosition({ 300, 500 });
+		//myBox2.SetPosition({ 300, 500 });
 		mFont.CreateTextComponent("font_1", L"πŸ≈¡", 30.f);
 		mFont.CreateTextComponent("font_2", L"±º∏≤", 100.f);
 		test = 1;
@@ -58,10 +58,10 @@ public:
 
 		test = 101 * mTimer.GetDeltaTime();
 
-		myBox.Rotate(0.5f);
-		myBox.SetPosition({myPos.x, myPos.y});
-		myBox2.SetScale({ glm::cos(mTimer.GetDeltaTime()) * 5, glm::sin(mTimer.GetDeltaTime() * 5) });
-		myBox2.Rotate(test);
+		//myBox.Rotate(0.5f);
+		//myBox.SetPosition({myPos.x, myPos.y});
+		//myBox2.SetScale({ glm::cos(mTimer.GetDeltaTime()) * 5, glm::sin(mTimer.GetDeltaTime() * 5) });
+		//myBox2.Rotate(test);
 	}
 
 	virtual void RenderComponent() override
@@ -70,8 +70,8 @@ public:
 		//{
 		//	GetTextComponent("font_1").DrawTextW(GetTimerComponent().m_csBuffer, { 10, 10, 1024, 1024 });
 		//}
-		myBox.RenderComponent();
-		myBox2.RenderComponent();
+		//myBox.RenderComponent();
+		//myBox2.RenderComponent();
 		//mFont.DrawTextAsKey("font_1", mTimer.m_csBuffer, {myPos.x, myPos.y}, {0.f, 1.f, 1.f, 1.f});
 		//mFont.DrawTextAsKey("font_1", std::to_wstring(mTimer.GetElapsedTime()), {myPos.x, myPos.y}, {0.f, 1.f, 1.f, 1.f});
 		DrawTextForDebuging(mTimer.m_csBuffer);
@@ -79,6 +79,7 @@ public:
 
 	virtual void ReleaseComponent() override
 	{
+
 	}
 };
 

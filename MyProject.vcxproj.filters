@@ -34,16 +34,19 @@
     <Filter Include="Engine\Texture">
       <UniqueIdentifier>{286d40a3-7ce8-4812-b08a-2494b994f4ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Resources">
+    <Filter Include="Engine\Shader">
+      <UniqueIdentifier>{20ef4af3-cd53-4c4d-b488-e8f8570dd51e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
       <UniqueIdentifier>{bba2f93a-7a91-4e7c-893a-21ccf6c0b6fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Resources\Textures">
+    <Filter Include="Resources\Textures">
       <UniqueIdentifier>{70c7b20e-d26d-4ba6-978e-95ce57bafbdb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Resources\Fonts">
+    <Filter Include="Resources\Fonts">
       <UniqueIdentifier>{c71176ab-5e9e-40ec-ad47-45b1ab795aa2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Resources\Meshes">
+    <Filter Include="Resources\Meshes">
       <UniqueIdentifier>{a0b14784-4a82-451f-9fb3-17e5a8764e1f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -75,22 +78,13 @@
     <ClInclude Include="MyCore.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="MyShader.h">
-      <Filter>Engine\Core</Filter>
-    </ClInclude>
     <ClInclude Include="MyWindow.h">
       <Filter>Engine\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="MyResourceManger.h">
-      <Filter>Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
     <ClInclude Include="MyFontHandler.h">
-      <Filter>Engine\Font</Filter>
-    </ClInclude>
-    <ClInclude Include="MyDefaultFont.h">
       <Filter>Engine\Font</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">
@@ -102,14 +96,38 @@
     <ClInclude Include="MyTextureHandler.h">
       <Filter>Engine\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="MyDefaultMesh.h">
-      <Filter>Engine\Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="MyObject.h">
       <Filter>Engine\Object</Filter>
     </ClInclude>
+    <ClInclude Include="MyDefaultFontKey.h">
+      <Filter>Engine\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="MyDefaultMeshKey.h">
+      <Filter>Engine\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTexture.h">
+      <Filter>Engine\Texture</Filter>
+    </ClInclude>
     <ClInclude Include="Handler.h">
-      <Filter>Engine\Manager</Filter>
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MyShader.h">
+      <Filter>Engine\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="MyVertexShader.h">
+      <Filter>Engine\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="MyPixelShader.h">
+      <Filter>Engine\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="MyCamera.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="MyResourceManger.h">
+      <Filter>Engine\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -143,14 +161,8 @@
     <ClCompile Include="MyCore.cpp">
       <Filter>Engine\Core</Filter>
     </ClCompile>
-    <ClCompile Include="MyShader.cpp">
-      <Filter>Engine\Core</Filter>
-    </ClCompile>
     <ClCompile Include="MyWindow.cpp">
       <Filter>Engine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="MyResourceManger.cpp">
-      <Filter>Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="MyFontHandler.cpp">
       <Filter>Engine\Font</Filter>
@@ -163,6 +175,27 @@
     </ClCompile>
     <ClCompile Include="MyObject.cpp">
       <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTexture.cpp">
+      <Filter>Engine\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="MyShader.cpp">
+      <Filter>Engine\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="MyVertexShader.cpp">
+      <Filter>Engine\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="MyPixelShader.cpp">
+      <Filter>Engine\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="MyCamera.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="MyResourceManger.cpp">
+      <Filter>Engine\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
