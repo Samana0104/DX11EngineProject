@@ -1,13 +1,14 @@
 #pragma once
 #include "ResourceHandler.h"
-#include "Box2D.h"
+#include "MyBox2D.h"
 
 namespace MyProject
 {
-	class MyMeshHandler : public ResourceHandler<MyMesh2D>
+	class MyMeshHandler : public ResourceHandler<MyMesh2D, MESH_KEY>
 	{
-		void CreateBox2DMesh(const std::string _key, POINT_F _rectSize);
-		void AddMesh(const std::string _key, std::shared_ptr<MyMesh2D>& _texture);
+	public:
+		bool CreateMesh(const MESH_KEY _key, const MeshShape _meshShape, const POINT_F _meshSize);
+		bool CreateBox2DMesh(const MESH_KEY _key, const POINT_F _meshSize);
 	};
 }
 

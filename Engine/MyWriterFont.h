@@ -3,6 +3,17 @@
 
 namespace MyProject
 {
+	struct FontDesc
+	{
+		std::wstring mFontName;
+		std::wstring mFontLocalName;
+		FLOAT		 mFontSize;
+
+		DWRITE_FONT_WEIGHT	mFontWeight;
+		DWRITE_FONT_STYLE	mFontStyle;
+		DWRITE_FONT_STRETCH mFontStretch;
+	};
+
 	class MyWriterFont : public Component
 	{
 	private:
@@ -12,13 +23,7 @@ namespace MyProject
 		ComPtr<IDWriteTextFormat>		mWriteFont;
 		ComPtr<ID2D1SolidColorBrush>	mDefaultColor;
 
-		std::wstring	mFontName;
-		std::wstring	mFontLocalName;
-		float			mFontSize;
-
-		DWRITE_FONT_WEIGHT	 mFontWeight;
-		DWRITE_FONT_STYLE	 mFontStyle;
-		DWRITE_FONT_STRETCH	 mFontStretch;
+		FontDesc mFontDesc;
 
 	private:
 		bool	CreateBrushComponent();
@@ -27,13 +32,7 @@ namespace MyProject
 		bool	CreateBrush();
 
 	public:
-		MyWriterFont(
-			const std::wstring _fontName, 
-			const FLOAT _fontSize, 
-			const std::wstring _localName = L"ko-kr",
-			const DWRITE_FONT_WEIGHT _fontWeight = DWRITE_FONT_WEIGHT_THIN, 
-			const DWRITE_FONT_STYLE _fontStyle = DWRITE_FONT_STYLE_NORMAL,
-			const DWRITE_FONT_STRETCH _fontStrech = DWRITE_FONT_STRETCH_NORMAL);
+		MyWriterFont(const FontDesc& _desc);
 
 		void DrawTexts(const wstringV _msg, POINT_F _pos, COLOR_F _color) const;
 

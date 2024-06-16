@@ -41,8 +41,8 @@ bool D3Device::CreateDeviceAndSwapChain()
 bool D3Device::CreateRenderTargetView()
 {
 	HRESULT hr;
-
 	ComPtr<ID3D11Texture2D> backBuffer;
+
 	hr = mSwapChain->GetBuffer(
 		0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(backBuffer.GetAddressOf()));
 
@@ -61,6 +61,7 @@ bool D3Device::CreateDirect2DRenderTarget()
 {
 	HRESULT hr; 
 	ComPtr<IDXGISurface> dxgiSurface;
+
 	hr = mSwapChain->GetBuffer(0, __uuidof(IDXGISurface),
 		reinterpret_cast<void**>(dxgiSurface.GetAddressOf()));
 
@@ -91,13 +92,14 @@ bool D3Device::CreateDirect2DRenderTarget()
 void D3Device::CreateViewport()
 {
 	auto windowSize = MyWindow::GetInstance().GetWindowSizeF();
-
-	mViewPort.TopLeftX = 0;
-	mViewPort.TopLeftY = 0;
-	mViewPort.Width = windowSize.x;
-	mViewPort.Height = windowSize.y;
-	mViewPort.MinDepth = 0;
-	mViewPort.MaxDepth = 1;
+	{
+		mViewPort.TopLeftX = 0;
+		mViewPort.TopLeftY = 0;
+		mViewPort.Width = windowSize.x;
+		mViewPort.Height = windowSize.y;
+		mViewPort.MinDepth = 0;
+		mViewPort.MaxDepth = 1;
+	}
 
 	mContext->RSSetViewports(1, &mViewPort);
 }

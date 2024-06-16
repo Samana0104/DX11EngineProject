@@ -21,7 +21,6 @@ void MyCore::GamePreRender()
 {
 	float clearColor[] = { 0.f, 0.f, 0.f, 1.0f };
 	mDevice.mContext->ClearRenderTargetView(mDevice.mRTV.Get(), clearColor);
-
 }
 
 void MyCore::GameRender()
@@ -65,15 +64,6 @@ void MyCore::GameRun()
 	GameRelease();
 }
 
-//void MyCore::DrawTextForDebugging(const wstringV format, auto&&... args)
-//{
-//    std::wstring formattedMessage = 
-//		std::vformat(format, std::make_wformat_args(std::forward<decltype(args)>(args)...));
-//
-
-//	mFont.DrawTextAsKey(DefaultFont::DEBUG, formattedMessage, { 10, 10 }, { 1.f, 1.f, 1.f, 1.f });
-//}
-
 void MyCore::DrawTextForDebugging(const wchar_t* format, ...)
 {
     va_list args;
@@ -86,5 +76,18 @@ void MyCore::DrawTextForDebugging(const wchar_t* format, ...)
     vswprintf_s(&formattedMessage[0], size, format, args);
     va_end(args);
 
-    mFont.DrawTextAsKey(DefaultFont::DEBUG, formattedMessage, { 10, 10 }, { 1.f, 1.f, 1.f, 1.f });
+    mManager.mFontHandler.DrawTextAsKey(
+		"DEBUG_FONT",
+		formattedMessage, 
+		{10, 10}, 
+		{1.f, 1.f, 1.f, 1.f});
+}
+
+void MyCore::INITIAL_SETUP(HINSTANCE _hinstance, LONG _width, LONG _height)
+{
+	MyWindow::GetInstance().SetHinstance(_hinstance);
+	_ASSERT(MyWindow::GetInstance().CreateWin(_width, _height));
+	_ASSERT(D3Device::GetInstance().CreateDevice());
+	MyResourceManager::GetInstance().CreateDafultResource();
+
 }

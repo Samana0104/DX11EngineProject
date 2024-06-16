@@ -2,16 +2,13 @@
 #include "MyTextureHandler.h"
 using namespace MyProject;
 
-void MyTextureHandler::CreateTexture(const std::string _key, const wstringV _texturePath)
+bool MyTextureHandler::CreateTextureComponent(
+	const TEXTURE_KEY _key,
+	const wstringV _texturePath)
 {
-	auto texture = std::make_shared<MyTexture>(_texturePath);
-	AddComponent(_key, texture);
-}
+	if (IsKeyContained(_key))
+		return false;
 
-void MyTextureHandler::AddTexture(const std::string _key, std::shared_ptr<MyTexture>& _texture)
-{
-	if (!AddComponent(_key, _texture))
-	{
-		MessageBoxA(NULL, "exist texture[Key Error]", "Texture Error", MB_OK);
-	}
+	auto texture = std::make_shared<MyTexture>(_texturePath);
+	return AddResource(_key, texture);
 }

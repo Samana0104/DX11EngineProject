@@ -4,10 +4,9 @@
 
 namespace MyProject
 {
-	class MyTextureHandler : public ResourceHandler<MyTexture>
+	class MyTextureHandler : public ResourceHandler<MyTexture, TEXTURE_KEY>
 	{
 	public:
-		void CreateTexture(const std::string _key, const wstringV _texturePath);
-		void AddTexture(const std::string _key, std::shared_ptr<MyTexture>& _texture)
+		bool CreateTextureComponent(const TEXTURE_KEY _key, const wstringV _texturePath);
 	};
 }

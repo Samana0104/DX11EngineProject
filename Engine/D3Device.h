@@ -27,5 +27,4 @@ namespace MyProject
 		bool CreateDevice();
 	};
 
-#define INITIALIZE_DEVICE(WIN_INSTANCE, WIDTH, HEIGHT) CREATE_WINDOW(WIN_INSTANCE, WIDTH, HEIGHT) _ASSERT(D3Device::GetInstance().CreateDevice());
 }

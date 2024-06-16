@@ -2,11 +2,17 @@
 #include "MyMeshHandler.h"
 using namespace MyProject;
 
-void MyMeshHandler::CreateBox2DMesh(const std::string _key, POINT_F _rectSize)
+bool MyMeshHandler::CreateMesh(const MESH_KEY _key, MeshShape _meshShape, POINT_F _meshSize)
 {
+	switch (_meshShape)
+	{
+	case MeshShape::BOX2D:
+		return CreateBox2DMesh(_key, _meshSize);
+	}
 }
 
-void MyMeshHandler::AddMesh(const std::string _key, std::shared_ptr<MyMesh2D>& _texture)
+bool MyMeshHandler::CreateBox2DMesh(const MESH_KEY _key, const POINT_F _meshSize)
 {
+	auto boxMesh = std::make_shared<MyMesh2D>(MyBox2D(_meshSize));
+	return AddResource(_key, boxMesh);
 }
-

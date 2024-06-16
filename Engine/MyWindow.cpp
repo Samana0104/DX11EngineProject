@@ -29,10 +29,10 @@ void MyWindow::CreateRegisterClass(HINSTANCE _hInstance)
 	RegisterClass(&wc);
 }
 
-bool MyWindow::CreateWin(LONG _xSize, LONG _ySize) 
+bool MyWindow::CreateWin(LONG _width, LONG _height) 
 {
-	mWindowSize = { _xSize, _ySize };
-	RECT rt{ 0, 0, _xSize, _ySize };
+	mWindowSize = { _width, _height };
+	RECT rt{ 0, 0, _width, _height };
 
 	CreateRegisterClass(mHinstance);
 	AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, FALSE);

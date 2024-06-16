@@ -18,7 +18,7 @@ namespace MyProject
 		void CreateRegisterClass(HINSTANCE _hInstance);
 
 	public:
-		bool	CreateWin(LONG _xSize, LONG _ySize);
+		bool	CreateWin(LONG _width, LONG _height);
 		bool	WindowRun() const; 
 		bool	IsActivate() const;
 
@@ -36,5 +36,4 @@ namespace MyProject
 
 #define MY_WINDOW_NAME L"My Project"
 #define MY_WINDOW_CLASS_NAME L"IS_REAL_WINDOW?"
-#define CREATE_WINDOW(WIN_INSTANCE, WIDTH, HEIGHT) MyWindow::GetInstance().SetHinstance(WIN_INSTANCE);_ASSERT(MyWindow::GetInstance().CreateWin(WIDTH, HEIGHT));
 }

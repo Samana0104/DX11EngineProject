@@ -8,15 +8,15 @@ namespace MyProject
 	{
 	private:
 		MyTransformer2D		mTransform;
-		UINT	mObjectID;
 
-		std::string			mTextureKey;
-		std::string			mMeshKey;
+		TEXTURE_KEY	mTextureKey;
+		MESH_KEY	mMeshKey;
 
 	public:
-		MyObject(std::string _textureKey, std::string _meshKey)
+		MyObject(TEXTURE_KEY _textureKey, MESH_KEY _meshKey)
 		{
 		}
+
 		virtual void UpdateComponent();
 		virtual void RenderComponent();
 	};

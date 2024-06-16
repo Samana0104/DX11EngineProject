@@ -17,9 +17,9 @@ namespace MyProject
 	using stringV	= std::string_view;
 	using wstringV	= std::wstring_view;
 
-	using TEXTURE_KEY = UINT;
-	using MESH_KEY = UINT;
-	using FONT_KEY = UINT;
+	using TEXTURE_KEY = std::string;
+	using MESH_KEY = std::string;
+	using FONT_KEY = std::string;
 
 	class Component
 	{

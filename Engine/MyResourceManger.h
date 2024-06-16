@@ -1,4 +1,5 @@
 #pragma once
+#include "DefaultResource.h"
 #include "MyTextureHandler.h"
 #include "MyMeshHandler.h"
 #include "MyFontHandler.h"
@@ -7,17 +8,18 @@ namespace MyProject
 {
 	class MyResourceManager : public Singleton<MyResourceManager>
 	{
-	private:
+	public:
 		MyTextureHandler mTextureHandler;
 		MyMeshHandler	 mMeshHandler;
 		MyFontHandler	 mFontHandler;
 		
-		std::vector<std::string> mDefaultFont;
-		std::vector<std::string> mDefaultMesh;
-		std::vector<std::string> mDefaultTexture;
+	private:
+		void CreateDefaultFonts();
+		void CreateDefaultMeshes();
+		void CreateDefaultTextures();
 
 	public:
-		
+		void CreateDafultResource();
 	};
 }
 

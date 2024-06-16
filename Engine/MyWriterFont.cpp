@@ -2,19 +2,8 @@
 #include "MyWriterFont.h"
 using namespace MyProject;
 
-MyWriterFont::MyWriterFont(
-			const std::wstring _fontName, 
-			const FLOAT _fontSize, 
-			const std::wstring _localName, 
-			const DWRITE_FONT_WEIGHT _fontWeight, 
-			const DWRITE_FONT_STYLE _fontStyle,
-			const DWRITE_FONT_STRETCH _fontStrech) 
-	:	mFontName(_fontName),
-		mFontSize(_fontSize),
-		mFontLocalName(_localName),
-		mFontWeight(_fontWeight),
-		mFontStyle(_fontStyle),
-		mFontStretch(_fontStrech)
+MyWriterFont::MyWriterFont(const FontDesc& _desc) 
+	:	mFontDesc(_desc)
 {
 	_ASSERT(CreateBrushComponent());
 }
@@ -45,13 +34,13 @@ bool MyWriterFont::CreateDWriteFactory()
 bool MyWriterFont::CreateTextFormat()
 {
 	HRESULT hr = mWriteFactory->CreateTextFormat(
-		mFontName.c_str(),
+		mFontDesc.mFontName.c_str(),
 		nullptr,
-		mFontWeight,
-		mFontStyle,
-		mFontStretch,
-		mFontSize,
-		mFontLocalName.c_str(),
+		mFontDesc.mFontWeight,
+		mFontDesc.mFontStyle,
+		mFontDesc.mFontStretch,
+		mFontDesc.mFontSize,
+		mFontDesc.mFontLocalName.c_str(),
 		mWriteFont.GetAddressOf());
 
 	return !FAILED(hr);

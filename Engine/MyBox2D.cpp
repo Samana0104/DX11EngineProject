@@ -1,11 +1,11 @@
 #include "pch.h"
-#include "Box2D.h"
+#include "MyBox2D.h"
 using namespace MyProject;
 
-Box2D::Box2D(POINT_F _size)
-	: MyMesh2D(MeshShape::BOX)
+MyBox2D::MyBox2D(POINT_F _rectSize)
+	: MyMesh2D(MeshShape::BOX2D, _rectSize)
 {
-	RECT_F rect = { -_size.x / 2, -_size.y / 2, _size.x / 2, _size.y / 2 };
+	RECT_F rect = { -_rectSize.x / 2, -_rectSize.y / 2, _rectSize.x / 2, _rectSize.y / 2 };
 	ReserveVertexSize(4);
 	AddVertexAndColorAndUV({rect.left, rect.top}, {1.f, 0.f, 1.f, 1.f}, {0, 0});
 	AddVertexAndColorAndUV({rect.right, rect.top}, {1.f, 1.f, 0.f, 1.f}, {1, 0});
@@ -15,11 +15,11 @@ Box2D::Box2D(POINT_F _size)
 	_ASSERT(CreateVertexBuffer());
 }
 
-void Box2D::UpdateComponent()
+void MyBox2D::UpdateComponent()
 {
 }
 
-void Box2D::RenderComponent()
+void MyBox2D::RenderComponent()
 {
 	MyMesh2D::RenderComponent();
 }

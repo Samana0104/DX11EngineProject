@@ -2,8 +2,9 @@
 #include "MyMesh2D.h"
 using namespace MyProject;
 
-MyMesh2D::MyMesh2D(MeshShape _meshShape)
-	: mMeshShape(_meshShape)
+MyMesh2D::MyMesh2D(const MeshShape _meshShape, const POINT_F _meshSize)
+	: mMeshShape(_meshShape),
+	  mMeshSize(_meshSize)
 {
 }
 
@@ -44,7 +45,7 @@ void MyMesh2D::SetIAVertexBuffer()
 	mDevice.mContext->IASetVertexBuffers(StartSlot, NumBuffers, mVertexBuffer.GetAddressOf(), &pStrides, &pOffsets);
 }
 
-void MyMesh2D::SetVertexColor(const size_t _colorIdx, const vec4 _color)
+MyMesh2D& MyMesh2D::SetVertexColor(const size_t _colorIdx, const vec4 _color)
 {
 	try
 	{
@@ -54,9 +55,11 @@ void MyMesh2D::SetVertexColor(const size_t _colorIdx, const vec4 _color)
 	{
 		MessageBoxA(mWindow.GetWindowHandle(), e.what(), "Color indexing error[Mesh2D]", MB_OK);
 	}
+
+	return *this;
 }
 
-void MyMesh2D::SetVertexUV(const size_t _uvIdx, const vec2 _uv)
+MyMesh2D& MyMesh2D::SetVertexUV(const size_t _uvIdx, const vec2 _uv)
 {
 	try
 	{
@@ -66,9 +69,11 @@ void MyMesh2D::SetVertexUV(const size_t _uvIdx, const vec2 _uv)
 	{
 		//MessageBoxA(mWindow.GetWindowHandle(), e.what(), "UV indexing error[Mesh2D]", MB_OK);
 	}
+
+	return *this;
 }
 
-void MyMesh2D::MoveVertex(const size_t _vertexIdx, const vec2 _pos)
+MyMesh2D& MyMesh2D::MoveVertex(const size_t _vertexIdx, const vec2 _pos)
 {
 	try
 	{
@@ -78,15 +83,19 @@ void MyMesh2D::MoveVertex(const size_t _vertexIdx, const vec2 _pos)
 	{
 		//MessageBoxA(mWindow.GetWindowHandle(), e.what(), "Vertex indexing error[Mesh2D]", MB_OK);
 	}
+
+	return *this;
 }
 
-void MyMesh2D::MoveAllVertices(const vec2 _pos)
+MyMesh2D& MyMesh2D::MoveAllVertices(const vec2 _pos)
 {
 	for (size_t i = 0; i < mVertices.size(); i++)
 		MoveVertex(i, _pos);
+
+	return *this;
 }
 
-void MyMesh2D::RotateVertex(const size_t _vertexIdx, const float _angle)
+MyMesh2D& MyMesh2D::RotateVertex(const size_t _vertexIdx, const float _angle)
 {
 	try
 	{
@@ -96,12 +105,26 @@ void MyMesh2D::RotateVertex(const size_t _vertexIdx, const float _angle)
 	{
 		//MessageBoxA(mWindow.GetWindowHandle(), e.what(), "Vertex indexing error[Mesh2D]", MB_OK);
 	}
+
+	return *this;
 }
 
-void MyMesh2D::RotateAllVertices(const float _angle)
+MyMesh2D& MyMesh2D::RotateAllVertices(const float _angle)
 {
 	for (size_t i = 0; i < mVertices.size(); i++)
 		RotateVertex(i, _angle);
+
+	return *this;
+}
+
+const std::vector<MyVertex2D>& MyMesh2D::GetRanderVertices()
+{
+	return mRenderVertices;
+}
+
+POINT_F MyMesh2D::GetMeshSize() const
+{
+	return mMeshSize;
 }
 
 bool MyMesh2D::CreateVertexBuffer()

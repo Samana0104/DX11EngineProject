@@ -2,41 +2,48 @@
 #include "MyFontHandler.h"
 using namespace MyProject;
 
-MyFontHandler::MyFontHandler()
+bool MyFontHandler::CreateFontComponent(const FONT_KEY _key, const FontDesc& _desc)
 {
-	CreateDefaultFonts();
+	if (IsKeyContained(_key))
+		return false;
+
+	auto font = std::make_shared<MyWriterFont>(_desc);
+	return AddResource(_key, font);
 }
 
-void MyFontHandler::CreateDefaultFonts()
+bool MyFontHandler::CreateFontComponent(
+	const FONT_KEY _key,
+	const std::wstring _fontName,
+	const FLOAT _fontSize,
+	const std::wstring _localName,
+	const DWRITE_FONT_WEIGHT _fontWeight,
+	const DWRITE_FONT_STYLE _fontStyle,
+	const DWRITE_FONT_STRETCH _fontStretch)
 {
-	CreateFontComponent(L"¸¼Àº °íµñ", 25);
+	FontDesc desc;
+	{
+		desc.mFontName = _fontName;
+		desc.mFontLocalName = _localName;
+		desc.mFontSize = _fontSize;
+		desc.mFontWeight = _fontWeight;
+		desc.mFontStyle = _fontStyle;
+		desc.mFontStretch = _fontStretch;
+	}
+
+	return CreateFontComponent(_key, desc);
 }
 
-FONT_KEY MyFontHandler::CreateFontComponent(
-			const std::wstring _fontName, 
-			const FLOAT _fontSize, 
-			const std::wstring _localName,
-			const DWRITE_FONT_WEIGHT _fontWeight, 
-			const DWRITE_FONT_STYLE _fontStyle,
-			const DWRITE_FONT_STRETCH _fontStrech)
+bool MyFontHandler::DrawTextAsKey(FONT_KEY _key, wstringV _msg, POINT_F _pos, COLOR_F _color)
 {
-	auto font = std::make_shared<MyWriterFont>(_fontName, _fontSize, _localName, _fontWeight, _fontStyle, _fontStrech);
-	return AddFontComponent(font);
-}
+	auto data = GetResource(_key);
 
-FONT_KEY MyFontHandler::AddFontComponent(std::shared_ptr<MyWriterFont>& _font)
-{
-	if (!AddComponent(_key, _font))
-		MessageBoxA(NULL, "exist Font[Key Error]", "Font Error", MB_OK);
-	// throw ´øÁú±î À½...
-}
-
-void MyFontHandler::DrawTextAsKey(const std::string _key, wstringV _msg, POINT_F _pos, COLOR_F _color)
-{
-	auto data = GetComponent(_key);
-
-	if(data != nullptr)
+	if (data != nullptr)
+	{
 		data->DrawTexts(_msg, _pos, _color);
+		return true;
+	}
 	else
-		MessageBoxA(NULL, "Not existed Font[Key Error]", "Font Error", MB_OK);
+	{
+		return false;
+	}
 }

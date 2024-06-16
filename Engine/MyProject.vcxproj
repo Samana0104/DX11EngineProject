@@ -157,13 +157,12 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Box2D.h" />
+    <ClInclude Include="MyBox2D.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="D3Device.h" />
+    <ClInclude Include="DefaultResource.h" />
     <ClInclude Include="ResourceHandler.h" />
     <ClInclude Include="MyCamera.h" />
-    <ClInclude Include="MyDefaultFontKey.h" />
-    <ClInclude Include="MyDefaultMeshKey.h" />
     <ClInclude Include="MyFontHandler.h" />
     <ClInclude Include="MyMeshHandler.h" />
     <ClInclude Include="MyInput.h" />
@@ -185,7 +184,7 @@
     <ClInclude Include="MyTextureHandler.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Box2D.cpp" />
+    <ClCompile Include="MyBox2D.cpp" />
     <ClCompile Include="D3Device.cpp" />
     <ClCompile Include="MyCamera.cpp" />
     <ClCompile Include="MyFontHandler.cpp" />
@@ -227,9 +226,6 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VSMain</EntryPointName>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VSMain</EntryPointName>
     </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
