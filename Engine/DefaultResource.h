@@ -29,12 +29,13 @@ namespace MyProject
 		SPEHERE = 2
 	};
 */
-	inline static const std::map<MESH_KEY, std::pair<MeshShape, POINT_F>> gDefaultMeshes = {
-		{ "BOX2D_MESH", { MeshShape::BOX2D, {10.f, 10.f}}}
+	inline static const std::map<MESH_KEY, MeshShape> gDefaultMeshes = {
+		{ "BOX2D_MESH", { MeshShape::BOX2D }}
 	};
 
 
-	inline static const std::map<TEXTURE_KEY, std::wstring> gDeafultTextures = {
-		{ "KGCA_01", L"KGCA01"}
+	using TexturePath = std::wstring;
+	inline static const std::map<TEXTURE_KEY, TexturePath> gDefaultTextures = {
+		{ "KGCA_01_IMG", L"../data/KGCA1.png"}
 	};
 }

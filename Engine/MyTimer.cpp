@@ -92,7 +92,6 @@ void MyTimer::UpdateComponent()
 		L" FPS=%ld \n FPS=%ld \n %.10f \n GameTimer=%10.10f \n SPF=%10.10f\n",
 		mCurrentFPS, mFPS, mDeltaTime, mElapsedTime.count(),
 		mOneSecond);
-	OutputDebugString(msgKey);
 	m_csBuffer = msgKey;
 #endif
 }

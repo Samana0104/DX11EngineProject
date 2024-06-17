@@ -64,6 +64,7 @@ void MyCore::GameRun()
 	GameRelease();
 }
 
+#ifdef _DEBUG
 void MyCore::DrawTextForDebugging(const wchar_t* format, ...)
 {
     va_list args;
@@ -76,12 +77,30 @@ void MyCore::DrawTextForDebugging(const wchar_t* format, ...)
     vswprintf_s(&formattedMessage[0], size, format, args);
     va_end(args);
 
-    mManager.mFontHandler.DrawTextAsKey(
+	vec2 mySize = mWindow.GetWindowSizeVec2();
+	RECT_F rc1 = { mySize.x*0.1f, mySize.y*0.8f, mySize.x*0.6f, mySize.y-10.f };
+	RECT_F rc2 = { rc1.left + rc1.left*0.1f, rc1.top + rc1.top*0.05f, rc1.right, rc1.bottom };
+
+	std::shared_ptr<MyWriterFont> brush = mManager.mFontHandler.GetResource("DEBUG_FONT");
+
+	mDevice.mD2dRT->BeginDraw();
+	brush->GetBrush()->SetColor({ 1.f, 1.f, 1.f, 0.3f });
+	mDevice.mD2dRT->FillRectangle(rc1, brush->GetBrush().Get());
+	brush->GetBrush()->SetColor({ 1.f, 0.1f, 0.1f, 1.f });
+	mDevice.mD2dRT->DrawRectangle(rc1, brush->GetBrush().Get(), 1.f);
+	mDevice.mD2dRT->EndDraw();
+	mManager.mFontHandler.DrawTextAsKey(
 		"DEBUG_FONT",
-		formattedMessage, 
-		{10, 10}, 
-		{1.f, 1.f, 1.f, 1.f});
+		L" [DEBUG WINDOW]",
+		rc1,
+		{ 0.f, 0.f, 0.f, 1.f });
+	mManager.mFontHandler.DrawTextAsKey(
+		"DEBUG_FONT",
+		formattedMessage,
+		rc2,
+		{ 0.f, 0.f, 0.f, 1.f });
 }
+#endif
 
 void MyCore::INITIAL_SETUP(HINSTANCE _hinstance, LONG _width, LONG _height)
 {

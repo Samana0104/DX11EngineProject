@@ -31,6 +31,8 @@ namespace MyProject
 
 		KeyState	GetCurrentKeyState(const UINT _key);
 		POINT_L		GetCurrentMousePos() const;
+		POINT_F		GetCurrentMousePosF() const;
+		vec2		GetCurrentMousePosVec2() const;
 
 		bool IsKeyUp(const UINT _key) const;
 		bool IsKeyDown(const UINT _key) const;

@@ -32,13 +32,20 @@ namespace MyProject
 			return mResourceDatas.contains(_key);
 		}
 
-		std::shared_ptr<V> GetResource(K _key) 
+#pragma warning(push)
+#pragma warning(disable:4715)
+		std::shared_ptr<V>& GetResource(K _key) 
 		{
-			if (IsKeyContained(_key))
-				return mResourceDatas[_key];
-			else
-				return nullptr;
+			try
+			{
+				return mResourceDatas.at(_key);
+			}
+			catch (std::out_of_range e)
+			{
+				MessageBoxA(NULL, e.what(), "[Key Error]", MB_OK);
+			}
 		}
+#pragma warning(pop)
 		
 		typename Alloc& GetAllResources() const
 		{

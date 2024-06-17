@@ -66,7 +66,7 @@
     <ClInclude Include="MyBox2D.h">
       <Filter>Engine\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="Sphere2D.h">
+    <ClInclude Include="MySphere2D.h">
       <Filter>Engine\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="MyTransformer2D.h">
@@ -126,6 +126,9 @@
     <ClInclude Include="DefaultResource.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
+    <ClInclude Include="MyActor.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyTimer.cpp">
@@ -146,7 +149,7 @@
     <ClCompile Include="MyBox2D.cpp">
       <Filter>Engine\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="Sphere2D.cpp">
+    <ClCompile Include="MySphere2D.cpp">
       <Filter>Engine\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="MyTransformer2D.cpp">
@@ -194,6 +197,9 @@
     <ClCompile Include="MyResourceManger.cpp">
       <Filter>Engine\Core</Filter>
     </ClCompile>
+    <ClCompile Include="MyActor.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl">
@@ -202,5 +208,8 @@
     <FxCompile Include="PixelShader.hlsl">
       <Filter>Engine\HLSL</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

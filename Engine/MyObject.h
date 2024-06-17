@@ -1,10 +1,12 @@
 #pragma once
 #include "Component.h"
+#include "D3Device.h"
 #include "MyTransformer2D.h"
+#include "MyResourceManger.h"
 
 namespace MyProject
 {
-	class MyObject : public Component
+	class MyObject
 	{
 	private:
 		MyTransformer2D		mTransform;
@@ -12,12 +14,12 @@ namespace MyProject
 		TEXTURE_KEY	mTextureKey;
 		MESH_KEY	mMeshKey;
 
-	public:
-		MyObject(TEXTURE_KEY _textureKey, MESH_KEY _meshKey)
-		{
-		}
+		MyResourceManager& mManager = MyResourceManager::GetInstance();
 
-		virtual void UpdateComponent();
-		virtual void RenderComponent();
+	public:
+		MyObject(TEXTURE_KEY _textureKey, MESH_KEY _meshKey);
+
+		virtual void UpdateObject(float _deltaTime);
+		virtual void RenderObject(const mat3 _viewMat);
 	};
 }

@@ -2,9 +2,8 @@
 #include "MyMesh2D.h"
 using namespace MyProject;
 
-MyMesh2D::MyMesh2D(const MeshShape _meshShape, const POINT_F _meshSize)
-	: mMeshShape(_meshShape),
-	  mMeshSize(_meshSize)
+MyMesh2D::MyMesh2D(MeshShape _meshShape)
+	: mMeshShape(_meshShape)
 {
 }
 
@@ -32,8 +31,15 @@ void MyMesh2D::AddVertexIndex(std::initializer_list<size_t> _index)
 	for (auto idx : _index)
 	{
 		mIndices.emplace_back(idx);
-		mRenderVertices.push_back({ mVertices[idx], mColors[idx], mUV[idx] });
+
+		mRenderVertices.push_back({ MyTransformer2D::CartesianToNDC(mVertices[idx]), mColors[idx], mUV[idx] });
 	}
+}
+
+void MyMesh2D::CreateMesh(const POINT_F _meshCom)
+{
+	_ASSERT(CreateVertexBuffer());
+	mMeshCom = _meshCom;
 }
 
 void MyMesh2D::SetIAVertexBuffer()
@@ -50,6 +56,7 @@ MyMesh2D& MyMesh2D::SetVertexColor(const size_t _colorIdx, const vec4 _color)
 	try
 	{
 		mColors.at(_colorIdx) = _color;
+		mRenderVertices[mIndices[_colorIdx]].color = mColors[_colorIdx];
 	}
 	catch (std::out_of_range e)
 	{
@@ -59,72 +66,9 @@ MyMesh2D& MyMesh2D::SetVertexColor(const size_t _colorIdx, const vec4 _color)
 	return *this;
 }
 
-MyMesh2D& MyMesh2D::SetVertexUV(const size_t _uvIdx, const vec2 _uv)
+POINT_F MyMesh2D::GetMeshCom() const
 {
-	try
-	{
-		mUV.at(_uvIdx) = _uv;
-	}
-	catch (std::out_of_range e)
-	{
-		//MessageBoxA(mWindow.GetWindowHandle(), e.what(), "UV indexing error[Mesh2D]", MB_OK);
-	}
-
-	return *this;
-}
-
-MyMesh2D& MyMesh2D::MoveVertex(const size_t _vertexIdx, const vec2 _pos)
-{
-	try
-	{
-		mVertices.at(_vertexIdx) = _pos;
-	}
-	catch (std::out_of_range e)
-	{
-		//MessageBoxA(mWindow.GetWindowHandle(), e.what(), "Vertex indexing error[Mesh2D]", MB_OK);
-	}
-
-	return *this;
-}
-
-MyMesh2D& MyMesh2D::MoveAllVertices(const vec2 _pos)
-{
-	for (size_t i = 0; i < mVertices.size(); i++)
-		MoveVertex(i, _pos);
-
-	return *this;
-}
-
-MyMesh2D& MyMesh2D::RotateVertex(const size_t _vertexIdx, const float _angle)
-{
-	try
-	{
-		mVertices.at(_vertexIdx) = MyTransformer2D::RotateAsAngle(mVertices.at(_vertexIdx), _angle);
-	}
-	catch (std::out_of_range e)
-	{
-		//MessageBoxA(mWindow.GetWindowHandle(), e.what(), "Vertex indexing error[Mesh2D]", MB_OK);
-	}
-
-	return *this;
-}
-
-MyMesh2D& MyMesh2D::RotateAllVertices(const float _angle)
-{
-	for (size_t i = 0; i < mVertices.size(); i++)
-		RotateVertex(i, _angle);
-
-	return *this;
-}
-
-const std::vector<MyVertex2D>& MyMesh2D::GetRanderVertices()
-{
-	return mRenderVertices;
-}
-
-POINT_F MyMesh2D::GetMeshSize() const
-{
-	return mMeshSize;
+	return mMeshCom;
 }
 
 bool MyMesh2D::CreateVertexBuffer()
@@ -146,14 +90,14 @@ bool MyMesh2D::CreateVertexBuffer()
 	return !FAILED(hr);
 }
 
-void MyMesh2D::UpdateRenderVertices(mat3x3 & _matrix)
+void MyMesh2D::UpdateRenderVertices(const mat3 _matrix)
 {
 	vec3 dim2ToDim3;
-	std::vector<vec2> copyVertices(mVertices);
+	std::vector<vec2> copyVertices(mVertices.size());
 
 	for (size_t i = 0; i < mVertices.size(); i++)
 	{
-		dim2ToDim3 = { mVertices[i], 1.f };
+		dim2ToDim3 = vec3({ mVertices[i], 1.f });
 		copyVertices[i] = _matrix * dim2ToDim3;
 	}
 

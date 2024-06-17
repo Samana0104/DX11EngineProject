@@ -21,7 +21,7 @@ namespace MyProject
 
 		ComPtr<IDWriteFactory>			mWriteFactory;
 		ComPtr<IDWriteTextFormat>		mWriteFont;
-		ComPtr<ID2D1SolidColorBrush>	mDefaultColor;
+		ComPtr<ID2D1SolidColorBrush>	mBrush;
 
 		FontDesc mFontDesc;
 
@@ -34,7 +34,9 @@ namespace MyProject
 	public:
 		MyWriterFont(const FontDesc& _desc);
 
-		void DrawTexts(const wstringV _msg, POINT_F _pos, COLOR_F _color) const;
+		void DrawTexts(const wstringV _msg, RECT_F _rect, COLOR_F _color) const;
+		ComPtr<ID2D1SolidColorBrush> GetBrush() const;
+
 
 		virtual void UpdateComponent() override;
 		virtual void RenderComponent() override;

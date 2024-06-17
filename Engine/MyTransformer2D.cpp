@@ -12,7 +12,7 @@ void MyTransformer2D::InitTransform()
 	mLocation = { 0.f, 0.f };
 	mAngle = 0.f;
 	mScale = { 1.f, 1.f };
-	mModelMatrix = glm::mat3x3(1.0f);
+	mTRSMat = glm::mat3(1.0f);
 }
 
 MyTransformer2D& MyTransformer2D::AddTranslationInMat(const vec2 _pos)
@@ -36,8 +36,8 @@ MyTransformer2D& MyTransformer2D::AddScaleInMat(const vec2 _scale)
 MyTransformer2D& MyTransformer2D::SetTranslationInMat(const vec2 _pos)
 {
 	mLocation = _pos;
-	mModelMatrix[2][0] = _pos.x;
-	mModelMatrix[2][1] = _pos.y;
+	mTRSMat[2][0] = _pos.x;
+	mTRSMat[2][1] = _pos.y;
 	return *this;
 }
 
@@ -62,9 +62,29 @@ MyTransformer2D& MyTransformer2D::SetScaleInMat(const vec2 _scale)
 	return *this;
 }
 
-const mat3x3& MyTransformer2D::GetModelMat() const
+const mat3& MyTransformer2D::GetModelMat() const
 {
-	return mModelMatrix;
+	return mTRSMat;
+}
+
+const mat3& MyTransformer2D::GetViewMat() const
+{
+	return glm::inverse(mTRSMat);
+}
+
+const vec2 MyProject::MyTransformer2D::GetLocation() const
+{
+	return mLocation;
+}
+
+const vec2 MyProject::MyTransformer2D::GetScale() const
+{
+	return mScale;
+}
+
+float MyProject::MyTransformer2D::GetAngle() const
+{
+	return mAngle;
 }
 
 void MyTransformer2D::SetCartesianSize(const vec2 _pos)
@@ -79,14 +99,14 @@ vec2 MyTransformer2D::GetCartesianSize(const vec2 _pos)
 
 void MyTransformer2D::CalculateScaleRotationMat()
 {
-	float cos = glm::cos(mAngle);
-	float sin = glm::sin(mAngle);
+	float cos = glm::cos(glm::radians(mAngle));
+	float sin = glm::sin(glm::radians(mAngle));
 
-	mModelMatrix[0][0] = cos * mScale.x;
-	mModelMatrix[0][1] = sin * mScale.x;
+	mTRSMat[0][0] = cos * mScale.x;
+	mTRSMat[0][1] = sin * mScale.x;
 
-	mModelMatrix[1][0] = -sin * mScale.y;
-	mModelMatrix[1][1] = cos * mScale.y;
+	mTRSMat[1][0] = -sin * mScale.y;
+	mTRSMat[1][1] = cos * mScale.y;
 }
 
 vec2 MyTransformer2D::CalculateScreenTRS(const vec2& _pos)
@@ -101,15 +121,20 @@ vec2 MyTransformer2D::CartesianToNDC(const vec2& _pos)
 	return (_pos / mCartesianSize) * 2.f;
 }
 
-vec2 MyTransformer2D::PixelToCartesian(const vec2& _pos, const vec2& _windowSize)
+vec2 MyTransformer2D::PixelToCartesian(const vec2 _pos)
 {
 	// pixel to cartesian in window range
 	// -> (Pos.x - Window.X/2,  -Pos.y + Window.Y/2) => [-window/2, window/2]
-	// cartesian in window range to custom cartesian range 
 	// -> (Pos.x - Window.X/2,  -Pos.y + Window.Y/2) / Window => [-1, 1]
 	// -> (cartesian/2) *((Pos.x - Window.X/2,  -Pos.y + Window.Y/2) / Window) => [-cartesianSize/2, cartesianSize/2]
-	return { mCartesianSize.x * _pos.x / _windowSize.x - mCartesianSize.x / 2,
-			-mCartesianSize.y * _pos.y / _windowSize.y + mCartesianSize.y / 2 };
+	/* column major
+	[ cartesian/window(x)		0			cartesian/2(x)
+	     0			  cartesian/window(y)	cartesian/2(y)
+		 0						0				1	
+	*/
+	const vec2 windowSize = MyWindow::GetInstance().GetWindowSizeVec2();
+	return { mCartesianSize.x * _pos.x / windowSize.x - mCartesianSize.x / 2,
+			-mCartesianSize.y * _pos.y / windowSize.y + mCartesianSize.y / 2 };
 }
 
 vec2 MyTransformer2D::PixelToNDC(const vec2& _pos, const vec2 &_rectSize)

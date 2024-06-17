@@ -51,25 +51,24 @@ bool MyWriterFont::CreateBrush()
 	COLOR_F color = { 1.f, 1.f, 1.f, 1.f };
 	HRESULT hr = mDevice.mD2dRT->CreateSolidColorBrush(
 		color,
-		mDefaultColor.GetAddressOf());
+		mBrush.GetAddressOf());
 	return !FAILED(hr);
 }
 
-void MyWriterFont::DrawTexts(const wstringV _msg, POINT_F _pos, COLOR_F _color) const
+void MyWriterFont::DrawTexts(const wstringV _msg, RECT_F _rect, COLOR_F _color) const
 {
-	RECT_F rc = { 
-		_pos.x, 
-		_pos.y, 
-		MyWindow::GetInstance().GetWindowSizeF().x * 2,
-		MyWindow::GetInstance().GetWindowSizeF().y * 2};
-
 	mDevice.mD2dRT->BeginDraw();
-	mDefaultColor->SetColor(_color);
+	mBrush->SetColor(_color);
 	//mDevice.mD2dRT->DrawRectangle(rc, mDefaultColor.Get());
 	//mDevice.mD2dRT->DrawText(_msg.data(), _msg.size(), mWriteFont.Get(),&rc, mDefaultColor.Get());
 	//mDevice.mD2dRT->SetTransform(D2D1::Matrix3x2F::Rotation(-10.f));
-	mDevice.mD2dRT->DrawText(_msg.data(), _msg.size(), mWriteFont.Get(),&rc, mDefaultColor.Get());
+	mDevice.mD2dRT->DrawText(_msg.data(), _msg.size(), mWriteFont.Get(),&_rect, mBrush.Get());
 	mDevice.mD2dRT->EndDraw();
+}
+
+ComPtr<ID2D1SolidColorBrush> MyProject::MyWriterFont::GetBrush() const
+{
+	return mBrush;
 }
 
 void MyWriterFont::UpdateComponent()

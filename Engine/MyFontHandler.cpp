@@ -33,17 +33,8 @@ bool MyFontHandler::CreateFontComponent(
 	return CreateFontComponent(_key, desc);
 }
 
-bool MyFontHandler::DrawTextAsKey(FONT_KEY _key, wstringV _msg, POINT_F _pos, COLOR_F _color)
+void MyFontHandler::DrawTextAsKey(FONT_KEY _key, wstringV _msg, RECT_F _rect, COLOR_F _color)
 {
 	auto data = GetResource(_key);
-
-	if (data != nullptr)
-	{
-		data->DrawTexts(_msg, _pos, _color);
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	data->DrawTexts(_msg, _rect, _color);
 }

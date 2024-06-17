@@ -18,6 +18,6 @@ namespace MyProject
 			const DWRITE_FONT_STYLE _fontStyle = DWRITE_FONT_STYLE_NORMAL,
 			const DWRITE_FONT_STRETCH _fontStretch = DWRITE_FONT_STRETCH_NORMAL);
 
-		bool DrawTextAsKey(FONT_KEY _key, wstringV _msg, POINT_F _pos, COLOR_F _color);
+		void DrawTextAsKey(FONT_KEY _key, wstringV _msg, RECT_F _rect, COLOR_F _color);
 	};
 }

@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <optional>
 #include <functional>
+#include <random>
 #include <Windows.h>
 #include <wrl.h>
 #include <d3d11.h>

@@ -35,6 +35,16 @@ POINT_L MyInput::GetCurrentMousePos() const
 	return mMousePos;
 }
 
+POINT_F MyInput::GetCurrentMousePosF() const
+{
+	return { static_cast<float>(mMousePos.x), static_cast<float>(mMousePos.y) };
+}
+
+vec2 MyInput::GetCurrentMousePosVec2() const
+{
+	return { static_cast<float>(mMousePos.x), static_cast<float>(mMousePos.y) };
+}
+
 bool MyInput::IsKeyUp(const UINT _key) const
 {
 	return mCurrentKeyState[_key] == KeyState::KEY_UP;

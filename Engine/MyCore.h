@@ -5,13 +5,15 @@
 #include "MyShader.h"
 #include "MyBox2D.h"
 #include "MyResourceManger.h"
+#include "MyObject.h"
+#include "MyCamera.h"
 
 namespace MyProject
 {
 	class MyCore : public Component
 	{
 	private:
-		MyShader			mShader;
+		MyShader	mShader;
 
 	protected:
 		MyTimer	mTimer;

@@ -9,10 +9,15 @@ private:
 	//Box2D	myBox;
 	//Box2D	myBox2;
 	float	test;
+	MyObject mObject;
+	MyObject mObject2;
+	MyCamera mCamera;
 
 public:
 	Sample()
 		: myPos({ 0, 0 }),
+		  mObject("KGCA_01_IMG", "BOX2D_MESH"),
+		  mObject2("KGCA_01_IMG", "BOX2D_MESH"),
 		//myBox({ 200, 200 }, L"KGCA1.png"),
 		//myBox2({ 300, 200 }, L"KGCA1.png"),
 		test(1)
@@ -21,9 +26,6 @@ public:
 
 	virtual void InitComponent() override
 	{
-		//myBox2.SetPosition({ 300, 500 });
-		//mFont.CreateFontComponent("font_1", L"¹ÙÅÁ", 30.f);
-		//mFont.CreateFontComponent("font_2", L"±¼¸²", 100.f);
 		test = 1;
 	}
 	virtual void UpdateComponent() override
@@ -35,54 +37,47 @@ public:
 			myPos.y -= 400 * mTimer.GetDeltaTime();
 			if (myPos.y < 0)
 				myPos.y = 0;
-			mTimer.SetMaxFPS(100);
+			mCamera.mTransform.AddTranslationInMat({ 0.f, 100.f* mTimer.GetDeltaTime()});
 		}
 		if (mInput.GetCurrentKeyState(VK_RIGHT) == KeyState::KEY_HOLD)
 		{
 			myPos.x += 400 * mTimer.GetDeltaTime();
 			if (myPos.x > mWindow.GetWindowSizeF().x)
 				myPos.x = mWindow.GetWindowSizeF().x;
-			mTimer.SetMaxFPS(120);
+			mCamera.mTransform.AddTranslationInMat({100.f* mTimer.GetDeltaTime(), 0.f});
 		}
 		if (mInput.GetCurrentKeyState(VK_LEFT) == KeyState::KEY_HOLD)
 		{
 			myPos.x -= 400 * mTimer.GetDeltaTime();
 			if (myPos.x < 0)
 				myPos.x = 0;
-			mTimer.SetMaxFPS(50);
+			mCamera.mTransform.AddTranslationInMat({ 100.f*-mTimer.GetDeltaTime(), 0.f});
 		}
 		if (mInput.GetCurrentKeyState(VK_DOWN) == KeyState::KEY_HOLD)
 		{
 			myPos.y += 400 * mTimer.GetDeltaTime();
 			if (myPos.y > mWindow.GetWindowSizeF().y)
 				myPos.y = mWindow.GetWindowSizeF().y;
-			mTimer.SetMaxFPS(30);
+			mCamera.mTransform.AddTranslationInMat({ 0.f, 100.f*-mTimer.GetDeltaTime()});
 		}
-
+		
 		test = 101 * mTimer.GetDeltaTime();
-
-		//myBox.Rotate(0.5f);
-		//myBox.SetPosition({myPos.x, myPos.y});
-		//myBox2.SetScale({ glm::cos(mTimer.GetDeltaTime()) * 5, glm::sin(mTimer.GetDeltaTime() * 5) });
-		//myBox2.Rotate(test);
 	}
 
 	virtual void RenderComponent() override
 	{
-		//if (GetInputComponent().GetCurrentKeyState(VK_F1) == KeyState::KEY_HOLD)
-		//{
-		//	GetTextComponent("font_1").DrawTextW(GetTimerComponent().m_csBuffer, { 10, 10, 1024, 1024 });
-		//}
-		//myBox.RenderComponent();
-		//myBox2.RenderComponent();
 		//mFont.DrawTextAsKey("font_1", mTimer.m_csBuffer, {myPos.x, myPos.y}, {0.f, 1.f, 1.f, 1.f});
 		//mFont.DrawTextAsKey("font_1", std::to_wstring(mTimer.GetElapsedTime()), {myPos.x, myPos.y}, {0.f, 1.f, 1.f, 1.f});
-		DrawTextForDebugging(L"%d", 1234567);
+		//DrawTextForDebugging(L"%d", 1234567);
+		mObject.RenderObject(mCamera.GetViewMat());
+		mObject2.RenderObject(mCamera.GetViewMat());
+		DrawTextForDebugging(L"Ä«¸Þ¶ó ÁÂÇ¥°è : %f %f",
+			mCamera.mTransform.GetLocation().x,
+			mCamera.mTransform.GetLocation().y);
 	}
 
 	virtual void ReleaseComponent() override
 	{
-
 	}
 };
 

@@ -5,6 +5,8 @@ namespace MyProject
 {
 	class MyActor : public MyObject
 	{
+	private:
+		
 	};
 }
 

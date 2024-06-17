@@ -97,8 +97,8 @@ void MyWindow::CallEventWMDestroy(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM
 
 void MyWindow::CallEventWMSize(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM _lParam)
 {
-	//MyWindow::mWindowSize.x = LOWORD(lParam);
-	//MyWindow::mWindowSize.y = HIWORD(wParam);
+	//MyWindow::mWindowSize.x = LOWORD(_lParam);
+	//MyWindow::mWindowSize.y = HIWORD(_lParam);
 }
 
 bool MyWindow::IsActivate() const
