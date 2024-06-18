@@ -25,9 +25,6 @@
     <Filter Include="Engine\GameStart~">
       <UniqueIdentifier>{daec4fc2-3d36-4483-92a9-5097ca8a6d5f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Manager">
-      <UniqueIdentifier>{17d5fa66-cdcb-439b-b22c-7048852ca487}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Object">
       <UniqueIdentifier>{fc4fb03b-f87c-4063-87ff-ea18f8129b72}</UniqueIdentifier>
     </Filter>
@@ -129,6 +126,9 @@
     <ClInclude Include="MyActor.h">
       <Filter>Engine\Object</Filter>
     </ClInclude>
+    <ClInclude Include="MyShaderHandler.h">
+      <Filter>Engine\Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyTimer.cpp">
@@ -200,6 +200,9 @@
     <ClCompile Include="MyActor.cpp">
       <Filter>Engine\Object</Filter>
     </ClCompile>
+    <ClCompile Include="MyShaderHandler.cpp">
+      <Filter>Engine\Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl">
@@ -208,8 +211,5 @@
     <FxCompile Include="PixelShader.hlsl">
       <Filter>Engine\HLSL</Filter>
     </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>
