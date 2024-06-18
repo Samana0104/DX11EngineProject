@@ -158,80 +158,66 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="MyShaderHandler.h" />
-    <ClInclude Include="MyActor.h" />
-    <ClInclude Include="MyBox2D.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="D3Device.h" />
-    <ClInclude Include="DefaultResource.h" />
-    <ClInclude Include="ResourceHandler.h" />
-    <ClInclude Include="MyCamera.h" />
-    <ClInclude Include="MyFontHandler.h" />
-    <ClInclude Include="MyMeshHandler.h" />
-    <ClInclude Include="MyInput.h" />
-    <ClInclude Include="MyCore.h" />
-    <ClInclude Include="MyMesh2D.h" />
-    <ClInclude Include="MyObject.h" />
-    <ClInclude Include="MyPixelShader.h" />
-    <ClInclude Include="MyShader.h" />
-    <ClInclude Include="MyTexture.h" />
-    <ClInclude Include="MyTimer.h" />
-    <ClInclude Include="MyTransformer2D.h" />
-    <ClInclude Include="MyVertexShader.h" />
-    <ClInclude Include="MyWindow.h" />
-    <ClInclude Include="MyWriterFont.h" />
-    <ClInclude Include="MyResourceManger.h" />
+    <ClInclude Include="Core\Component.h" />
+    <ClInclude Include="Core\D3Device.h" />
+    <ClInclude Include="Core\DefaultResource.h" />
+    <ClInclude Include="Core\MyCore.h" />
+    <ClInclude Include="Core\MyResourceManger.h" />
+    <ClInclude Include="Core\MyWindow.h" />
+    <ClInclude Include="Core\ResourceHandler.h" />
+    <ClInclude Include="Core\Singleton.h" />
+    <ClInclude Include="Font\MyFontHandler.h" />
+    <ClInclude Include="Font\MyWriterFont.h" />
+    <ClInclude Include="Input\MyInput.h" />
+    <ClInclude Include="Mesh\MyBox2D.h" />
+    <ClInclude Include="Mesh\MyMesh2D.h" />
+    <ClInclude Include="Mesh\MyMeshHandler.h" />
+    <ClInclude Include="Mesh\MySphere2D.h" />
+    <ClInclude Include="Mesh\MyTransformer2D.h" />
+    <ClInclude Include="Object\MyActor.h" />
+    <ClInclude Include="Object\MyCamera.h" />
+    <ClInclude Include="Object\MyObject.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Singleton.h" />
-    <ClInclude Include="MySphere2D.h" />
-    <ClInclude Include="MyTextureHandler.h" />
+    <ClInclude Include="Shader\MyPixelShader.h" />
+    <ClInclude Include="Shader\MyShader.h" />
+    <ClInclude Include="Shader\MyShaderHandler.h" />
+    <ClInclude Include="Shader\MyVertexShader.h" />
+    <ClInclude Include="Texture\MyTexture.h" />
+    <ClInclude Include="Texture\MyTextureHandler.h" />
+    <ClInclude Include="Timer\MyTimer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MyShaderHandler.cpp" />
-    <ClCompile Include="MyActor.cpp" />
-    <ClCompile Include="MyBox2D.cpp" />
-    <ClCompile Include="D3Device.cpp" />
-    <ClCompile Include="MyCamera.cpp" />
-    <ClCompile Include="MyFontHandler.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MyMeshHandler.cpp" />
-    <ClCompile Include="MyCore.cpp" />
-    <ClCompile Include="MyInput.cpp" />
-    <ClCompile Include="MyMesh2D.cpp" />
-    <ClCompile Include="MyObject.cpp" />
-    <ClCompile Include="MyPixelShader.cpp" />
-    <ClCompile Include="MyShader.cpp" />
-    <ClCompile Include="MyTexture.cpp" />
-    <ClCompile Include="MyTimer.cpp" />
-    <ClCompile Include="MyTransformer2D.cpp" />
-    <ClCompile Include="MyVertexShader.cpp" />
-    <ClCompile Include="MyWindow.cpp" />
-    <ClCompile Include="MyWriterFont.cpp" />
-    <ClCompile Include="MyResourceManger.cpp" />
+    <ClCompile Include="Core\D3Device.cpp" />
+    <ClCompile Include="Core\MyCore.cpp" />
+    <ClCompile Include="Core\MyResourceManger.cpp" />
+    <ClCompile Include="Core\MyWindow.cpp" />
+    <ClCompile Include="Font\MyFontHandler.cpp" />
+    <ClCompile Include="Font\MyWriterFont.cpp" />
+    <ClCompile Include="GameStart\Main.cpp" />
+    <ClCompile Include="Input\MyInput.cpp" />
+    <ClCompile Include="Mesh\MyBox2D.cpp" />
+    <ClCompile Include="Mesh\MyMesh2D.cpp" />
+    <ClCompile Include="Mesh\MyMeshHandler.cpp" />
+    <ClCompile Include="Mesh\MySphere2D.cpp" />
+    <ClCompile Include="Mesh\MyTransformer2D.cpp" />
+    <ClCompile Include="Object\MyActor.cpp" />
+    <ClCompile Include="Object\MyCamera.cpp" />
+    <ClCompile Include="Object\MyObject.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="MySphere2D.cpp" />
-    <ClCompile Include="MyTextureHandler.cpp" />
+    <ClCompile Include="Shader\MyPixelShader.cpp" />
+    <ClCompile Include="Shader\MyShader.cpp" />
+    <ClCompile Include="Shader\MyShaderHandler.cpp" />
+    <ClCompile Include="Shader\MyVertexShader.cpp" />
+    <ClCompile Include="Texture\MyTexture.cpp" />
+    <ClCompile Include="Texture\MyTextureHandler.cpp" />
+    <ClCompile Include="Timer\MyTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="PixelShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PSMain</EntryPointName>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PSMain</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="VertexShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VSMain</EntryPointName>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VSMain</EntryPointName>
-    </FxCompile>
+    <FxCompile Include="..\data\shaders\PixelShader.hlsl" />
+    <FxCompile Include="..\data\shaders\VertexShader.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

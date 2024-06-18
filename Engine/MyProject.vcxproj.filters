@@ -16,14 +16,8 @@
     <Filter Include="Engine\Font">
       <UniqueIdentifier>{5f89f745-3bf2-494a-ac7d-4069aedf80b9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Core">
-      <UniqueIdentifier>{678fd39d-7d27-4f62-9b34-6700cd05887a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\HLSL">
       <UniqueIdentifier>{80e5dd8c-3708-452a-986f-cf2c8afb5e80}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\GameStart~">
-      <UniqueIdentifier>{daec4fc2-3d36-4483-92a9-5097ca8a6d5f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Object">
       <UniqueIdentifier>{fc4fb03b-f87c-4063-87ff-ea18f8129b72}</UniqueIdentifier>
@@ -46,169 +40,175 @@
     <Filter Include="Resources\Meshes">
       <UniqueIdentifier>{a0b14784-4a82-451f-9fb3-17e5a8764e1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\GameStart">
+      <UniqueIdentifier>{daec4fc2-3d36-4483-92a9-5097ca8a6d5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core">
+      <UniqueIdentifier>{e2bcd6d7-6e9f-48f7-ab08-8f09965ca159}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MyTimer.h">
-      <Filter>Engine\Timer</Filter>
-    </ClInclude>
-    <ClInclude Include="MyInput.h">
-      <Filter>Engine\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="MyWriterFont.h">
+    <ClInclude Include="Font\MyFontHandler.h">
       <Filter>Engine\Font</Filter>
     </ClInclude>
-    <ClInclude Include="MyMesh2D.h">
-      <Filter>Engine\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="MyBox2D.h">
-      <Filter>Engine\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="MySphere2D.h">
-      <Filter>Engine\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="MyTransformer2D.h">
-      <Filter>Engine\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="D3Device.h">
-      <Filter>Engine\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="MyCore.h">
-      <Filter>Engine\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="MyWindow.h">
-      <Filter>Engine\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>Engine\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="MyFontHandler.h">
+    <ClInclude Include="Font\MyWriterFont.h">
       <Filter>Engine\Font</Filter>
     </ClInclude>
-    <ClInclude Include="Singleton.h">
+    <ClInclude Include="Core\Singleton.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="MyMeshHandler.h">
-      <Filter>Engine\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="MyTextureHandler.h">
-      <Filter>Engine\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="MyObject.h">
-      <Filter>Engine\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="MyTexture.h">
-      <Filter>Engine\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceHandler.h">
+    <ClInclude Include="Core\D3Device.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="MyShader.h">
-      <Filter>Engine\Shader</Filter>
+    <ClInclude Include="Core\DefaultResource.h">
+      <Filter>Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="MyVertexShader.h">
-      <Filter>Engine\Shader</Filter>
+    <ClInclude Include="Core\MyCore.h">
+      <Filter>Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="MyPixelShader.h">
-      <Filter>Engine\Shader</Filter>
+    <ClInclude Include="Core\MyResourceManger.h">
+      <Filter>Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="MyCamera.h">
-      <Filter>Engine\Object</Filter>
+    <ClInclude Include="Core\MyWindow.h">
+      <Filter>Engine\Core</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="MyResourceManger.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="DefaultResource.h">
+    <ClInclude Include="Core\ResourceHandler.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="MyActor.h">
+    <ClInclude Include="Core\Component.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh\MyBox2D.h">
+      <Filter>Engine\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh\MyMesh2D.h">
+      <Filter>Engine\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh\MyMeshHandler.h">
+      <Filter>Engine\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh\MySphere2D.h">
+      <Filter>Engine\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh\MyTransformer2D.h">
+      <Filter>Engine\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MyActor.h">
       <Filter>Engine\Object</Filter>
     </ClInclude>
-    <ClInclude Include="MyShaderHandler.h">
+    <ClInclude Include="Object\MyCamera.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MyObject.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\MyPixelShader.h">
       <Filter>Engine\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\MyShader.h">
+      <Filter>Engine\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\MyShaderHandler.h">
+      <Filter>Engine\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\MyVertexShader.h">
+      <Filter>Engine\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\MyTexture.h">
+      <Filter>Engine\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\MyTextureHandler.h">
+      <Filter>Engine\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\MyInput.h">
+      <Filter>Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer\MyTimer.h">
+      <Filter>Engine\Timer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MyTimer.cpp">
-      <Filter>Engine\Timer</Filter>
-    </ClCompile>
-    <ClCompile Include="MyInput.cpp">
-      <Filter>Engine\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="MyWriterFont.cpp">
+    <ClCompile Include="Font\MyFontHandler.cpp">
       <Filter>Engine\Font</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Engine\GameStart~</Filter>
-    </ClCompile>
-    <ClCompile Include="MyMesh2D.cpp">
-      <Filter>Engine\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="MyBox2D.cpp">
-      <Filter>Engine\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="MySphere2D.cpp">
-      <Filter>Engine\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="MyTransformer2D.cpp">
-      <Filter>Engine\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="D3Device.cpp">
-      <Filter>Engine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="MyCore.cpp">
-      <Filter>Engine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="MyWindow.cpp">
-      <Filter>Engine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="MyFontHandler.cpp">
+    <ClCompile Include="Font\MyWriterFont.cpp">
       <Filter>Engine\Font</Filter>
     </ClCompile>
-    <ClCompile Include="MyMeshHandler.cpp">
-      <Filter>Engine\Mesh</Filter>
+    <ClCompile Include="GameStart\Main.cpp">
+      <Filter>Engine\GameStart</Filter>
     </ClCompile>
-    <ClCompile Include="MyTextureHandler.cpp">
-      <Filter>Engine\Texture</Filter>
+    <ClCompile Include="Core\D3Device.cpp">
+      <Filter>Engine\Core</Filter>
     </ClCompile>
-    <ClCompile Include="MyObject.cpp">
-      <Filter>Engine\Object</Filter>
+    <ClCompile Include="Core\MyCore.cpp">
+      <Filter>Engine\Core</Filter>
     </ClCompile>
-    <ClCompile Include="MyTexture.cpp">
-      <Filter>Engine\Texture</Filter>
+    <ClCompile Include="Core\MyResourceManger.cpp">
+      <Filter>Engine\Core</Filter>
     </ClCompile>
-    <ClCompile Include="MyShader.cpp">
-      <Filter>Engine\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="MyVertexShader.cpp">
-      <Filter>Engine\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="MyPixelShader.cpp">
-      <Filter>Engine\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="MyCamera.cpp">
-      <Filter>Engine\Object</Filter>
+    <ClCompile Include="Core\MyWindow.cpp">
+      <Filter>Engine\Core</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="MyResourceManger.cpp">
       <Filter>Engine\Core</Filter>
     </ClCompile>
-    <ClCompile Include="MyActor.cpp">
+    <ClCompile Include="Mesh\MyBox2D.cpp">
+      <Filter>Engine\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh\MyMesh2D.cpp">
+      <Filter>Engine\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh\MyMeshHandler.cpp">
+      <Filter>Engine\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh\MySphere2D.cpp">
+      <Filter>Engine\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh\MyTransformer2D.cpp">
+      <Filter>Engine\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MyActor.cpp">
       <Filter>Engine\Object</Filter>
     </ClCompile>
-    <ClCompile Include="MyShaderHandler.cpp">
+    <ClCompile Include="Object\MyCamera.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MyObject.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\MyPixelShader.cpp">
       <Filter>Engine\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\MyShader.cpp">
+      <Filter>Engine\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\MyShaderHandler.cpp">
+      <Filter>Engine\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\MyVertexShader.cpp">
+      <Filter>Engine\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\MyTexture.cpp">
+      <Filter>Engine\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\MyTextureHandler.cpp">
+      <Filter>Engine\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\MyInput.cpp">
+      <Filter>Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer\MyTimer.cpp">
+      <Filter>Engine\Timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="VertexShader.hlsl">
+    <FxCompile Include="..\data\shaders\PixelShader.hlsl">
       <Filter>Engine\HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="PixelShader.hlsl">
+    <FxCompile Include="..\data\shaders\VertexShader.hlsl">
       <Filter>Engine\HLSL</Filter>
     </FxCompile>
   </ItemGroup>
