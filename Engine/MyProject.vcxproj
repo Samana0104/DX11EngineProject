@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -123,15 +123,22 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\Users\bhb0104\source\repos\Samana0104\2DGameEngineProject;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Timer\;$(SolutionDir)Texture\;$(SolutionDir)Shader\;$(SolutionDir)Object\;$(SolutionDir)GameStart\;$(SolutionDir)Mesh\;$(SolutionDir)Font\;$(SolutionDir)Core\;$(SolutionDir)Input\;$(SolutionDir)Color\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <FxCompile>
-      <EntryPointName>
-      </EntryPointName>
+      <EntryPointName>main</EntryPointName>
+      <DisableOptimizations>false</DisableOptimizations>
+      <EnableDebuggingInformation>false</EnableDebuggingInformation>
+      <AssemblerOutput>AssemblyCodeAndHex</AssemblerOutput>
+      <AssemblerOutputFile>test.txt</AssemblerOutputFile>
+      <ShaderModel>5.0</ShaderModel>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+      <ShaderType>Effect</ShaderType>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -158,12 +165,14 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Color\MyColor.h" />
     <ClInclude Include="Core\Component.h" />
     <ClInclude Include="Core\D3Device.h" />
     <ClInclude Include="Core\DefaultResource.h" />
     <ClInclude Include="Core\MyCore.h" />
     <ClInclude Include="Core\MyResourceManger.h" />
     <ClInclude Include="Core\MyWindow.h" />
+    <ClInclude Include="Core\pch.h" />
     <ClInclude Include="Core\ResourceHandler.h" />
     <ClInclude Include="Core\Singleton.h" />
     <ClInclude Include="Font\MyFontHandler.h" />
@@ -177,7 +186,6 @@
     <ClInclude Include="Object\MyActor.h" />
     <ClInclude Include="Object\MyCamera.h" />
     <ClInclude Include="Object\MyObject.h" />
-    <ClInclude Include="pch.h" />
     <ClInclude Include="Shader\MyPixelShader.h" />
     <ClInclude Include="Shader\MyShader.h" />
     <ClInclude Include="Shader\MyShaderHandler.h" />
@@ -187,10 +195,14 @@
     <ClInclude Include="Timer\MyTimer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Color\MyColor.cpp" />
     <ClCompile Include="Core\D3Device.cpp" />
     <ClCompile Include="Core\MyCore.cpp" />
     <ClCompile Include="Core\MyResourceManger.cpp" />
     <ClCompile Include="Core\MyWindow.cpp" />
+    <ClCompile Include="Core\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Font\MyFontHandler.cpp" />
     <ClCompile Include="Font\MyWriterFont.cpp" />
     <ClCompile Include="GameStart\Main.cpp" />
@@ -203,10 +215,6 @@
     <ClCompile Include="Object\MyActor.cpp" />
     <ClCompile Include="Object\MyCamera.cpp" />
     <ClCompile Include="Object\MyObject.cpp" />
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="Shader\MyPixelShader.cpp" />
     <ClCompile Include="Shader\MyShader.cpp" />
     <ClCompile Include="Shader\MyShaderHandler.cpp" />
@@ -216,8 +224,14 @@
     <ClCompile Include="Timer\MyTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\data\shaders\PixelShader.hlsl" />
-    <FxCompile Include="..\data\shaders\VertexShader.hlsl" />
+    <FxCompile Include="..\data\shaders\PixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PSMain</EntryPointName>
+    </FxCompile>
+    <FxCompile Include="..\data\shaders\VertexShader.hlsl">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VSMain</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

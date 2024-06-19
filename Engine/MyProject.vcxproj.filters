@@ -46,6 +46,9 @@
     <Filter Include="Engine\Core">
       <UniqueIdentifier>{e2bcd6d7-6e9f-48f7-ab08-8f09965ca159}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Color">
+      <UniqueIdentifier>{83fe6b1c-a009-4b81-8d1c-2e9945069c89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font\MyFontHandler.h">
@@ -70,9 +73,6 @@
       <Filter>Engine\Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\MyWindow.h">
-      <Filter>Engine\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\ResourceHandler.h">
@@ -129,6 +129,12 @@
     <ClInclude Include="Timer\MyTimer.h">
       <Filter>Engine\Timer</Filter>
     </ClInclude>
+    <ClInclude Include="Core\pch.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Color\MyColor.h">
+      <Filter>Engine\Color</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font\MyFontHandler.cpp">
@@ -152,16 +158,10 @@
     <ClCompile Include="Core\MyWindow.cpp">
       <Filter>Engine\Core</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>Engine\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Mesh\MyBox2D.cpp">
       <Filter>Engine\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Mesh\MyMesh2D.cpp">
-      <Filter>Engine\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh\MyMeshHandler.cpp">
       <Filter>Engine\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Mesh\MySphere2D.cpp">
@@ -202,6 +202,15 @@
     </ClCompile>
     <ClCompile Include="Timer\MyTimer.cpp">
       <Filter>Engine\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\pch.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh\MyMeshHandler.cpp">
+      <Filter>Engine\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Color\MyColor.cpp">
+      <Filter>Engine\Color</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -5,19 +5,21 @@ using namespace MyProject;
 MyObject::MyObject(TEXTURE_KEY _textureKey, MESH_KEY _meshKey)
 	: mTextureKey(_textureKey), mMeshKey(_meshKey)
 {
-	mTransform.SetScaleInMat({100.f, 100.f});
-	//mTransform.SetTranslationInMat({100.f, 100.f});
+	mTransform.SetScale({100.f, 100.f});
+	//mTransform.SetMovement({100.f, 100.f});
 	//mTransform.AddRotationInMat(60.f);
-	//mTransform.SetRotationInMat(90.f);
+	//mTransform.SetRotation(90.f);
+	mManager.mMeshHandler[mMeshKey]->SetUVVertexAsRange(
+		{239.f, 145.f, 866.f, 462.f}, 
+		*mManager.mTextureHandler[mTextureKey]);
 }
 
 void MyObject::UpdateObject(float _deltaTime)
 {
 }
 
-void MyObject::RenderObject(const mat3x3 _viewMat)
+void MyObject::RenderObject(const mat3 _viewMat)
 {
-	mManager.mMeshHandler.GetResource(mMeshKey)->UpdateRenderVertices(_viewMat*mTransform.GetModelMat());
-	mManager.mTextureHandler.GetResource(mTextureKey)->RenderComponent();
-	mManager.mMeshHandler.GetResource(mMeshKey)->RenderComponent();
+	mManager.mTextureHandler[mTextureKey]->RenderComponent();
+	mManager.mMeshHandler[mMeshKey]->Render(_viewMat * mTransform.GetModelMat(), {1.f, 1.f, 0.3f, 0.7f});
 }

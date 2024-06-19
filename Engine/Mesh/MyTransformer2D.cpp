@@ -15,25 +15,25 @@ void MyTransformer2D::InitTransform()
 	mTRSMat = glm::mat3(1.0f);
 }
 
-MyTransformer2D& MyTransformer2D::AddTranslationInMat(const vec2 _pos)
+MyTransformer2D& MyTransformer2D::AddMovement(const vec2 _pos)
 {
-	SetTranslationInMat(mLocation + _pos);
+	SetMovement(mLocation + _pos);
 	return *this;
 }
 
-MyTransformer2D& MyTransformer2D::AddRotationInMat(const float _angle)
+MyTransformer2D& MyTransformer2D::AddRotation(const float _angle)
 {
-	SetRotationInMat(mAngle + _angle);
+	SetRotation(mAngle + _angle);
 	return *this;
 }
 
-MyTransformer2D& MyTransformer2D::AddScaleInMat(const vec2 _scale)
+MyTransformer2D& MyTransformer2D::AddScale(const vec2 _scale)
 {
-	SetScaleInMat(mScale + _scale);
+	SetScale(mScale + _scale);
 	return *this;
 }
 
-MyTransformer2D& MyTransformer2D::SetTranslationInMat(const vec2 _pos)
+MyTransformer2D& MyTransformer2D::SetMovement(const vec2 _pos)
 {
 	mLocation = _pos;
 	mTRSMat[2][0] = _pos.x;
@@ -41,7 +41,7 @@ MyTransformer2D& MyTransformer2D::SetTranslationInMat(const vec2 _pos)
 	return *this;
 }
 
-MyTransformer2D& MyTransformer2D::SetRotationInMat(const float _angle)
+MyTransformer2D& MyTransformer2D::SetRotation(const float _angle)
 {
 	if (_angle >= 360.f)
 	{
@@ -55,9 +55,9 @@ MyTransformer2D& MyTransformer2D::SetRotationInMat(const float _angle)
 	return *this;
 }
 
-MyTransformer2D& MyTransformer2D::SetScaleInMat(const vec2 _scale)
+MyTransformer2D& MyTransformer2D::SetScale(const vec2 _scale)
 {
-	mScale = _scale;
+	mScale = { glm::max(_scale.x, 0.f), glm::max(_scale.y, 0.f) };
 	CalculateScaleRotationMat();
 	return *this;
 }
@@ -67,17 +67,17 @@ const mat3& MyTransformer2D::GetModelMat() const
 	return mTRSMat;
 }
 
-const mat3 MyTransformer2D::GetViewMat() const
+const mat3& MyTransformer2D::GetViewMat() const
 {
 	return glm::inverse(mTRSMat);
 }
 
-const vec2 MyProject::MyTransformer2D::GetLocation() const
+const vec2& MyTransformer2D::GetLocation() const
 {
 	return mLocation;
 }
 
-const vec2 MyProject::MyTransformer2D::GetScale() const
+const vec2& MyTransformer2D::GetScale() const
 {
 	return mScale;
 }
@@ -127,9 +127,9 @@ vec2 MyTransformer2D::PixelToCartesian(const vec2 _pos)
 	// -> (Pos.x - Window.X/2,  -Pos.y + Window.Y/2) => [-window/2, window/2]
 	// -> (Pos.x - Window.X/2,  -Pos.y + Window.Y/2) / Window => [-1, 1]
 	// -> (cartesian/2) *((Pos.x - Window.X/2,  -Pos.y + Window.Y/2) / Window) => [-cartesianSize/2, cartesianSize/2]
-	/* column major
-	[ cartesian/window(x)		0			cartesian/2(x)
-	     0			  cartesian/window(y)	cartesian/2(y)
+	/* column major, matrix expression
+	[ cartesian/window(x)		0			-cartesian/2(x)
+	     0			  cartesian/window(y)	-cartesian/2(y)
 		 0						0				1	
 	*/
 	const vec2 windowSize = MyWindow::GetInstance().GetWindowSizeVec2();
@@ -145,12 +145,13 @@ vec2 MyTransformer2D::PixelToNDC(const vec2 _pos, const vec2 _rectSize)
 
 vec2 MyTransformer2D::CartesianToPolar(const vec2 _pos)
 {
-	return { glm::length(_pos), glm::atan(_pos.x / _pos.y) };
+	return { glm::length(_pos), glm::atan(_pos.y / _pos.x) };
 }
 
 vec2 MyTransformer2D::PolarToCartesian(const vec2 _pos)
 {
-	return { _pos.x * glm::cos(_pos.y), _pos.y * glm::sin(_pos.y) };
+	// _pos = (r,theta)
+	return { _pos.x * glm::cos(_pos.y), _pos.x * glm::sin(_pos.y) };
 }
 
 vec2 MyTransformer2D::RotateAsAngle(const vec2 _pos, const float _angle)
@@ -172,15 +173,33 @@ vec2 MyTransformer2D::ResizeScale(const vec2 _pos, const vec2 _scale)
 // 작성예정 3개 
 vec2 MyTransformer2D::lerp(const vec2 _pos1, const vec2 _pos2, float t)
 {
-	return vec2();
+	t = glm::clamp(t, 0.f, 1.f);
+	return _pos2 * t + _pos1 * (1 - t);
 }
 
 float MyTransformer2D::lerp(float const a, const float b, float t)
 {
-	return 0.0f;
+	t = glm::clamp(t, 0.f, 1.f);
+	return b * t + a * (1 - t);
 }
 
 vec2 MyTransformer2D::Slerp(const vec2 _pos1, const vec2 _pos2, float t)
 {
-	return vec2();
+	/*
+		sin((1-t)Θ)*a  + sin(t*Θ) * b
+		  sin(Θ)		sin(Θ)	
+	*/
+	t = glm::clamp(t, 0.f, 1.f);
+
+	const vec2 normalizedPos1 = glm::normalize(_pos1);
+	const vec2 normalizedPos2 = glm::normalize(_pos2);
+
+	const float theta = glm::acos(glm::dot(normalizedPos1, normalizedPos2));
+	
+	const float T1 = glm::sin((1 - t) * theta) / glm::sin(theta);
+	const float T2 = glm::sin((t) * theta) / glm::sin(theta);
+	const vec2 slerpedVec = normalizedPos1 * T1 + normalizedPos2 * T2;
+	// slerpedVec [0, 1]
+
+	return glm::length(_pos1) * slerpedVec;
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "MyTransformer2D.h"
+#include "MyTexture.h"
 
 namespace MyProject
 {
@@ -18,12 +19,11 @@ namespace MyProject
 		vec2 uv;
 	};
 
-	class MyMesh2D : public Component
+	class MyMesh2D	
 	{
 	private:
 		std::vector<vec2>		mVertices;
 		std::vector<size_t>		mIndices;
-		std::vector<vec4>		mColors;
 		std::vector<vec2>		mUV;
 		std::vector<MyVertex2D>	mRenderVertices;
 
@@ -37,24 +37,24 @@ namespace MyProject
 
 	private:
 		bool CreateVertexBuffer();
+		void SetIAVertexBuffer();
+		void UpdateRenderVertices(const mat3& _matrix, const vec4 &_color);
 
 	protected:
 		MyMesh2D(MeshShape _meshShape);
 
 		void ReserveVertexSize(size_t _vertexCount);
-		void AddVertexAndColorAndUV(const vec2 _vertex, const vec4 _color, const vec2 _uv);
+		void AddVertexAndUV(const vec2 _vertex, const vec2 _uv);
 		void AddVertexIndex(std::initializer_list<size_t> _index);
 		void CreateMesh(const POINT_F _meshCom);
+		void SetUVVertex(const size_t _uvVertex, const vec2 _uv); 
 
 	public:
-		void UpdateRenderVertices(const mat3 _matrix);
-		void SetIAVertexBuffer();
-
-		MyMesh2D& SetVertexColor(const size_t _colorIdx, const vec4 _color); 
-
 		POINT_F	GetMeshCom() const;
 
-		virtual void UpdateComponent() override;
-		virtual void RenderComponent() override;
+		void Render(const mat3& _matrix, const vec4 _color = { 1.f, 1.f, 1.f, 1.f });
+
+		virtual void SetUVVertexAsRange(const RECT_F _rect, MyTexture& _texture) = 0;
+		virtual void Update();
 	};
 }

@@ -14,8 +14,8 @@ namespace MyProject
 	public:
 		MyPixelShader(const ShaderDesc& _desc);
 
-		virtual bool CreateShader();
-		virtual void SetUpConfiguration() const;
+		virtual bool CreateShader() override;
+		virtual void SetUpConfiguration() const override;
 	};
 }
 

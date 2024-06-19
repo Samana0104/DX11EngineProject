@@ -10,8 +10,10 @@ namespace MyProject
 
 		vec2	mLocation;
 		vec2	mScale;
+
 		float	mAngle;
-		mat3  mTRSMat;
+
+		mat3	mTRSMat;
 
 	private:
 		void CalculateScaleRotationMat();
@@ -21,18 +23,19 @@ namespace MyProject
 		MyTransformer2D();
 
 		void InitTransform();
-		MyTransformer2D& AddTranslationInMat(const vec2 _pos);
-		MyTransformer2D& AddRotationInMat(const float _angle);
-		MyTransformer2D& AddScaleInMat(const vec2 _scale);
-		MyTransformer2D& SetTranslationInMat(const vec2 _pos);
-		MyTransformer2D& SetRotationInMat(const float _angle);
-		MyTransformer2D& SetScaleInMat(const vec2 _scale);
-		const mat3& GetModelMat() const;
-		const mat3 GetViewMat() const;
+		MyTransformer2D& AddMovement(const vec2 _pos);
+		MyTransformer2D& AddRotation(const float _angle);
+		MyTransformer2D& AddScale(const vec2 _scale);
+		MyTransformer2D& SetMovement(const vec2 _pos);
+		MyTransformer2D& SetRotation(const float _angle);
+		MyTransformer2D& SetScale(const vec2 _scale);
 
-		const vec2	GetLocation() const;
-		const vec2	GetScale() const;
-		float	GetAngle() const;
+		const mat3& GetModelMat() const;
+		const mat3&	GetViewMat() const;
+
+		const vec2&	GetLocation() const;
+		const vec2&	GetScale() const;
+		float		GetAngle() const;
 
 		static void		SetCartesianSize(const vec2 _pos);
 		static vec2		GetCartesianSize(const vec2 _pos);

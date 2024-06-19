@@ -2,17 +2,31 @@
 #include "MyShaderHandler.h"
 using namespace MyProject;
 
-bool MyShaderHandler::CreatePixelShader(const MESH_KEY _key)
+bool MyShaderHandler::CreateVertexShader(const MESH_KEY& _key, const ShaderDesc& _desc)
 {
-	return false;
+	std::shared_ptr<MyShader> vertexShader = std::make_shared<MyVertexShader>(_desc);
+	return AddResource(_key, vertexShader);
 }
 
-bool MyShaderHandler::CreateVertexShader(const MESH_KEY _key)
+
+bool MyShaderHandler::CreatePixelShader(const MESH_KEY& _key, const ShaderDesc& _desc)
 {
-	return false;
+	std::shared_ptr<MyShader> pixelShader = std::make_shared<MyPixelShader>(_desc);
+	return AddResource(_key, pixelShader);
 }
 
 bool MyShaderHandler::CreateShader(const ShaderDesc _desc)
 {
+	std::wstring key = GetKeyAsFileName(_desc.mShaderPath);
+
+	switch (_desc.mShaderType)
+	{
+	case ShaderType::VERTEX:
+		return CreateVertexShader(key, _desc);
+
+	case ShaderType::PIXEL:
+		return CreatePixelShader(key, _desc);
+	}
+
 	return false;
 }

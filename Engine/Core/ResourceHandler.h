@@ -3,6 +3,8 @@
 
 namespace MyProject
 {
+	#define TEMPLATE_VKA template<typename V, typename K, typename A>
+
 	template <typename V, typename K = std::wstring, 
 		typename Alloc = std::map<K, std::shared_ptr<V>>>
 	class ResourceHandler
@@ -11,28 +13,29 @@ namespace MyProject
 		Alloc mResourceDatas;
 
 	public:
-		bool AddResource(K _key, std::shared_ptr<V>& _value);
-		bool DeleteResource(K _key);
-		bool IsKeyContained(K _key) const;
+		bool AddResource(const K& _key, const std::shared_ptr<V>& _value);
+		bool DeleteResource(const K _key);
+		bool IsKeyContained(const K _key) const;
 		
 		typename Alloc&		GetAllResources() const;
-		std::shared_ptr<V>	GetResource(K _key);
-		std::shared_ptr<V>& operator[](K _key);
 
-		std::wstring GetKeyAsFileName(wstringV _filePath) const;
+		const std::shared_ptr<V> GetResource(const K _key);
+		const std::shared_ptr<V> operator[](const K _key);
+
+		std::wstring GetKeyAsFileName(const wstringV _filePath) const;
 	};
 
 	/*
 	--------------------------------------------------------------
 	*/
 
-	template< typename V, typename K, typename A>
-	bool ResourceHandler<V, K, A>::AddResource(K _key, std::shared_ptr<V>& _value)
+	TEMPLATE_VKA
+	bool ResourceHandler<V, K, A>::AddResource(const K& _key, const std::shared_ptr<V>& _value)
 	{
 		return mResourceDatas.insert(std::make_pair(_key, _value)).second;
 	}
 
-	template< typename V, typename K, typename A>
+	TEMPLATE_VKA
 	std::wstring ResourceHandler<V, K, A>::GetKeyAsFileName(wstringV _filePath) const
 	{
 		std::wstring fileNameKey;
@@ -48,8 +51,8 @@ namespace MyProject
 		return fileNameKey;
 	}
 
-	template< typename V, typename K, typename A>
-	bool ResourceHandler<V, K, A>::DeleteResource(K _key)
+	TEMPLATE_VKA
+	bool ResourceHandler<V, K, A>::DeleteResource(const K _key)
 	{
 		if (!IsKeyContained(_key))
 			return false;
@@ -58,14 +61,14 @@ namespace MyProject
 		return true;
 	}
 
-	template< typename V, typename K, typename A>
-	bool ResourceHandler<V, K, A>::IsKeyContained(K _key) const
+	TEMPLATE_VKA
+	bool ResourceHandler<V, K, A>::IsKeyContained(const K _key) const
 	{
 		return mResourceDatas.contains(_key);
 	}
 
-	template< typename V, typename K, typename A>
-	std::shared_ptr<V> ResourceHandler<V, K, A>::GetResource(K _key)
+	TEMPLATE_VKA
+	const std::shared_ptr<V> ResourceHandler<V, K, A>::GetResource(const K _key)
 	{
 		try
 		{
@@ -78,15 +81,15 @@ namespace MyProject
 		}
 	}
 
-	template< typename V, typename K, typename A>
+	TEMPLATE_VKA
 	typename A& ResourceHandler<V, K, A>::GetAllResources() const
 	{
 		return mResourceDatas;
 	}
 
-	template< typename V, typename K, typename A>
-	std::shared_ptr<V>& ResourceHandler<V, K, A>::operator[](K _key)
+	TEMPLATE_VKA
+	const std::shared_ptr<V> ResourceHandler<V, K, A>::operator[](const K _key)
 	{
-		return mResourceDatas[_key];
+		return GetResource(_key);
 	}
 }

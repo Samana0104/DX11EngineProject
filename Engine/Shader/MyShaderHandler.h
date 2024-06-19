@@ -1,14 +1,15 @@
 #pragma once
 #include "ResourceHandler.h"
-#include "MyShader.h"
+#include "MyVertexShader.h"
+#include "MyPixelShader.h"
 
 namespace MyProject
 {
 	class MyShaderHandler : public ResourceHandler<MyShader, SHADER_KEY>
 	{
 	private:
-		bool CreatePixelShader(const MESH_KEY _key);
-		bool CreateVertexShader(const MESH_KEY _key);
+		bool CreateVertexShader(const MESH_KEY& _key, const ShaderDesc& _desc);
+		bool CreatePixelShader(const MESH_KEY& _key, const ShaderDesc& _desc);
 
 	public:
 		bool CreateShader(const ShaderDesc _desc);

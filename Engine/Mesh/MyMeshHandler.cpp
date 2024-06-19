@@ -13,8 +13,8 @@ bool MyMeshHandler::CreateMesh(const MESH_KEY _key, MeshShape _meshShape)
 	return false;
 }
 
-bool MyMeshHandler::CreateBox2DMesh(const MESH_KEY _key)
+bool MyMeshHandler::CreateBox2DMesh(const MESH_KEY& _key)
 {
-	auto boxMesh = std::make_shared<MyMesh2D>(MyBox2D());
+	std::shared_ptr<MyMesh2D> boxMesh = std::make_shared<MyBox2D>();
 	return AddResource(_key, boxMesh);
 }

@@ -8,8 +8,8 @@ namespace MyProject
 	public:
 		MyBox2D();
 
-		virtual void UpdateComponent() override;
-		virtual void RenderComponent() override;
+		virtual void SetUVVertexAsRange(const RECT_F _rect, MyTexture& _texture) override;
+		virtual void Update() override;
 	};
 }
 
