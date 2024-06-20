@@ -31,14 +31,19 @@ namespace MyProject
 	};
 */
 	inline static const std::map<MESH_KEY, MeshShape> gDefaultMeshes = {
-		{ L"BOX2D_MESH", { MeshShape::BOX2D }}
+		{ L"DEFAULT_MESH", { MeshShape::BOX2D }},
+		{ L"BOX2D_MESH", { MeshShape::BOX2D }},
+		{ L"CIRCLE2D_MESH", { MeshShape::CIRCLE2D }}
 	};
 
 
-	using TexturePath = std::wstring;
-	inline static const std::vector<TexturePath> gDefaultTextures = {
-		{ L"../data/KGCA1.png"}
-	};
+	//using TexturePath = std::wstring;
+	//inline static const std::vector<TexturePath> gDefaultTextures = {
+	//	{ L"../data/KGCA1.png"},
+	//	{ L"../data/Default.jpg"}
+	//};
+
+	inline static const TEXTURE_KEY gTexturePath = L"../data/Image/";
 
 /*
 	struct ShaderDesc
@@ -50,7 +55,7 @@ namespace MyProject
 */
 
 	inline static const std::vector<ShaderDesc> gDefaultShaders = {
-		{ ShaderType::VERTEX, L"../data/shaders/VertexShader.hlsl", "VSMain"},
-		{ ShaderType::PIXEL, L"../data/shaders/PixelShader.hlsl", "PSMain"}
+		{ ShaderType::VERTEX, L"../data/Shaders/VertexShader.hlsl", "VSMain"},
+		{ ShaderType::PIXEL, L"../data/Shaders/PixelShader.hlsl", "PSMain"}
 	};
 }

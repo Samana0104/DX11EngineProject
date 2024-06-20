@@ -8,5 +8,6 @@ namespace MyProject
 	{
 	public:
 		bool CreateTextureComponent(const wstringV _texturePath);
+		void CreateTextureAsFolderPath(const wstringV _folderPath);
 	};
 }

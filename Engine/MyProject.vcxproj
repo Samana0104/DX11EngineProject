@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -123,11 +123,13 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)Timer\;$(SolutionDir)Texture\;$(SolutionDir)Shader\;$(SolutionDir)Object\;$(SolutionDir)GameStart\;$(SolutionDir)Mesh\;$(SolutionDir)Font\;$(SolutionDir)Core\;$(SolutionDir)Input\;$(SolutionDir)Color\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Timer\;$(ProjectDir)Texture\;$(ProjectDir)Shader\;$(ProjectDir)Object\;$(ProjectDir)GameStart\;$(ProjectDir)Mesh\;$(ProjectDir)Font\;$(ProjectDir)Core\;$(ProjectDir)Input\;$(ProjectDir)Color\;$(ProjectDir)Sound\;$(ProjectDir)fmod\inc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)fmod\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <EntryPointName>main</EntryPointName>
@@ -181,7 +183,7 @@
     <ClInclude Include="Mesh\MyBox2D.h" />
     <ClInclude Include="Mesh\MyMesh2D.h" />
     <ClInclude Include="Mesh\MyMeshHandler.h" />
-    <ClInclude Include="Mesh\MySphere2D.h" />
+    <ClInclude Include="Mesh\MyCircle2D.h" />
     <ClInclude Include="Mesh\MyTransformer2D.h" />
     <ClInclude Include="Object\MyActor.h" />
     <ClInclude Include="Object\MyCamera.h" />
@@ -190,6 +192,8 @@
     <ClInclude Include="Shader\MyShader.h" />
     <ClInclude Include="Shader\MyShaderHandler.h" />
     <ClInclude Include="Shader\MyVertexShader.h" />
+    <ClInclude Include="Sound\MySound.h" />
+    <ClInclude Include="Sound\MySoundHandler.h" />
     <ClInclude Include="Texture\MyTexture.h" />
     <ClInclude Include="Texture\MyTextureHandler.h" />
     <ClInclude Include="Timer\MyTimer.h" />
@@ -210,7 +214,7 @@
     <ClCompile Include="Mesh\MyBox2D.cpp" />
     <ClCompile Include="Mesh\MyMesh2D.cpp" />
     <ClCompile Include="Mesh\MyMeshHandler.cpp" />
-    <ClCompile Include="Mesh\MySphere2D.cpp" />
+    <ClCompile Include="Mesh\MyCircle2D.cpp" />
     <ClCompile Include="Mesh\MyTransformer2D.cpp" />
     <ClCompile Include="Object\MyActor.cpp" />
     <ClCompile Include="Object\MyCamera.cpp" />
@@ -219,6 +223,8 @@
     <ClCompile Include="Shader\MyShader.cpp" />
     <ClCompile Include="Shader\MyShaderHandler.cpp" />
     <ClCompile Include="Shader\MyVertexShader.cpp" />
+    <ClCompile Include="Sound\MySound.cpp" />
+    <ClCompile Include="Sound\MySoundHandler.cpp" />
     <ClCompile Include="Texture\MyTexture.cpp" />
     <ClCompile Include="Texture\MyTextureHandler.cpp" />
     <ClCompile Include="Timer\MyTimer.cpp" />
@@ -232,6 +238,9 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VSMain</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

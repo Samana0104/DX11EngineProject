@@ -11,6 +11,7 @@
 #include <optional>
 #include <functional>
 #include <random>
+#include <filesystem>
 #include <Windows.h>
 #include <wrl.h>
 #include <d3d11.h>
@@ -20,6 +21,8 @@
 #include <dwrite.h>
 #include <tchar.h>
 #include <glm/glm.hpp>
+#include "fmod.hpp"
+#include "fmod_errors.h"
 #include "directxtk/WICTextureLoader.h"
 #include "Singleton.h"
 #include "MyWindow.h"
@@ -31,3 +34,5 @@
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "DirectXTK.lib")
 #pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "fmod_vc.lib")
+

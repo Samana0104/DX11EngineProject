@@ -43,7 +43,7 @@ MyTransformer2D& MyTransformer2D::SetMovement(const vec2 _pos)
 
 MyTransformer2D& MyTransformer2D::SetRotation(const float _angle)
 {
-	if (_angle >= 360.f)
+	if (glm::abs(_angle) >= 360.f)
 	{
 		// [-360, 360]
 		const int angleDivison = glm::abs(static_cast<int>(_angle / 360.f));
@@ -67,7 +67,7 @@ const mat3& MyTransformer2D::GetModelMat() const
 	return mTRSMat;
 }
 
-const mat3& MyTransformer2D::GetViewMat() const
+const mat3 MyTransformer2D::GetViewMat() const
 {
 	return glm::inverse(mTRSMat);
 }
@@ -85,6 +85,11 @@ const vec2& MyTransformer2D::GetScale() const
 float MyProject::MyTransformer2D::GetAngle() const
 {
 	return mAngle;
+}
+
+MyTransformer2D* MyTransformer2D::operator->()
+{
+	return this;
 }
 
 void MyTransformer2D::SetCartesianSize(const vec2 _pos)

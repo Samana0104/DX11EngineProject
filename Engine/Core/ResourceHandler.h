@@ -90,6 +90,6 @@ namespace MyProject
 	TEMPLATE_VKA
 	const std::shared_ptr<V> ResourceHandler<V, K, A>::operator[](const K _key)
 	{
-		return GetResource(_key);
+		return mResourceDatas[_key];
 	}
 }

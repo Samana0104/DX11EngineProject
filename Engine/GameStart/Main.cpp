@@ -9,12 +9,12 @@ private:
 	//Box2D	myBox;
 	//Box2D	myBox2;
 	MyObject mObject;
+	MyObject mObject2;
 	MyCamera mCamera;
 
 public:
 	Sample()
-		: myPos({ 0, 0 }),
-		  mObject(L"KGCA1.png", L"BOX2D_MESH")
+		: myPos({ 0, 0 })
 		//myBox({ 200, 200 }, L"KGCA1.png"),
 		//myBox2({ 300, 200 }, L"KGCA1.png"),
 	{
@@ -23,6 +23,9 @@ public:
 
 	virtual void InitComponent() override
 	{
+		mObject->SetScale({ 10.f, 10.f });
+		mObject2->SetScale({ 40.f, 10.f });
+		mObject2->AddMovement({ 20.f, 10.f });
 	}
 	virtual void UpdateComponent() override
 	{
@@ -47,12 +50,14 @@ public:
 			mCamera.ZoomInCamera(0.1f);
 		else if(mInput.GetCurrentKeyState(VK_F2) == KeyState::KEY_HOLD)
 			mCamera.ZoomOutCamera(0.1f);
-
+		
+		mObject2->AddRotation(0.1f);
 	}
 
 	virtual void RenderComponent() override
 	{
-		mObject.RenderObject(mCamera.GetViewMat());
+		mObject.Render(mCamera.GetViewMat());
+		mObject2.Render(mCamera.GetViewMat());
 		//DrawTextForDebugging(L"카메라 좌표계 : %f %f\n 마우스 좌표계 :  %f %f",
 		//	mCamera.mTransform.GetLocation().x,
 		//	mCamera.mTransform.GetLocation().y,

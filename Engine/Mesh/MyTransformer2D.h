@@ -31,11 +31,13 @@ namespace MyProject
 		MyTransformer2D& SetScale(const vec2 _scale);
 
 		const mat3& GetModelMat() const;
-		const mat3&	GetViewMat() const;
+		const mat3	GetViewMat() const;
 
 		const vec2&	GetLocation() const;
 		const vec2&	GetScale() const;
 		float		GetAngle() const;
+
+		MyTransformer2D* operator->();
 
 		static void		SetCartesianSize(const vec2 _pos);
 		static vec2		GetCartesianSize(const vec2 _pos);

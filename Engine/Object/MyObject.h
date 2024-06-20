@@ -17,9 +17,11 @@ namespace MyProject
 		MyResourceManager& mManager = MyResourceManager::GetInstance();
 
 	public:
-		MyObject(TEXTURE_KEY _textureKey, MESH_KEY _meshKey);
+		MyObject();
 
-		virtual void UpdateObject(float _deltaTime);
-		virtual void RenderObject(const mat3 _viewMat);
+		MyTransformer2D* operator->(); // 위치 변환 편하게 하려고 오버로딩 함
+
+		virtual void Update(float _deltaTime);
+		virtual void Render(const mat3 _viewMat);
 	};
 }

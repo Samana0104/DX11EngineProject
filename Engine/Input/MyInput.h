@@ -12,7 +12,7 @@ namespace MyProject
 		KEY_HOLD
 	};
 
-	class MyInput : public Component
+	class MyInput : public Singleton<MyInput>
 	{
 	private:
 		static inline const UINT KEY_COUNT = 256;
@@ -24,15 +24,17 @@ namespace MyProject
 		inline static MyWindow& mWindow = MyWindow::GetInstance();
 
 	private:
+		friend class Singleton<MyInput>;
+		MyInput();
+
 		void UpdateKeyState(UINT _key);
 	
 	public:
-		MyInput();
 
-		KeyState	GetCurrentKeyState(const UINT _key);
-		POINT_L		GetCurrentMousePos() const;
-		POINT_F		GetCurrentMousePosF() const;
-		vec2		GetCurrentMousePosVec2() const;
+		KeyState GetCurrentKeyState(const UINT _key);
+		POINT_L	 GetCurrentMousePos() const;
+		POINT_F	 GetCurrentMousePosF() const;
+		vec2	 GetCurrentMousePosVec2() const;
 
 		bool IsKeyUp(const UINT _key) const;
 		bool IsKeyDown(const UINT _key) const;
@@ -45,7 +47,7 @@ namespace MyProject
 		void SetKeyFree(const UINT _key);
 		void SetKeyHold(const UINT _key);
 
-		virtual void UpdateComponent() override;
-		virtual void RenderComponent() override;
+		virtual void UpdateComponent();
+		virtual void RenderComponent();
 	};
 }

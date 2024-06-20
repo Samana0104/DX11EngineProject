@@ -80,7 +80,7 @@ void MyCore::DrawTextForDebugging(const wchar_t* format, ...)
 	RECT_F rc1 = { mySize.x*0.1f, mySize.y*0.7f, mySize.x*0.6f, mySize.y-10.f };
 	RECT_F rc2 = { rc1.left + rc1.left*0.1f, rc1.top + rc1.top*0.05f, rc1.right, rc1.bottom };
 
-	std::shared_ptr<MyWriterFont> brush = mManager.mFontHandler[L"DEBUG_FONT"];
+	std::shared_ptr<MyWriterFont> brush = mManager.mFont[L"DEBUG_FONT"];
 
 	mDevice.mD2dRT->BeginDraw();
 	brush->GetBrush()->SetColor({ 1.f, 1.f, 1.f, 0.3f });
@@ -88,12 +88,12 @@ void MyCore::DrawTextForDebugging(const wchar_t* format, ...)
 	brush->GetBrush()->SetColor({ 1.f, 0.1f, 0.1f, 1.f });
 	mDevice.mD2dRT->DrawRectangle(rc1, brush->GetBrush().Get(), 1.f);
 	mDevice.mD2dRT->EndDraw();
-	mManager.mFontHandler.DrawTextAsKey(
+	mManager.mFont.DrawTextAsKey(
 		L"DEBUG_FONT",
 		L" [DEBUG WINDOW]",
 		rc1,
 		{ 0.f, 0.f, 0.f, 1.f });
-	mManager.mFontHandler.DrawTextAsKey(
+	mManager.mFont.DrawTextAsKey(
 		L"DEBUG_FONT",
 		formattedMessage,
 		rc2,

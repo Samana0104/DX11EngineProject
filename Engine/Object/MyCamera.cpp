@@ -2,7 +2,7 @@
 #include "MyCamera.h"
 using namespace MyProject;
 
-const mat3& MyCamera::GetViewMat() const
+const mat3 MyCamera::GetViewMat() const
 {
 	return mTransform.GetViewMat();
 }

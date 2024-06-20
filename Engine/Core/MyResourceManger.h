@@ -4,16 +4,18 @@
 #include "MyMeshHandler.h"
 #include "MyFontHandler.h"
 #include "MyShaderHandler.h"
+#include "MySoundHandler.h"
 
 namespace MyProject
 {
 	class MyResourceManager : public Singleton<MyResourceManager>
 	{
 	public:
-		MyTextureHandler mTextureHandler;
-		MyMeshHandler	 mMeshHandler;
-		MyFontHandler	 mFontHandler;
-		MyShaderHandler  mShaderHandler;
+		MyTextureHandler mTexture;
+		MyMeshHandler	 mMesh;
+		MyFontHandler	 mFont;
+		MyShaderHandler  mShader;
+		MySoundHandler	 mSound;
 		
 	private:
 		friend class Singleton<MyResourceManager>;

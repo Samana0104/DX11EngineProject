@@ -2,8 +2,13 @@
 #include "MyBox2D.h"
 using namespace MyProject;
 
-MyBox2D::MyBox2D() : 
+MyBox2D::MyBox2D() :
 	MyMesh2D(MeshShape::BOX2D)
+{
+	CreateBox2DVertex();
+}
+
+void MyBox2D::CreateBox2DVertex()
 {
 	RECT_F rect = {-0.5f, 0.5f, 0.5f, -0.5f};
 	ReserveVertexSize(4);
@@ -18,15 +23,11 @@ MyBox2D::MyBox2D() :
 /*
 2D 아니고는 안쓸 방식;;;
 */
-void MyBox2D::SetUVVertexAsRange(const RECT_F _rect, MyTexture& _texture)
+void MyBox2D::SetUVVertexAsRect(const RECT_F _rect, MyTexture& _texture)
 {
 	vec2 imageSize = _texture.GetTextureSizeVec2();
 	SetUVVertex(0, { _rect.left / imageSize.x, _rect.top / imageSize.y });
 	SetUVVertex(1, { _rect.right / imageSize.x, _rect.top / imageSize.y });
 	SetUVVertex(2, { _rect.left / imageSize.x, _rect.bottom / imageSize.y });
 	SetUVVertex(3, { _rect.right / imageSize.x, _rect.bottom / imageSize.y });
-}
-
-void MyBox2D::Update()
-{
 }

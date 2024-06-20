@@ -2,24 +2,25 @@
 #include "MyObject.h"
 using namespace MyProject;
 
-MyObject::MyObject(TEXTURE_KEY _textureKey, MESH_KEY _meshKey)
-	: mTextureKey(_textureKey), mMeshKey(_meshKey)
+MyObject::MyObject()
+	: mTextureKey(L"KGCA1.png"), mMeshKey(L"CIRCLE2D_MESH")
 {
-	mTransform.SetScale({100.f, 100.f});
-	//mTransform.SetMovement({100.f, 100.f});
-	//mTransform.AddRotationInMat(60.f);
-	//mTransform.SetRotation(90.f);
-	mManager.mMeshHandler[mMeshKey]->SetUVVertexAsRange(
+	mManager.mMesh[mMeshKey]->SetUVVertexAsRect(
 		{239.f, 145.f, 866.f, 462.f}, 
-		*mManager.mTextureHandler[mTextureKey]);
+		*mManager.mTexture[mTextureKey]);
 }
 
-void MyObject::UpdateObject(float _deltaTime)
+MyTransformer2D* MyObject::operator->()
+{
+	return &mTransform;
+}
+
+void MyObject::Update(float _deltaTime)
 {
 }
 
-void MyObject::RenderObject(const mat3 _viewMat)
+void MyObject::Render(const mat3 _viewMat)
 {
-	mManager.mTextureHandler[mTextureKey]->RenderComponent();
-	mManager.mMeshHandler[mMeshKey]->Render(_viewMat * mTransform.GetModelMat(), {1.f, 1.f, 0.3f, 0.7f});
+	mManager.mTexture[mTextureKey]->RenderComponent();
+	mManager.mMesh[mMeshKey]->Render(_viewMat * mTransform.GetModelMat());
 }

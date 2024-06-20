@@ -3,15 +3,16 @@
 
 namespace MyProject
 {
-	class MyBox2D : public MyMesh2D
+	class MyCircle2D : public MyMesh2D
 	{
 	private:
-		void CreateBox2DVertex();
+		void CreateCircle2DVertex(const size_t _triangles);
 
 	public:
-		MyBox2D();
+		MyCircle2D(const size_t _triangles = 100);
 
 		virtual void SetUVVertexAsRect(const RECT_F _rect, MyTexture& _texture) override;
 	};
 }
+
 

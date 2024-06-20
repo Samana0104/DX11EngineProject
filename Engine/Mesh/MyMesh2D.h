@@ -9,7 +9,7 @@ namespace MyProject
 	{
 		CUSTOM = 0,
 		BOX2D = 1,
-		SPEHERE = 2
+		CIRCLE2D = 2
 	};
 
 	struct MyVertex2D
@@ -46,7 +46,7 @@ namespace MyProject
 		void ReserveVertexSize(size_t _vertexCount);
 		void AddVertexAndUV(const vec2 _vertex, const vec2 _uv);
 		void AddVertexIndex(std::initializer_list<size_t> _index);
-		void CreateMesh(const POINT_F _meshCom);
+		void CreateMesh(const POINT_F _meshCom = { 0.f, 0.f });
 		void SetUVVertex(const size_t _uvVertex, const vec2 _uv); 
 
 	public:
@@ -54,7 +54,6 @@ namespace MyProject
 
 		void Render(const mat3& _matrix, const vec4 _color = { 1.f, 1.f, 1.f, 1.f });
 
-		virtual void SetUVVertexAsRange(const RECT_F _rect, MyTexture& _texture) = 0;
-		virtual void Update();
+		virtual void SetUVVertexAsRect(const RECT_F _rect, MyTexture& _texture) = 0;
 	};
 }

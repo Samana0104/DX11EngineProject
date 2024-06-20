@@ -105,10 +105,6 @@ void MyMesh2D::UpdateRenderVertices(const mat3& _matrix, const vec4& _color)
 	mDevice.mContext->UpdateSubresource(mVertexBuffer.Get(),0, NULL, &mRenderVertices.at(0), 0, 0);
 }
 
-void MyMesh2D::Update()
-{
-}
-
 void MyMesh2D::Render(const mat3& _matrix, const vec4 _color)
 {
 	UpdateRenderVertices(_matrix, _color);

@@ -1,6 +1,7 @@
 #pragma once
 #include "ResourceHandler.h"
 #include "MyBox2D.h"
+#include "MyCircle2D.h"
 
 namespace MyProject
 {
@@ -8,6 +9,7 @@ namespace MyProject
 	{
 	private:
 		bool CreateBox2DMesh(const MESH_KEY& _key);
+		bool CreateCircle2DMesh(const MESH_KEY& _key);
 
 	public:
 		bool CreateMesh(const MESH_KEY _key, const MeshShape _meshShape);

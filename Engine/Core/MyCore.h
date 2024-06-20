@@ -16,8 +16,8 @@ namespace MyProject
 
 	protected:
 		MyTimer	mTimer;
-		MyInput	mInput;
 
+		static inline MyInput&  mInput = MyInput::GetInstance();
 		static inline MyWindow& mWindow = MyWindow::GetInstance();
 		static inline D3Device& mDevice = D3Device::GetInstance();
 		static inline MyResourceManager& mManager = MyResourceManager::GetInstance();

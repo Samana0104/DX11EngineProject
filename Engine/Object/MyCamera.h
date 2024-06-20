@@ -9,7 +9,7 @@ namespace MyProject
 		MyTransformer2D mTransform;
 		
 	public:
-		const mat3& GetViewMat() const;
+		const mat3 GetViewMat() const;
 
 		void ZoomInCamera(const float _scale);
 		void ZoomOutCamera(const float _scale);

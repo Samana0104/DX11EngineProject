@@ -28,18 +28,6 @@
     <Filter Include="Engine\Shader">
       <UniqueIdentifier>{20ef4af3-cd53-4c4d-b488-e8f8570dd51e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources">
-      <UniqueIdentifier>{bba2f93a-7a91-4e7c-893a-21ccf6c0b6fa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resources\Textures">
-      <UniqueIdentifier>{70c7b20e-d26d-4ba6-978e-95ce57bafbdb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resources\Fonts">
-      <UniqueIdentifier>{c71176ab-5e9e-40ec-ad47-45b1ab795aa2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resources\Meshes">
-      <UniqueIdentifier>{a0b14784-4a82-451f-9fb3-17e5a8764e1f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\GameStart">
       <UniqueIdentifier>{daec4fc2-3d36-4483-92a9-5097ca8a6d5f}</UniqueIdentifier>
     </Filter>
@@ -48,6 +36,9 @@
     </Filter>
     <Filter Include="Engine\Color">
       <UniqueIdentifier>{83fe6b1c-a009-4b81-8d1c-2e9945069c89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Sound">
+      <UniqueIdentifier>{f32e6ff4-2ad3-47a0-9af0-f42bb47be9e7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -90,7 +81,7 @@
     <ClInclude Include="Mesh\MyMeshHandler.h">
       <Filter>Engine\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh\MySphere2D.h">
+    <ClInclude Include="Mesh\MyCircle2D.h">
       <Filter>Engine\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Mesh\MyTransformer2D.h">
@@ -135,6 +126,12 @@
     <ClInclude Include="Color\MyColor.h">
       <Filter>Engine\Color</Filter>
     </ClInclude>
+    <ClInclude Include="Sound\MySound.h">
+      <Filter>Engine\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\MySoundHandler.h">
+      <Filter>Engine\Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font\MyFontHandler.cpp">
@@ -164,7 +161,7 @@
     <ClCompile Include="Mesh\MyMesh2D.cpp">
       <Filter>Engine\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh\MySphere2D.cpp">
+    <ClCompile Include="Mesh\MyCircle2D.cpp">
       <Filter>Engine\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Mesh\MyTransformer2D.cpp">
@@ -212,6 +209,12 @@
     <ClCompile Include="Color\MyColor.cpp">
       <Filter>Engine\Color</Filter>
     </ClCompile>
+    <ClCompile Include="Sound\MySound.cpp">
+      <Filter>Engine\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\MySoundHandler.cpp">
+      <Filter>Engine\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\data\shaders\PixelShader.hlsl">
@@ -220,5 +223,8 @@
     <FxCompile Include="..\data\shaders\VertexShader.hlsl">
       <Filter>Engine\HLSL</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
