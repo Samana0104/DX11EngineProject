@@ -4,21 +4,21 @@ using namespace MyProject;
 
 bool D3Device::CreateDeviceAndSwapChain()
 {
-	CONST D3D_FEATURE_LEVEL pFeatureLevels = D3D_FEATURE_LEVEL_11_0;
 	HRESULT hr;
+	CONST D3D_FEATURE_LEVEL pFeatureLevels = D3D_FEATURE_LEVEL_11_0;
 
 	DXGI_SWAP_CHAIN_DESC pSwapChainDesc = { };
 	{
+		pSwapChainDesc.OutputWindow = MyWindow::GetInstance().GetWindowHandle();
 		pSwapChainDesc.BufferDesc.Width = MyWindow::GetInstance().GetWindowSize().x;
 		pSwapChainDesc.BufferDesc.Height = MyWindow::GetInstance().GetWindowSize().y;
 		pSwapChainDesc.BufferDesc.RefreshRate.Numerator = 60;
 		pSwapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
 		pSwapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		pSwapChainDesc.SampleDesc.Count = 1;
 		pSwapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		pSwapChainDesc.BufferCount = 1;
-		pSwapChainDesc.OutputWindow = MyWindow::GetInstance().GetWindowHandle();
 		pSwapChainDesc.Windowed = true;
+		pSwapChainDesc.SampleDesc.Count = 4;
 	}
 
 	hr = D3D11CreateDeviceAndSwapChain(

@@ -2,8 +2,9 @@
 #include "MyObject.h"
 using namespace MyProject;
 
-MyObject::MyObject()
-	: mTextureKey(L"KGCA1.png"), mMeshKey(L"CIRCLE2D_MESH")
+MyObject::MyObject() : 
+	mTextureKey(L"KGCA1.png"), 
+	mMeshKey(L"CIRCLE2D_MESH")
 {
 	mManager.mMesh[mMeshKey]->SetUVVertexAsRect(
 		{239.f, 145.f, 866.f, 462.f}, 

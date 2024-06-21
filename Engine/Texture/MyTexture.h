@@ -1,9 +1,9 @@
 #pragma once
-#include "Component.h"
+#include "MyCoreAPI.h"
 
 namespace MyProject
 {
-	class MyTexture : public Component
+	class MyTexture : public MyCoreAPI
 	{
 	private:
 		ComPtr<ID3D11ShaderResourceView>	mSRV;

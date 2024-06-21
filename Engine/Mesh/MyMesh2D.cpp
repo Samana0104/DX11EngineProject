@@ -2,8 +2,8 @@
 #include "MyMesh2D.h"
 using namespace MyProject;
 
-MyMesh2D::MyMesh2D(MeshShape _meshShape)
-	: mMeshShape(_meshShape)
+MyMesh2D::MyMesh2D(MeshShape _meshShape) : 
+	mMeshShape(_meshShape)
 {
 }
 

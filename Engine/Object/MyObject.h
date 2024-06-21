@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "MyCoreAPI.h"
 #include "D3Device.h"
 #include "MyTransformer2D.h"
 #include "MyResourceManger.h"
@@ -10,9 +10,8 @@ namespace MyProject
 	{
 	private:
 		MyTransformer2D		mTransform;
-
-		TEXTURE_KEY	mTextureKey;
-		MESH_KEY	mMeshKey;
+		TEXTURE_KEY			mTextureKey;
+		MESH_KEY			mMeshKey;
 
 		MyResourceManager& mManager = MyResourceManager::GetInstance();
 

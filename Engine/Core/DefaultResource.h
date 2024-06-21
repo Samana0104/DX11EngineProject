@@ -25,11 +25,12 @@ namespace MyProject
 /*
 	enum class MeshShape
 	{
-		CUSTOM = 0,
+		CUSTOM = 0, 이 기능은 3D때 구현 예정
 		BOX = 1,
 		SPEHERE = 2
 	};
 */
+	// 만약 UV값을 따로 주고 싶으면 메쉬 따로 추가해서 넣을 것
 	inline static const std::map<MESH_KEY, MeshShape> gDefaultMeshes = {
 		{ L"DEFAULT_MESH", { MeshShape::BOX2D }},
 		{ L"BOX2D_MESH", { MeshShape::BOX2D }},

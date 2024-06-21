@@ -168,7 +168,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Color\MyColor.h" />
-    <ClInclude Include="Core\Component.h" />
+    <ClInclude Include="Core\MyCoreAPI.h" />
     <ClInclude Include="Core\D3Device.h" />
     <ClInclude Include="Core\DefaultResource.h" />
     <ClInclude Include="Core\MyCore.h" />
@@ -192,6 +192,7 @@
     <ClInclude Include="Shader\MyShader.h" />
     <ClInclude Include="Shader\MyShaderHandler.h" />
     <ClInclude Include="Shader\MyVertexShader.h" />
+    <ClInclude Include="Sound\MyFmodSystem.h" />
     <ClInclude Include="Sound\MySound.h" />
     <ClInclude Include="Sound\MySoundHandler.h" />
     <ClInclude Include="Texture\MyTexture.h" />
@@ -223,6 +224,7 @@
     <ClCompile Include="Shader\MyShader.cpp" />
     <ClCompile Include="Shader\MyShaderHandler.cpp" />
     <ClCompile Include="Shader\MyVertexShader.cpp" />
+    <ClCompile Include="Sound\MyFmodSystem.cpp" />
     <ClCompile Include="Sound\MySound.cpp" />
     <ClCompile Include="Sound\MySoundHandler.cpp" />
     <ClCompile Include="Texture\MyTexture.cpp" />

@@ -18,7 +18,6 @@ public:
 		//myBox({ 200, 200 }, L"KGCA1.png"),
 		//myBox2({ 300, 200 }, L"KGCA1.png"),
 	{
-
 	}
 
 	virtual void InitComponent() override
@@ -47,9 +46,9 @@ public:
 		}
 
 		if(mInput.GetCurrentKeyState(VK_F1) == KeyState::KEY_HOLD)
-			mCamera.ZoomInCamera(0.1f);
+			mCamera.ZoomIn(0.01f);
 		else if(mInput.GetCurrentKeyState(VK_F2) == KeyState::KEY_HOLD)
-			mCamera.ZoomOutCamera(0.1f);
+			mCamera.ZoomOut(0.01f);
 		
 		mObject2->AddRotation(0.1f);
 	}

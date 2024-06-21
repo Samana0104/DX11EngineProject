@@ -2,8 +2,8 @@
 #include "MyVertexShader.h"
 using namespace MyProject;
 
-MyVertexShader::MyVertexShader(const ShaderDesc& _desc)
-	: MyShader(_desc)
+MyVertexShader::MyVertexShader(const ShaderDesc& _desc) : 
+	MyShader(_desc)
 {
 	_ASSERT(CreateShader());
 	SetUpConfiguration();

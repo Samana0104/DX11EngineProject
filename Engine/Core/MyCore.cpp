@@ -37,7 +37,7 @@ void MyCore::GamePostRender()
 
 void MyCore::GameInit()
 {
-	mTimer.ResetTimer();
+	mTimer.Reset();
 	InitComponent();
 }
 

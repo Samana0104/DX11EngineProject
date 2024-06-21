@@ -1,11 +1,11 @@
 #pragma once
-#include "Component.h"
+#include "MyCoreAPI.h"
 
 
 namespace MyProject
 {
 	using namespace std::chrono;
-	class MyTimer : public Component
+	class MyTimer : public MyCoreAPI
 	{
 	private:
 		time_point<steady_clock>	mStartTimeTick;
@@ -33,7 +33,7 @@ namespace MyProject
 	public:
 		MyTimer(int _maxFPS = 120);
 
-		void	ResetTimer();
+		void	Reset();
 
 		void	SetMaxFPS(int _fps);
 

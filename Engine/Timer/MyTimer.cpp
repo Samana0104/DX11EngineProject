@@ -6,10 +6,10 @@ MyTimer::MyTimer(int _maxFPS)
 {
 	mMaxFPS = _maxFPS;
 	mMaxFPSTime = 1.0 / _maxFPS;
-	ResetTimer();
+	Reset();
 }
 
-void MyTimer::ResetTimer()
+void MyTimer::Reset()
 {
 	mStartTimeTick = steady_clock::now();
 	mCurrentFPS = 0;

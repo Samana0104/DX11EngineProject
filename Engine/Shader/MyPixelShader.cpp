@@ -2,8 +2,8 @@
 #include "MyPixelShader.h"
 using namespace MyProject;
 
-MyPixelShader::MyPixelShader(const ShaderDesc& _desc)
-    : MyShader(_desc)
+MyPixelShader::MyPixelShader(const ShaderDesc& _desc) :
+	MyShader(_desc)
 {
 	_ASSERT(CreateShader());
 	SetUpConfiguration();

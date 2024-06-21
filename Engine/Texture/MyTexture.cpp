@@ -2,8 +2,8 @@
 #include "MyTexture.h"
 using namespace MyProject;
 
-MyTexture::MyTexture(const wstringV _texturePath)
-	: mTexturePath(_texturePath)
+MyTexture::MyTexture(const wstringV _texturePath) : 
+	mTexturePath(_texturePath)
 {
 	_ASSERT(CreateTexture());
 	LoadTextureSize();

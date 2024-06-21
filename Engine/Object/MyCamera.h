@@ -11,8 +11,8 @@ namespace MyProject
 	public:
 		const mat3 GetViewMat() const;
 
-		void ZoomInCamera(const float _scale);
-		void ZoomOutCamera(const float _scale);
+		void ZoomIn(const float _scale);
+		void ZoomOut(const float _scale);
 	};
 }
 

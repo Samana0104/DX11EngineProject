@@ -2,8 +2,8 @@
 #include "MyWriterFont.h"
 using namespace MyProject;
 
-MyWriterFont::MyWriterFont(const FontDesc& _desc) 
-	:	mFontDesc(_desc)
+MyWriterFont::MyWriterFont(const FontDesc& _desc) :	
+	mFontDesc(_desc)
 {
 	_ASSERT(CreateBrushComponent());
 }

@@ -10,7 +10,7 @@
 
 namespace MyProject
 {
-	class MyCore : public Component
+	class MyCore : public MyCoreAPI
 	{
 	private:
 

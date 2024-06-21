@@ -21,8 +21,9 @@ void MyBox2D::CreateBox2DVertex()
 }
 
 /*
-2D 아니고는 안쓸 방식;;;
+2D 아니고는 안쓸 방식
 */
+
 void MyBox2D::SetUVVertexAsRect(const RECT_F _rect, MyTexture& _texture)
 {
 	vec2 imageSize = _texture.GetTextureSizeVec2();

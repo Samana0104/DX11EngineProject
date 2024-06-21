@@ -3,8 +3,8 @@
 #include "MyMesh2D.h"
 using namespace MyProject;
 
-MyShader::MyShader(const ShaderDesc& _desc)
-	: mShaderDesc(_desc)
+MyShader::MyShader(const ShaderDesc& _desc) : 
+	mShaderDesc(_desc)
 {
 }
 

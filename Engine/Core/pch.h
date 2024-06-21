@@ -20,6 +20,7 @@
 #include <d2d1helper.h>
 #include <dwrite.h>
 #include <tchar.h>
+#include <atlconv.h>
 #include <glm/glm.hpp>
 #include "fmod.hpp"
 #include "fmod_errors.h"

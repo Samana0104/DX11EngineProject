@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "MyCoreAPI.h"
 #include "MyTransformer2D.h"
 #include "MyTexture.h"
 

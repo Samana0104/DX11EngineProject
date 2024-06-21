@@ -69,7 +69,7 @@
     <ClInclude Include="Core\ResourceHandler.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Component.h">
+    <ClInclude Include="Core\MyCoreAPI.h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
     <ClInclude Include="Mesh\MyBox2D.h">
@@ -130,6 +130,9 @@
       <Filter>Engine\Sound</Filter>
     </ClInclude>
     <ClInclude Include="Sound\MySoundHandler.h">
+      <Filter>Engine\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\MyFmodSystem.h">
       <Filter>Engine\Sound</Filter>
     </ClInclude>
   </ItemGroup>
@@ -213,6 +216,9 @@
       <Filter>Engine\Sound</Filter>
     </ClCompile>
     <ClCompile Include="Sound\MySoundHandler.cpp">
+      <Filter>Engine\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\MyFmodSystem.cpp">
       <Filter>Engine\Sound</Filter>
     </ClCompile>
   </ItemGroup>

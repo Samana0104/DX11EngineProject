@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "MyCoreAPI.h"
 #include "MyWindow.h"
 
 namespace MyProject

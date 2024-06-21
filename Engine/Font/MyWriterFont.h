@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "MyCoreAPI.h"
 
 namespace MyProject
 {
@@ -14,7 +14,7 @@ namespace MyProject
 		DWRITE_FONT_STRETCH mFontStretch;
 	};
 
-	class MyWriterFont : public Component
+	class MyWriterFont : public MyCoreAPI
 	{
 	private:
 		inline static D3Device& mDevice = D3Device::GetInstance();
