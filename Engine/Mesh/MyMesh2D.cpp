@@ -14,6 +14,7 @@ void MyMesh2D::ReserveVertexSize(size_t _vertexCount)
 
 	mVertices.reserve(_vertexCount);
 	mUV.reserve(_vertexCount);
+	mUV.reserve(_vertexCount);
 	mRenderVertices.reserve((_vertexCount-2)*3); // -> »ï°¢Çü °¹¼ö 
 	mIndices.reserve((_vertexCount-2)*3);
 }
@@ -31,11 +32,17 @@ void MyMesh2D::AddVertexIndex(std::initializer_list<size_t> _index)
 		mIndices.emplace_back(idx);
 		mRenderVertices.push_back({ MyTransformer2D::CartesianToNDC(mVertices[idx]), {1.f,1.f,1.f,1.f}, mUV[idx]});
 	}
+
+	mTempUV = mUV;
 }
 
 void MyMesh2D::CreateMesh(const POINT_F _meshCom)
 {
+#ifdef _DEBUG
 	_ASSERT(CreateVertexBuffer());
+#else
+	CreateVertexBuffer();
+#endif
 	mMeshCom = _meshCom;
 }
 
@@ -43,7 +50,7 @@ void MyMesh2D::SetUVVertex(const size_t _uvVertex, const vec2 _uv)
 {
 	try
 	{
-		mUV.at(_uvVertex) = _uv;
+		mTempUV.at(_uvVertex) = _uv;
 	}
 	catch (std::out_of_range e)
 	{
@@ -65,7 +72,7 @@ bool MyMesh2D::CreateVertexBuffer()
 	bd.ByteWidth = sizeof(MyVertex2D) * static_cast<UINT>(mRenderVertices.size());
 	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
-	sd.pSysMem = &mRenderVertices.at(0);
+	sd.pSysMem = mRenderVertices.data();
 
 	hr = mDevice.mD3dDevice->CreateBuffer(&bd, &sd, mVertexBuffer.GetAddressOf());
 
@@ -98,11 +105,11 @@ void MyMesh2D::UpdateRenderVertices(const mat3& _matrix, const vec4& _color)
 		mRenderVertices[i] = { 
 			MyTransformer2D::CartesianToNDC(copyVertices[mIndices[i]]),
 			_color, 
-			mUV[mIndices[i]] 
+			mTempUV[mIndices[i]] 
 		};
 	}
 
-	mDevice.mContext->UpdateSubresource(mVertexBuffer.Get(),0, NULL, &mRenderVertices.at(0), 0, 0);
+	mDevice.mContext->UpdateSubresource(mVertexBuffer.Get(),0, NULL, mRenderVertices.data(), 0, 0);
 }
 
 void MyMesh2D::Render(const mat3& _matrix, const vec4 _color)
@@ -110,4 +117,10 @@ void MyMesh2D::Render(const mat3& _matrix, const vec4 _color)
 	UpdateRenderVertices(_matrix, _color);
 	SetIAVertexBuffer();
 	mDevice.mContext->Draw(static_cast<UINT>(mRenderVertices.size()), 0);
+	PostRender();
+}
+
+void MyMesh2D::PostRender()
+{
+	mTempUV = mUV; // ¿øº» UV º¹±Í
 }

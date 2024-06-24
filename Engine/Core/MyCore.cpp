@@ -8,13 +8,13 @@ void MyCore::GamePreFrame()
 
 void MyCore::GameFrame()
 {
-	mTimer.UpdateComponent();
 	mInput.UpdateComponent();
 	UpdateComponent();
 }
 
 void MyCore::GamePostFrame()
 {
+	mManager.mSound.Update();
 }
 
 void MyCore::GamePreRender()
@@ -77,7 +77,7 @@ void MyCore::DrawTextForDebugging(const wchar_t* format, ...)
     va_end(args);
 
 	vec2 mySize = mWindow.GetWindowSizeVec2();
-	RECT_F rc1 = { mySize.x*0.1f, mySize.y*0.7f, mySize.x*0.6f, mySize.y-10.f };
+	RECT_F rc1 = { mySize.x*0.1f, mySize.y*0.7f, mySize.x*0.6f, mySize.y*0.95f };
 	RECT_F rc2 = { rc1.left + rc1.left*0.1f, rc1.top + rc1.top*0.05f, rc1.right, rc1.bottom };
 
 	std::shared_ptr<MyWriterFont> brush = mManager.mFont[L"DEBUG_FONT"];
@@ -104,8 +104,14 @@ void MyCore::DrawTextForDebugging(const wchar_t* format, ...)
 void MyCore::INITIAL_SETUP(HINSTANCE _hinstance, LONG _width, LONG _height)
 {
 	MyWindow::GetInstance().SetHinstance(_hinstance);
+#ifdef _DEBUG
 	_ASSERT(MyWindow::GetInstance().CreateWin(_width, _height));
 	_ASSERT(D3Device::GetInstance().CreateDevice());
+#else
+	MyWindow::GetInstance().CreateWin(_width, _height);
+	D3Device::GetInstance().CreateDevice();
+#endif
+
 	MyResourceManager::GetInstance().CreateDafultResource();
 
 }

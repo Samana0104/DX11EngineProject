@@ -2,6 +2,35 @@
 #include "MySoundHandler.h"
 using namespace MyProject;
 
-MySoundHandler::MySoundHandler()
+bool MySoundHandler::CreateSoundResource(const wstringV _filePath)
 {
+	std::wstring key = GetKeyAsFileName(_filePath);
+
+	auto sound = std::make_shared<MySound>(_filePath);
+	return AddResource(key, sound);
 }
+
+void MySoundHandler::CreateSoundAsFolderPath(const wstringV _folderPath)
+{
+	std::filesystem::directory_iterator iter(_folderPath);
+
+	while (iter != std::filesystem::end(iter))
+	{
+		const auto & currentFile = *(iter++);
+
+		if (currentFile.is_directory())
+			CreateSoundAsFolderPath(currentFile.path().wstring());
+		else
+			CreateSoundResource(currentFile.path().wstring());
+	}
+}
+
+void MySoundHandler::Update()
+{
+	auto& allResource = GetAllResources();
+	for (auto& sound : allResource)
+		sound.second->Update();
+}
+
+
+

@@ -2,7 +2,7 @@
 #include "MyMeshHandler.h"
 using namespace MyProject;
 
-bool MyMeshHandler::CreateMesh(const MESH_KEY _key, MeshShape _meshShape)
+bool MyMeshHandler::CreateMeshResource(const MESH_KEY _key, MeshShape _meshShape)
 {
 	switch (_meshShape)
 	{

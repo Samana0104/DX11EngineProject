@@ -1,26 +1,27 @@
 #pragma once
-#include "MyCoreAPI.h"
-#include "D3Device.h"
-#include "MyTransformer2D.h"
 #include "MyResourceManger.h"
 
 namespace MyProject
 {
 	class MyObject
 	{
-	private:
+	protected:
 		MyTransformer2D		mTransform;
 		TEXTURE_KEY			mTextureKey;
 		MESH_KEY			mMeshKey;
+		MyResourceManager&	mManager = MyResourceManager::GetInstance();
 
-		MyResourceManager& mManager = MyResourceManager::GetInstance();
 
-	public:
+	protected:
 		MyObject();
 
-		MyTransformer2D* operator->(); // 위치 변환 편하게 하려고 오버로딩 함
+	public:
 
-		virtual void Update(float _deltaTime);
-		virtual void Render(const mat3 _viewMat);
+		void SetTextureKey(TEXTURE_KEY _key);
+		void SetMeshKey(MESH_KEY _key);
+
+		const MyTransformer2D& GetTransform() const;
+
+		MyTransformer2D* operator->(); // 위치 변환 편하게 하려고 오버로딩 함
 	};
 }

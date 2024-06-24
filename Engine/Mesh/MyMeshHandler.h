@@ -12,7 +12,7 @@ namespace MyProject
 		bool CreateCircle2DMesh(const MESH_KEY& _key);
 
 	public:
-		bool CreateMesh(const MESH_KEY _key, const MeshShape _meshShape);
+		bool CreateMeshResource(const MESH_KEY _key, const MeshShape _meshShape);
 	};
 }
 

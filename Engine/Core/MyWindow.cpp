@@ -43,7 +43,7 @@ bool MyWindow::CreateWin(LONG _width, LONG _height)
 		MY_WINDOW_NAME,
 		WS_OVERLAPPEDWINDOW,// Window style
 		GetSystemMetrics(SM_CXSCREEN) / 2 - (rt.right-rt.left) / 2, // 영역 중앙에 윈도우 생성
-		(GetSystemMetrics(SM_CYSCREEN)-45) / 2 - (rt.bottom-rt.top) / 2, // 하단 영역 45px
+		GetSystemMetrics(SM_CYSCREEN) / 2 - (rt.bottom - rt.top) / 2 - 45, // 하단 영역 45px
 		rt.right-rt.left, 
 		rt.bottom-rt.top,
 		NULL, // Parent window
@@ -55,11 +55,9 @@ bool MyWindow::CreateWin(LONG _width, LONG _height)
 	if (hwnd == NULL)
 		return false;
 
-	GetWindowRect(hwnd, &mWindowRect);
-	GetClientRect(hwnd, &mClientWindowRect);
-
 	mHwnd = hwnd;
 	ShowWindow(hwnd, SW_SHOW);
+
 	return true;
 }
 
@@ -97,8 +95,15 @@ void MyWindow::CallEventWMDestroy(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM
 
 void MyWindow::CallEventWMSize(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM _lParam)
 {
-	//MyWindow::mWindowSize.x = LOWORD(_lParam);
-	//MyWindow::mWindowSize.y = HIWORD(_lParam);
+	RECT rc;
+
+	GetClientRect(_hwnd, &rc);
+
+	MyWindow::mWindowSize.x = rc.right;
+	MyWindow::mWindowSize.y = rc.bottom;
+
+	for (auto& obj : mCallbackWMSize)
+		obj(MyWindow::mWindowSize.x, MyWindow::mWindowSize.y);
 }
 
 bool MyWindow::IsActivate() const

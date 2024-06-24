@@ -1,18 +1,17 @@
 #pragma once
-#include "MyTransformer2D.h"
+#include "MyObject.h"
 
 namespace MyProject
 {
-	class MyCamera
+	class MyCamera : public MyObject
 	{
-	public:
-		MyTransformer2D mTransform;
-		
 	public:
 		const mat3 GetViewMat() const;
 
 		void ZoomIn(const float _scale);
 		void ZoomOut(const float _scale);
+
+		void LookAtObject(MyObject & _obj);
 	};
 }
 

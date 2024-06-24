@@ -9,7 +9,8 @@ namespace MyProject
 	private:
 
 	public:
-		MySoundHandler(); 
-
+		bool CreateSoundResource(const wstringV _filePath);
+		void CreateSoundAsFolderPath(const wstringV _folderPath);
+		void Update();
 	};
 }

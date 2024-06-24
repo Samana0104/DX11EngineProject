@@ -1,11 +1,11 @@
 #pragma once
-#include "MyTimer.h"
+#include "MySystemTimer.h"
 #include "MyInput.h"
 #include "MyWindow.h"
 #include "MyShader.h"
 #include "MyBox2D.h"
 #include "MyResourceManger.h"
-#include "MyObject.h"
+#include "MyActor.h"
 #include "MyCamera.h"
 
 namespace MyProject
@@ -15,7 +15,7 @@ namespace MyProject
 	private:
 
 	protected:
-		MyTimer	mTimer;
+		MySystemTimer mTimer;
 
 		static inline MyInput&  mInput = MyInput::GetInstance();
 		static inline MyWindow& mWindow = MyWindow::GetInstance();
@@ -44,7 +44,10 @@ namespace MyProject
 
 	public:
 		void GameRun();
+
+#ifdef _DEBUG
 		void DrawTextForDebugging(const wchar_t* format, ...);
+#endif
 
 		static void INITIAL_SETUP(HINSTANCE _hinstance, LONG _width, LONG _height);
 	};

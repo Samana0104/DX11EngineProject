@@ -1,5 +1,6 @@
 #pragma once
 #include "MyCoreAPI.h"
+#include "MyTransformer2D.h"
 
 namespace MyProject
 {
@@ -14,7 +15,7 @@ namespace MyProject
 		DWRITE_FONT_STRETCH mFontStretch;
 	};
 
-	class MyWriterFont : public MyCoreAPI
+	class MyWriterFont
 	{
 	private:
 		inline static D3Device& mDevice = D3Device::GetInstance();
@@ -23,22 +24,30 @@ namespace MyProject
 		ComPtr<IDWriteTextFormat>		mWriteFont;
 		ComPtr<ID2D1SolidColorBrush>	mBrush;
 
-		FontDesc mFontDesc;
+		FontDesc		mFontDesc;
+		MyTransformer2D mTransform;
+
+		D2D1_MATRIX_3X2_F mTempMat;
 
 	private:
+		void	DrawBegin();
+		void	DrawEnd();
 		bool	CreateBrushComponent();
 		bool	CreateDWriteFactory();
 		bool	CreateTextFormat();
 		bool	CreateBrush();
 
+		//void	OnWMSize();
+
 	public:
 		MyWriterFont(const FontDesc& _desc);
 
-		void DrawTexts(const wstringV _msg, RECT_F _rect, COLOR_F _color) const;
+		void DrawTexts(const wstringV _msg, RECT_F _rect, COLOR_F _color);
 		const ComPtr<ID2D1SolidColorBrush>& GetBrush() const;
 
+		void SetBold();
+		bool isBold() const;
 
-		virtual void UpdateComponent() override;
-		virtual void RenderComponent() override;
+		MyTransformer2D* operator->();
 	};
 }

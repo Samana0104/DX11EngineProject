@@ -15,7 +15,7 @@ bool MyShaderHandler::CreatePixelShader(const MESH_KEY& _key, const ShaderDesc& 
 	return AddResource(_key, pixelShader);
 }
 
-bool MyShaderHandler::CreateShader(const ShaderDesc _desc)
+bool MyShaderHandler::CreateShaderResource(const ShaderDesc _desc)
 {
 	std::wstring key = GetKeyAsFileName(_desc.mShaderPath);
 

@@ -2,9 +2,15 @@
 #include "MySound.h"
 using namespace MyProject;
 
-MySound::MySound(wstringV _filePath)
+MySound::MySound(const wstringV _filePath) :
+	mSoundPath(_filePath)
 {
+#ifdef _DEBUG
 	_ASSERT(CreateSound(_filePath));
+#else
+	CreateSound(_filePath);
+#endif
+
 	InitSound();
 }
 
@@ -19,7 +25,7 @@ MySound::~MySound()
 	mSound = nullptr;
 }
 
-bool MySound::CreateSound(wstringV _filePath)
+bool MySound::CreateSound(const wstringV _filePath)
 {
 	FMOD_RESULT hr = mFmodSys->createSound(
 		MyCoreAPI::to_wm(_filePath).c_str(),
@@ -37,7 +43,7 @@ void MySound::InitSound()
 {
 	Stop();
 
-	ZeroMemory(mSoundTimeStr, sizeof(wchar_t) * MAX_PATH);
+	ZeroMemory(mSoundTimer, sizeof(wchar_t) * MAX_PATH);
 	mSoundChannel = nullptr;
 	mSoundSizeInMS = 0;
 	mSoundVolume = 0.5f;
@@ -52,7 +58,7 @@ bool MySound::Play(bool _loop)
 
 	mSoundChannel->setVolume(mSoundVolume);
 	mSound->getLength(&mSoundSizeInMS, FMOD_TIMEUNIT_MS);
-	_stprintf_s(mSoundTimeStr,
+	_stprintf_s(mSoundTimer,
 		L"전체시간 [%02d:%02d:%02d]",
 		mSoundSizeInMS / 1000 / 60,
 		mSoundSizeInMS / 1000 % 60,
@@ -72,7 +78,7 @@ void MySound::Stop()
 		mSoundChannel->stop();
 }
 
-bool MySound::IsPlaying()
+bool MySound::IsPlaying() const
 {
 	if (mSoundChannel == nullptr)
 		return false;
@@ -93,12 +99,12 @@ void MySound::Paused()
 	}
 }
 
-void MySound::VolumeUp(float _volumne)
+void MySound::VolumeUp(float _volume)
 {
 	if (mSoundChannel == nullptr) 
 		return;
 
-	float setUpVolume = glm::clamp(_volumne + mSoundVolume, 0.f, 1.f);
+	float setUpVolume = glm::clamp(mSoundVolume + _volume , 0.f, 1.f);
 	mSoundChannel->setVolume(setUpVolume);
 }
 
@@ -107,18 +113,20 @@ void MySound::VolumneDown(float _volume)
 	if (mSoundChannel == nullptr) 
 		return;
 
-	float setUpVolume = glm::clamp(_volume + mSoundVolume, 0.f, 1.f);
+	float setUpVolume = glm::clamp(mSoundVolume - _volume, 0.f, 1.f);
 	mSoundChannel->setVolume(setUpVolume);
 }
 
 void MySound::Update()
 {
-	if (mSoundChannel == nullptr) 
+	if (!IsPlaying()) 
 		return;
+
+	mFmodSys->update();
 
 	unsigned int ms;
 	mSoundChannel->getPosition(&ms, FMOD_TIMEUNIT_MS);
-	_stprintf_s(mSoundTimeStr,
+	_stprintf_s(mSoundTimer,
 		L"전체시간[%02d:%02d:%02d]\n",
 		ms / 1000 / 60,
 		ms / 1000 % 60,

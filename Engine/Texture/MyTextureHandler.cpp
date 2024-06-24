@@ -2,12 +2,12 @@
 #include "MyTextureHandler.h"
 using namespace MyProject;
 
-bool MyTextureHandler::CreateTextureComponent(
-	const wstringV _texturePath)
+bool MyTextureHandler::CreateTextureResource(
+	const wstringV _filePath)
 {
-	std::wstring key = GetKeyAsFileName(_texturePath);
+	std::wstring key = GetKeyAsFileName(_filePath);
 
-	auto texture = std::make_shared<MyTexture>(_texturePath);
+	auto texture = std::make_shared<MyTexture>(_filePath);
 	return AddResource(key, texture);
 }
 
@@ -22,7 +22,7 @@ void MyTextureHandler::CreateTextureAsFolderPath(const wstringV _folderPath)
 		if (currentFile.is_directory())
 			CreateTextureAsFolderPath(currentFile.path().wstring());
 		else
-			CreateTextureComponent(currentFile.path().wstring());
+			CreateTextureResource(currentFile.path().wstring());
 	}
 }
 

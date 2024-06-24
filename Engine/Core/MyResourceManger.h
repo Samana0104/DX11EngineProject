@@ -25,6 +25,7 @@ namespace MyProject
 		void CreateDefaultMeshes();
 		void CreateDefaultTextures();
 		void CreateDefaultShaders();
+		void CreateDefaultSounds();
 
 	public:
 		void CreateDafultResource();

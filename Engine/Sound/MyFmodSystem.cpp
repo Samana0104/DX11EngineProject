@@ -31,24 +31,6 @@ MyFmodSystem::~MyFmodSystem()
 	OutputDebugString((std::to_wstring(mRefSysCount) + L"\n").c_str());
 }
 
-MyFmodSystem::MyFmodSystem(const MyFmodSystem& _ref) 
-{
-	if(mFmodSys != nullptr)
-		mRefSysCount++;
-	else
-		MessageBoxA(NULL, "Not created fmod system[Pointer error]", "[Fmod System Copy]", MB_OK);
-}
-
-MyFmodSystem& MyFmodSystem::operator=(const MyFmodSystem&)
-{
-	if(mFmodSys != nullptr)
-		mRefSysCount++;
-	else
-		MessageBoxA(NULL, "Not created fmod system[Pointer error]", "[Fmod System Assignment]", MB_OK);
-
-	return *this;
-}
-
 bool MyFmodSystem::CreateFmodSystem()
 {
 	FMOD_RESULT hr = FMOD::System_Create(&mFmodSys);

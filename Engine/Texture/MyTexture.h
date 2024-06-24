@@ -25,7 +25,7 @@ namespace MyProject
 		void SetTextureResource() const;
 
 	public:
-		MyTexture(const wstringV _textureName);
+		MyTexture(const wstringV _filePath);
 
 		POINT_F GetTextureSizeF() const;
 		POINT_U GetTextureSizeU() const;

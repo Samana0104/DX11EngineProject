@@ -2,10 +2,14 @@
 #include "MyTexture.h"
 using namespace MyProject;
 
-MyTexture::MyTexture(const wstringV _texturePath) : 
-	mTexturePath(_texturePath)
+MyTexture::MyTexture(const wstringV _filePath) : 
+	mTexturePath(_filePath)
 {
+#ifdef _DEBUG
 	_ASSERT(CreateTexture());
+#else
+	CreateTexture();
+#endif
 	LoadTextureSize();
 }
 

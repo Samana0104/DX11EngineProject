@@ -15,9 +15,9 @@ void MyTransformer2D::InitTransform()
 	mTRSMat = glm::mat3(1.0f);
 }
 
-MyTransformer2D& MyTransformer2D::AddMovement(const vec2 _pos)
+MyTransformer2D& MyTransformer2D::AddLocation(const vec2 _pos)
 {
-	SetMovement(mLocation + _pos);
+	SetLocation(mLocation + _pos);
 	return *this;
 }
 
@@ -33,7 +33,7 @@ MyTransformer2D& MyTransformer2D::AddScale(const vec2 _scale)
 	return *this;
 }
 
-MyTransformer2D& MyTransformer2D::SetMovement(const vec2 _pos)
+MyTransformer2D& MyTransformer2D::SetLocation(const vec2 _pos)
 {
 	mLocation = _pos;
 	mTRSMat[2][0] = _pos.x;

@@ -23,10 +23,10 @@ namespace MyProject
 		MyTransformer2D();
 
 		void InitTransform();
-		MyTransformer2D& AddMovement(const vec2 _pos);
+		MyTransformer2D& AddLocation(const vec2 _pos);
 		MyTransformer2D& AddRotation(const float _angle);
 		MyTransformer2D& AddScale(const vec2 _scale);
-		MyTransformer2D& SetMovement(const vec2 _pos);
+		MyTransformer2D& SetLocation(const vec2 _pos);
 		MyTransformer2D& SetRotation(const float _angle);
 		MyTransformer2D& SetScale(const vec2 _scale);
 

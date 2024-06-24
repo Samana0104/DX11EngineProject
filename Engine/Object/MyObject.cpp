@@ -3,25 +3,27 @@
 using namespace MyProject;
 
 MyObject::MyObject() : 
-	mTextureKey(L"KGCA1.png"), 
-	mMeshKey(L"CIRCLE2D_MESH")
+	mTextureKey(L"Default.jpg"), 
+	mMeshKey(L"DEFAULT_MESH")
 {
-	mManager.mMesh[mMeshKey]->SetUVVertexAsRect(
-		{239.f, 145.f, 866.f, 462.f}, 
-		*mManager.mTexture[mTextureKey]);
+}
+
+void MyObject::SetTextureKey(TEXTURE_KEY _key)
+{
+	mTextureKey = _key;
+}
+
+void MyObject::SetMeshKey(MESH_KEY _key)
+{
+	mMeshKey = _key;
+}
+
+const MyTransformer2D& MyProject::MyObject::GetTransform() const
+{
+	return mTransform;
 }
 
 MyTransformer2D* MyObject::operator->()
 {
 	return &mTransform;
-}
-
-void MyObject::Update(float _deltaTime)
-{
-}
-
-void MyObject::Render(const mat3 _viewMat)
-{
-	mManager.mTexture[mTextureKey]->RenderComponent();
-	mManager.mMesh[mMeshKey]->Render(_viewMat * mTransform.GetModelMat());
 }

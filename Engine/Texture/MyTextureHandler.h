@@ -7,7 +7,7 @@ namespace MyProject
 	class MyTextureHandler : public ResourceHandler<MyTexture, TEXTURE_KEY>
 	{
 	public:
-		bool CreateTextureComponent(const wstringV _texturePath);
+		bool CreateTextureResource(const wstringV _filePath);
 		void CreateTextureAsFolderPath(const wstringV _folderPath);
 	};
 }

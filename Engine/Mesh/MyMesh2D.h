@@ -23,8 +23,9 @@ namespace MyProject
 	{
 	private:
 		std::vector<vec2>		mVertices;
-		std::vector<size_t>		mIndices;
 		std::vector<vec2>		mUV;
+		std::vector<vec2>		mTempUV; // UV 좌표 관리를 위해서 억지로 넣음
+		std::vector<size_t>		mIndices;
 		std::vector<MyVertex2D>	mRenderVertices;
 
 		ComPtr<ID3D11Buffer>	mVertexBuffer;
@@ -39,6 +40,8 @@ namespace MyProject
 		bool CreateVertexBuffer();
 		void SetIAVertexBuffer();
 		void UpdateRenderVertices(const mat3& _matrix, const vec4 &_color);
+
+		void PostRender();
 
 	protected:
 		MyMesh2D(MeshShape _meshShape);

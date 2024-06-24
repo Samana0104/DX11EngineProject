@@ -12,7 +12,7 @@ namespace MyProject
 		bool CreatePixelShader(const MESH_KEY& _key, const ShaderDesc& _desc);
 
 	public:
-		bool CreateShader(const ShaderDesc _desc);
+		bool CreateShaderResource(const ShaderDesc _desc);
 	};
 }
 

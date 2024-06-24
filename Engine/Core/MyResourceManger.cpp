@@ -8,13 +8,14 @@ void MyResourceManager::CreateDafultResource()
 	CreateDefaultMeshes();
 	CreateDefaultTextures();
 	CreateDefaultShaders();
+	CreateDefaultSounds();
 }
 
 void MyResourceManager::CreateDefaultFonts()
 {
 	for (auto& font : gDefaultFonts)
 	{
-		if(!mFont.CreateFontComponent(font.first, font.second))
+		if(!mFont.CreateFontResource(font.first, font.second))
 			MessageBoxA(NULL, "Not created default font[Key Error]", "[Font creation]", MB_OK);
 	}
 }
@@ -23,7 +24,7 @@ void MyResourceManager::CreateDefaultMeshes()
 {
 	for (auto& mesh : gDefaultMeshes)
 	{
-		if(!mMesh.CreateMesh(mesh.first, mesh.second))
+		if(!mMesh.CreateMeshResource(mesh.first, mesh.second))
 			MessageBoxA(NULL, "Not created default mesh[Key Error]", "[Mesh creation]", MB_OK);
 	}
 }
@@ -39,7 +40,13 @@ void MyResourceManager::CreateDefaultShaders()
 {
 	for (auto& shader : gDefaultShaders)
 	{
-		if(!mShader.CreateShader(shader))
+		if(!mShader.CreateShaderResource(shader))
 			MessageBoxA(NULL, "Not created default shader[Key Error]", "[Shader creation]", MB_OK);
 	}
 }
+
+void MyResourceManager::CreateDefaultSounds()
+{
+	mSound.CreateSoundAsFolderPath(gSoundPath);
+}
+

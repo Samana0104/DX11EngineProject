@@ -5,7 +5,11 @@ using namespace MyProject;
 MyVertexShader::MyVertexShader(const ShaderDesc& _desc) : 
 	MyShader(_desc)
 {
+#ifdef _DEBUG
 	_ASSERT(CreateShader());
+#else
+	CreateShader();
+#endif
 	SetUpConfiguration();
 }
 

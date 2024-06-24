@@ -11,20 +11,21 @@ namespace MyProject
 		FMOD::Sound*	mSound;
 		FMOD::Channel*	mSoundChannel;
 
-		wchar_t			mSoundTimeStr[MAX_PATH];
+		std::wstring	mSoundPath;
+		wchar_t			mSoundTimer[MAX_PATH];
 		unsigned int	mSoundSizeInMS;
 
 		float			mSoundVolume;
 
 	private:
-		bool CreateSound(wstringV _filePath);
+		bool CreateSound(const wstringV _filePath);
 
 	public:
-		MySound(wstringV _filePath);
+		MySound(const wstringV _filePath);
 		~MySound();
 
-		bool IsPlaying();
-		bool Play(bool _loop);
+		bool IsPlaying() const;
+		bool Play(bool _loop = false);
 		void Stop();
 		void Paused();
 		void VolumeUp(float _volume);

@@ -59,4 +59,6 @@ namespace MyProject
 		{ ShaderType::VERTEX, L"../data/Shaders/VertexShader.hlsl", "VSMain"},
 		{ ShaderType::PIXEL, L"../data/Shaders/PixelShader.hlsl", "PSMain"}
 	};
+
+	inline static const SOUND_KEY gSoundPath = L"../data/Sound/";
 }

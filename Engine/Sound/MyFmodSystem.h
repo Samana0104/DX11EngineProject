@@ -20,18 +20,18 @@ namespace MyProject
 		bool CreateFmodSystem();
 		void DeleteFmodSystem();
 
+		MyFmodSystem(const MyFmodSystem&) = delete;
 		MyFmodSystem(MyFmodSystem&&) = delete;
 		MyFmodSystem& operator=(MyFmodSystem&&) = delete;
+		MyFmodSystem& operator=(const MyFmodSystem&) = delete;
 
 	public:
 		MyFmodSystem();
 		~MyFmodSystem();
-		
-		MyFmodSystem(const MyFmodSystem&);
-		MyFmodSystem& operator=(const MyFmodSystem&);
 
 		UINT GetRefCount() const;
 		FMOD_SYS* const operator->();
+
 	};
 }
 

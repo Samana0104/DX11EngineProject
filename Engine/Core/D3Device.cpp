@@ -2,23 +2,60 @@
 #include "D3Device.h"
 using namespace MyProject;
 
+bool D3Device::CreateDevice()
+{
+	if (!CreateDeviceAndSwapChain())
+		return false;
+	
+	if (!CreateRenderTargetView())
+		return false;
+
+	if (!CreateDirect2DRenderTarget())
+		return false;
+
+	if (!SetAlphaBlendingState())
+		return false;
+
+	CreateViewport();
+	//MyWindow::GetInstance().RegisterCallBackWMSize<D3Device>(this, &D3Device::OnWMSize);
+	return true;
+}
+
+void D3Device::OnWMSize(UINT _width, UINT _height)
+{	
+	//mViewPort.Width = static_cast<float>(_width);
+	//mViewPort.Height = static_cast<float>(_height);
+	//mSwapChainDesc.BufferDesc.Width = _width;
+	//mSwapChainDesc.BufferDesc.Height = _height;
+	//
+
+	//HRESULT hr = mSwapChain->ResizeBuffers(
+	//	mSwapChainDesc.BufferCount,
+	//	mSwapChainDesc.BufferDesc.Width,
+	//	mSwapChainDesc.BufferDesc.Height,
+	//	mSwapChainDesc.BufferDesc.Format,
+	//	mSwapChainDesc.Flags);
+
+	//CreateRenderTargetView();
+}
+
 bool D3Device::CreateDeviceAndSwapChain()
 {
 	HRESULT hr;
 	CONST D3D_FEATURE_LEVEL pFeatureLevels = D3D_FEATURE_LEVEL_11_0;
 
-	DXGI_SWAP_CHAIN_DESC pSwapChainDesc = { };
+	mSwapChainDesc = {};
 	{
-		pSwapChainDesc.OutputWindow = MyWindow::GetInstance().GetWindowHandle();
-		pSwapChainDesc.BufferDesc.Width = MyWindow::GetInstance().GetWindowSize().x;
-		pSwapChainDesc.BufferDesc.Height = MyWindow::GetInstance().GetWindowSize().y;
-		pSwapChainDesc.BufferDesc.RefreshRate.Numerator = 60;
-		pSwapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
-		pSwapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		pSwapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-		pSwapChainDesc.BufferCount = 1;
-		pSwapChainDesc.Windowed = true;
-		pSwapChainDesc.SampleDesc.Count = 4;
+		mSwapChainDesc.OutputWindow = MyWindow::GetInstance().GetWindowHandle();
+		mSwapChainDesc.BufferDesc.Width = MyWindow::GetInstance().GetWindowSize().x;
+		mSwapChainDesc.BufferDesc.Height = MyWindow::GetInstance().GetWindowSize().y;
+		mSwapChainDesc.BufferDesc.RefreshRate.Numerator = 60;
+		mSwapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
+		mSwapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		mSwapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+		mSwapChainDesc.BufferCount = 1;
+		mSwapChainDesc.Windowed = true;
+		mSwapChainDesc.SampleDesc.Count = 1;
 	}
 
 	hr = D3D11CreateDeviceAndSwapChain(
@@ -29,7 +66,7 @@ bool D3Device::CreateDeviceAndSwapChain()
 		&pFeatureLevels,
 		1,
 		D3D11_SDK_VERSION,
-		&pSwapChainDesc,
+		&mSwapChainDesc,
 		mSwapChain.GetAddressOf(),
 		mD3dDevice.GetAddressOf(),
 		nullptr,
@@ -144,20 +181,3 @@ void D3Device::CreateViewport()
 	mContext->RSSetViewports(1, &mViewPort);
 }
 
-bool D3Device::CreateDevice()
-{
-	if (!CreateDeviceAndSwapChain())
-		return false;
-	
-	if (!CreateRenderTargetView())
-		return false;
-
-	if (!CreateDirect2DRenderTarget())
-		return false;
-
-	if (!SetAlphaBlendingState())
-		return false;
-
-	CreateViewport();
-	return true;
-}

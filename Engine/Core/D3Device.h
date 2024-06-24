@@ -16,8 +16,12 @@ namespace MyProject
 		ComPtr<ID2D1RenderTarget>		mD2dRT;
 		ComPtr<ID2D1Factory>			mD2dFactory;
 
-		D3D11_VIEWPORT	mViewPort;
+		D3D11_VIEWPORT			mViewPort;
+		DXGI_SWAP_CHAIN_DESC	mSwapChainDesc;
 	
+	private:
+		void OnWMSize(UINT _width, UINT _height);
+
 	private:
 		friend class Singleton<D3Device>;
 		D3Device() = default;

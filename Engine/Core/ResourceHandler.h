@@ -17,10 +17,10 @@ namespace MyProject
 		bool DeleteResource(const K _key);
 		bool IsKeyContained(const K _key) const;
 		
-		typename Alloc&		GetAllResources() const;
+		typename const Alloc&	GetAllResources() const;
 
 		const std::shared_ptr<V> GetResource(const K _key);
-		const std::shared_ptr<V> operator[](const K _key);
+		const std::shared_ptr<V>& operator[](const K _key);
 
 		std::wstring GetKeyAsFileName(const wstringV _filePath) const;
 	};
@@ -36,7 +36,7 @@ namespace MyProject
 	}
 
 	TEMPLATE_VKA
-	std::wstring ResourceHandler<V, K, A>::GetKeyAsFileName(wstringV _filePath) const
+	std::wstring ResourceHandler<V, K, A>::GetKeyAsFileName(const wstringV _filePath) const
 	{
 		std::wstring fileNameKey;
 		wchar_t  szDrive[MAX_PATH] = { 0, };
@@ -82,13 +82,13 @@ namespace MyProject
 	}
 
 	TEMPLATE_VKA
-	typename A& ResourceHandler<V, K, A>::GetAllResources() const
+	typename const A& ResourceHandler<V, K, A>::GetAllResources() const
 	{
 		return mResourceDatas;
 	}
 
 	TEMPLATE_VKA
-	const std::shared_ptr<V> ResourceHandler<V, K, A>::operator[](const K _key)
+	const std::shared_ptr<V>& ResourceHandler<V, K, A>::operator[](const K _key)
 	{
 		return mResourceDatas[_key];
 	}

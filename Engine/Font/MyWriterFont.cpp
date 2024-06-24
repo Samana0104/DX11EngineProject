@@ -5,7 +5,11 @@ using namespace MyProject;
 MyWriterFont::MyWriterFont(const FontDesc& _desc) :	
 	mFontDesc(_desc)
 {
+#ifdef _DEBUG
 	_ASSERT(CreateBrushComponent());
+#else
+	CreateBrushComponent();
+#endif
 }
 
 bool MyWriterFont::CreateBrushComponent()
@@ -55,8 +59,31 @@ bool MyWriterFont::CreateBrush()
 	return SUCCEEDED(hr);
 }
 
-void MyWriterFont::DrawTexts(const wstringV _msg, RECT_F _rect, COLOR_F _color) const
+void MyWriterFont::DrawBegin()
 {
+	D2D1_MATRIX_3X2_F convertMat;
+	mat3 trsMat = mTransform->GetViewMat();
+
+	mDevice.mD2dRT->GetTransform(&mTempMat);
+
+	convertMat.m11 = trsMat[0][0];
+	convertMat.m12 = trsMat[0][1];
+	convertMat.m21 = trsMat[1][0];
+	convertMat.m22 = trsMat[1][1];
+	convertMat.dx = trsMat[2][0];
+	convertMat.dy = trsMat[2][1];
+
+	mDevice.mD2dRT->SetTransform(convertMat);
+}
+
+void MyWriterFont::DrawEnd()
+{
+	mDevice.mD2dRT->SetTransform(mTempMat);
+}
+
+void MyWriterFont::DrawTexts(const wstringV _msg, RECT_F _rect, COLOR_F _color) 
+{
+	DrawBegin();
 	mDevice.mD2dRT->BeginDraw();
 	mBrush->SetColor(_color);
 	//mDevice.mD2dRT->DrawRectangle(rc, mDefaultColor.Get());
@@ -64,6 +91,7 @@ void MyWriterFont::DrawTexts(const wstringV _msg, RECT_F _rect, COLOR_F _color) 
 	//mDevice.mD2dRT->SetTransform(D2D1::Matrix3x2F::Rotation(-10.f));
 	mDevice.mD2dRT->DrawText(_msg.data(), _msg.size(), mWriteFont.Get(),&_rect, mBrush.Get());
 	mDevice.mD2dRT->EndDraw();
+	DrawEnd();
 }
 
 const ComPtr<ID2D1SolidColorBrush>& MyWriterFont::GetBrush() const
@@ -71,10 +99,31 @@ const ComPtr<ID2D1SolidColorBrush>& MyWriterFont::GetBrush() const
 	return mBrush;
 }
 
-void MyWriterFont::UpdateComponent()
+void MyWriterFont::SetBold()
 {
+	if (isBold())
+	{
+		mWriteFont->Release();
+		mFontDesc.mFontWeight = DWRITE_FONT_WEIGHT_NORMAL;
+		CreateTextFormat();
+	}
+	else
+	{
+		mWriteFont->Release();
+		mFontDesc.mFontWeight = DWRITE_FONT_WEIGHT_BOLD;
+		CreateTextFormat();
+	}
 }
 
-void MyWriterFont::RenderComponent()
+bool MyWriterFont::isBold() const
 {
+	if (mFontDesc.mFontWeight == DWRITE_FONT_WEIGHT_BOLD)
+		return true;
+	else
+		return false;
+}
+
+MyTransformer2D* MyWriterFont::operator->()
+{
+	return &mTransform;
 }
