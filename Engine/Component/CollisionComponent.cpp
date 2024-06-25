@@ -2,15 +2,10 @@
 #include "CollisionComponent.h"
 using namespace MyProject;
 
-CollisionComponent::CollisionComponent(MyTransformer2D& _objMat) :
-    mObjMat(_objMat)
+bool CollisionComponent::IsAABBCollision(const MyTransformer2D& _objM, const MyTransformer2D& _targetM)
 {
-}
-
-bool CollisionComponent::IsAABBCollision(MyTransformer2D& _targetM)
-{
-    vec2 objScale = mObjMat.GetScale();
-    vec2 objLocation = mObjMat.GetLocation();
+    vec2 objScale = _objM.GetScale();
+    vec2 objLocation = _objM.GetLocation();
     vec2 targetScale = _targetM.GetScale();
     vec2 targetLocation = _targetM.GetLocation();
 
@@ -24,11 +19,11 @@ bool CollisionComponent::IsAABBCollision(MyTransformer2D& _targetM)
         return false;
 }
 
-bool CollisionComponent::IsOBBCollision(MyTransformer2D& _targetM)
+bool CollisionComponent::IsOBBCollision(const MyTransformer2D& _objM, const MyTransformer2D& _targetM)
 { 
-    vec2 objScale     = mObjMat.GetScale();
-    vec2 objLocation  = mObjMat.GetLocation();
-    float objAngle    = mObjMat.GetAngle();
+    vec2 objScale     = _objM.GetScale();
+    vec2 objLocation  = _objM.GetLocation();
+    float objAngle    = _objM.GetAngle();
     vec2 targetScale  = _targetM.GetScale();
     vec2 targetLocation = _targetM.GetLocation();
     float targetAngle = _targetM.GetAngle();
@@ -40,33 +35,37 @@ bool CollisionComponent::IsOBBCollision(MyTransformer2D& _targetM)
     
     vec2 distance = targetLocation - objLocation;
 
-    float distance1 = glm::dot(objXVec, distance) / glm::length(objXVec);
-    float distance2 = glm::dot(objYVec, distance) / glm::length(objYVec);
-    float distance3 = glm::dot(targetXVec, distance) / glm::length(targetXVec);
-    float distance4 = glm::dot(targetYVec, distance) / glm::length(targetYVec);
+    float distance1 = glm::abs(glm::dot(objXVec, distance)) / glm::length(objXVec);
+    float distance2 = glm::abs(glm::dot(objYVec, distance)) / glm::length(objYVec);
+    float distance3 = glm::abs(glm::dot(targetXVec, distance)) / glm::length(targetXVec);
+    float distance4 = glm::abs(glm::dot(targetYVec, distance)) / glm::length(targetYVec);
 
-    float targetProj1 = glm::dot(objXVec, targetXVec + targetYVec) / glm::length(objXVec);
+    float targetProj1X = glm::abs(glm::dot(objXVec, targetXVec)) / glm::length(objXVec);
+    float targetProj1Y = glm::abs(glm::dot(objXVec, targetYVec)) / glm::length(objXVec);
     float objProj1 = glm::length(objXVec);
 
-    float targetProj2 = glm::dot(objYVec, targetXVec + targetYVec) / glm::length(objYVec);
+    float targetProj2X = glm::abs(glm::dot(objYVec, targetXVec)) / glm::length(objYVec);
+    float targetProj2Y = glm::abs(glm::dot(objYVec, targetYVec)) / glm::length(objYVec);
     float objProj2 = glm::length(objYVec);
 
-    float objProj3 = glm::dot(targetXVec, objXVec + objYVec) / glm::length(targetXVec);
+    float objProj1X = glm::abs(glm::dot(targetXVec, objXVec)) / glm::length(targetXVec);
+    float objProj1Y = glm::abs(glm::dot(targetXVec, objYVec)) / glm::length(targetXVec);
     float targetProj3 = glm::length(targetXVec);
 
-    float objProj4 = glm::dot(targetYVec, objXVec + objYVec) / glm::length(targetYVec);
+    float objProj2X = glm::abs(glm::dot(targetYVec, objXVec)) / glm::length(targetYVec);
+    float objProj2Y = glm::abs(glm::dot(targetYVec, objYVec)) / glm::length(targetYVec);
     float targetProj4 = glm::length(targetYVec);
 
-    if (!(targetProj1 + objProj1 < distance1))
+    if (targetProj1X + targetProj1Y + objProj1 < distance1)
         return false;
             
-    if (!(targetProj2 + objProj2 < distance2))
+    if (targetProj2X + targetProj2Y + objProj2 < distance2)
         return false;
 
-    if (!(targetProj3 + objProj3 < distance3))
-        return false;
+    if (objProj1X + objProj1Y + targetProj3 < distance3)
+        return false; 
 
-    if (!(targetProj4 + objProj4 < distance4))
+    if (objProj2X + objProj2Y + targetProj4 < distance4)
         return false;
 
     return true;

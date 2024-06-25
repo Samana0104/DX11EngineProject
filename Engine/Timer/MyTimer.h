@@ -20,6 +20,6 @@ namespace MyProject
 		virtual float	GetDeltaTime() const;
 		virtual void	Reset();
 		virtual void	Start();
-		virtual void	Update();
+		void	Update();
 	};
 }

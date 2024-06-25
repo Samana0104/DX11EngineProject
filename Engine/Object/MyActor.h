@@ -9,10 +9,9 @@ namespace MyProject
 	private:
 
 	public:
-		CollisionComponent collision;
 		COLOR_F				mColor;
 
-		MyActor() : collision(mTransform) { mColor = { 1.f, 1.f,1.f,1.f }; }
+		MyActor() { mColor = { 1.f, 1.f,1.f,1.f }; }
 
 		void SetColor(COLOR_F _color);
 		COLOR_F GetColor() const;

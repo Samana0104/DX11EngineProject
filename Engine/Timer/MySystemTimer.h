@@ -32,7 +32,6 @@ namespace MyProject
 		virtual float	GetDeltaTime() const override;
 		virtual void	Reset() override;
 		virtual void	Start() override;
-		virtual void	Update() override;
 	};
 }
 

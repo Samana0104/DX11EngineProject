@@ -23,5 +23,8 @@ namespace MyProject
 		const MyTransformer2D& GetTransform() const;
 
 		MyTransformer2D* operator->(); // 위치 변환 편하게 하려고 오버로딩 함
+		
+		virtual void Update(const float _deltaTime) = 0;
+		virtual void Render(const mat3 _viewMat) = 0;
 	};
 }

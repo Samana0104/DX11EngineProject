@@ -92,6 +92,16 @@ MyTransformer2D* MyTransformer2D::operator->()
 	return this;
 }
 
+MyTransformer2D& MyTransformer2D::operator=(const MyTransformer2D& _ref)
+{
+	vec2	mLocation = _ref.mLocation;
+	vec2	mScale = _ref.mScale;
+	float	mAngle = _ref.mAngle;
+	mat3	mTRSMat = _ref.mTRSMat;
+
+	return *this;
+}
+
 void MyTransformer2D::SetCartesianSize(const vec2 _pos)
 {
 	MyTransformer2D::mCartesianSize = _pos;
@@ -173,19 +183,6 @@ vec2 MyTransformer2D::RotateAsRadian(const vec2 _pos, const float _radian)
 vec2 MyTransformer2D::ResizeScale(const vec2 _pos, const vec2 _scale)
 {
 	return { _pos.x * _scale.x, _pos.y * _scale.y };
-}
-
-// 작성예정 3개 
-vec2 MyTransformer2D::lerp(const vec2 _pos1, const vec2 _pos2, float t)
-{
-	t = glm::clamp(t, 0.f, 1.f);
-	return _pos2 * t + _pos1 * (1 - t);
-}
-
-float MyTransformer2D::lerp(float const a, const float b, float t)
-{
-	t = glm::clamp(t, 0.f, 1.f);
-	return b * t + a * (1 - t);
 }
 
 vec2 MyTransformer2D::Slerp(const vec2 _pos1, const vec2 _pos2, float t)

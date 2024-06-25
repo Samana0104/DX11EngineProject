@@ -17,26 +17,36 @@ bool D3Device::CreateDevice()
 		return false;
 
 	CreateViewport();
-	//MyWindow::GetInstance().RegisterCallBackWMSize<D3Device>(this, &D3Device::OnWMSize);
+	MyWindow::GetInstance().RegisterCallBackWMSize<D3Device>(this, &D3Device::OnWMSize);
 	return true;
 }
 
 void D3Device::OnWMSize(UINT _width, UINT _height)
 {	
-	//mViewPort.Width = static_cast<float>(_width);
-	//mViewPort.Height = static_cast<float>(_height);
-	//mSwapChainDesc.BufferDesc.Width = _width;
-	//mSwapChainDesc.BufferDesc.Height = _height;
-	//
+	/* 해상도 자동 변경 이벤트 */
+	mContext->OMSetRenderTargets(0, nullptr, nullptr);
+	mContext->Flush();
 
-	//HRESULT hr = mSwapChain->ResizeBuffers(
-	//	mSwapChainDesc.BufferCount,
-	//	mSwapChainDesc.BufferDesc.Width,
-	//	mSwapChainDesc.BufferDesc.Height,
-	//	mSwapChainDesc.BufferDesc.Format,
-	//	mSwapChainDesc.Flags);
+	mContext->Release();
+	mRTV->Release();
+	mAlphaBlend->Release();
+	mD2dRT->Release();
+	mD2dFactory->Release();
 
-	//CreateRenderTargetView();
+	mSwapChainDesc.BufferDesc.Width = _width;
+	mSwapChainDesc.BufferDesc.Height = _height;
+
+	HRESULT hr = mSwapChain->ResizeBuffers(
+		mSwapChainDesc.BufferCount,
+		mSwapChainDesc.BufferDesc.Width,
+		mSwapChainDesc.BufferDesc.Height,
+		mSwapChainDesc.BufferDesc.Format,
+		mSwapChainDesc.Flags);
+
+	CreateRenderTargetView();
+	CreateDirect2DRenderTarget();
+	SetAlphaBlendingState();
+	CreateViewport();
 }
 
 bool D3Device::CreateDeviceAndSwapChain()

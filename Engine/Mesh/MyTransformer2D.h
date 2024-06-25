@@ -10,9 +10,7 @@ namespace MyProject
 
 		vec2	mLocation;
 		vec2	mScale;
-
 		float	mAngle;
-
 		mat3	mTRSMat;
 
 	private:
@@ -38,6 +36,7 @@ namespace MyProject
 		float		GetAngle() const;
 
 		MyTransformer2D* operator->();
+		MyTransformer2D& operator=(const MyTransformer2D& _ref);
 
 		static void		SetCartesianSize(const vec2 _pos);
 		static vec2		GetCartesianSize(const vec2 _pos);
@@ -51,8 +50,16 @@ namespace MyProject
 		static vec2		RotateAsAngle(const vec2 _pos, const float _angle);
 		static vec2		RotateAsRadian(const vec2 _pos, const float _radian);
 		static vec2		ResizeScale(const vec2 _pos, const vec2 _scale);
-		static vec2		lerp(const vec2 _pos1, const vec2 _pos2, float t);
-		static float	lerp(float const a, const float b, float t);
+
+		template< typename T >
+		static T		lerp(const T a, const T b, float t);
 		static vec2		Slerp(const vec2 _pos1, const vec2 _pos2, float t);
 	};
+
+	template<typename T>
+	inline T MyTransformer2D::lerp(const T a, const T b, float t)
+	{
+		t = glm::clamp(t, 0.f, 1.f);
+		return b * t + a * (1 - t);
+	}
 }

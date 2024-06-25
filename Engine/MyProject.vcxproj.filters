@@ -40,6 +40,15 @@
     <Filter Include="Engine\Sound">
       <UniqueIdentifier>{f32e6ff4-2ad3-47a0-9af0-f42bb47be9e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Component">
+      <UniqueIdentifier>{343d7eab-3a1d-47c0-85d6-426d3839f8b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene">
+      <UniqueIdentifier>{bbd1442c-dd57-4c59-a250-74f56f5a5c5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Animation">
+      <UniqueIdentifier>{a8a01813-da2e-4d40-a463-b4c9811ee921}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font\MyFontHandler.h">
@@ -135,6 +144,30 @@
     <ClInclude Include="Sound\MyFmodSystem.h">
       <Filter>Engine\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="Timer\MySystemTimer.h">
+      <Filter>Engine\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer\MyNormalTimer.h">
+      <Filter>Engine\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MyPawn.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\CollisionComponent.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\MoveComponent.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\SpriteComponent.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\MyScene.h">
+      <Filter>Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MySprite.h" />
+    <ClInclude Include="MySpriteTexture.h" />
+    <ClInclude Include="MySpriteUV.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font\MyFontHandler.cpp">
@@ -221,6 +254,27 @@
     <ClCompile Include="Sound\MyFmodSystem.cpp">
       <Filter>Engine\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="Timer\MyNormalTimer.cpp">
+      <Filter>Engine\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer\MySystemTimer.cpp">
+      <Filter>Engine\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MyPawn.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\MoveComponent.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\SpriteComponent.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\CollisionComponent.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="MySprite.cpp" />
+    <ClCompile Include="MySpriteTexture.cpp" />
+    <ClCompile Include="MySpriteUV.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\data\shaders\PixelShader.hlsl">
@@ -229,8 +283,5 @@
     <FxCompile Include="..\data\shaders\VertexShader.hlsl">
       <Filter>Engine\HLSL</Filter>
     </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

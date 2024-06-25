@@ -9,6 +9,7 @@ namespace MyProject
 		float	mSpeed;
 		float	mAcceleration;
 		vec2	mDirection;
+		vec2	mOffset;
 
 	public:
 		MoveComponent(float _speed, float _acceleration, vec2 _dir);
@@ -21,7 +22,7 @@ namespace MyProject
 		float GetAcceleration() const;
 		vec2  GetDirection() const;
 
-		vec2  Update(float _deltaTime);
+		void  Update(float _deltaTime);
 	};
 }
 

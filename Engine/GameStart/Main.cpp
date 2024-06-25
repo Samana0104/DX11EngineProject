@@ -22,7 +22,7 @@ public:
 
 	virtual void InitComponent() override
 	{
-		mObject->SetScale({ 10.f, 10.f });
+		mObject->SetScale({ 30.f, 10.f });
 		mObject2->SetScale({ 40.f, 10.f });
 		mObject2->SetLocation({ 50.f, 0.f });
 	}
@@ -30,19 +30,19 @@ public:
 	{
 		if (mInput.GetCurrentKeyState(VK_UP) == KeyState::KEY_HOLD)
 		{
-			mObject2->AddLocation({0.f, 100.f* mTimer.GetDeltaTime() });
+			mCamera->AddLocation({0.f, 100.f* mTimer.GetDeltaTime() });
 		}
 		if (mInput.GetCurrentKeyState(VK_RIGHT) == KeyState::KEY_HOLD)
 		{
-			mObject2->AddLocation({100.f* mTimer.GetDeltaTime(), 0.f});
+			mCamera->AddLocation({100.f* mTimer.GetDeltaTime(), 0.f});
 		}
 		if (mInput.GetCurrentKeyState(VK_LEFT) == KeyState::KEY_HOLD)
 		{
-			mObject2->AddLocation({ 100.f*-mTimer.GetDeltaTime(), 0.f});
+			mCamera->AddLocation({ 100.f*-mTimer.GetDeltaTime(), 0.f});
 		}
 		if (mInput.GetCurrentKeyState(VK_DOWN) == KeyState::KEY_HOLD)
 		{
-			mObject2->AddLocation({ 0.f, 100.f*-mTimer.GetDeltaTime()});
+			mCamera->AddLocation({ 0.f, 100.f*-mTimer.GetDeltaTime()});
 		}
 
 		if(mInput.GetCurrentKeyState(VK_F1) == KeyState::KEY_HOLD)
@@ -50,12 +50,9 @@ public:
 		else if(mInput.GetCurrentKeyState(VK_F2) == KeyState::KEY_HOLD)
 			mCamera.ZoomOut(0.01f);
 		
-		MyTransformer2D mTransform = mObject.GetTransform();
-		if (mObject2.collision.IsOBBCollision(mTransform))
-			mObject2.SetColor({ 1.f, 0.f, 0.f, 1.f });
-		else
-			mObject2.SetColor({ 1.f, 1.f, 1.f, 1.f });
-
+		mObject->AddRotation(0.1f);
+		mObject2->AddRotation(0.5f);
+		//mCamera.LookAtObject(mObject2);
 	}
 
 	virtual void RenderComponent() override

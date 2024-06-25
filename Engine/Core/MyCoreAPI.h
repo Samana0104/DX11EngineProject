@@ -21,6 +21,7 @@ namespace MyProject
 
 	using MESH_KEY	= std::wstring;
 	using FONT_KEY	= std::wstring;
+	using SCENE_KEY = std::wstring;
 
 	// 파일 이름으로 키 값을 받아오기에 이 3개는 wstring으로 선언 안하면 큰일 
 	using SHADER_KEY	= std::wstring;
@@ -32,6 +33,7 @@ namespace MyProject
 	protected:
 		virtual void UpdateComponent() = 0;
 		virtual void RenderComponent() = 0;
+
 	public:
 		static std::wstring to_mw(const stringV _src)
 		{

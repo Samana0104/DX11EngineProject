@@ -39,8 +39,8 @@ vec2 MoveComponent::GetDirection() const
     return mDirection;
 }
 
-vec2 MoveComponent::Update(float _deltaTime)
+void MoveComponent::Update(float _deltaTime)
 {
     mSpeed += mAcceleration * _deltaTime;
-    return mSpeed * _deltaTime * mDirection;
+    mOffset = mSpeed * _deltaTime * mDirection;
 }

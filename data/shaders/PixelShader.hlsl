@@ -23,8 +23,8 @@ PS_Out PSMain( PS_In psIn )
 {
 	PS_Out  psOut=(PS_Out)0;
 	float4 pixel = g_txTexture.Sample(sampler0, psIn.t);
-    psOut.c = float4(pixel.x * psIn.c.x, pixel.y * psIn.c.y, pixel.z * psIn.c.z, 1);
-    //psOut.c = pixel;
+    psOut.c = pixel * psIn.c;
+	//psOut.c = pixel;
  
 	return psOut;
   //return float4(psIn.t.x, psIn.t.y, 0,1);

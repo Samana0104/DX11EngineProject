@@ -16,12 +16,24 @@ bool MySystemTimer::CanExecuteFrame()
 
 	mDeltaTime = mSecondPerMaxFPS;
 	mSecondPerMaxFPS = 0.;
+
+#ifdef _DEBUG
+	TCHAR msgKey[MAX_PATH] = { 0, };
+	_stprintf_s(msgKey,
+		L" FPS=%ld \n FPS=%ld \n %.10f \n GameTimer=%10.10f \n SPF=%10.10f\n",
+		mCurrentFPS, mFPS, mDeltaTime, mElapsedTime.count(),
+		mOneSecond);
+	m_csBuffer = msgKey;
+#endif
+
 	return true;
 }
 
 bool MySystemTimer::HasPassedTime() 
 {
-	Update();
+	MyTimer::Update();
+	mOneSecond += MyTimer::GetDeltaTime();
+	mSecondPerMaxFPS += MyTimer::GetDeltaTime();
 
 	if (!CanExecuteFrame()) // 프레임 제어를 위해 추가
 		return false;
@@ -67,20 +79,4 @@ void MySystemTimer::Reset()
 void MySystemTimer::Start()
 {
 	MyTimer::Start();
-}
-
-void MySystemTimer::Update()
-{
-	MyTimer::Update();
-	mOneSecond += MyTimer::GetDeltaTime();
-	mSecondPerMaxFPS += MyTimer::GetDeltaTime();
-
-#ifdef _DEBUG
-	TCHAR msgKey[MAX_PATH] = { 0, };
-	_stprintf_s(msgKey,
-		L" FPS=%ld \n FPS=%ld \n %.10f \n GameTimer=%10.10f \n SPF=%10.10f\n",
-		mCurrentFPS, mFPS, mDeltaTime, mElapsedTime.count(),
-		mOneSecond);
-	m_csBuffer = msgKey;
-#endif
 }

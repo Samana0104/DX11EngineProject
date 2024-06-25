@@ -10,6 +10,16 @@ MyWriterFont::MyWriterFont(const FontDesc& _desc) :
 #else
 	CreateBrushComponent();
 #endif
+	MyWindow::GetInstance().RegisterCallBackWMSize(this, &MyWriterFont::OnWMSize);
+}
+
+void MyWriterFont::OnWMSize(UINT _weight, UINT _height)
+{
+	mWriteFactory->Release();
+	mWriteFont->Release();
+	mBrush->Release();
+
+	CreateBrushComponent();
 }
 
 bool MyWriterFont::CreateBrushComponent()

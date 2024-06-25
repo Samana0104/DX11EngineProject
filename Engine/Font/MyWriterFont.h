@@ -37,7 +37,7 @@ namespace MyProject
 		bool	CreateTextFormat();
 		bool	CreateBrush();
 
-		//void	OnWMSize();
+		void	OnWMSize(UINT _weight, UINT _height);
 
 	public:
 		MyWriterFont(const FontDesc& _desc);

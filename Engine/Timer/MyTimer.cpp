@@ -25,7 +25,6 @@ void MyTimer::Start()
 	Reset();
 }
 
-
 void MyTimer::Update()
 {
 	mCurrentTimeTick = steady_clock::now();
