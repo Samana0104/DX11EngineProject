@@ -2,11 +2,16 @@
 #include "MyTextureHandler.h"
 using namespace MyProject;
 
-bool MyTextureHandler::CreateTextureResource(
-	const wstringV _filePath)
+bool MyTextureHandler::CreateTextureResource(const wstringV _filePath)
 {
-	std::wstring key = GetKeyAsFileName(_filePath);
+	auto fileInfo = MyCoreAPI::GetFileNameAndExt(_filePath);
 
+	if (fileInfo.second.compare(L".png") != 0 && 
+		fileInfo.second.compare(L".jpg") != 0 &&
+		fileInfo.second.compare(L".bmp") != 0)
+		return false;
+	
+	TEXTURE_KEY key = fileInfo.first + fileInfo.second;
 	auto texture = std::make_shared<MyTexture>(_filePath);
 	return AddResource(key, texture);
 }

@@ -8,8 +8,8 @@ private:
 	POINT_F myPos;
 	//Box2D	myBox;
 	//Box2D	myBox2;
-	MyActor mObject;
-	MyActor mObject2;
+	TestObj mObject;
+	TestObj mObject2;
 	MyCamera mCamera;
 
 public:
@@ -65,11 +65,13 @@ public:
 		//	MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2()).x,
 		//	MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2()).y);
 		//DrawTextForDebugging(mTimer.m_csBuffer.c_str());
-		DrawTextForDebugging(L"[%f %f] [%f %f]",
+		DrawTextForDebugging(L"[%f %f] [%f %f]\n[%f %f]",
 			mObject->GetLocation().x,
 			mObject->GetLocation().y,
 			mObject2->GetLocation().x,
-			mObject2->GetLocation().y);
+			mObject2->GetLocation().y,
+			mCamera->GetLocation().x,
+			mCamera->GetLocation().y);
 	}
 
 	virtual void ReleaseComponent() override

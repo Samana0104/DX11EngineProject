@@ -2,6 +2,43 @@
 #include "CollisionComponent.h"
 using namespace MyProject;
 
+bool CollisionComponent::IsPointInRect(const RECT_F rt1, const POINT_F pt)
+{
+	if (rt1.left <= pt.x && rt1.right >= pt.x)
+	{
+		if (rt1.top <= pt.y && rt1.bottom >= pt.y)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool CollisionComponent::IsAABBCollision(const RECT_F rt1, const RECT_F rt2)
+{
+	float minX, maxX, minY, maxY;
+	minX = min(rt1.left, rt2.left);
+	maxX = max(rt1.right, rt2.right);
+	minY = min(rt1.top, rt2.top);
+	maxY = max(rt1.bottom, rt2.bottom);
+	float sizeX, sizeY;
+	sizeX = maxX - minX;
+	sizeY = maxY - minY;
+
+	float  rt1W, rt1H, rt2W, rt2H;
+	rt1W = rt1.right - rt1.left;// rt1.w + rt2.w;
+	rt1H = rt1.bottom - rt1.top;
+	rt2W = rt2.right - rt2.left;// rt1.w + rt2.w;
+	rt2H = rt2.bottom - rt2.top;
+
+	if ( sizeX <= (rt1W + rt2W) &&
+		 sizeY <= (rt1H + rt2H))
+	{
+		return true;
+	}
+	return false;
+}
+
 bool CollisionComponent::IsAABBCollision(const MyTransformer2D& _objM, const MyTransformer2D& _targetM)
 {
     vec2 objScale = _objM.GetScale();

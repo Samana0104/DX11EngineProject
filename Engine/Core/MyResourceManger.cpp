@@ -9,6 +9,7 @@ void MyResourceManager::CreateDafultResource()
 	CreateDefaultTextures();
 	CreateDefaultShaders();
 	CreateDefaultSounds();
+	CreateDefaultSprites();
 }
 
 void MyResourceManager::CreateDefaultFonts()
@@ -31,7 +32,8 @@ void MyResourceManager::CreateDefaultMeshes()
 
 void MyResourceManager::CreateDefaultTextures()
 {
-	mTexture.CreateTextureAsFolderPath(gTexturePath);
+	for(auto& path : gTexturePath)
+		mTexture.CreateTextureAsFolderPath(path);
 	//if(!mTexture.CreateTextureComponent(texture))
 	//	MessageBoxA(NULL, "Not created default texture[Key Error]", "[Texture creation]", MB_OK);
 }
@@ -47,6 +49,13 @@ void MyResourceManager::CreateDefaultShaders()
 
 void MyResourceManager::CreateDefaultSounds()
 {
-	mSound.CreateSoundAsFolderPath(gSoundPath);
+	for(auto& path : gSoundPath)
+		mSound.CreateSoundAsFolderPath(path);
+}
+
+void MyResourceManager::CreateDefaultSprites()
+{
+	for (auto& path : gSpritePath)
+		mSprite.CreateSpriteAsFolderPath(path);
 }
 

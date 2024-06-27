@@ -6,18 +6,13 @@ namespace MyProject
 {
 	class MyActor : public MyObject
 	{
-	private:
+
+	protected:
+		MyActor() = default;
 
 	public:
-		COLOR_F				mColor;
-
-		MyActor() { mColor = { 1.f, 1.f,1.f,1.f }; }
-
-		void SetColor(COLOR_F _color);
-		COLOR_F GetColor() const;
-
-		virtual void Update(const float _deltaTime);
-		virtual void Render(const mat3 _viewMat);
+		virtual void Update(const float _deltaTime) = 0;
+		virtual void Render(const mat3& _viewMat) = 0;
 	};
 }
 

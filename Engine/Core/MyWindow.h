@@ -6,7 +6,7 @@ namespace MyProject
 #define MY_WINDOW_NAME L"My Project"
 #define MY_WINDOW_CLASS_NAME L"IS_REAL_WINDOW?"
 
-	using CALLBACK_WMSIZE_TYPE = std::vector<std::function<void(UINT, UINT)>>;
+	using CALLBACK_WMSIZE_TYPE = std::list<std::pair<void*, std::function<void(UINT, UINT)>>>;
 
 	class MyWindow : public Singleton<MyWindow>
 	{
@@ -14,7 +14,7 @@ namespace MyProject
 		inline static bool	mIsActivate = false;
 		inline static POINT mWindowSize = { 0, 0 };
 
-		inline static CALLBACK_WMSIZE_TYPE mCallbackWMSize; // weak_ptr 써서 개선해야함
+		inline static CALLBACK_WMSIZE_TYPE mCallbackWMSize;
 
 		HINSTANCE	mHinstance;
 		HWND		mHwnd;
@@ -34,8 +34,6 @@ namespace MyProject
 		bool	WindowRun() const; 
 		bool	IsActivate() const;
 
-		template <typename T>
-		void	RegisterCallBackWMSize(T* obj, void(T::* func)(UINT, UINT));
 		void	SetHinstance(HINSTANCE _hinstance);
 
 		POINT		GetWindowSize() const;
@@ -43,13 +41,34 @@ namespace MyProject
 		glm::vec2	GetWindowSizeVec2() const;
 		HWND		GetWindowHandle() const;
 
+		template <typename T>
+		void	RegisterCallBackWMSize(T* obj, void(T::* func)(UINT, UINT));
+		template <typename T>
+		void	DeleteCallBack(T* obj);
 	};
 
 	template<typename T>
 	inline void MyWindow::RegisterCallBackWMSize(T* obj, void(T::* func)(UINT, UINT))
 	{
-		mCallbackWMSize.push_back([obj, func](UINT width, UINT height) {
+		mCallbackWMSize.push_back(std::make_pair(
+			reinterpret_cast<void*>(obj), 
+			[obj, func](UINT width, UINT height) 
+			{
 			(obj->*func)(width, height);
-			});
+			}
+		));
+	}
+
+	template<typename T>
+	inline void MyWindow::DeleteCallBack(T* obj)
+	{
+		auto iter = std::find_if(mCallbackWMSize.begin, mCallbackWMSize.end(),
+			[obj](std::pair<void*, std::function<void(UINT, UINT)>> & _value)
+			{
+				return _value.first == reinterpret_cast<void*>(obj);
+			}
+		);
+
+		mCallbackWMSize.erase(iter);
 	}
 }

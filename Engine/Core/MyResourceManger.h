@@ -5,6 +5,7 @@
 #include "MyFontHandler.h"
 #include "MyShaderHandler.h"
 #include "MySoundHandler.h"
+#include "MySpriteHandler.h"
 
 namespace MyProject
 {
@@ -16,6 +17,7 @@ namespace MyProject
 		MyFontHandler	 mFont;
 		MyShaderHandler  mShader;
 		MySoundHandler	 mSound;
+		MySpriteHandler  mSprite;
 		
 	private:
 		friend class Singleton<MyResourceManager>;
@@ -26,6 +28,7 @@ namespace MyProject
 		void CreateDefaultTextures();
 		void CreateDefaultShaders();
 		void CreateDefaultSounds();
+		void CreateDefaultSprites();
 
 	public:
 		void CreateDafultResource();

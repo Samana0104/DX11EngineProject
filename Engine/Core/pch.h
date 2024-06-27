@@ -10,6 +10,7 @@
 #include <string_view>
 #include <optional>
 #include <functional>
+#include <tuple>
 #include <random>
 #include <filesystem>
 #include <Windows.h>

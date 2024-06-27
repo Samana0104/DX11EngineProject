@@ -24,11 +24,10 @@ void MyBox2D::CreateBox2DVertex()
 2D 아니고는 안쓸 방식
 */
 
-void MyBox2D::SetUVVertexAsRect(const RECT_F _rect, MyTexture& _texture)
+void MyBox2D::SetUVVertexAsRect(const RECT_F _rect, const vec2& _imageSize)
 {
-	vec2 imageSize = _texture.GetTextureSizeVec2();
-	SetUVVertex(0, { _rect.left / imageSize.x, _rect.top / imageSize.y });
-	SetUVVertex(1, { _rect.right / imageSize.x, _rect.top / imageSize.y });
-	SetUVVertex(2, { _rect.left / imageSize.x, _rect.bottom / imageSize.y });
-	SetUVVertex(3, { _rect.right / imageSize.x, _rect.bottom / imageSize.y });
+	SetUVVertex(0, { _rect.left / _imageSize.x, _rect.top / _imageSize.y });
+	SetUVVertex(1, { _rect.right / _imageSize.x, _rect.top / _imageSize.y });
+	SetUVVertex(2, { _rect.left / _imageSize.x, _rect.bottom / _imageSize.y });
+	SetUVVertex(3, { _rect.right / _imageSize.x, _rect.bottom / _imageSize.y });
 }

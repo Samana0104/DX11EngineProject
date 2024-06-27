@@ -73,11 +73,6 @@ void MyTexture::Load3DTextureSize()
 	// desc.Depth ?? 언젠가 필요하면 추가
 }
 
-void MyTexture::SetTextureResource() const
-{
-	mDevice.mContext->PSSetShaderResources(0, 1, mSRV.GetAddressOf());
-}
-
 POINT_F MyTexture::GetTextureSizeF() const
 {
 	return { static_cast<float>(mTextureWidth), static_cast<float>(mTextureHeight) };
@@ -93,11 +88,7 @@ vec2 MyTexture::GetTextureSizeVec2() const
 	return { static_cast<float>(mTextureWidth), static_cast<float>(mTextureHeight) };
 }
 
-void MyTexture::UpdateComponent()
+void MyTexture::Render()
 {
-}
-
-void MyTexture::RenderComponent()
-{
-	SetTextureResource();
+	mDevice.mContext->PSSetShaderResources(0, 1, mSRV.GetAddressOf());
 }

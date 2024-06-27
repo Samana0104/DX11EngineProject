@@ -4,7 +4,14 @@ using namespace MyProject;
 
 bool MySoundHandler::CreateSoundResource(const wstringV _filePath)
 {
-	std::wstring key = GetKeyAsFileName(_filePath);
+	auto fileInfo = MyCoreAPI::GetFileNameAndExt(_filePath);
+
+	//if (fileInfo.second.compare(L"png") != 0 && 
+	//	fileInfo.second.compare(L"jpg") != 0 &&
+	//	fileInfo.second.compare(L"bmp") != 0)
+	//	return;
+
+	SOUND_KEY key = fileInfo.first + fileInfo.second;
 
 	auto sound = std::make_shared<MySound>(_filePath);
 	return AddResource(key, sound);

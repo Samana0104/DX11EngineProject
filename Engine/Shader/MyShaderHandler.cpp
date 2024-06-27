@@ -17,7 +17,8 @@ bool MyShaderHandler::CreatePixelShader(const MESH_KEY& _key, const ShaderDesc& 
 
 bool MyShaderHandler::CreateShaderResource(const ShaderDesc _desc)
 {
-	std::wstring key = GetKeyAsFileName(_desc.mShaderPath);
+	auto fileInfo = MyCoreAPI::GetFileNameAndExt(_desc.mShaderPath);
+	std::wstring key = fileInfo.first + fileInfo.second;
 
 	switch (_desc.mShaderType)
 	{

@@ -14,7 +14,7 @@ namespace MyProject
 	public:
 		MyCircle2D(const size_t _triangles = 50);
 
-		virtual void SetUVVertexAsRect(const RECT_F _rect, MyTexture& _texture) override;
+		virtual void SetUVVertexAsRect(const RECT_F _rect, const vec2& _imageSize) override;
 	};
 }
 

@@ -18,7 +18,7 @@ namespace MyProject
 	class MyWriterFont
 	{
 	private:
-		inline static D3Device& mDevice = D3Device::GetInstance();
+		D3Device& mDevice = D3Device::GetInstance();
 
 		ComPtr<IDWriteFactory>			mWriteFactory;
 		ComPtr<IDWriteTextFormat>		mWriteFont;

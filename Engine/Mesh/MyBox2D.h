@@ -11,7 +11,7 @@ namespace MyProject
 	public:
 		MyBox2D();
 
-		virtual void SetUVVertexAsRect(const RECT_F _rect, MyTexture& _texture) override;
+		virtual void SetUVVertexAsRect(const RECT_F _rect, const vec2& _imageSize) override;
 	};
 }
 

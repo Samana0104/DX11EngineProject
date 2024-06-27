@@ -3,9 +3,9 @@
 
 namespace MyProject
 {
-	enum class SpriteType
+	enum class SpriteType : int
 	{
-		RECT_UV = 0,
+		UV_RECT = 0,
 		IMAGE = 1,
 	};
 
@@ -13,15 +13,20 @@ namespace MyProject
 	{
 	private:
 		SpriteType				 mSpriteType;
-		std::vector<SHADER_KEY>  mShaderKeys;
+		std::vector<RECT_F>		 mSpriteUVRects;
+		std::vector<TEXTURE_KEY> mSpriteTextures;
+		TEXTURE_KEY				 mSpriteMain;
 
 	public:
-		MySprite(SpriteType _spriteType);
-		
-		void AddShaderKey(SHADER_KEY _shaderKey);
+		MySprite() = default;
 
-		virtual void Update(float _deltaTime) = 0;
-		virtual void Render() = 0;
+		const RECT_F& GetUVRect(size_t _idx);
+		const TEXTURE_KEY& GetTextureKey(size_t _idx) const;
+		const TEXTURE_KEY& GetTextureMainKey() const;
+
+		bool LoadSpriteScriptFile(wstringV _filePath);
+
+		size_t GetSize() const;
 	};
 }
 

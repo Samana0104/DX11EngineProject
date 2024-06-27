@@ -3,7 +3,7 @@
 
 namespace MyProject
 {
-	class MyTexture : public MyCoreAPI
+	class MyTexture 
 	{
 	private:
 		ComPtr<ID3D11ShaderResourceView>	mSRV;
@@ -22,7 +22,6 @@ namespace MyProject
 		void Load1DTextureSize();
 		void Load2DTextureSize();
 		void Load3DTextureSize();
-		void SetTextureResource() const;
 
 	public:
 		MyTexture(const wstringV _filePath);
@@ -31,7 +30,6 @@ namespace MyProject
 		POINT_U GetTextureSizeU() const;
 		vec2	GetTextureSizeVec2() const;
 
-		virtual void UpdateComponent() override;
-		virtual void RenderComponent() override;
+		virtual void Render();
 	};
 }

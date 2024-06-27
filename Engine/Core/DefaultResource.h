@@ -44,7 +44,9 @@ namespace MyProject
 	//	{ L"../data/Default.jpg"}
 	//};
 
-	inline static const TEXTURE_KEY gTexturePath = L"../data/Image/";
+	inline static const std::vector<std::wstring> gTexturePath = {
+		{ L"../data/Image/"}
+	};
 
 /*
 	struct ShaderDesc
@@ -60,5 +62,11 @@ namespace MyProject
 		{ ShaderType::PIXEL, L"../data/Shaders/PixelShader.hlsl", "PSMain"}
 	};
 
-	inline static const SOUND_KEY gSoundPath = L"../data/Sound/";
+	inline static const std::vector<std::wstring> gSoundPath = {
+		{L"../data/Sound/"}
+	};
+
+	inline static const std::vector<std::wstring> gSpritePath = {
+		{ L"../data/Image/" }
+	};
 }

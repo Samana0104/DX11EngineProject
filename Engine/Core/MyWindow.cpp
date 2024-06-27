@@ -103,7 +103,7 @@ void MyWindow::CallEventWMSize(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM _l
 	MyWindow::mWindowSize.y = rc.bottom;
 
 	for (auto& obj : mCallbackWMSize)
-		obj(MyWindow::mWindowSize.x, MyWindow::mWindowSize.y);
+		obj.second(MyWindow::mWindowSize.x, MyWindow::mWindowSize.y);
 }
 
 bool MyWindow::IsActivate() const

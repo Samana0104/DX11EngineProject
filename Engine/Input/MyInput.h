@@ -21,7 +21,7 @@ namespace MyProject
 		POINT_L		mMousePos;
 
 	protected:
-		inline static MyWindow& mWindow = MyWindow::GetInstance();
+		MyWindow& mWindow = MyWindow::GetInstance();
 
 	private:
 		friend class Singleton<MyInput>;

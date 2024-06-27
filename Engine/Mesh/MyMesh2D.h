@@ -33,8 +33,8 @@ namespace MyProject
 		POINT_F		mMeshCom; // 무게중심
 
 	protected:
-		inline static D3Device& mDevice = D3Device::GetInstance();
-		inline static MyWindow& mWindow = MyWindow::GetInstance();
+		D3Device& mDevice = D3Device::GetInstance();
+		MyWindow& mWindow = MyWindow::GetInstance();
 
 	private:
 		bool CreateVertexBuffer();
@@ -55,8 +55,8 @@ namespace MyProject
 	public:
 		POINT_F	GetMeshCom() const;
 
-		void Render(const mat3& _matrix, const vec4 _color = { 1.f, 1.f, 1.f, 1.f });
+		void Draw(const mat3& _matrix, const vec4 _color = { 1.f, 1.f, 1.f, 1.f });
 
-		virtual void SetUVVertexAsRect(const RECT_F _rect, MyTexture& _texture) = 0;
+		virtual void SetUVVertexAsRect(const RECT_F _rect, const vec2& _imageSize) = 0;
 	};
 }

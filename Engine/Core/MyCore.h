@@ -5,7 +5,7 @@
 #include "MyShader.h"
 #include "MyBox2D.h"
 #include "MyResourceManger.h"
-#include "MyActor.h"
+#include "TestObj.h"
 #include "MyCamera.h"
 
 namespace MyProject
@@ -17,10 +17,10 @@ namespace MyProject
 	protected:
 		MySystemTimer mTimer;
 
-		static inline MyInput&  mInput = MyInput::GetInstance();
-		static inline MyWindow& mWindow = MyWindow::GetInstance();
-		static inline D3Device& mDevice = D3Device::GetInstance();
-		static inline MyResourceManager& mManager = MyResourceManager::GetInstance();
+		MyInput&			mInput = MyInput::GetInstance();
+		MyWindow&			mWindow = MyWindow::GetInstance();
+		D3Device&			mDevice = D3Device::GetInstance();
+		MyResourceManager&	mManager = MyResourceManager::GetInstance();
 
 	private:
 		MyCore(const MyCore&) = delete;

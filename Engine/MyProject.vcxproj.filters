@@ -46,8 +46,8 @@
     <Filter Include="Engine\Scene">
       <UniqueIdentifier>{bbd1442c-dd57-4c59-a250-74f56f5a5c5e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Animation">
-      <UniqueIdentifier>{a8a01813-da2e-4d40-a463-b4c9811ee921}</UniqueIdentifier>
+    <Filter Include="Engine\Sprite">
+      <UniqueIdentifier>{662a250f-9d36-4dcf-ac7c-13157a4f5ddd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -165,9 +165,15 @@
     <ClInclude Include="Scene\MyScene.h">
       <Filter>Engine\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="MySprite.h" />
-    <ClInclude Include="MySpriteTexture.h" />
-    <ClInclude Include="MySpriteUV.h" />
+    <ClInclude Include="Sprite\MySprite.h">
+      <Filter>Engine\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite\MySpriteHandler.h">
+      <Filter>Engine\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TestObj.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font\MyFontHandler.cpp">
@@ -272,9 +278,15 @@
     <ClCompile Include="Component\CollisionComponent.cpp">
       <Filter>Engine\Component</Filter>
     </ClCompile>
-    <ClCompile Include="MySprite.cpp" />
-    <ClCompile Include="MySpriteTexture.cpp" />
-    <ClCompile Include="MySpriteUV.cpp" />
+    <ClCompile Include="Sprite\MySprite.cpp">
+      <Filter>Engine\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite\MySpriteHandler.cpp">
+      <Filter>Engine\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TestObj.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\data\shaders\PixelShader.hlsl">

@@ -22,7 +22,6 @@ namespace MyProject
 		const std::shared_ptr<V> GetResource(const K _key);
 		const std::shared_ptr<V>& operator[](const K _key);
 
-		std::wstring GetKeyAsFileName(const wstringV _filePath) const;
 	};
 
 	/*
@@ -33,22 +32,6 @@ namespace MyProject
 	bool ResourceHandler<V, K, A>::AddResource(const K& _key, const std::shared_ptr<V>& _value)
 	{
 		return mResourceDatas.insert(std::make_pair(_key, _value)).second;
-	}
-
-	TEMPLATE_VKA
-	std::wstring ResourceHandler<V, K, A>::GetKeyAsFileName(const wstringV _filePath) const
-	{
-		std::wstring fileNameKey;
-		wchar_t  szDrive[MAX_PATH] = { 0, };
-		wchar_t  szDir[MAX_PATH] = { 0, };
-		wchar_t  szFileName[MAX_PATH] = { 0, };
-		wchar_t  szFileExt[MAX_PATH] = { 0, };
-
-		_tsplitpath_s(_filePath.data(), szDrive, szDir, szFileName, szFileExt);
-		fileNameKey = szFileName;
-		fileNameKey += szFileExt;
-
-		return fileNameKey;
 	}
 
 	TEMPLATE_VKA
