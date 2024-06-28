@@ -29,9 +29,14 @@ namespace MyProject
 
 		void UpdateKeyState(UINT _key);
 	
+		void SetKeyUp(const UINT _key);
+		void SetKeyDown(const UINT _key);
+		void SetKeyFree(const UINT _key);
+		void SetKeyHold(const UINT _key);
+
 	public:
 
-		KeyState GetCurrentKeyState(const UINT _key);
+		KeyState GetCurrentKeyState(const UINT _key) const;
 		POINT_L	 GetCurrentMousePos() const;
 		POINT_F	 GetCurrentMousePosF() const;
 		vec2	 GetCurrentMousePosVec2() const;
@@ -41,13 +46,11 @@ namespace MyProject
 		bool IsKeyFree(const UINT _key) const;
 		bool IsKeyHold(const UINT _key) const;
 		bool IsKeyPressed(const SHORT _key);
+		
+		KeyState GetLBState() const;
+		KeyState GetRBState() const;
+		KeyState GetMBState() const;
 
-		void SetKeyUp(const UINT _key);
-		void SetKeyDown(const UINT _key);
-		void SetKeyFree(const UINT _key);
-		void SetKeyHold(const UINT _key);
-
-		virtual void UpdateComponent();
-		virtual void RenderComponent();
+		void Update();
 	};
 }

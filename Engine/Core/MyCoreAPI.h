@@ -19,6 +19,9 @@ namespace MyProject
 	using stringV	= std::string_view;
 	using wstringV	= std::wstring_view;
 
+	using STATE_ID	= UINT;
+	using EVENT_ID  = UINT;
+
 	using MESH_KEY	 = std::wstring;
 	using FONT_KEY	 = std::wstring;
 	using SCENE_KEY	 = std::wstring;
@@ -27,14 +30,10 @@ namespace MyProject
 	using SHADER_KEY	= std::wstring;
 	using TEXTURE_KEY	= std::wstring;
 	using SOUND_KEY		= std::wstring;
-	using SPRITE_KEY = std::wstring;
+	using SPRITE_KEY	= std::wstring;
 
 	class MyCoreAPI
 	{
-	protected:
-		virtual void UpdateComponent() = 0;
-		virtual void RenderComponent() = 0;
-
 	public:
 		static std::wstring to_mw(const stringV _src)
 		{

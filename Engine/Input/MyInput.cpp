@@ -25,7 +25,7 @@ void MyInput::UpdateKeyState(const UINT _key)
 	}
 }
 
-KeyState MyInput::GetCurrentKeyState(const UINT _key)
+KeyState MyInput::GetCurrentKeyState(const UINT _key) const
 {
 	return mCurrentKeyState[_key];
 }
@@ -71,6 +71,21 @@ bool MyInput::IsKeyPressed(const SHORT _key)
 	return _key & PRESSED_KEY;
 }
 
+KeyState MyInput::GetLBState() const
+{
+	return GetCurrentKeyState(VK_LBUTTON);
+}
+
+KeyState MyInput::GetRBState() const
+{
+	return GetCurrentKeyState(VK_RBUTTON);
+}
+
+KeyState MyInput::GetMBState() const
+{
+	return GetCurrentKeyState(VK_MBUTTON);
+}
+
 void MyInput::SetKeyUp(const UINT _key)
 {
 	mCurrentKeyState[_key] = KeyState::KEY_UP;
@@ -91,7 +106,7 @@ void MyInput::SetKeyHold(const UINT _key)
 	mCurrentKeyState[_key] = KeyState::KEY_HOLD;
 }
 
-void MyInput::UpdateComponent()
+void MyInput::Update()
 {
 	if (!mWindow.IsActivate())
 		return;
@@ -103,8 +118,4 @@ void MyInput::UpdateComponent()
 	{
 		UpdateKeyState(key);
 	}
-}
-
-void MyInput::RenderComponent()
-{
 }

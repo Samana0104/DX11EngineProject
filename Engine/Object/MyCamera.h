@@ -1,9 +1,9 @@
 #pragma once
-#include "MyObject.h"
+#include "MyActor.h"
 
 namespace MyProject
 {
-	class MyCamera : public MyObject
+	class MyCamera : public MyActor
 	{
 	public:
 		const mat3 GetViewMat() const;

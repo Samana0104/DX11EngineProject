@@ -123,7 +123,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Color\;$(ProjectDir)Component\;$(ProjectDir)Core\;$(ProjectDir)fmod\inc\;$(ProjectDir)Font\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Mesh\;$(ProjectDir)Object\;$(ProjectDir)Shader\;$(ProjectDir)Sound\;$(ProjectDir)Sprite\;$(ProjectDir)Scene\;$(ProjectDir)Texture\;$(ProjectDir)Timer\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Button\;$(ProjectDir)Color\;$(ProjectDir)Component\;$(ProjectDir)Core\;$(ProjectDir)fmod\inc\;$(ProjectDir)Font\;$(ProjectDir)FSM\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Mesh\;$(ProjectDir)Object\;$(ProjectDir)Shader\;$(ProjectDir)Sound\;$(ProjectDir)Sprite\;$(ProjectDir)Scene\;$(ProjectDir)Texture\;$(ProjectDir)Timer\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -184,6 +184,8 @@
     <ClInclude Include="Core\Singleton.h" />
     <ClInclude Include="Font\MyFontHandler.h" />
     <ClInclude Include="Font\MyWriterFont.h" />
+    <ClInclude Include="FSM\MyFiniteState.h" />
+    <ClInclude Include="FSM\MyFSM.h" />
     <ClInclude Include="Input\MyInput.h" />
     <ClInclude Include="Mesh\MyBox2D.h" />
     <ClInclude Include="Mesh\MyMesh2D.h" />
@@ -196,6 +198,9 @@
     <ClInclude Include="Object\MyPawn.h" />
     <ClInclude Include="Object\TestObj.h" />
     <ClInclude Include="Scene\MyScene.h" />
+    <ClInclude Include="Scene\MySceneLobby.h" />
+    <ClInclude Include="Scene\MySceneManager.h" />
+    <ClInclude Include="Scene\MySceneSetting.h" />
     <ClInclude Include="Shader\MyPixelShader.h" />
     <ClInclude Include="Shader\MyShader.h" />
     <ClInclude Include="Shader\MyShaderHandler.h" />
@@ -238,6 +243,9 @@
     <ClCompile Include="Object\MyObject.cpp" />
     <ClCompile Include="Object\MyPawn.cpp" />
     <ClCompile Include="Object\TestObj.cpp" />
+    <ClCompile Include="Scene\MySceneLobby.cpp" />
+    <ClCompile Include="Scene\MySceneManager.cpp" />
+    <ClCompile Include="Scene\MySceneSetting.cpp" />
     <ClCompile Include="Shader\MyPixelShader.cpp" />
     <ClCompile Include="Shader\MyShader.cpp" />
     <ClCompile Include="Shader\MyShaderHandler.cpp" />

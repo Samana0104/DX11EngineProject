@@ -49,6 +49,12 @@
     <Filter Include="Engine\Sprite">
       <UniqueIdentifier>{662a250f-9d36-4dcf-ac7c-13157a4f5ddd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\FSM">
+      <UniqueIdentifier>{e4353116-282f-4af4-827b-22a80f4b8971}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Button">
+      <UniqueIdentifier>{a95ef134-bd46-43d7-8554-9e945ed05d07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font\MyFontHandler.h">
@@ -174,6 +180,21 @@
     <ClInclude Include="Object\TestObj.h">
       <Filter>Engine\Object</Filter>
     </ClInclude>
+    <ClInclude Include="FSM\MyFSM.h">
+      <Filter>Engine\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="FSM\MyFiniteState.h">
+      <Filter>Engine\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\MySceneLobby.h">
+      <Filter>Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\MySceneManager.h">
+      <Filter>Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\MySceneSetting.h">
+      <Filter>Engine\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font\MyFontHandler.cpp">
@@ -286,6 +307,15 @@
     </ClCompile>
     <ClCompile Include="Object\TestObj.cpp">
       <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\MySceneLobby.cpp">
+      <Filter>Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\MySceneManager.cpp">
+      <Filter>Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\MySceneSetting.cpp">
+      <Filter>Engine\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

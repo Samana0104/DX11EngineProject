@@ -7,18 +7,31 @@ namespace MyProject
 	class SpriteComponent
 	{
 	private:
-		MyObject& mObj;
+		MyObject&	mObj;
+		SPRITE_KEY	mSpriteKey;
 
-		int		mAnimIndex = 0;
-		float	mPlayTimer = 0.0f;
-		float	mAnimationTimer = 0.0f;
-		float	mChangeTime = 0.0f;
-		float   mTexCounter = 1.0f;
+		float	mTimer;
+		float	mChangeTime;
+
+		size_t  mAnimationCount;
+		size_t	mAnimationIdx;
+		
+		bool    mIsLoop;
+
+		MyResourceManager& mManager = MyResourceManager::GetInstance();
 
 	public:
 		SpriteComponent(MyObject& _obj);
+		
+		void ResetAnimation();
 
-		void Render(const mat3& _viewMat);
+		void SetLoop(const bool _loop);
+		void SetAnimationIdx(const size_t _idx);
+		void SetChangeTime(const float _time);
+		void SetSpriteKey(const SPRITE_KEY _spriteKey);
+
+		void Update(const float _deltaTime);
+		void Render();
 	};
 }
 

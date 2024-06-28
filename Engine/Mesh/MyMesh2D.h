@@ -57,6 +57,6 @@ namespace MyProject
 
 		void Draw(const mat3& _matrix, const vec4 _color = { 1.f, 1.f, 1.f, 1.f });
 
-		virtual void SetUVVertexAsRect(const RECT_F _rect, const vec2& _imageSize) = 0;
+		virtual void SetUVVertexAsRect(const RECT_F& _rect, const vec2& _imageSize) = 0;
 	};
 }

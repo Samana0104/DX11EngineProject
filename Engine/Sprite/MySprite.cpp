@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "MyObject.h"
 #include "MySprite.h"
 using namespace MyProject;
 
@@ -9,12 +10,20 @@ const RECT_F& MySprite::GetUVRect(size_t _idx)
 
 const TEXTURE_KEY& MySprite::GetTextureKey(size_t _idx) const
 {
-	return mSpriteTextures[_idx];
+	if (mSpriteType == SpriteType::UV_RECT)
+		return mSpriteMainKey;
+	else 
+		return mSpriteTextures[_idx];
 }
 
 const TEXTURE_KEY& MySprite::GetTextureMainKey() const
 {
-	return mSpriteMain;
+	return mSpriteMainKey;
+}
+
+const SpriteType& MySprite::GetSpriteType() const
+{
+	return mSpriteType;
 }
 
 bool MySprite::LoadSpriteScriptFile(wstringV _filePath)
@@ -24,7 +33,6 @@ bool MySprite::LoadSpriteScriptFile(wstringV _filePath)
 	TCHAR pBuffer[256] = { 0 };
 	TCHAR textureName[256] = { 0 };
 	
-	int spriteFrame = 0;
 	int readFrame = 0;
 
 	_wfopen_s(&fp_src, _filePath.data(), _T("rt"));
@@ -34,25 +42,25 @@ bool MySprite::LoadSpriteScriptFile(wstringV _filePath)
 
 // ---------------------------
 	_fgetts(pBuffer, _countof(pBuffer), fp_src);
-	_stscanf_s(pBuffer, _T("%d %d %s"),
-		&spriteFrame,
+	_stscanf_s(pBuffer, L"%d %d %s",
+		&mSpriteCount,
 		&mSpriteType,
 		textureName,
 		(unsigned int)_countof(textureName));
 // ---------------------------
 
-	mSpriteMain = textureName;
+	mSpriteMainKey = textureName;
 	
 	switch (mSpriteType)
 	{
 	case SpriteType::UV_RECT:
-		mSpriteUVRects.reserve(spriteFrame);
+		mSpriteUVRects.reserve(mSpriteCount);
 		RECT_F rt;
 
-		for (int iFrame = 0; iFrame < spriteFrame; iFrame++)
+		for (int iFrame = 0; iFrame < mSpriteCount; iFrame++)
 		{
 			_fgetts(pBuffer, _countof(pBuffer), fp_src);
-			_stscanf_s(pBuffer, _T("%f %f %f %f %f"),
+			_stscanf_s(pBuffer, L"%d %f %f %f %f",
 				&readFrame,
 				&rt.left, 
 				&rt.top,
@@ -63,9 +71,9 @@ bool MySprite::LoadSpriteScriptFile(wstringV _filePath)
 		}
 		break;
 	case SpriteType::IMAGE:
-		mSpriteTextures.reserve(spriteFrame);
+		mSpriteTextures.reserve(mSpriteCount);
 
-		for (int iFrame = 0; iFrame < spriteFrame; iFrame++)
+		for (int iFrame = 0; iFrame < mSpriteCount; iFrame++)
 		{
 			_fgetts(pBuffer, _countof(pBuffer), fp_src);
 			_stscanf_s(pBuffer, _T("%d %s"),
@@ -80,18 +88,27 @@ bool MySprite::LoadSpriteScriptFile(wstringV _filePath)
 	return true;
 }
 
-size_t MySprite::GetSize() const
+void MySprite::Render(MyObject& _obj, size_t idx)
 {
+	MyResourceManager& mManager = MyResourceManager::GetInstance();
+
 	switch (mSpriteType)
 	{
 	case SpriteType::UV_RECT:
-		return mSpriteUVRects.size();
+		vec2 imageSize = mManager.mTexture[mSpriteMainKey]->GetTextureSizeVec2();
+		mManager.mTexture[mSpriteMainKey]->Render();
+		mManager.mMesh[_obj.GetMeshKey()]->SetUVVertexAsRect(mSpriteUVRects[idx], imageSize);
+		break;
 
 	case SpriteType::IMAGE:
-		return mSpriteTextures.size();
+		mManager.mTexture[mSpriteTextures[idx]]->Render();
+		break;
 	}
+}
 
-	return -1;
+size_t MySprite::GetSize() const
+{
+	return mSpriteCount;
 }
 
 

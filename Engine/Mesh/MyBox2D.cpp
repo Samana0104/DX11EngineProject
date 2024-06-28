@@ -24,7 +24,7 @@ void MyBox2D::CreateBox2DVertex()
 2D 아니고는 안쓸 방식
 */
 
-void MyBox2D::SetUVVertexAsRect(const RECT_F _rect, const vec2& _imageSize)
+void MyBox2D::SetUVVertexAsRect(const RECT_F& _rect, const vec2& _imageSize)
 {
 	SetUVVertex(0, { _rect.left / _imageSize.x, _rect.top / _imageSize.y });
 	SetUVVertex(1, { _rect.right / _imageSize.x, _rect.top / _imageSize.y });

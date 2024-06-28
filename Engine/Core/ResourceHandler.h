@@ -17,6 +17,8 @@ namespace MyProject
 		bool DeleteResource(const K _key);
 		bool IsKeyContained(const K _key) const;
 		
+		void Clear();
+
 		typename const Alloc&	GetAllResources() const;
 
 		const std::shared_ptr<V> GetResource(const K _key);
@@ -48,6 +50,12 @@ namespace MyProject
 	bool ResourceHandler<V, K, A>::IsKeyContained(const K _key) const
 	{
 		return mResourceDatas.contains(_key);
+	}
+
+	TEMPLATE_VKA
+	inline void ResourceHandler<V, K, A>::Clear()
+	{
+		mResourceDatas.clear();
 	}
 
 	TEMPLATE_VKA

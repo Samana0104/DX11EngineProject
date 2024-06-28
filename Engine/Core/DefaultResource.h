@@ -67,6 +67,6 @@ namespace MyProject
 	};
 
 	inline static const std::vector<std::wstring> gSpritePath = {
-		{ L"../data/Image/" }
+		{ L"../data/Image/Sprite/" }
 	};
 }
