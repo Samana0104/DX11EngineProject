@@ -6,7 +6,8 @@ namespace MyProject
 #define MY_WINDOW_NAME L"My Project"
 #define MY_WINDOW_CLASS_NAME L"IS_REAL_WINDOW?"
 
-	using CALLBACK_WMSIZE_TYPE = std::list<std::pair<void*, std::function<void(UINT, UINT)>>>;
+	using CALLBACK_ID = UINT;
+	using WMSIZE_FUNC = std::function<void(UINT, UINT)>;
 
 	class MyWindow : public Singleton<MyWindow>
 	{
@@ -14,7 +15,8 @@ namespace MyProject
 		inline static bool	mIsActivate = false;
 		inline static POINT mWindowSize = { 0, 0 };
 
-		inline static CALLBACK_WMSIZE_TYPE mCallbackWMSize;
+		CALLBACK_ID registerCallbackID = 0;
+		std::map<CALLBACK_ID, WMSIZE_FUNC> mCallbackWMSize;
 
 		HINSTANCE	mHinstance;
 		HWND		mHwnd;
@@ -25,9 +27,9 @@ namespace MyProject
 
 		void CreateRegisterClass(HINSTANCE _hInstance);
 
-		void static CallEventWMActivate(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM	_lParam);
-		void static CallEventWMDestroy(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM	_lParam);
-		void static CallEventWMSize(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM	_lParam);
+		void CallEventWMActivate(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM	_lParam);
+		void CallEventWMDestroy(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM	_lParam);
+		void CallEventWMSize(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM	_lParam);
 
 	public:
 		bool	CreateWin(LONG _width, LONG _height);
@@ -41,34 +43,7 @@ namespace MyProject
 		glm::vec2	GetWindowSizeVec2() const;
 		HWND		GetWindowHandle() const;
 
-		template <typename T>
-		void	RegisterCallBackWMSize(T* obj, void(T::* func)(UINT, UINT));
-		template <typename T>
-		void	DeleteCallBack(T* obj);
+		CALLBACK_ID	RegisterCallBackWMSize(WMSIZE_FUNC _func);
+		bool DeleteCallBack(CALLBACK_ID _id);
 	};
-
-	template<typename T>
-	inline void MyWindow::RegisterCallBackWMSize(T* obj, void(T::* func)(UINT, UINT))
-	{
-		mCallbackWMSize.push_back(std::make_pair(
-			reinterpret_cast<void*>(obj), 
-			[obj, func](UINT width, UINT height) 
-			{
-			(obj->*func)(width, height);
-			}
-		));
-	}
-
-	template<typename T>
-	inline void MyWindow::DeleteCallBack(T* obj)
-	{
-		auto iter = std::find_if(mCallbackWMSize.begin, mCallbackWMSize.end(),
-			[obj](std::pair<void*, std::function<void(UINT, UINT)>> & _value)
-			{
-				return _value.first == reinterpret_cast<void*>(obj);
-			}
-		);
-
-		mCallbackWMSize.erase(iter);
-	}
 }

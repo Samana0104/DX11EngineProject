@@ -1,18 +1,23 @@
 #pragma once
 #include "MyObject.h"
+#include "MyCamera.h"
 #include "CollisionComponent.h"
 
 namespace MyProject
 {
 	class MyActor : public MyObject
 	{
+	protected:
+		MyCamera* mCamera = nullptr;
 
 	protected:
 		MyActor() = default;
 
 	public:
-		virtual void Update(const float _deltaTime) = 0;
-		virtual void Render(const mat3& _viewMat) = 0;
+		void SetViewedCamera(MyCamera* _camera);
+
+		virtual void Update(const float _deltaTime) override = 0;
+		virtual void Render() override = 0;
 	};
 }
 

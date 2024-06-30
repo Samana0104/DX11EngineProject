@@ -2,11 +2,11 @@
 #include "CollisionComponent.h"
 using namespace MyProject;
 
-bool CollisionComponent::IsPointInRect(const RECT_F rt1, const POINT_F pt)
+bool CollisionComponent::IsPointInRect(const RECT_F rt1, const vec2 pt)
 {
 	if (rt1.left <= pt.x && rt1.right >= pt.x)
 	{
-		if (rt1.top <= pt.y && rt1.bottom >= pt.y)
+		if (rt1.top >= pt.y && rt1.bottom <= pt.y)
 		{
 			return true;
 		}

@@ -1,9 +1,9 @@
 #pragma once
-#include "MyActor.h"
+#include "MyObject.h"
 
 namespace MyProject
 {
-	class MyCamera : public MyActor
+	class MyCamera : public MyObject
 	{
 	public:
 		const mat3 GetViewMat() const;
@@ -14,7 +14,7 @@ namespace MyProject
 		void LookAtObject(MyObject & _obj);
 
 		virtual void Update(const float _deltaTime) override;
-		virtual void Render(const mat3& _viewMat) override;
+		virtual void Render() override;
 	};
 }
 

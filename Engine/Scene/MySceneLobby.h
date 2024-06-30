@@ -3,12 +3,14 @@
 #include "MyInput.h"
 #include "TestObj.h"
 #include "MyCamera.h"
+#include "MyButton.h"
 
 namespace MyProject
 {
 	class MySceneLobby : public MyScene
 	{
 	private:
+		MyButton mButton;
 		POINT_F myPos;
 		TestObj mObject;
 		TestObj mObject2;

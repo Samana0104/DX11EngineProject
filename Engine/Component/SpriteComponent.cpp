@@ -5,11 +5,6 @@ using namespace MyProject;
 SpriteComponent::SpriteComponent(MyObject& _obj) :
 	mObj(_obj)
 {
-	mTimer = 0.f;
-	mChangeTime = 1.f;
-	mAnimationIdx = 0;
-	mAnimationCount = 0;
-	mIsLoop = true;
 }
 
 void SpriteComponent::ResetAnimation()

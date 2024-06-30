@@ -26,6 +26,6 @@ void MyCamera::Update(const float _deltaTime)
 {
 }
 
-void MyCamera::Render(const mat3& _viewMat)
+void MyCamera::Render()
 {
 }

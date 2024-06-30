@@ -16,10 +16,13 @@ void TestObj::Update(const float _deltaTime)
 	mSprite.Update(_deltaTime);
 }
 
-void TestObj::Render(const mat3& _viewMat)
+void TestObj::Render()
 {
-	vec4 color = { mColor.r, mColor.g, mColor.b, mColor.a };
-	//mManager.mTexture[mTextureKey]->Render();
+	mManager.mShader[L"PixelShader.hlsl"]->SetUpConfiguration();
 	mSprite.Render();
-	mManager.mMesh[mMeshKey]->Draw(_viewMat * mTransform.GetModelMat(), color);
+
+	if(mCamera != nullptr)
+		mManager.mMesh[mMeshKey]->Draw(mCamera->GetViewMat() * mTransform.GetModelMat(), mColor);
+	else
+		mManager.mMesh[mMeshKey]->Draw(mTransform.GetModelMat(), mColor);
 }

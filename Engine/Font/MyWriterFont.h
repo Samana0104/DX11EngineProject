@@ -29,6 +29,8 @@ namespace MyProject
 
 		D2D1_MATRIX_3X2_F mTempMat;
 
+		CALLBACK_ID mWMSizeID;
+
 	private:
 		void	DrawBegin();
 		void	DrawEnd();
@@ -41,6 +43,7 @@ namespace MyProject
 
 	public:
 		MyWriterFont(const FontDesc& _desc);
+		~MyWriterFont();
 
 		void DrawTexts(const wstringV _msg, RECT_F _rect, COLOR_F _color);
 		const ComPtr<ID2D1SolidColorBrush>& GetBrush() const;

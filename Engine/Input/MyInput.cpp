@@ -6,6 +6,7 @@ MyInput::MyInput()
 {
 	ZeroMemory(&mCurrentKeyState, sizeof(KeyState) * 256);
 	mMousePos = { 0, 0 };
+	mPreMousePos = { 0, 0 };
 }
 
 void MyInput::UpdateKeyState(const UINT _key)
@@ -45,6 +46,20 @@ vec2 MyInput::GetCurrentMousePosVec2() const
 	return { static_cast<float>(mMousePos.x), static_cast<float>(mMousePos.y) };
 }
 
+KeyState MyInput::GetLBState() const
+{
+	return GetCurrentKeyState(VK_LBUTTON);
+}
+
+KeyState MyInput::GetRBState() const
+{
+	return GetCurrentKeyState(VK_RBUTTON);
+}
+KeyState MyInput::GetMBState() const
+{
+	return GetCurrentKeyState(VK_MBUTTON);
+}
+
 bool MyInput::IsKeyUp(const UINT _key) const
 {
 	return mCurrentKeyState[_key] == KeyState::KEY_UP;
@@ -71,21 +86,6 @@ bool MyInput::IsKeyPressed(const SHORT _key)
 	return _key & PRESSED_KEY;
 }
 
-KeyState MyInput::GetLBState() const
-{
-	return GetCurrentKeyState(VK_LBUTTON);
-}
-
-KeyState MyInput::GetRBState() const
-{
-	return GetCurrentKeyState(VK_RBUTTON);
-}
-
-KeyState MyInput::GetMBState() const
-{
-	return GetCurrentKeyState(VK_MBUTTON);
-}
-
 void MyInput::SetKeyUp(const UINT _key)
 {
 	mCurrentKeyState[_key] = KeyState::KEY_UP;
@@ -106,10 +106,173 @@ void MyInput::SetKeyHold(const UINT _key)
 	mCurrentKeyState[_key] = KeyState::KEY_HOLD;
 }
 
+void MyInput::CallEventOnMouseMove()
+{
+	for (auto& obj : mCallbackOnMouseMove)
+	{
+		obj.second(mPreMousePos, mMousePos);
+	}
+}
+
+void MyInput::CallEventOnMousePush(MOUSE_FLAGS _mouseFlags)
+{
+	for (auto& obj : mCallbackOnMousePush)
+	{
+		obj.second(
+			GetCurrentMousePosVec2(), 
+			_mouseFlags);
+	}
+}
+
+void MyInput::CallEventOnMouseUP(MOUSE_FLAGS _mouseFlags)
+{
+	for (auto& obj : mCallbackOnMouseUP)
+	{
+		obj.second(
+			GetCurrentMousePosVec2(), 
+			_mouseFlags);
+	}
+}
+
+CALLBACK_ID MyInput::RegisterCallBackOnMouseMove(ONMOUSEMOVE_FUNC _func)
+{
+	registerCallbackID++;
+	mCallbackOnMouseMove.insert(std::make_pair(registerCallbackID, _func));
+	return registerCallbackID;
+}
+
+CALLBACK_ID MyInput::RegisterCallBackOnMousePush(ONMOUSEPUSH_FUNC _func)
+{
+	registerCallbackID++;
+	mCallbackOnMousePush.insert(std::make_pair(registerCallbackID, _func));
+	return registerCallbackID;
+}
+
+CALLBACK_ID MyInput::RegisterCallBackOnMouseUP(ONMOUSEUP_FUNC _func)
+{
+	registerCallbackID++;
+	mCallbackOnMouseUP.insert(std::make_pair(registerCallbackID, _func));
+	return registerCallbackID;
+}
+
+bool MyInput::DeleteCallbackMouseMove(CALLBACK_ID _id)
+{
+	if (mCallbackOnMouseMove.contains(_id))
+	{
+		mCallbackOnMouseMove.erase(_id);
+		return true;
+	}
+
+	return false;
+}
+
+bool MyInput::DeleteCallbackMousePush(CALLBACK_ID _id)
+{
+	if (mCallbackOnMousePush.contains(_id))
+	{
+		mCallbackOnMousePush.erase(_id);
+		return true;
+	}
+
+	return false;
+}
+
+bool MyInput::DeleteCallbackMouseUP(CALLBACK_ID _id)
+{
+	if (mCallbackOnMouseUP.contains(_id))
+	{
+		mCallbackOnMouseUP.erase(_id);
+		return true;
+	}
+
+	return false;
+}
+
+bool MyInput::DeleteCallBack(CALLBACK_ID _id)
+{
+	bool isDeleted = false;
+
+	if (DeleteCallbackMouseMove(_id))
+		isDeleted = true;
+	
+	if (DeleteCallbackMousePush(_id))
+		isDeleted = true;
+
+	if (DeleteCallbackMouseUP(_id))
+		isDeleted = true;
+
+		//MessageBoxA(NULL, "Not existed event id[id Error]", "[OnMouse event]", MB_OK);
+	return isDeleted;
+}
+
+void MyInput::CheckMouseMove()
+{
+		// mouse move
+	if (mPreMousePos.x - mMousePos.x != 0L && mPreMousePos.y - mMousePos.y != 0L)
+	{
+		CallEventOnMouseMove();
+	}
+}
+
+void MyInput::CheckMousePush()
+{
+	MOUSE_FLAGS mouseFlags = 0;
+	bool isPushed = false;
+
+	if (GetLBState() == KeyState::KEY_DOWN)
+	{
+		isPushed = true;
+		mouseFlags |= VK_LBUTTON;
+	}
+	if (GetMBState() == KeyState::KEY_DOWN)
+	{
+		isPushed = true;
+		mouseFlags |= VK_MBUTTON;
+	}
+
+	if (GetRBState() == KeyState::KEY_DOWN)
+	{
+		isPushed = true;
+		mouseFlags |= VK_RBUTTON;
+	}
+	
+	if(isPushed)
+		CallEventOnMousePush(mouseFlags);
+}
+
+void MyInput::CheckMouseUP()
+{
+	MOUSE_FLAGS mouseFlags = 0;
+	bool isUp = false;
+
+	if (GetLBState() == KeyState::KEY_UP)
+	{
+		isUp = true;
+		mouseFlags |= VK_LBUTTON;
+	}
+	if (GetMBState() == KeyState::KEY_UP)
+	{
+		isUp = true;
+		mouseFlags |= VK_MBUTTON;
+	}
+
+	if (GetRBState() == KeyState::KEY_UP)
+	{
+		isUp = true;
+		mouseFlags |= VK_RBUTTON;
+	}
+	
+	if(isUp)
+		CallEventOnMouseUP(mouseFlags);
+}
+
+
 void MyInput::Update()
 {
 	if (!mWindow.IsActivate())
 		return;
+
+	mPreMousePos = mMousePos;
 
 	GetCursorPos(&mMousePos);
 	ScreenToClient(mWindow.GetWindowHandle(), &mMousePos);
@@ -118,4 +281,8 @@ void MyInput::Update()
 	{
 		UpdateKeyState(key);
 	}
+
+	CheckMouseMove();
+	CheckMousePush();
+	CheckMouseUP();
 }

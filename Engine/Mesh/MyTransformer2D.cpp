@@ -82,9 +82,19 @@ const vec2& MyTransformer2D::GetScale() const
 	return mScale;
 }
 
-float MyProject::MyTransformer2D::GetAngle() const
+float MyTransformer2D::GetAngle() const
 {
 	return mAngle;
+}
+
+RECT_F MyTransformer2D::GetCartesianRectF() const
+{
+	return {
+		mLocation.x - mScale.x / 2,
+		mLocation.y + mScale.y / 2,
+		mLocation.x + mScale.x / 2,
+		mLocation.y - mScale.y / 2
+	};
 }
 
 MyTransformer2D* MyTransformer2D::operator->()

@@ -52,9 +52,6 @@
     <Filter Include="Engine\FSM">
       <UniqueIdentifier>{e4353116-282f-4af4-827b-22a80f4b8971}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Button">
-      <UniqueIdentifier>{a95ef134-bd46-43d7-8554-9e945ed05d07}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font\MyFontHandler.h">
@@ -195,6 +192,9 @@
     <ClInclude Include="Scene\MySceneSetting.h">
       <Filter>Engine\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Object\MyButton.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font\MyFontHandler.cpp">
@@ -317,6 +317,9 @@
     <ClCompile Include="Scene\MySceneSetting.cpp">
       <Filter>Engine\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Object\MyButton.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\data\shaders\PixelShader.hlsl">
@@ -325,5 +328,8 @@
     <FxCompile Include="..\data\shaders\VertexShader.hlsl">
       <Filter>Engine\HLSL</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

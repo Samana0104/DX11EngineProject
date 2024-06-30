@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -78,6 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)..\output\</OutDir>
+    <IntDir>$(SolutionDir)..\output\Debug\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -123,7 +125,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Button\;$(ProjectDir)Color\;$(ProjectDir)Component\;$(ProjectDir)Core\;$(ProjectDir)fmod\inc\;$(ProjectDir)Font\;$(ProjectDir)FSM\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Mesh\;$(ProjectDir)Object\;$(ProjectDir)Shader\;$(ProjectDir)Sound\;$(ProjectDir)Sprite\;$(ProjectDir)Scene\;$(ProjectDir)Texture\;$(ProjectDir)Timer\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Color\;$(ProjectDir)Component\;$(ProjectDir)Core\;$(ProjectDir)fmod\inc\;$(ProjectDir)Font\;$(ProjectDir)FSM\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Mesh\;$(ProjectDir)Object\;$(ProjectDir)Shader\;$(ProjectDir)Sound\;$(ProjectDir)Sprite\;$(ProjectDir)Scene\;$(ProjectDir)Texture\;$(ProjectDir)Timer\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -193,6 +195,7 @@
     <ClInclude Include="Mesh\MyCircle2D.h" />
     <ClInclude Include="Mesh\MyTransformer2D.h" />
     <ClInclude Include="Object\MyActor.h" />
+    <ClInclude Include="Object\MyButton.h" />
     <ClInclude Include="Object\MyCamera.h" />
     <ClInclude Include="Object\MyObject.h" />
     <ClInclude Include="Object\MyPawn.h" />
@@ -239,6 +242,7 @@
     <ClCompile Include="Mesh\MyCircle2D.cpp" />
     <ClCompile Include="Mesh\MyTransformer2D.cpp" />
     <ClCompile Include="Object\MyActor.cpp" />
+    <ClCompile Include="Object\MyButton.cpp" />
     <ClCompile Include="Object\MyCamera.cpp" />
     <ClCompile Include="Object\MyObject.cpp" />
     <ClCompile Include="Object\MyPawn.cpp" />
@@ -274,6 +278,9 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VSMain</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,12 +3,14 @@
 #include "MyInput.h"
 #include "MyWindow.h"
 #include "MyResourceManger.h"
+#include "MySceneManager.h"
 
 namespace MyProject
 {
 	class MyCore : public MyCoreAPI
 	{
 	protected:
+		MySceneManager mSceneManager;
 		MySystemTimer mTimer;
 
 		MyInput&			mInput = MyInput::GetInstance();
@@ -26,17 +28,12 @@ namespace MyProject
 		void	GamePostRender();
 		void	GameInit();
 		void	GameRelease();
-	protected:
-		MyCore() = default;
-
-		virtual void Init() = 0;
-		virtual void Update(const float _delta) = 0;
-		virtual void Render() = 0;
-		virtual void Release() = 0;
 
 	public:
+		MyCore() = default;
 		void GameRun();
 
-		static void INITIAL_SETUP(HINSTANCE _hinstance, LONG _width, LONG _height);
+		static void ENGINE_BEGIN(HINSTANCE _hinstance, LONG _width, LONG _height);
+		static void ENGINE_END();
 	};
 }

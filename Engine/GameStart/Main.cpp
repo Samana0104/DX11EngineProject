@@ -1,51 +1,16 @@
 #include "pch.h"
 #include "MyCore.h"
-#include "MySceneManager.h"
 using namespace MyProject;
-
-class Sample : public MyCore 
-{
-private:
-	MySceneManager mSceneManager;
-
-public:
-	Sample()
-	{
-		Init();
-	}
-
-	~Sample()
-	{
-		Release();
-	}
-
-	virtual void Init() override
-	{
-		mSceneManager.Init();
-	}
-	virtual void Update(const float _deltaTime) override
-	{
-		mSceneManager.Update(_deltaTime);
-	}
-
-	virtual void Render() override
-	{
-		mSceneManager.Render();
-	}
-
-	virtual void Release() override
-	{
-		mSceneManager.Release();
-	}
-
-};
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR
 	pCmdLine, int nCmdShow)
 {
-	MyCore::INITIAL_SETUP(hInstance, 1200, 800);
-	Sample sample;
+	MyCore::ENGINE_BEGIN(hInstance, 1200, 800);
+	std::shared_ptr<MyCore> core = std::make_shared<MyCore>();
+	core->GameRun();
 
-	sample.GameRun();
+	core.reset(); // 메모리 초기화 순서가 있기에 무조건 리셋 해야함
+	// 나중에 begin end에서 자동 처리 하게 만들예정
+	MyCore::ENGINE_END();
 	return 0;
 }

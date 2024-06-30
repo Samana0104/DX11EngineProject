@@ -8,6 +8,10 @@ void MySceneLobby::Init()
 	mObject2->SetScale({ 40.f, 10.f });
 	mObject2->SetLocation({ 50.f, 0.f });
 	mObject.SetColor({ 1.f, 1.f, 0.f, 0.7f });
+	mObject.SetViewedCamera(&mCamera);
+	mObject2.SetViewedCamera(&mCamera);
+	mButton->SetScale({ 30, 10 });
+	mButton.SetTextureKey(L"KGCA1.png");
 }
 
 void MySceneLobby::Update(float _deltaTime)
@@ -38,13 +42,15 @@ void MySceneLobby::Update(float _deltaTime)
 	mObject->AddRotation(0.1f);
 	mObject2->AddRotation(0.5f);
 	mObject.Update(_deltaTime);
+	mButton.Update(_deltaTime);
 	//mCamera.LookAtObject(mObject2);
 }
 
 void MySceneLobby::Render()
 {
-	mObject.Render(mCamera.GetViewMat());
-	mObject2.Render(mCamera.GetViewMat());
+	mObject.Render();
+	mObject2.Render();
+	mButton.Render();
 	//DrawTextForDebugging(L"카메라 좌표계 : %f %f\n 마우스 좌표계 :  %f %f",
 	//	mCamera.mTransform.GetLocation().x,
 	//	mCamera.mTransform.GetLocation().y,

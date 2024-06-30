@@ -10,15 +10,15 @@ void MyWindow::CreateRegisterClass(HINSTANCE _hInstance)
 		switch (uMsg)
 		{
 		case WM_ACTIVATE:
-			MyWindow::CallEventWMActivate(hwnd, uMsg, wParam, lParam);
+			MyWindow::GetInstance().CallEventWMActivate(hwnd, uMsg, wParam, lParam);
 			return 0;
 
 		case WM_DESTROY:
-			MyWindow::CallEventWMDestroy(hwnd, uMsg, wParam, lParam);
+			MyWindow::GetInstance().CallEventWMDestroy(hwnd, uMsg, wParam, lParam);
 			return 0;
 
 		case WM_SIZE:
-			MyWindow::CallEventWMSize(hwnd, uMsg, wParam, lParam);
+			MyWindow::GetInstance().CallEventWMSize(hwnd, uMsg, wParam, lParam);
 			return 0;
 		}
 		return DefWindowProc(hwnd, uMsg, wParam, lParam);
@@ -134,5 +134,26 @@ glm::vec2 MyWindow::GetWindowSizeVec2() const
 HWND MyWindow::GetWindowHandle() const
 {
 	return mHwnd;
+}
+
+CALLBACK_ID MyWindow::RegisterCallBackWMSize(WMSIZE_FUNC _func)
+{
+	registerCallbackID++;
+	mCallbackWMSize.insert(std::make_pair(registerCallbackID, _func));
+	return registerCallbackID;
+}
+
+bool MyWindow::DeleteCallBack(CALLBACK_ID _id)
+{
+	if (mCallbackWMSize.contains(_id))
+	{
+		mCallbackWMSize.erase(_id);
+		return true;
+	}
+	else
+	{
+		MessageBoxA(NULL, "Not existed event id[id Error]", "[WM Size event]", MB_OK);
+		return false;
+	}
 }
 

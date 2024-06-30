@@ -10,13 +10,13 @@ namespace MyProject
 		MyObject&	mObj;
 		SPRITE_KEY	mSpriteKey;
 
-		float	mTimer;
-		float	mChangeTime;
+		float	mTimer			= 0.f;
+		float	mChangeTime		= 1.f;
 
-		size_t  mAnimationCount;
-		size_t	mAnimationIdx;
+		size_t  mAnimationCount	= 0;
+		size_t	mAnimationIdx	= 0;
 		
-		bool    mIsLoop;
+		bool mIsLoop = true;
 
 		MyResourceManager& mManager = MyResourceManager::GetInstance();
 

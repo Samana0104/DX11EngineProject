@@ -12,6 +12,10 @@ namespace MyProject
 	class Singleton
 	{
 	private:
+		static inline T* singleton = nullptr;
+		static inline bool isConstructed = false; // template마다 생성되는 static이 다름
+
+	private:
 		Singleton(const Singleton&) = delete;
 		Singleton(Singleton&&) = delete;
 		Singleton& operator=(const Singleton&) = delete;
@@ -23,8 +27,19 @@ namespace MyProject
 	public:
 		static T& GetInstance()
 		{
-			static T _singleton;
-			return _singleton;
+			if (!isConstructed)
+			{
+				singleton = new T;
+				isConstructed = true;
+			}
+
+			return *singleton;
+		}
+
+		static void Release()
+		{
+			if(singleton != nullptr)
+				delete singleton;
 		}
 	};
 }

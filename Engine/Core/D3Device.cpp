@@ -2,6 +2,11 @@
 #include "D3Device.h"
 using namespace MyProject;
 
+D3Device::~D3Device()
+{
+	MyWindow::GetInstance().DeleteCallBack(mWMSizeID);
+}
+
 bool D3Device::CreateDevice()
 {
 	if (!CreateDeviceAndSwapChain())
@@ -17,7 +22,13 @@ bool D3Device::CreateDevice()
 		return false;
 
 	CreateViewport();
-	MyWindow::GetInstance().RegisterCallBackWMSize<D3Device>(this, &D3Device::OnWMSize);
+	mWMSizeID = MyWindow::GetInstance().RegisterCallBackWMSize(
+		std::bind(
+			&D3Device::OnWMSize,
+			this,
+			std::placeholders::_1,
+			std::placeholders::_2
+		));
 	return true;
 }
 

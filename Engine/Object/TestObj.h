@@ -13,7 +13,7 @@ namespace MyProject
 		TestObj();
 
 		virtual void Update(const float _deltaTime) override;
-		virtual void Render(const mat3& _viewMat) override;
+		virtual void Render() override;
 	};
 }
 

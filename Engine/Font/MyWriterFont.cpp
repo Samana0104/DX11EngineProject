@@ -10,7 +10,18 @@ MyWriterFont::MyWriterFont(const FontDesc& _desc) :
 #else
 	CreateBrushComponent();
 #endif
-	MyWindow::GetInstance().RegisterCallBackWMSize(this, &MyWriterFont::OnWMSize);
+	mWMSizeID = MyWindow::GetInstance().RegisterCallBackWMSize(
+		std::bind(
+			&MyWriterFont::OnWMSize, 
+			this, 
+			std::placeholders::_1,
+			std::placeholders::_2
+		));
+}
+
+MyWriterFont::~MyWriterFont()
+{
+	MyWindow::GetInstance().DeleteCallBack(mWMSizeID);
 }
 
 void MyWriterFont::OnWMSize(UINT _weight, UINT _height)

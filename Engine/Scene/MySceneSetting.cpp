@@ -17,8 +17,7 @@ void MySceneSetting::Update(float _deltaTime)
 
 void MySceneSetting::Render()
 {
-	glm::mat3 a(1.f);
-	obj.Render(a);
+	obj.Render();
 	mManager.mFont.DrawTextForDebugging(L"아 힘들다아");
 }
 

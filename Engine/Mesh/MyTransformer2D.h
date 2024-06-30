@@ -35,6 +35,8 @@ namespace MyProject
 		const vec2&	GetScale() const;
 		float		GetAngle() const;
 
+		RECT_F		GetCartesianRectF() const;
+
 		MyTransformer2D* operator->();
 		MyTransformer2D& operator=(const MyTransformer2D& _ref);
 

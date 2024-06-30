@@ -5,7 +5,7 @@ using namespace MyProject;
 void MyCore::GameFrame()
 {
 	mInput.Update();
-	Update(mTimer.GetDeltaTime());
+	mSceneManager.Update(mTimer.GetDeltaTime());
 	mManager.mSound.Update();
 }
 
@@ -18,7 +18,7 @@ void MyCore::GamePreRender()
 void MyCore::GameRender()
 {
 	GamePreRender();
-	Render();
+	mSceneManager.Render();
 	GamePostRender();
 }
 
@@ -30,12 +30,12 @@ void MyCore::GamePostRender()
 void MyCore::GameInit()
 {
 	mTimer.Reset();
-	Init();
+	mSceneManager.Init();
 }
 
 void MyCore::GameRelease()
 {
-	Release();
+	mSceneManager.Release();
 }
 
 void MyCore::GameRun()
@@ -55,7 +55,7 @@ void MyCore::GameRun()
 	GameRelease();
 }
 
-void MyCore::INITIAL_SETUP(HINSTANCE _hinstance, LONG _width, LONG _height)
+void MyCore::ENGINE_BEGIN(HINSTANCE _hinstance, LONG _width, LONG _height)
 {
 	MyWindow::GetInstance().SetHinstance(_hinstance);
 #ifdef _DEBUG
@@ -68,4 +68,12 @@ void MyCore::INITIAL_SETUP(HINSTANCE _hinstance, LONG _width, LONG _height)
 
 	MyResourceManager::GetInstance().CreateDafultResource();
 
+}
+
+void MyCore::ENGINE_END()
+{
+	MyResourceManager::GetInstance().Release();
+	MyInput::GetInstance().Release();
+	D3Device::GetInstance().Release();
+	MyWindow::GetInstance().Release();
 }

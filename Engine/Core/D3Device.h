@@ -19,6 +19,8 @@ namespace MyProject
 		D3D11_VIEWPORT			mViewPort;
 		DXGI_SWAP_CHAIN_DESC	mSwapChainDesc;
 	
+		CALLBACK_ID mWMSizeID;
+
 	private:
 		void OnWMSize(UINT _width, UINT _height);
 
@@ -33,6 +35,8 @@ namespace MyProject
 		void CreateViewport();
 
 	public:
+		~D3Device();
+
 		bool CreateDevice();
 	};
 

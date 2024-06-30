@@ -9,7 +9,7 @@ MyObject::MyObject() :
 {
 }
 
-void MyObject::SetColor(COLOR_F _color)
+void MyObject::SetColor(vec4 _color)
 {
 	mColor = _color;
 }
@@ -25,7 +25,7 @@ void MyObject::SetMeshKey(MESH_KEY _key)
 }
 
 
-const COLOR_F& MyObject::GetColor() const
+const vec4& MyObject::GetColor() const
 {
 	return mColor;
 }
@@ -48,4 +48,15 @@ const MyTransformer2D& MyObject::GetTransform() const
 MyTransformer2D* MyObject::operator->()
 {
 	return &mTransform;
+}
+
+void MyObject::Update(const float _deltaTime)
+{
+}
+
+void MyObject::Render()
+{
+	mManager.mShader[L"PixelShader.hlsl"]->SetUpConfiguration();
+	mManager.mTexture[mTextureKey]->Render();
+	mManager.mMesh[mMeshKey]->Draw(mTransform.GetModelMat(), mColor);
 }
