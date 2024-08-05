@@ -2,45 +2,91 @@
 #include "MoveComponent.h"
 using namespace MyProject;
 
-MoveComponent::MoveComponent(float _speed, float _acceleration, vec2 _dir) :
-    mSpeed(_speed),
-    mAcceleration(_acceleration),
-    mDirection(_dir)
+MoveComponent::MoveComponent(MyTransformer2D & _transform) :
+    mTransform(_transform)
 {
 }
 
-void MoveComponent::SetSpeed(const float _speed)
+void MoveComponent::SetSpeedX(const float _speedX)
 {
-    mSpeed = _speed;
+    mVelocity.x = _speedX;
 }
 
-void MoveComponent::SetAcceleration(const float _acceleration)
+void MoveComponent::SetSpeedY(const float _speedY)
 {
-    mAcceleration = _acceleration;
+    mVelocity.y = _speedY;
 }
 
-void MoveComponent::SetDirection(const vec2 _direction)
+void MoveComponent::SetAccelX(const float _acclerationX)
 {
-    mDirection = _direction;
+    mAcceleration.x = _acclerationX;
 }
 
-float MoveComponent::GetSpeed() const
+void MoveComponent::SetAccelY(const float _acclerationY)
 {
-    return mSpeed;
+    mAcceleration.y = _acclerationY;
 }
 
-float MoveComponent::GetAcceleration() const
+const vec2& MoveComponent::GetOffset() const
+{
+    return mOffset;
+}
+
+void MoveComponent::AddSpeedX(const float _speed)
+{
+    mVelocity.x += _speed;
+}
+
+void MoveComponent::AddSpeedY(const float _speed)
+{
+    mVelocity.y += _speed;
+}
+
+void MoveComponent::AddAccelX(const float _acceleration)
+{
+    mAcceleration.x += _acceleration;
+}
+
+void MoveComponent::AddAccelY(const float _acceleration)
+{
+    mAcceleration.y += _acceleration;
+}
+
+void MoveComponent::Break(const vec2 _accleration)
+{
+    if (mVelocity.x <= TOLERANCE && mVelocity.y <= TOLERANCE)
+        return;
+
+    if (mVelocity.x > 0.f)
+    {
+		mIsXposBreaking = true;
+    }
+    else if(mVelocity.x < 0.f)
+    {
+		mIsXposBreaking = false;
+    }
+
+}
+
+void MoveComponent::Stop()
+{
+    mVelocity = { 0.f, 0.f };
+    mAcceleration = { 0.f, 0.f };
+}
+
+vec2 MoveComponent::GetVelocity() const
+{
+    return mVelocity;
+}
+
+vec2 MoveComponent::GetAccel() const
 {
     return mAcceleration;
 }
 
-vec2 MoveComponent::GetDirection() const
-{
-    return mDirection;
-}
-
 void MoveComponent::Update(float _deltaTime)
 {
-    mSpeed += mAcceleration * _deltaTime;
-    mOffset = mSpeed * _deltaTime * mDirection;
+    mVelocity += mAcceleration * _deltaTime;
+    mOffset = mVelocity * _deltaTime;
+    mTransform->AddLocation(mOffset);
 }

@@ -4,76 +4,90 @@ using namespace MyProject;
 
 void MySceneLobby::Init()
 {
-	mObject->SetScale({ 30.f, 30.f });
-	mObject2->SetScale({ 40.f, 10.f });
-	mObject2->SetLocation({ 50.f, 0.f });
-	mObject.SetColor({ 1.f, 1.f, 0.f, 0.7f });
-	mObject.SetViewedCamera(&mCamera);
-	mObject2.SetViewedCamera(&mCamera);
-	mButton->SetScale({ 30, 10 });
-	mButton.SetTextureKey(L"KGCA1.png");
+	mCurrentButton = 0;
+	mTitle.SetTextureKey(L"title1.png");
+	mTitle->SetScale({ 135.f, 25.f });
+	mTitle->SetLocation({ 0.f, 17.f });
+	mBackground.SetImageScale();
+	mBackground.SetColor({ 0.f, 0.f, 0.f, 1.f });
+	mButtons[0]->SetLocation({ 0.f, -7.f });
+	mButtons[1]->SetLocation({ 0.f, -17.f });
+	mButtons[2]->SetLocation({ 0.f, -27.f });
+	mButtons[0].SetText(L"시작");
+	mButtons[1].SetText(L"설정");
+	mButtons[2].SetText(L"나가기");
+	mButtons[mCurrentButton].SetCurrentState(SelectState::ACTIVE);
+	mManager.mSound[L"menu-change.wav"]->VolumneDown(0.3f);
 }
 
 void MySceneLobby::Update(float _deltaTime)
 {
-	if (mInput.GetCurrentKeyState(VK_UP) == KeyState::KEY_HOLD)
+	if (mInput.GetCurrentKeyState(VK_UP) == KeyState::KEY_DOWN)
 	{
-		mCamera->AddLocation({ 0.f, 100.f * _deltaTime });
+		mManager.mSound[L"menu-change.wav"]->Play();
+		mButtons[mCurrentButton].SetCurrentState(SelectState::DEFAULT);
+		mCurrentButton--;
+		mCurrentButton = (mCurrentButton + 3) % 3;
+		mButtons[mCurrentButton].SetCurrentState(SelectState::ACTIVE);
 	}
-	if (mInput.GetCurrentKeyState(VK_RIGHT) == KeyState::KEY_HOLD)
+	if (mInput.GetCurrentKeyState(VK_DOWN) == KeyState::KEY_DOWN)
 	{
-		mCamera->AddLocation({ 100.f * _deltaTime,  0.f });
-	}
-	if (mInput.GetCurrentKeyState(VK_LEFT) == KeyState::KEY_HOLD)
-	{
-		mCamera->AddLocation({ 100.f * -_deltaTime,  0.f });
-	}
-	if (mInput.GetCurrentKeyState(VK_DOWN) == KeyState::KEY_HOLD)
-	{
-		mCamera->AddLocation({ 0.f, 100.f * -_deltaTime});
-		mSceneManager.SetCurrentScene(L"SETTING");
+		mManager.mSound[L"menu-change.wav"]->Play();
+		mButtons[mCurrentButton].SetCurrentState(SelectState::DEFAULT);
+		mCurrentButton++;
+		mCurrentButton %= 3;
+		mButtons[mCurrentButton].SetCurrentState(SelectState::ACTIVE);
 	}
 
-	if (mInput.GetCurrentKeyState(VK_F1) == KeyState::KEY_HOLD)
-		mCamera.ZoomIn(0.01f);
-	else if (mInput.GetCurrentKeyState(VK_F2) == KeyState::KEY_HOLD)
-		mCamera.ZoomOut(0.01f);
+	if (mInput.GetCurrentKeyState(VK_RETURN) == KeyState::KEY_DOWN ||
+		mInput.GetCurrentKeyState(0x5A) == KeyState::KEY_DOWN ||
+		mInput.GetCurrentKeyState(0x58) == KeyState::KEY_DOWN)
+	{
+		if (mCurrentButton == 0)
+		{
+			mManager.mSound[L"title-start.wav"]->Play();
+			mSceneManager.SetCurrentScene(L"STAGE");
+		}
+		else if(mCurrentButton == 1)
+		{
+			mManager.mSound[L"menu-select.wav"]->Play();
+		}
+		else if (mCurrentButton == 2)
+		{
+			PostMessage(MyWindow::GetInstance().GetWindowHandle(), WM_DESTROY, 0, 0);
+		}
+	}
 
-	mObject->AddRotation(0.1f);
-	mObject2->AddRotation(0.5f);
-	mObject.Update(_deltaTime);
-	mButton.Update(_deltaTime);
 	//mCamera.LookAtObject(mObject2);
+	for (int i = 0; i < 3; i++)
+		mButtons[i].Update(_deltaTime);
 }
 
 void MySceneLobby::Render()
 {
-	mObject.Render();
-	mObject2.Render();
-	mButton.Render();
-	//DrawTextForDebugging(L"카메라 좌표계 : %f %f\n 마우스 좌표계 :  %f %f",
-	//	mCamera.mTransform.GetLocation().x,
-	//	mCamera.mTransform.GetLocation().y,
-	//	MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2()).x,
-	//	MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2()).y);
-	//DrawTextForDebugging(mTimer.m_csBuffer.c_str());
-	//DrawTextForDebugging(L"[%f %f] [%f %f]\n[%f %f]",
-	//	mObject->GetLocation().x,
-	//	mObject->GetLocation().y,
-	//	mObject2->GetLocation().x,
-	//	mObject2->GetLocation().y,
-	//	mCamera->GetLocation().x,
-	//	mCamera->GetLocation().y);
+	mBackground.Render();
+	mTitle.Render();
+
+	for (int i = 0; i < 3; i++)
+		mButtons[i].Render();
 }
 
 void MySceneLobby::Release()
 {
+	mManager.mSound[L"theme.ogg"]->Stop();
 }
 
 void MySceneLobby::Reset()
 {
 }
 
-void MySceneLobby::Execute()
+void MySceneLobby::Start()
+{
+	mManager.mSound[L"theme.ogg"]->Stop();
+	mManager.mSound[L"theme.ogg"]->Play(true);
+	mManager.mSound[L"ashrams.ogg"]->Stop();
+}
+
+void MySceneLobby::End()
 {
 }

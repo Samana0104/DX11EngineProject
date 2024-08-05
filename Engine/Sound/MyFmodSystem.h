@@ -12,9 +12,10 @@ namespace MyProject
 	class MyFmodSystem
 	{
 	private:
-		inline static const int MAX_CHANNELS = 32;
-		inline static UINT mRefSysCount = 0;
-		inline static FMOD_SYS * mFmodSys = nullptr;
+		inline static const int  MAX_CHANNELS = 32;
+
+		inline static UINT		 mRefSysCount = 0;
+		inline static FMOD_SYS * mFmodSys	  = nullptr;
 
 	private:
 		bool CreateFmodSystem();

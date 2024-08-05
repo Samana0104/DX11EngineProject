@@ -13,7 +13,7 @@ MyFmodSystem::MyFmodSystem()
 	{
 		mRefSysCount++;
 	}
-	OutputDebugString((std::to_wstring(mRefSysCount) + L"\n").c_str());
+	//OutputDebugString((std::to_wstring(mRefSysCount) + L"\n").c_str());
 }
 
 MyFmodSystem::~MyFmodSystem()
@@ -28,7 +28,7 @@ MyFmodSystem::~MyFmodSystem()
 		mRefSysCount--;
 	}
 
-	OutputDebugString((std::to_wstring(mRefSysCount) + L"\n").c_str());
+	//OutputDebugString((std::to_wstring(mRefSysCount) + L"\n").c_str());
 }
 
 bool MyFmodSystem::CreateFmodSystem()
@@ -49,7 +49,7 @@ bool MyFmodSystem::CreateFmodSystem()
 		return false;
 	}
 
-	OutputDebugString(L"\nFMOD System Create\n");
+	//OutputDebugString(L"\nFMOD System Create\n");
 	return true;
 }
 
@@ -61,7 +61,7 @@ void MyFmodSystem::DeleteFmodSystem()
 		mFmodSys->release();
 	}
 
-	OutputDebugString(L"\nFMOD System Delete\n");
+	//OutputDebugString(L"\nFMOD System Delete\n");
 	mFmodSys = nullptr;
 }
 

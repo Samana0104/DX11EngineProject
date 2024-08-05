@@ -3,6 +3,8 @@
 #include <initializer_list>
 #include <vector>
 #include <string>
+#include <queue>
+#include <stack>
 #include <map>
 #include <list>
 #include <algorithm>
@@ -24,11 +26,11 @@
 #include <atlconv.h>
 #include <glm/glm.hpp>
 #include "fmod.hpp"
-#include "fmod_errors.h"
 #include "directxtk/WICTextureLoader.h"
 #include "Singleton.h"
 #include "MyWindow.h"
 #include "D3Device.h"
+#include "ResourceHandler.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d2d1.lib")

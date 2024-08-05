@@ -2,15 +2,9 @@
 #include "SpriteComponent.h"
 using namespace MyProject;
 
-SpriteComponent::SpriteComponent(MyObject& _obj) :
-	mObj(_obj)
-{
-}
-
 void SpriteComponent::ResetAnimation()
 {
-	mAnimationIdx = 0;
-	mTimer = 0.f;
+	SetAnimationIdx(0);
 }
 
 void SpriteComponent::SetLoop(const bool _loop)
@@ -20,14 +14,13 @@ void SpriteComponent::SetLoop(const bool _loop)
 
 void SpriteComponent::SetAnimationIdx(const size_t _idx)
 {
-	mAnimationIdx = _idx % mAnimationCount;
+	mAnimationIdx = _idx;
 }
 
 void SpriteComponent::SetSpriteKey(const SPRITE_KEY _spriteKey)
 {
 	mSpriteKey = _spriteKey;
 	mAnimationCount = mManager.mSprite[_spriteKey]->GetSize();
-	ResetAnimation();
 }
 
 void SpriteComponent::SetChangeTime(const float _time)
@@ -37,6 +30,9 @@ void SpriteComponent::SetChangeTime(const float _time)
 
 void SpriteComponent::Update(const float _deltaTime)
 {
+	if (mAnimationCount == 0)
+		return;
+
 	mTimer += _deltaTime;
 
 	if (mTimer >= mChangeTime)
@@ -45,13 +41,17 @@ void SpriteComponent::Update(const float _deltaTime)
 		mAnimationIdx++;
 
 		if (mIsLoop)
+		{
 			mAnimationIdx %= mAnimationCount;
+		}
 		else
+		{
 			mAnimationIdx = min(mAnimationIdx, mAnimationCount - 1);
+		}
 	}
 }
 
-void SpriteComponent::Render()
+void SpriteComponent::Render(MyObject& mObj)
 {
 	mManager.mSprite[mSpriteKey]->Render(mObj, mAnimationIdx);
 }

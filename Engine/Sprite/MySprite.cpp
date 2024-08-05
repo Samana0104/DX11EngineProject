@@ -26,12 +26,13 @@ const SpriteType& MySprite::GetSpriteType() const
 	return mSpriteType;
 }
 
-bool MySprite::LoadSpriteScriptFile(wstringV _filePath)
+bool MySprite::LoadScript(wstringV _filePath)
 {
 	FILE* fp_src = nullptr;
 
 	TCHAR pBuffer[256] = { 0 };
 	TCHAR textureName[256] = { 0 };
+	TCHAR shaderName[256] = { 0 };
 	
 	int readFrame = 0;
 
@@ -42,14 +43,17 @@ bool MySprite::LoadSpriteScriptFile(wstringV _filePath)
 
 // ---------------------------
 	_fgetts(pBuffer, _countof(pBuffer), fp_src);
-	_stscanf_s(pBuffer, L"%d %d %s",
+	_stscanf_s(pBuffer, L"%d %d %s %s",
 		&mSpriteCount,
 		&mSpriteType,
 		textureName,
-		(unsigned int)_countof(textureName));
+		(unsigned int)_countof(textureName),
+		shaderName,
+		(unsigned int)_countof(shaderName));
 // ---------------------------
 
 	mSpriteMainKey = textureName;
+	mSpriteShaderKey = shaderName;
 	
 	switch (mSpriteType)
 	{
@@ -91,6 +95,8 @@ bool MySprite::LoadSpriteScriptFile(wstringV _filePath)
 void MySprite::Render(MyObject& _obj, size_t idx)
 {
 	MyResourceManager& mManager = MyResourceManager::GetInstance();
+
+	mManager.mShader[mSpriteShaderKey]->SetUpConfiguration();
 
 	switch (mSpriteType)
 	{

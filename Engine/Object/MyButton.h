@@ -16,17 +16,21 @@ namespace MyProject
 	class MyButton : public MyObject
 	{
 	private:
-		SelectState mCurrentState = DEFAULT;
-		bool mIsMovable = true;
+		SelectState mCurrentState = SelectState::DEFAULT;
+
+		bool mIsMovable = false;
+		bool mIsDisable = true;
 
 		CALLBACK_ID mOnMouseMoveID;
 		CALLBACK_ID mOnMousePushID;
 		CALLBACK_ID mOnMouseUpID;
+		
+		std::function<void()> mCallSelectedBtn;
 
 	private:
-		void OnMouseMove(POINT_L _prePos, POINT_L _postPos);
-		void OnMousePush(vec2 _pos, MOUSE_FLAGS _flag);
-		void OnMouseUp(vec2 _pos, MOUSE_FLAGS _flag);
+		virtual void OnMouseMove(POINT_L _prePos, POINT_L _postPos);
+		virtual void OnMousePush(vec2 _pos, MOUSE_FLAGS _flag);
+		virtual void OnMouseUp(vec2 _pos, MOUSE_FLAGS _flag);
 		
 	protected:
 		virtual void SetDefaultMode();
@@ -40,9 +44,11 @@ namespace MyProject
 		virtual ~MyButton();
 
 		SelectState GetCurrentState() const;
+		void SetCurrentState(SelectState _state);
 		void SetMovable(bool _isMovable);
+		void SetDisable(bool _isDisable);
+		void SetSelectedBtn(std::function<void()> _func);
 
-		virtual void SelectMouseState(SelectState _state);
 		virtual void Update(const float _deltaTime) override;
 		virtual void Render() override;
 	};

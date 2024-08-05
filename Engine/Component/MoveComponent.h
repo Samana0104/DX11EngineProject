@@ -1,26 +1,44 @@
 #pragma once
 #include "MyCoreAPI.h"
+#include "MyTransformer2D.h"
 
 namespace MyProject
 {
 	class MoveComponent
 	{
 	private:
-		float	mSpeed;
-		float	mAcceleration;
-		vec2	mDirection;
-		vec2	mOffset;
+		vec2	mVelocity	  = { 0.f, 0.f };
+		vec2 	mAcceleration = { 0.f, 0.f };
+		vec2 	mOffset		  = { 0.f, 0.f };
+		vec2	mDir		  = { 0.f, 0.f };
+		// °è»ê¿ë
+
+		bool	mIsXposBreaking = false;
+		bool	mIsYposBreaking = false;
+
+		MyTransformer2D & mTransform;
 
 	public:
-		MoveComponent(float _speed, float _acceleration, vec2 _dir);
+		MoveComponent(MyTransformer2D & _transform);
 
-		void SetSpeed(const float _speed);
-		void SetAcceleration(const float _acceleration);
-		void SetDirection(const vec2 _direction);
+		void SetSpeedX(const float _speedX);
+		void SetSpeedY(const float _speedY);
 
-		float GetSpeed() const;
-		float GetAcceleration() const;
-		vec2  GetDirection() const;
+		void SetAccelX(const float _acclerationX);
+		void SetAccelY(const float _acclerationY);
+
+		const vec2& GetOffset() const;
+		
+		void AddSpeedX(const float _speed);
+		void AddSpeedY(const float _speed);
+		void AddAccelX(const float _acceleration);
+		void AddAccelY(const float _acceleration);
+
+		void Break(const vec2 _scalar);
+		void Stop();
+
+		vec2  GetVelocity() const;
+		vec2  GetAccel() const;
 
 		void  Update(float _deltaTime);
 	};

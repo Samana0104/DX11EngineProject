@@ -12,8 +12,8 @@ namespace MyProject
 	class Singleton
 	{
 	private:
-		static inline T* singleton = nullptr;
-		static inline bool isConstructed = false; // template마다 생성되는 static이 다름
+		static inline T*	singleton	  = nullptr;
+		static inline bool	isConstructed = false; // template마다 생성되는 static이 다름
 
 	private:
 		Singleton(const Singleton&) = delete;

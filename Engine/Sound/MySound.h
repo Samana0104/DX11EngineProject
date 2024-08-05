@@ -8,14 +8,16 @@ namespace MyProject
 	{
 	private:
 		MyFmodSystem	mFmodSys;
-		FMOD::Sound*	mSound;
-		FMOD::Channel*	mSoundChannel;
+
+		FMOD::Sound*   mSound		 = nullptr;
+		FMOD::Channel* mSoundChannel = nullptr;
+
+		float	mSoundVolume = 0.5f;
+		bool	mIsPlaying   = false;
 
 		std::wstring	mSoundPath;
-		wchar_t			mSoundTimer[MAX_PATH];
-		unsigned int	mSoundSizeInMS;
-
-		float			mSoundVolume;
+		//wchar_t			mSoundTimer[MAX_PATH];
+		//unsigned int	mSoundSizeInMS;
 
 	private:
 		bool CreateSound(const wstringV _filePath);

@@ -10,7 +10,7 @@ bool MySpriteHandler::CreateSpriteResource(const wstringV _filePath)
 	if (fileInfo.second.compare(L".sprite") != 0)
 		return false;
 	
-	if (!sprite->LoadSpriteScriptFile(_filePath))
+	if (!sprite->LoadScript(_filePath))
 		return false;
 
 	SPRITE_KEY key = fileInfo.first + fileInfo.second;

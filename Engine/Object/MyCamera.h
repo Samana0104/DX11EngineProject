@@ -3,8 +3,11 @@
 
 namespace MyProject
 {
-	class MyCamera : public MyObject
+	class MyCamera
 	{
+	public:
+		MyTransformer2D mTransform;
+
 	public:
 		const mat3 GetViewMat() const;
 
@@ -12,9 +15,6 @@ namespace MyProject
 		void ZoomOut(const float _scale);
 
 		void LookAtObject(MyObject & _obj);
-
-		virtual void Update(const float _deltaTime) override;
-		virtual void Render() override;
 	};
 }
 

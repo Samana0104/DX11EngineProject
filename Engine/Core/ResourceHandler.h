@@ -1,5 +1,4 @@
 #pragma once
-#include "MyCoreAPI.h"
 
 namespace MyProject
 {
@@ -17,7 +16,7 @@ namespace MyProject
 		bool DeleteResource(const K _key);
 		bool IsKeyContained(const K _key) const;
 		
-		void Clear();
+		void ClearResources();
 
 		typename const Alloc&	GetAllResources() const;
 
@@ -53,7 +52,7 @@ namespace MyProject
 	}
 
 	TEMPLATE_VKA
-	inline void ResourceHandler<V, K, A>::Clear()
+	inline void ResourceHandler<V, K, A>::ClearResources()
 	{
 		mResourceDatas.clear();
 	}

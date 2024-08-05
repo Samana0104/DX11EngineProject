@@ -47,7 +47,17 @@ void MyButton::SetMovable(bool _isMovable)
 	mIsMovable = _isMovable;
 }
 
-void MyButton::SelectMouseState(SelectState _state)
+void MyButton::SetDisable(bool _isDisable)
+{
+	mIsDisable = _isDisable;
+}
+
+void MyButton::SetSelectedBtn(std::function<void()> _func)
+{
+	mCallSelectedBtn = _func;
+}
+
+void MyButton::SetCurrentState(SelectState _state)
 {
 	mCurrentState = _state;
 
@@ -77,6 +87,9 @@ void MyButton::SelectMouseState(SelectState _state)
 
 void MyButton::OnMouseMove(POINT_L _prePos, POINT_L _postPos)
 {
+	if (mIsDisable)
+		return;
+
 	vec2 toFloatPost = { static_cast<float>(_postPos.x), static_cast<float>(_postPos.y) };
 	vec2 cartesianPost = MyTransformer2D::PixelToCartesian(toFloatPost);
 		
@@ -88,15 +101,15 @@ void MyButton::OnMouseMove(POINT_L _prePos, POINT_L _postPos)
 			vec2 cartesianPre = MyTransformer2D::PixelToCartesian(toFloatPre);
 			vec2 offPre = mTransform.GetLocation()-cartesianPre;
 
-			mTransform.SetLocation(cartesianPost);
-			mTransform.AddLocation(offPre);
+			mTransform.AddLocation(cartesianPost-cartesianPre);
+			//mTransform.AddLocation(offPre);
 		}
 	}
 
 	if(CollisionComponent::IsPointInRect(
 		mTransform.GetCartesianRectF(), cartesianPost))
 	{ 
-		if (mCurrentState == SelectState::DEFAULT)
+		if (mCurrentState == SelectState::DEFAULT || mCurrentState == SelectState::FOCUS )
 		{
 			mCurrentState = SelectState::HOVER;
 			return;
@@ -114,6 +127,9 @@ void MyButton::OnMouseMove(POINT_L _prePos, POINT_L _postPos)
 
 void MyButton::OnMousePush(vec2 _pos, MOUSE_FLAGS _flag)
 {
+	if (mIsDisable)
+		return;
+
 	vec2 cartesianMousePos = MyTransformer2D::PixelToCartesian(_pos);
 	if(CollisionComponent::IsPointInRect(
 		mTransform.GetCartesianRectF(), cartesianMousePos))
@@ -125,41 +141,55 @@ void MyButton::OnMousePush(vec2 _pos, MOUSE_FLAGS _flag)
 
 void MyButton::OnMouseUp(vec2 _pos, MOUSE_FLAGS _flag)
 {
+	if (mIsDisable)
+		return;
+
+	vec2 cartesianMousePos = MyTransformer2D::PixelToCartesian(_pos);
+
 	if (mCurrentState == SelectState::ACTIVE)
 	{
-		mCurrentState = SelectState::DEFAULT;
-		return;
+		if(CollisionComponent::IsPointInRect(
+			mTransform.GetCartesianRectF(), cartesianMousePos))
+		{ 
+			mCurrentState = SelectState::SELECTED;
+		}
+		else
+		{
+			mCurrentState = SelectState::FOCUS;
+		}
 	}
 }
 
 void MyButton::SetDefaultMode()
 {
-	SetTextureKey(L"main_start_1.png");
+	//SetTextureKey(L"btn_default.png");
 }
 
 void MyButton::SetHoverMode()
 {
-	SetTextureKey(L"main_start_2.png");
+	//SetTextureKey(L"btn_hover.png");
 }
 
 void MyButton::SetFocusMode()
 {
-	SetTextureKey(L"main_start_3.png");
+	//SetTextureKey(L"btn_focus.png");
 }
 
 void MyButton::SetActiveMode()
 {
-	SetTextureKey(L"main_start_3.png");
+	//SetTextureKey(L"btn_active.png");
 }
 
 void MyButton::SetSelectedMode()
 {
-	SetTextureKey(L"main_start_1.png");
+	//SetTextureKey(L"btn_selected.png");
+	if(mCallSelectedBtn != nullptr)
+		mCallSelectedBtn();
 }
 
 void MyButton::Update(const float _deltaTime)
 {
-	SelectMouseState(mCurrentState);
+	SetCurrentState(mCurrentState);
 }
 
 void MyButton::Render()

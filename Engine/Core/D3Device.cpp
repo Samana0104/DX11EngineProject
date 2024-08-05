@@ -7,6 +7,11 @@ D3Device::~D3Device()
 	MyWindow::GetInstance().DeleteCallBack(mWMSizeID);
 }
 
+glm::vec2 D3Device::GetViewportSize() const
+{
+	return { mViewPort.Width, mViewPort.Height };
+}
+
 bool D3Device::CreateDevice()
 {
 	if (!CreateDeviceAndSwapChain())
@@ -16,6 +21,9 @@ bool D3Device::CreateDevice()
 		return false;
 
 	if (!CreateDirect2DRenderTarget())
+		return false;
+
+	if (!CreateSamplerState())
 		return false;
 
 	if (!SetAlphaBlendingState())
@@ -43,6 +51,7 @@ void D3Device::OnWMSize(UINT _width, UINT _height)
 	mAlphaBlend->Release();
 	mD2dRT->Release();
 	mD2dFactory->Release();
+	mSamplerState->Release();
 
 	mSwapChainDesc.BufferDesc.Width = _width;
 	mSwapChainDesc.BufferDesc.Height = _height;
@@ -56,6 +65,7 @@ void D3Device::OnWMSize(UINT _width, UINT _height)
 
 	CreateRenderTargetView();
 	CreateDirect2DRenderTarget();
+	CreateSamplerState();
 	SetAlphaBlendingState();
 	CreateViewport();
 }
@@ -145,6 +155,27 @@ bool D3Device::CreateDirect2DRenderTarget()
 	return SUCCEEDED(hr);
 }
 
+bool D3Device::CreateSamplerState()
+{
+    D3D11_SAMPLER_DESC samplerDesc = {};
+    samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT; // 선형 필터링 설정
+    samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+    samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+    samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+    samplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+    samplerDesc.MinLOD = 0;
+    samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+    // 샘플러 상태 객체 생성
+    HRESULT hr = mD3dDevice->CreateSamplerState(&samplerDesc, mSamplerState.GetAddressOf());
+    if (FAILED(hr))
+		return false;
+
+    // 샘플러 상태를 파이프라인에 바인딩
+    mContext->PSSetSamplers(0, 1, mSamplerState.GetAddressOf());
+	return true;
+}
+
 bool D3Device::SetAlphaBlendingState()
 {
 	HRESULT hr;
@@ -200,5 +231,43 @@ void D3Device::CreateViewport()
 	}
 
 	mContext->RSSetViewports(1, &mViewPort);
+}
+
+void D3Device::SetViewportSizeOnCenter(glm::vec2 _size)
+{
+	auto windowSize = MyWindow::GetInstance().GetWindowSizeVec2();
+
+	mViewPort.TopLeftX = windowSize.x*0.5f - _size.x * 0.5f;
+	mViewPort.TopLeftY = windowSize.y*0.5f - _size.y * 0.5f;
+	mViewPort.Width = _size.x;
+	mViewPort.Height = _size.y;
+	mViewPort.MinDepth = 0;
+	mViewPort.MaxDepth = 1;
+
+	mContext->RSSetViewports(1, &mViewPort);
+}
+
+void D3Device::SetViewportSizeOnLeftTop(glm::vec2 _size)
+{
+	mViewPort.TopLeftX = 0;
+	mViewPort.TopLeftY = 0;
+	mViewPort.Width = _size.x;
+	mViewPort.Height = _size.y;
+	mViewPort.MinDepth = 0;
+	mViewPort.MaxDepth = 1;
+
+	mContext->RSSetViewports(1, &mViewPort);
+}
+
+void D3Device::SetViewportSize(ViewType _viewType, glm::vec2 _size)
+{
+	switch (_viewType)
+	{
+	case ViewType::CENTER:
+		SetViewportSizeOnCenter(_size);
+		break;
+	case ViewType::LEFT_TOP:
+		SetViewportSizeOnLeftTop(_size);
+	}
 }
 

@@ -22,7 +22,7 @@ namespace MyProject
 		bool CanExecuteFrame();
 
 	public:
-		MySystemTimer(int _maxFPS = 120);
+		MySystemTimer(int _maxFPS = 60);
 
 		bool	HasPassedTime();
 

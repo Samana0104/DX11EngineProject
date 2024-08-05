@@ -21,6 +21,7 @@ namespace MyProject
 
 		SpriteType  mSpriteType;
 		TEXTURE_KEY	mSpriteMainKey;
+		SHADER_KEY  mSpriteShaderKey;
 
 		int	mSpriteCount;
 
@@ -32,7 +33,7 @@ namespace MyProject
 		const TEXTURE_KEY& GetTextureMainKey() const;
 		const SpriteType&  GetSpriteType() const;
 
-		bool LoadSpriteScriptFile(wstringV _filePath);
+		bool LoadScript(wstringV _filePath);
 
 		void Render(MyObject& _obj, size_t idx);
 

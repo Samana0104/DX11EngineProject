@@ -20,6 +20,7 @@ void MyWindow::CreateRegisterClass(HINSTANCE _hInstance)
 		case WM_SIZE:
 			MyWindow::GetInstance().CallEventWMSize(hwnd, uMsg, wParam, lParam);
 			return 0;
+
 		}
 		return DefWindowProc(hwnd, uMsg, wParam, lParam);
 	};
@@ -43,7 +44,7 @@ bool MyWindow::CreateWin(LONG _width, LONG _height)
 		MY_WINDOW_NAME,
 		WS_OVERLAPPEDWINDOW,// Window style
 		GetSystemMetrics(SM_CXSCREEN) / 2 - (rt.right-rt.left) / 2, // 영역 중앙에 윈도우 생성
-		GetSystemMetrics(SM_CYSCREEN) / 2 - (rt.bottom - rt.top) / 2 - 45, // 하단 영역 45px
+		GetSystemMetrics(SM_CYSCREEN) / 2 - (rt.bottom - rt.top) / 2, // 하단 영역 45px
 		rt.right-rt.left, 
 		rt.bottom-rt.top,
 		NULL, // Parent window

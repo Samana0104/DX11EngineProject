@@ -1,5 +1,5 @@
 #pragma once
-#include "MyFiniteState.h"
+#include "MyTransition.h"
 
 namespace MyProject
 {

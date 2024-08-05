@@ -62,7 +62,11 @@ int MySystemTimer::GetMaxFPS() const
 
 float MySystemTimer::GetDeltaTime() const
 {
-	return static_cast<float>(mDeltaTime);
+	// 모니터 끌어 당기기로 인해 너무 클 때를 방지함
+	if (mDeltaTime >= mMaxFPSTime*2)
+		return static_cast<float>(mMaxFPSTime);
+	else
+		return static_cast<float>(mDeltaTime);
 }
 
 void MySystemTimer::Reset()

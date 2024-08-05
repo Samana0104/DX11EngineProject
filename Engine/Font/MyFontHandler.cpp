@@ -2,10 +2,48 @@
 #include "MyFontHandler.h"
 using namespace MyProject;
 
+MyFontHandler::~MyFontHandler()
+{
+	for(auto& fontPath : externalFontNames)
+		RemoveFontResource(fontPath.data());
+
+	PostMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
+}
+
 bool MyFontHandler::CreateFontResource(const FONT_KEY _key, const FontDesc& _desc)
 {
 	auto font = std::make_shared<MyWriterFont>(_desc);
 	return AddResource(_key, font);
+}
+
+bool MyFontHandler::LoadExternalFont(const wstringV _fontPath)
+{
+	auto fileInfo = MyCoreAPI::GetFileNameAndExt(_fontPath);
+
+	if (fileInfo.second.compare(L".ttf") != 0)
+		return false;
+	
+	if (AddFontResource(_fontPath.data()) == 0)
+        return false;
+
+	externalFontNames.push_back(_fontPath);
+	PostMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
+	return true;
+}
+
+void MyFontHandler::LoadExternalFontsAsFolder(const wstringV _fontFolder)
+{
+	std::filesystem::directory_iterator iter(_fontFolder);
+
+	while (iter != std::filesystem::end(iter))
+	{
+		const auto & currentFile = *(iter++);
+
+		if (currentFile.is_directory())
+			LoadExternalFontsAsFolder(currentFile.path().wstring());
+		else
+			LoadExternalFont(currentFile.path().wstring());
+	}
 }
 
 void MyFontHandler::DrawTextAsKey(FONT_KEY _key, wstringV _msg, RECT_F _rect, COLOR_F _color)
@@ -15,6 +53,13 @@ void MyFontHandler::DrawTextAsKey(FONT_KEY _key, wstringV _msg, RECT_F _rect, CO
 }
 
 #ifdef _DEBUG
+
+void MyFontHandler::AddRectAreaForDebugging(UINT _key, RECT_F _rect)
+{
+	RECT_F rt = MyTransformer2D::CartesianToPixelRect(_rect);
+	mDebugRect[_key] = rt;
+}
+
 void MyFontHandler::DrawTextForDebugging(const wchar_t* format, ...)
 {
     va_list args;
@@ -41,6 +86,18 @@ void MyFontHandler::DrawTextForDebugging(const wchar_t* format, ...)
 	D3Device::GetInstance().mD2dRT->EndDraw();
 	DrawTextAsKey( L"DEBUG_FONT", L" [DEBUG WINDOW]", rc1, { 0.f, 0.f, 0.f, 1.f });
 	DrawTextAsKey( L"DEBUG_FONT", formattedMessage, rc2, { 0.f, 0.f, 0.f, 1.f });
+}
+
+void MyFontHandler::DrawRectForDebugging()
+{
+	auto a = GetResource(L"DEBUG_FONT")->GetBrush();
+
+	for (auto& rect : mDebugRect)
+	{
+		D3Device::GetInstance().mD2dRT->BeginDraw();
+		D3Device::GetInstance().mD2dRT->DrawRectangle(&(rect.second), a.Get());
+		D3Device::GetInstance().mD2dRT->EndDraw();
+	}
 }
 #endif
 

@@ -10,6 +10,7 @@ namespace MyProject
 		ComPtr<ID3D11Resource>				mTexture;
 
 		std::wstring	mTexturePath;
+
 		UINT mTextureWidth;
 		UINT mTextureHeight;
 

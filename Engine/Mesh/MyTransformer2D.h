@@ -15,7 +15,6 @@ namespace MyProject
 
 	private:
 		void CalculateScaleRotationMat();
-		vec2 CalculateScreenTRS(const vec2 _pos);
 		
 	public:
 		MyTransformer2D();
@@ -24,26 +23,40 @@ namespace MyProject
 		MyTransformer2D& AddLocation(const vec2 _pos);
 		MyTransformer2D& AddRotation(const float _angle);
 		MyTransformer2D& AddScale(const vec2 _scale);
+		MyTransformer2D& AddScaleAsRatio(const float _ratio);
 		MyTransformer2D& SetLocation(const vec2 _pos);
 		MyTransformer2D& SetRotation(const float _angle);
 		MyTransformer2D& SetScale(const vec2 _scale);
 
+		void MultiplyToTRSMat(const mat3& _mat);
+
+		//벡터로 계산하고 맵핑된 벡터 반환
+		vec2 CalculateTRSAsVec(const vec2 _pos);
+
 		const mat3& GetModelMat() const;
 		const mat3	GetViewMat() const;
+		const mat3  GetTransposMat() const;
+		const mat3  GetScaleMat() const;
+		const mat3  GetRotationMat() const;
 
 		const vec2&	GetLocation() const;
 		const vec2&	GetScale() const;
 		float		GetAngle() const;
 
+		// 위치 기준 플레이어 rect
 		RECT_F		GetCartesianRectF() const;
+		RECT_F		GetCartesianScaleRectF() const;
+		RECT_F		GetPixelRectF() const;
 
 		MyTransformer2D* operator->();
 		MyTransformer2D& operator=(const MyTransformer2D& _ref);
 
 		static void		SetCartesianSize(const vec2 _pos);
-		static vec2		GetCartesianSize(const vec2 _pos);
+		static vec2		GetCartesianSize();
 
+		static RECT_F	CartesianToPixelRect(const RECT_F _rect);
 		static vec2		CartesianToNDC(const vec2 _pos);
+		static vec2		CartesianToPixel(const vec2 _pos);
 		static vec2		CartesianToPolar(const vec2 _pos);
 		static vec2		PolarToCartesian(const vec2 _pos);
 		static vec2		PixelToCartesian(const vec2 _pos);

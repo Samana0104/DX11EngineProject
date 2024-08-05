@@ -54,7 +54,7 @@ void MyMesh2D::SetUVVertex(const size_t _uvVertex, const vec2 _uv)
 	}
 	catch (std::out_of_range e)
 	{
-		MessageBoxA(mWindow.GetWindowHandle(), e.what(), "UV indexing error[Mesh2D]", MB_OK);
+		MessageBoxA(NULL, e.what(), "UV indexing error[Mesh2D]", MB_OK);
 	}
 }
 

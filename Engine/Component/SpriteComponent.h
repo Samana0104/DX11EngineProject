@@ -7,7 +7,6 @@ namespace MyProject
 	class SpriteComponent
 	{
 	private:
-		MyObject&	mObj;
 		SPRITE_KEY	mSpriteKey;
 
 		float	mTimer			= 0.f;
@@ -16,22 +15,20 @@ namespace MyProject
 		size_t  mAnimationCount	= 0;
 		size_t	mAnimationIdx	= 0;
 		
-		bool mIsLoop = true;
+		bool	mIsLoop			= true;
 
 		MyResourceManager& mManager = MyResourceManager::GetInstance();
 
 	public:
-		SpriteComponent(MyObject& _obj);
-		
 		void ResetAnimation();
 
 		void SetLoop(const bool _loop);
 		void SetAnimationIdx(const size_t _idx);
 		void SetChangeTime(const float _time);
 		void SetSpriteKey(const SPRITE_KEY _spriteKey);
-
+		
 		void Update(const float _deltaTime);
-		void Render();
+		void Render(MyObject& _obj);
 	};
 }
 

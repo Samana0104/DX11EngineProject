@@ -1,6 +1,214 @@
 #include "pch.h"
 #include "CollisionComponent.h"
+#include "MyActor.h"
 using namespace MyProject;
+
+CollisionComponent::CollisionComponent(MyActor& _obj):
+    mObj(_obj)
+{
+    mCollisionAreas.reserve(5);
+}
+
+void CollisionComponent::AddCollisionArea(const RECT_F _collisionArea)
+{
+    mCollisionAreas.push_back(_collisionArea);
+}
+
+void CollisionComponent::AddCollisionArea(const vec2 _scaleVec)
+{
+    RECT_F rt =
+    {
+        -_scaleVec.x * 0.5f,
+        _scaleVec.y * 0.5f,
+        _scaleVec.x * 0.5f,
+        -_scaleVec.y * 0.5f
+    };
+
+    mCollisionAreas.push_back(rt);
+}
+void CollisionComponent::SetCollisionable(bool _isCollisionable)
+{
+    mIsCollisionable = _isCollisionable;
+}
+
+void CollisionComponent::ClearCollisionAreas()
+{
+    mCollisionAreas.clear();
+}
+
+bool CollisionComponent::IsCollision(const RECT_F& _target)
+{
+    if (!mIsCollisionable)
+        return false;
+
+    RECT_F transformRect = mObj->GetCartesianRectF();
+    RECT_F collisionRect;
+    
+    for (auto& collisionArea : mCollisionAreas)
+    {
+        collisionRect =
+        {
+            collisionArea.left + transformRect.left,
+            collisionArea.top + transformRect.top,
+            collisionArea.right + transformRect.right,
+            collisionArea.bottom + transformRect.bottom
+        };
+
+        if (IsAABBCollision(collisionRect, _target))
+            return true;
+    }
+    
+    return false;
+}
+
+void CollisionComponent::IsCollisionWithEvent(CollisionComponent& _targetCollision)
+{
+    // 충돌 오브젝트가 아니라면
+
+    if (!mIsCollisionable || !_targetCollision.mIsCollisionable)
+        return;
+
+    vec2 myLocation = mObj->GetLocation();
+    RECT_F myCollisionRect;
+
+    vec2 targetLocation = _targetCollision.mObj->GetLocation();
+    RECT_F targetCollisionRect;
+
+    for (auto& selfRange : mCollisionAreas)
+    {
+        for(auto& targetRange : _targetCollision.mCollisionAreas)
+        {
+			myCollisionRect =
+			{
+				selfRange.left + myLocation.x,
+				selfRange.top + myLocation.y,
+				selfRange.right + myLocation.x,
+				selfRange.bottom + myLocation.y
+			};
+			targetCollisionRect =
+			{
+				targetRange.left + targetLocation.x,
+				targetRange.top + targetLocation.y,
+				targetRange.right + targetLocation.x,
+				targetRange.bottom + targetLocation.y
+			};
+
+            if (IsAABBCollision(myCollisionRect, targetCollisionRect))
+            {
+                if (mCollisionFunc != nullptr)
+                    mCollisionFunc(myCollisionRect, targetCollisionRect, _targetCollision.mObj);
+                if(_targetCollision.mCollisionFunc != nullptr)
+                    _targetCollision.mCollisionFunc(targetCollisionRect, myCollisionRect, mObj);
+            }
+		}
+    }
+}
+
+bool CollisionComponent::IsCollisionable() const
+{
+    return mIsCollisionable;
+}
+
+void CollisionComponent::RegisterCollisionEvent(COLLISION_FUNC _func)
+{
+    mCollisionFunc = _func;
+}
+
+void CollisionComponent::ResizeCollisionArea()
+{
+    ClearCollisionAreas();
+    mCollisionAreas.push_back(mObj->GetCartesianScaleRectF());
+}
+
+RECT_F CollisionComponent::GetIntersectionRect(const RECT_F& _rt1, const RECT_F& _rt2)
+{
+    float left, top;
+    float right, bottom;
+
+    left   = max(_rt1.left, _rt2.left);
+    top    = min(_rt1.top, _rt2.top);
+    right  = min(_rt1.right, _rt2.right);
+    bottom = max(_rt1.bottom, _rt2.bottom);
+
+    return {left, top, right, bottom};
+}
+
+vec2 CollisionComponent::GetCorrectionForCollision(const vec2 _offsetDir, const vec2 _targetLocation, 
+			const RECT_F& _rt1, const RECT_F& _rt2)
+{
+    vec2 correctionVec = { 0.f, 0.f };
+    vec2 myLocation    =  mObj->GetLocation();
+    vec2 FromObjToTarget = _targetLocation - myLocation;
+    
+    RECT_F beforeRt1X =
+    {
+        _rt1.left   - _offsetDir.x,
+        _rt1.top,
+        _rt1.right  - _offsetDir.x,
+        _rt1.bottom,
+    };
+
+    RECT_F beforeRt1Y =
+    {
+        _rt1.left,
+        _rt1.top    - _offsetDir.y,
+        _rt1.right,
+        _rt1.bottom - _offsetDir.y
+    };
+    
+    RECT_F intersectionRt = GetIntersectionRect(_rt1, _rt2);
+
+	float  intersectWidth  = abs(intersectionRt.right - intersectionRt.left);
+	float  intersectHeight = abs(intersectionRt.top - intersectionRt.bottom);
+
+    bool   IsXAxisCollided  = IsAABBCollision(beforeRt1Y, _rt2); // 만약 충돌이면 x와 충돌지점이라는 뜻
+    bool   IsYAxisCollided  = IsAABBCollision(beforeRt1X, _rt2); // 만약 충돌이면 y와 충돌지점이라는 뜻
+
+    // 두 충돌은 따로 특수처리
+   // if (IsXAxisCollided && IsYAxisCollided)
+   // {
+   //     return correctionVec;
+   // } 
+    if (IsXAxisCollided) 
+    {
+        if (_offsetDir.x >= TOLERANCE)
+        {
+            correctionVec.x = -intersectWidth - TOLERANCE;
+        }
+        else if (_offsetDir.x <= -TOLERANCE)
+        {
+            correctionVec.x = intersectWidth + TOLERANCE;
+        }
+        else // x가 0인 경우
+        {
+            if (FromObjToTarget.x > 0) // target이 obj 앞에 있을 때
+				correctionVec.x = -intersectWidth - TOLERANCE;
+            else
+				correctionVec.x = intersectWidth + TOLERANCE;
+        }
+    }
+    else if(IsYAxisCollided)
+    {
+        if (_offsetDir.y >= TOLERANCE)
+        {
+            correctionVec.y = -intersectHeight - TOLERANCE;
+        }
+        else if (_offsetDir.y <= -TOLERANCE)
+        {
+            correctionVec.y = intersectHeight + TOLERANCE;
+        }
+        else // y가 0인 경우
+        {
+            if (FromObjToTarget.y > 0) // target이 obj 앞에 있을 때
+				correctionVec.y = -intersectWidth - TOLERANCE;
+            else
+				correctionVec.y = intersectWidth + TOLERANCE;
+        }
+
+    }
+   
+    return correctionVec;
+}
 
 bool CollisionComponent::IsPointInRect(const RECT_F rt1, const vec2 pt)
 {
@@ -14,28 +222,31 @@ bool CollisionComponent::IsPointInRect(const RECT_F rt1, const vec2 pt)
 	return false;
 }
 
-bool CollisionComponent::IsAABBCollision(const RECT_F rt1, const RECT_F rt2)
+bool CollisionComponent::IsAABBCollision(const RECT_F& rt1, const RECT_F& rt2)
 {
-	float minX, maxX, minY, maxY;
-	minX = min(rt1.left, rt2.left);
-	maxX = max(rt1.right, rt2.right);
-	minY = min(rt1.top, rt2.top);
-	maxY = max(rt1.bottom, rt2.bottom);
+    float left, top;
+    float right, bottom;
 	float sizeX, sizeY;
-	sizeX = maxX - minX;
-	sizeY = maxY - minY;
+    float rt1Width, rt1Height;
+    float rt2Width, rt2Height;
 
-	float  rt1W, rt1H, rt2W, rt2H;
-	rt1W = rt1.right - rt1.left;// rt1.w + rt2.w;
-	rt1H = rt1.bottom - rt1.top;
-	rt2W = rt2.right - rt2.left;// rt1.w + rt2.w;
-	rt2H = rt2.bottom - rt2.top;
+	left   = min(rt1.left, rt2.left);
+	top    = max(rt1.top, rt2.top);
+	right  = max(rt1.right, rt2.right);
+	bottom = min(rt1.bottom, rt2.bottom);
 
-	if ( sizeX <= (rt1W + rt2W) &&
-		 sizeY <= (rt1H + rt2H))
-	{
+    sizeX = abs(right - left);
+    sizeY = abs(top - bottom);
+
+	rt1Width = abs(rt1.right - rt1.left);// rt1.w + rt2.w;
+	rt1Height = abs(rt1.top - rt1.bottom);
+	rt2Width = abs(rt2.right - rt2.left);// rt1.w + rt2.w;
+	rt2Height = abs(rt2.top - rt2.bottom);
+
+	if ((rt1Width + rt2Width) - sizeX > TOLERANCE && 
+        (rt1Height + rt2Height) - sizeY > TOLERANCE)
 		return true;
-	}
+
 	return false;
 }
 

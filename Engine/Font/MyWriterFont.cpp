@@ -6,9 +6,9 @@ MyWriterFont::MyWriterFont(const FontDesc& _desc) :
 	mFontDesc(_desc)
 {
 #ifdef _DEBUG
-	_ASSERT(CreateBrushComponent());
+	_ASSERT(CreateFontComponent());
 #else
-	CreateBrushComponent();
+	CreateFontComponent();
 #endif
 	mWMSizeID = MyWindow::GetInstance().RegisterCallBackWMSize(
 		std::bind(
@@ -27,13 +27,13 @@ MyWriterFont::~MyWriterFont()
 void MyWriterFont::OnWMSize(UINT _weight, UINT _height)
 {
 	mWriteFactory->Release();
-	mWriteFont->Release();
+	mTextFormat->Release();
 	mBrush->Release();
 
-	CreateBrushComponent();
+	CreateFontComponent();
 }
 
-bool MyWriterFont::CreateBrushComponent()
+bool MyWriterFont::CreateFontComponent()
 {
 	if (!CreateDWriteFactory())
 		return false;
@@ -52,7 +52,7 @@ bool MyWriterFont::CreateDWriteFactory()
 {
 	HRESULT hr = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED,__uuidof(IDWriteFactory),
 		reinterpret_cast<IUnknown**>(mWriteFactory.GetAddressOf()));
-
+	
 	return SUCCEEDED(hr);
 }
 
@@ -66,7 +66,7 @@ bool MyWriterFont::CreateTextFormat()
 		mFontDesc.mFontStretch,
 		mFontDesc.mFontSize,
 		mFontDesc.mFontLocalName.c_str(),
-		mWriteFont.GetAddressOf());
+		mTextFormat.GetAddressOf());
 
 	return SUCCEEDED(hr);
 }
@@ -110,7 +110,12 @@ void MyWriterFont::DrawTexts(const wstringV _msg, RECT_F _rect, COLOR_F _color)
 	//mDevice.mD2dRT->DrawRectangle(rc, mDefaultColor.Get());
 	//mDevice.mD2dRT->DrawText(_msg.data(), _msg.size(), mWriteFont.Get(),&rc, mDefaultColor.Get());
 	//mDevice.mD2dRT->SetTransform(D2D1::Matrix3x2F::Rotation(-10.f));
-	mDevice.mD2dRT->DrawText(_msg.data(), _msg.size(), mWriteFont.Get(),&_rect, mBrush.Get());
+	mDevice.mD2dRT->DrawText(
+		_msg.data(),
+		static_cast<UINT32>(_msg.size()),
+		mTextFormat.Get(),
+		&_rect, mBrush.Get()
+	);
 	mDevice.mD2dRT->EndDraw();
 	DrawEnd();
 }
@@ -124,13 +129,13 @@ void MyWriterFont::SetBold()
 {
 	if (isBold())
 	{
-		mWriteFont->Release();
+		mTextFormat->Release();
 		mFontDesc.mFontWeight = DWRITE_FONT_WEIGHT_NORMAL;
 		CreateTextFormat();
 	}
 	else
 	{
-		mWriteFont->Release();
+		mTextFormat->Release();
 		mFontDesc.mFontWeight = DWRITE_FONT_WEIGHT_BOLD;
 		CreateTextFormat();
 	}
@@ -142,6 +147,30 @@ bool MyWriterFont::isBold() const
 		return true;
 	else
 		return false;
+}
+
+float MyWriterFont::GetFontSize() const
+{
+	return mFontDesc.mFontSize;
+}
+
+vec2 MyWriterFont::GetTextSize(const wstringV _text) const
+{
+    ComPtr<IDWriteTextLayout> textLayout;
+	DWRITE_TEXT_METRICS textMetrics;
+
+    mWriteFactory->CreateTextLayout(
+        _text.data(),
+        static_cast<UINT32>(_text.size()),
+        mTextFormat.Get(),
+        FLT_MAX,  // Max width
+        FLT_MAX,  // Max height
+        textLayout.GetAddressOf()
+    );	
+
+	textLayout->GetMetrics(&textMetrics);
+
+	return { textMetrics.width, textMetrics.height };
 }
 
 MyTransformer2D* MyWriterFont::operator->()

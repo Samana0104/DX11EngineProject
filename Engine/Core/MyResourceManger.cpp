@@ -14,11 +14,15 @@ void MyResourceManager::CreateDafultResource()
 
 void MyResourceManager::CreateDefaultFonts()
 {
+	for(auto& font : gFontPath)
+		mFont.LoadExternalFontsAsFolder(font);
+
 	for (auto& font : gDefaultFonts)
 	{
 		if(!mFont.CreateFontResource(font.first, font.second))
 			MessageBoxA(NULL, "Not created default font[Key Error]", "[Font creation]", MB_OK);
 	}
+
 }
 
 void MyResourceManager::CreateDefaultMeshes()

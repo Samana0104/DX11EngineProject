@@ -13,6 +13,7 @@ void MyCore::GamePreRender()
 {
 	float clearColor[] = { 0.f, 0.f, 0.f, 1.0f };
 	mDevice.mContext->ClearRenderTargetView(mDevice.mRTV.Get(), clearColor);
+	SetClientRangeViewport();
 }
 
 void MyCore::GameRender()
@@ -24,11 +25,17 @@ void MyCore::GameRender()
 
 void MyCore::GamePostRender()
 {
-	mDevice.mSwapChain->Present(0, 0);
+#ifdef _DEBUG
+	mManager.mFont.DrawRectForDebugging();
+#endif
+
+	mDevice.mSwapChain->Present(1, 0);
 }
 
 void MyCore::GameInit()
 {
+	mWideScreen.SetTextureKey(L"widescreen.png");
+	mWideScreen->SetScale(mWindow.GetWindowSizeVec2());
 	mTimer.Reset();
 	mSceneManager.Init();
 }
@@ -36,6 +43,29 @@ void MyCore::GameInit()
 void MyCore::GameRelease()
 {
 	mSceneManager.Release();
+}
+
+void MyCore::SetClientRangeViewport()
+{
+	auto windowSize = mWindow.GetWindowSizeVec2();
+	
+	mDevice.SetViewportSizeOnLeftTop(windowSize);
+	mWideScreen.SetImageScale();
+	mWideScreen.SetColor({ 11.f, 10.f, 13.f, 1.f });
+	mWideScreen.Render();
+
+	if (windowSize.x >= 1280.f && windowSize.y >= 960.f)
+		windowSize = { 1280.f, 960.f };
+	else if (windowSize.x >= 960.f && windowSize.y >= 720.f)
+		windowSize = { 960.f, 720.f };
+	else if (windowSize.x >= 640.f && windowSize.y >= 480.f)
+		windowSize = { 640.f, 480.f };
+	else if (windowSize.x >= 320.f && windowSize.y >= 240.f)
+		windowSize = { 320.f, 240.f };
+	else
+		windowSize = { 0.f, 0.f };
+
+	mDevice.SetViewportSizeOnCenter(windowSize);
 }
 
 void MyCore::GameRun()

@@ -17,9 +17,14 @@ namespace MyProject
 		DWRITE_FONT_STRETCH mFontStretch;
 	};
 */
+	inline static const std::vector<std::wstring> gFontPath = {
+		{ L"../data/Font/" }
+	};
 
+	// 폰트는 직접 추가해서 써야함 크기 차이도 있고 위에는 단순 폰트 메모리에 올려주는 거 뿐
 	inline static const std::map<FONT_KEY, FontDesc> gDefaultFonts = {
-		{ L"DEBUG_FONT", {L"맑은 고딕", L"ko-kr", 20.f, DWRITE_FONT_WEIGHT_THIN, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL}}
+		{ L"DEBUG_FONT", {L"맑은 고딕", L"ko-kr", 20.f, DWRITE_FONT_WEIGHT_THIN, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL}},
+		{ L"BUTTON_FONT", {L"DOSMyungjo", L"ko-kr", 50.f, DWRITE_FONT_WEIGHT_THIN, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL}}
 	};
 
 /*
@@ -59,7 +64,13 @@ namespace MyProject
 
 	inline static const std::vector<ShaderDesc> gDefaultShaders = {
 		{ ShaderType::VERTEX, L"../data/Shaders/VertexShader.hlsl", "VSMain"},
-		{ ShaderType::PIXEL, L"../data/Shaders/PixelShader.hlsl", "PSMain"}
+		{ ShaderType::PIXEL, L"../data/Shaders/PixelShader.hlsl", "PSMain"},
+		{ ShaderType::PIXEL, L"../data/Shaders/PixelShaderAlpha.hlsl", "PSMain"},
+		{ ShaderType::PIXEL, L"../data/Shaders/PixelShaderLight.hlsl", "PSMain"},
+		{ ShaderType::PIXEL, L"../data/Shaders/Background.hlsl", "PSMain"},
+		{ ShaderType::PIXEL, L"../data/Shaders/BackgroundMap.hlsl", "PSMain"},
+		{ ShaderType::PIXEL, L"../data/Shaders/BackgroundPause.hlsl", "PSMain"},
+		{ ShaderType::PIXEL, L"../data/Shaders/Ruby.hlsl", "PSMain"}
 	};
 
 	inline static const std::vector<std::wstring> gSoundPath = {
@@ -67,6 +78,6 @@ namespace MyProject
 	};
 
 	inline static const std::vector<std::wstring> gSpritePath = {
-		{ L"../data/Image/Sprite/" }
+		{ L"../data/Image/Sprite/SpriteScript/" }
 	};
 }

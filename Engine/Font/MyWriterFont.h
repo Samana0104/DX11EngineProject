@@ -21,20 +21,19 @@ namespace MyProject
 		D3Device& mDevice = D3Device::GetInstance();
 
 		ComPtr<IDWriteFactory>			mWriteFactory;
-		ComPtr<IDWriteTextFormat>		mWriteFont;
+		ComPtr<IDWriteTextFormat>		mTextFormat;
 		ComPtr<ID2D1SolidColorBrush>	mBrush;
 
-		FontDesc		mFontDesc;
-		MyTransformer2D mTransform;
-
+		FontDesc		  mFontDesc;
+		MyTransformer2D	  mTransform;
 		D2D1_MATRIX_3X2_F mTempMat;
+		CALLBACK_ID		  mWMSizeID;
 
-		CALLBACK_ID mWMSizeID;
 
 	private:
 		void	DrawBegin();
 		void	DrawEnd();
-		bool	CreateBrushComponent();
+		bool	CreateFontComponent();
 		bool	CreateDWriteFactory();
 		bool	CreateTextFormat();
 		bool	CreateBrush();
@@ -50,6 +49,9 @@ namespace MyProject
 
 		void SetBold();
 		bool isBold() const;
+
+		float GetFontSize() const;
+		vec2  GetTextSize(const wstringV _text) const;
 
 		MyTransformer2D* operator->();
 	};

@@ -5,7 +5,7 @@ using namespace MyProject;
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR
 	pCmdLine, int nCmdShow)
 {
-	MyCore::ENGINE_BEGIN(hInstance, 1200, 800);
+	MyCore::ENGINE_BEGIN(hInstance, 960, 720);
 	std::shared_ptr<MyCore> core = std::make_shared<MyCore>();
 	core->GameRun();
 
