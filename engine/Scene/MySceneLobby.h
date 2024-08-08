@@ -3,7 +3,6 @@
 #include "MyInput.h"
 #include "MyCamera.h"
 #include "MyButton.h"
-#include "MyTextButton.h"
 
 namespace MyProject
 {
@@ -12,7 +11,6 @@ namespace MyProject
 	private:
 		MyObject mTitle;
 		MyObject mBackground;
-		MyTextButton mButtons[3];
 		int mCurrentButton;
 
 	public:

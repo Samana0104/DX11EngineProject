@@ -43,11 +43,10 @@ void MySound::InitSound()
 {
 	Stop();
 
+	mSoundChannel = nullptr;
 	//ZeroMemory(mSoundTimer, sizeof(wchar_t) * MAX_PATH);
 	//mSoundSizeInMS = 0;
-	mSoundChannel = nullptr;
 	mSoundVolume = 0.5f;
-	mIsPlaying = false;
 }
 
 bool MySound::Play(bool _loop)
@@ -55,10 +54,7 @@ bool MySound::Play(bool _loop)
 	FMOD_RESULT hr = mFmodSys->playSound(mSound, nullptr, false, &mSoundChannel);
 
 	if (hr != FMOD_OK)
-	{
-		mSoundChannel = nullptr;
 		return false;
-	}
 
 	mSoundChannel->setVolume(mSoundVolume);
 	//mSound->getLength(&mSoundSizeInMS, FMOD_TIMEUNIT_MS);
@@ -73,7 +69,6 @@ bool MySound::Play(bool _loop)
 	else
 		mSoundChannel->setMode(FMOD_LOOP_OFF);
 
-	
 	return true;
 }
 

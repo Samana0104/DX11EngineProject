@@ -20,7 +20,7 @@ struct PS_Out
 	float4 c : SV_Target;
 };
 
-PS_Out PSMain( PS_In psIn )
+PS_Out main( PS_In psIn )
 {
 	PS_Out  psOut=(PS_Out)0;
 	float4 pixel = g_txTexture.Sample(sampler0, psIn.t);

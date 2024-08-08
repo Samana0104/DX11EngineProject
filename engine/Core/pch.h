@@ -24,19 +24,30 @@
 #include <dwrite.h>
 #include <tchar.h>
 #include <atlconv.h>
-#include <glm/glm.hpp>
-#include "fmod.hpp"
-#include "directxtk/WICTextureLoader.h"
-#include "Singleton.h"
-#include "MyWindow.h"
-#include "D3Device.h"
-#include "ResourceHandler.h"
+#include "glm/glm.hpp"
+#include "fmod/fmod.hpp"
+#include "DirectXTK/WICTextureLoader.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "dwrite.lib")
 #pragma comment(lib, "winmm.lib")
-#pragma comment(lib, "DirectXTK.lib")
-#pragma comment(lib, "d3d11.lib")
-#pragma comment(lib, "fmod_vc.lib")
 
+#pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "fmod/fmod_vc.lib")
+#pragma comment(lib, "glm/glm.lib")
+
+#ifdef _DEBUG
+	#pragma comment(lib, "DirectXTK/DirectXTK_d.lib")
+#else
+	#pragma comment(lib, "DirectXTK/DirectXTK_r.lib")
+#endif
+
+// ---------------------------------------
+//			Internal Sources
+// ---------------------------------------
+
+#include "Singleton.h"
+#include "MyWindow.h"
+#include "D3Device.h"
+#include "ResourceHandler.h"

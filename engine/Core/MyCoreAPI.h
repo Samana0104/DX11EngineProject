@@ -29,6 +29,7 @@ namespace MyProject
 	using SPRITE_KEY	= std::wstring;
 
 	static inline const float TOLERANCE = 1e-4f;
+
 	class MyCoreAPI
 	{
 	public:

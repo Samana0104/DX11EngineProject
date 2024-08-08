@@ -20,7 +20,6 @@ namespace MyProject
 		D3Device&			mDevice = D3Device::GetInstance();
 		MyResourceManager&	mManager = MyResourceManager::GetInstance();
 
-
 	private:
 		MyCore(const MyCore&) = delete;
 		void operator=(const MyCore&) = delete;

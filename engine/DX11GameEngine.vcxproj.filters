@@ -49,6 +49,9 @@
     <Filter Include="HLSL">
       <UniqueIdentifier>{40dd7436-a5ac-433b-bac6-256650a24fc8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mesh">
+      <UniqueIdentifier>{000ae2ae-2f9b-4809-8c05-1f1b6bfe2878}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Color\MyColor.cpp">
@@ -89,69 +92,6 @@
     </ClCompile>
     <ClCompile Include="Input\MyInput.cpp">
       <Filter>Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\MyButton.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\MyCamera.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\MyDoor.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\MyImageButton.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\MyKey.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\MyObject.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\MyObjectManager.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\MyPawn.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\MyPlayer.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\MyRuby.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\MyTextButton.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\MyWoodBox.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\MyActor.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\MySceneSetting.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\MySceneStage.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\MySceneStage1.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\MySceneStage2.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\MySceneStage3.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\MyStageInterface.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\MySceneLobby.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\MySceneManager.cpp">
-      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Shader\MyShaderHandler.cpp">
       <Filter>Shader</Filter>
@@ -206,6 +146,48 @@
     </ClCompile>
     <ClCompile Include="Timer\MySystemTimer.cpp">
       <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\MySceneLobby.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\MySceneManager.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh\MyBox2D.cpp">
+      <Filter>Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh\MyCircle2D.cpp">
+      <Filter>Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh\MyMesh2D.cpp">
+      <Filter>Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh\MyMeshHandler.cpp">
+      <Filter>Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh\MySphere2D.cpp">
+      <Filter>Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh\MyTransformer2D.cpp">
+      <Filter>Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MyActor.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MyButton.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MyCamera.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MyObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MyObjectManager.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MyPawn.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -266,75 +248,6 @@
     <ClInclude Include="Input\MyInput.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="Object\MyButton.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\MyCamera.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\MyDoor.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\MyImageButton.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\MyKey.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\MyObject.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\MyObjectManager.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\MyPawn.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\MyPlayer.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\MyRuby.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\MyTextButton.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\MyWoodBox.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\ObjectCode.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\MyActor.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\MySceneManager.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\MySceneSetting.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\MySceneStage.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\MySceneStage1.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\MySceneStage2.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\MySceneStage3.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\MyStageInterface.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\MyScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\MySceneLobby.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Shader\MyShaderHandler.h">
       <Filter>Shader</Filter>
     </ClInclude>
@@ -389,27 +302,57 @@
     <ClInclude Include="Timer\MySystemTimer.h">
       <Filter>Timer</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\MyScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\MySceneLobby.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\MySceneManager.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh\MyTransformer2D.h">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh\MyBox2D.h">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh\MyCircle2D.h">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh\MyMesh2D.h">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh\MyMeshHandler.h">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh\MySphere2D.h">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MyActor.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MyButton.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MyCamera.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MyObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MyObjectManager.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MyPawn.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ObjectCode.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="HLSL\Background.hlsl">
-      <Filter>HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="HLSL\BackgroundMap.hlsl">
-      <Filter>HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="HLSL\BackgroundPause.hlsl">
-      <Filter>HLSL</Filter>
-    </FxCompile>
     <FxCompile Include="HLSL\PixelShader.hlsl">
-      <Filter>HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="HLSL\PixelShaderAlpha.hlsl">
-      <Filter>HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="HLSL\PixelShaderLight.hlsl">
-      <Filter>HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="HLSL\Ruby.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="HLSL\VertexShader.hlsl">

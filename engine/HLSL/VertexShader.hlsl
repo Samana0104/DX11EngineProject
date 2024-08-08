@@ -15,7 +15,7 @@ struct VS_Out
     float2 v : VPOS;
 };
 
-VS_Out VSMain( VS_In vsIn) 
+VS_Out main( VS_In vsIn) 
 {
     VS_Out vsOut = (VS_Out) 0;
     vsOut.p = float4(vsIn.p.x, vsIn.p.y, 0, 1);
