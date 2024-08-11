@@ -4,31 +4,49 @@
 
 namespace MyProject
 {
-	enum 
+	enum class IPProtocol
+	{
+		TCP,
+		UDP 
+	};
+
 	class MyNetwork
 	{
+	protected:
+		IPProtocol m_netProt;
+		
 	private:
-		SOCKET m_sock; // For server or client socket
+		bool InitSock() const noexcept;
+		bool DelWinSock() const noexcept;
 
-	private:
-		bool InitSock() noexcept;
-		bool DelWinSock() noexcept;
+		void operator=(const MyNetwork&) = delete;
+		void operator=(MyNetwork&&)		 = delete;
+		MyNetwork(const MyNetwork&)		 = delete;
+		MyNetwork(MyNetwork&&)			 = delete;
+		
+	protected:
+		MyNetwork(IPProtocol netProt);
+
+		virtual void RecvByTCP() = 0;
+		virtual void RecvByUDP() = 0;
+
+		virtual void SendByTCP() = 0;
+		virtual void SendByUDP() = 0;
+
+		virtual void BindSock() = 0;
+		virtual void Disconnet() = 0;
 
 	public:
-		MyNetwork();
-		MyNetwork();
-		~MyNetwork();
-
-		virtual void Recv() const;
-		virtual void Send();
-		virtual void Accept();
-		virtual void Disconnet();
-		virtual void Run();
+		virtual ~MyNetwork();
 
 		bool IsError() const noexcept;
+		std::string GetErrorMsg() const noexcept;
 
-		static std::string GetErrorMsg() noexcept;
-
+		void RecvPacket();
+		void SendPacket();
+		virtual void Run() = 0;
+		
+		
 		// 추후 구현 예정
 		//template < class T >
 		//static void SetSockOption(int level, int option, T value);

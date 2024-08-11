@@ -24,7 +24,6 @@
 //			My works
 // -----------------------------------
 #include "MyPacket.h"
-#include "MySession.h"
 
 // -----------------------------------
 //			Libraries
