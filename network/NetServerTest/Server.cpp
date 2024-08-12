@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "MyNetIOCPServ.h"
+#include "network/MyNetIOCPServ.h"
 #ifdef _DEBUG
 	#pragma comment(lib, "network/network_d.lib")
 #else

@@ -1,15 +1,20 @@
 #pragma once
 
 #include "pch.h"
+#include "MyPacket.h"
 
 namespace MyProject
 {
-	struct IOCPSession
+	struct Session
 	{
 		sockaddr_in addr;
 		SOCKET		sock;
-		PORT		port;
 		bool		isConnecting;
+		BytePacket  packet;
+	};
+
+	struct IOCPSession : Session
+	{
 	};
 }
 

@@ -3,10 +3,9 @@
 using namespace MyProject;
 
 
-MyNetwork::MyNetwork(IPProtocol netProt)
-	: m_netProt(netProt)
+MyNetwork::MyNetwork()
 {
-	assert(InitSock());
+	assert(!InitWinSock());
 }
 
 MyNetwork::~MyNetwork()
@@ -14,19 +13,21 @@ MyNetwork::~MyNetwork()
 	DelWinSock();
 }
 
-bool MyNetwork::InitSock() const noexcept
+bool MyNetwork::InitWinSock() const noexcept
 {
+	int errorCode;
 	WSADATA lpWSAData;
-	WSAStartup(MAKEWORD(2, 2), &lpWSAData);
+	errorCode = WSAStartup(MAKEWORD(2, 2), &lpWSAData);
 
-	return IsError();
+	return IsError(errorCode);
 }
 
 bool MyNetwork::DelWinSock() const noexcept
 {
-	WSACleanup();
+	int errorCode;
+	errorCode = WSACleanup();
 
-	return IsError();
+	return IsError(errorCode);
 }
 
 //bool MyNetwork::bind() const noexcept
@@ -40,28 +41,33 @@ bool MyNetwork::DelWinSock() const noexcept
 
 bool MyNetwork::IsError() const noexcept
 {
-	int error = WSAGetLastError();
-
-	if (error != WSAEWOULDBLOCK)
-		return true;
-
-	return false;
+	int errorCode = WSAGetLastError();
+	return IsError(errorCode);
 }
 
-std::string MyNetwork::GetErrorMsg() const noexcept
+bool MyNetwork::IsError(int errorCode) const noexcept
 {
-	if (!IsError())
-		return nullptr;
+	switch (errorCode)
+	{
+	case WSAEWOULDBLOCK: 
+		[[fallthrough]];
+	case NO_ERROR:
+		return false;
+	}
 
+	return true;
+}
+
+std::string MyNetwork::GetErrorMsg(int errorCode) const noexcept
+{
 	std::string msg;
 	LPVOID		msgErrorBuffer;
 
-	int errorCode = WSAGetLastError();
 	FormatMessageA(
 		FORMAT_MESSAGE_ALLOCATE_BUFFER |
 		FORMAT_MESSAGE_FROM_SYSTEM,
 		NULL,
-		0,
+		errorCode,
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 		reinterpret_cast<LPSTR>(&msgErrorBuffer),
 		0,
@@ -71,24 +77,5 @@ std::string MyNetwork::GetErrorMsg() const noexcept
 	LocalFree(msgErrorBuffer);
 
 	return std::move(msg);
-}
-
-void MyNetwork::SendPacket()
-{
-	if (m_netProt == IPProtocol::TCP)
-		SendByTCP();
-	else if (m_netProt == IPProtocol::UDP)
-		SendByUDP();
-}
-
-void MyNetwork::RecvPacket()
-{
-	if (m_netProt == IPProtocol::TCP)
-		RecvByTCP();
-	else if (m_netProt == IPProtocol::UDP)
-		RecvByUDP();
-}
-void MyNetwork::Run()
-{
 }
 

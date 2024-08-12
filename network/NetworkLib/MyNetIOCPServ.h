@@ -2,14 +2,25 @@
 
 #include "pch.h"
 #include "MyNetwork.h"
+
 namespace MyProject
 {
+	const uint8_t MAX_WORKERS = 6;
+
 	class MyNetIOCPServ : public MyNetwork
 	{
 	private:
 		sockaddr_in m_servAddr;
-		SOCKET		m_servSock; // For server or client socket
-		IOCPSession m_sessions;
+		SOCKET		m_servSock; 
+		HANDLE		m_iocpHandle;
+		MySessionManager m_sessionManager;
+
+		std::thread m_workers[MAX_WORKERS];
+		std::mutex  m_beginMutex;
+		ConditionV  m_beginCondition;
+
+		std::atomic<bool> m_isRunning = false;
+		
 	private:
 		void operator=(const MyNetIOCPServ&) = delete;
 		void operator=(MyNetIOCPServ&&)		 = delete;
@@ -19,22 +30,17 @@ namespace MyProject
 		bool ListenSock() noexcept;
 		bool AcceptSock() noexcept;
 		bool CreateSock(const PORT servPort) noexcept;
+		bool BindSock() noexcept;
+			
+		void Disconnet(Session& session) noexcept;
 
-	protected:
-		virtual void RecvByTCP() override;
-		virtual void RecvByUDP() override;
-
-		virtual void SendByTCP() override;
-		virtual void SendByUDP() override;
-
-		virtual void BindSock() override;
-		virtual void Disconnet() override;
+		void WorkerMain(MyNetIOCPServ& iocpServer);
 
 	public:
 		MyNetIOCPServ(const PORT servPort);
 		virtual ~MyNetIOCPServ();
 
-		virtual void Run() override;
+		void Run();
 	};
 }
 

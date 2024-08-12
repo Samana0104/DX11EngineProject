@@ -5,10 +5,11 @@
 #include <string>
 #include <string_view>
 #include <thread>
+#include <mutex>
+#include <condition_variable>
 #include <memory>
 #include <cassert>
 #include <array>
-#include <cassert>
 #include <atlconv.h> // A2W
 
 // -----------------------------------
@@ -24,6 +25,7 @@
 //			My works
 // -----------------------------------
 #include "MyPacket.h"
+#include "MySession.h"
 
 // -----------------------------------
 //			Libraries
@@ -40,6 +42,7 @@ namespace MyProject
 	using stringV = std::string_view;
 	using PORT	  = short;
 	using PACKET  = unsigned char;
+	using ConditionV = std::condition_variable;
 }
 
 

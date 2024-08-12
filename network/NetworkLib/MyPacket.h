@@ -15,7 +15,7 @@ namespace MyProject
 	const int PACKET_MSG_SIZE = 1024;
 
 #pragma pack(push, 1)
-	__declspec(align(64)) struct PacketHeader
+	__declspec(align(8)) struct PacketHeader
 	{
 		std::uint8_t	ioType;	// 패킷 입출력 종류
 		std::uint32_t 	len;	// msg 바이트 크기
@@ -23,7 +23,7 @@ namespace MyProject
 		PacketType		type;	// 어떤 패킷이다.	
 	};
 
-	struct BytePacket
+	struct MyPacket
 	{
 		PacketHeader header;
 		char		 msg[PACKET_MSG_SIZE];

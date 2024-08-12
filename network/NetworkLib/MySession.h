@@ -1,15 +1,27 @@
 #pragma once
 
 #include "pch.h"
+#include "MyPacket.h"
 
 namespace MyProject
 {
-	struct IOCPSession
+	struct Session
 	{
 		sockaddr_in addr;
 		SOCKET		sock;
-		PORT		port;
 		bool		isConnecting;
+		MyPacket  packet;
+	};
+
+	class MySessionManager
+	{
+	private:
+		inline static uint64_t		m_sessionNumber = 0;
+		std::map<uint64_t, Session> m_sessions;
+		
+	public:
+		void AddSession(SOCKET sock, sockaddr_in& addr);
+
 	};
 }
 

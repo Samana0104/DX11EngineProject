@@ -27,6 +27,9 @@
     <ClCompile Include="MyNetIOCPServ.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MySession.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyNetwork.h">
