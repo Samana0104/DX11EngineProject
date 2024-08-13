@@ -20,8 +20,8 @@ namespace MyProject
 		std::map<uint64_t, Session> m_sessions;
 		
 	public:
-		void AddSession(SOCKET sock, sockaddr_in& addr);
-
+		void Add(SOCKET sock, sockaddr_in& addr);
+		void Disconnect()
 	};
 }
 

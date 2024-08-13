@@ -32,7 +32,7 @@ namespace MyProject
 		bool CreateSock(const PORT servPort) noexcept;
 		bool BindSock() noexcept;
 			
-		void Disconnet(Session& session) noexcept;
+		void Disconnet(const Session& session) noexcept;
 
 		void WorkerMain(MyNetIOCPServ& iocpServer);
 
