@@ -2,7 +2,7 @@
 #include "DefaultResource.h"
 #include "TextureHandler.h"
 #include "MeshHandler.h"
-#include "MyFontHandler.h"
+#include "FontHandler.h"
 #include "ShaderHandler.h"
 #include "SoundHandler.h"
 #include "SpriteHandler.h"
@@ -14,7 +14,7 @@ namespace HBSoft
     public:
         TextureHandler mTexture;
         MeshHandler    mMesh;
-        MyFontHandler  mFont;
+        FontHandler    mFont;
         ShaderHandler  mShader;
         SoundHandler   mSound;
         SpriteHandler  mSprite;

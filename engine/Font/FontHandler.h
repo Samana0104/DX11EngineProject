@@ -4,7 +4,7 @@
 
 namespace HBSoft
 {
-    class MyFontHandler : public ResourceHandler<MyWriterFont, FONT_KEY>
+    class FontHandler : public ResourceHandler<MyWriterFont, FONT_KEY>
     {
     private:
         std::vector<wstringV> externalFontNames;
@@ -12,7 +12,7 @@ namespace HBSoft
         std::map<UINT, RECT_F> mDebugRect;
 
     public:
-        ~MyFontHandler();
+        ~FontHandler();
 
         bool CreateFontResource(const FONT_KEY _key, const FontDesc& _desc);
         void DrawTextAsKey(FONT_KEY _key, wstringV _msg, RECT_F _rect, COLOR_F _color);

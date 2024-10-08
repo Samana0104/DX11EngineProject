@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "MyFontHandler.h"
+#include "FontHandler.h"
 using namespace HBSoft;
 
-MyFontHandler::~MyFontHandler()
+FontHandler::~FontHandler()
 {
     for (auto& fontPath : externalFontNames)
         RemoveFontResource(fontPath.data());
@@ -10,13 +10,13 @@ MyFontHandler::~MyFontHandler()
     PostMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
 }
 
-bool MyFontHandler::CreateFontResource(const FONT_KEY _key, const FontDesc& _desc)
+bool FontHandler::CreateFontResource(const FONT_KEY _key, const FontDesc& _desc)
 {
     auto font = std::make_shared<MyWriterFont>(_desc);
     return AddResource(_key, font);
 }
 
-bool MyFontHandler::LoadExternalFont(const wstringV _fontPath)
+bool FontHandler::LoadExternalFont(const wstringV _fontPath)
 {
     auto fileInfo = CoreAPI::GetFileNameAndExt(_fontPath);
 
@@ -31,7 +31,7 @@ bool MyFontHandler::LoadExternalFont(const wstringV _fontPath)
     return true;
 }
 
-void MyFontHandler::LoadExternalFontsAsFolder(const wstringV _fontFolder)
+void FontHandler::LoadExternalFontsAsFolder(const wstringV _fontFolder)
 {
     std::filesystem::directory_iterator iter(_fontFolder);
 
@@ -46,7 +46,7 @@ void MyFontHandler::LoadExternalFontsAsFolder(const wstringV _fontFolder)
     }
 }
 
-void MyFontHandler::DrawTextAsKey(FONT_KEY _key, wstringV _msg, RECT_F _rect, COLOR_F _color)
+void FontHandler::DrawTextAsKey(FONT_KEY _key, wstringV _msg, RECT_F _rect, COLOR_F _color)
 {
     auto data = GetResource(_key);
     data->DrawTexts(_msg, _rect, _color);
@@ -54,13 +54,13 @@ void MyFontHandler::DrawTextAsKey(FONT_KEY _key, wstringV _msg, RECT_F _rect, CO
 
 #ifdef _DEBUG
 
-void MyFontHandler::AddRectAreaForDebugging(UINT _key, RECT_F _rect)
+void FontHandler::AddRectAreaForDebugging(UINT _key, RECT_F _rect)
 {
     RECT_F rt        = Transform2D::CartesianToPixelRect(_rect);
     mDebugRect[_key] = rt;
 }
 
-void MyFontHandler::DrawTextForDebugging(const wchar_t* format, ...)
+void FontHandler::DrawTextForDebugging(const wchar_t* format, ...)
 {
     va_list args;
     va_start(args, format);
@@ -88,7 +88,7 @@ void MyFontHandler::DrawTextForDebugging(const wchar_t* format, ...)
     DrawTextAsKey(L"DEBUG_FONT", formattedMessage, rc2, {0.f, 0.f, 0.f, 1.f});
 }
 
-void MyFontHandler::DrawRectForDebugging()
+void FontHandler::DrawRectForDebugging()
 {
     auto a = GetResource(L"DEBUG_FONT")->GetBrush();
 
