@@ -1,23 +1,23 @@
 #include "pch.h"
-#include "MyCamera.h"
+#include "Camera.h"
 using namespace HBSoft;
 
-const mat3 MyCamera::GetViewMat() const
+const mat3 Camera::GetViewMat() const
 {
-	return mTransform.GetViewMat();
+    return m_transform.GetViewMat();
 }
 
-void MyCamera::ZoomIn(const float _scale)
+void Camera::ZoomIn(const float scale)
 {
-	mTransform.AddScale({-_scale, -_scale});
+    m_transform.AddScale({-scale, -scale});
 }
 
-void MyCamera::ZoomOut(const float _scale)
+void Camera::ZoomOut(const float scale)
 {
-	mTransform.AddScale({_scale, _scale});
+    m_transform.AddScale({scale, scale});
 }
 
-void MyCamera::LookAtObject(Object& _obj)
+void Camera::LookAtObject(Object2D& obj)
 {
-	mTransform.SetLocation(_obj->GetLocation());
+    m_transform.SetLocation(obj->GetLocation());
 }

@@ -3,7 +3,7 @@
 #include "pch.h"
 #include "MyPacket.h"
 
-namespace MyProject
+namespace HBSoft
 {
 	struct Session
 	{
@@ -13,7 +13,7 @@ namespace MyProject
 		MyPacket  packet;
 	};
 
-	class MySessionManager
+	class SessionManager
 	{
 	private:
 		inline static uint64_t		m_sessionNumber = 0;

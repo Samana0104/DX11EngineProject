@@ -37,7 +37,7 @@
 //			Define
 // -----------------------------------
 
-namespace MyProject
+namespace HBSoft
 {
 	using stringV = std::string_view;
 	using PORT	  = short;

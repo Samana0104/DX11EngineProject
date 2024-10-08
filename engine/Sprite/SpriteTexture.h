@@ -6,7 +6,7 @@ namespace HBSoft
 	class SpriteTexture : public Sprite
 	{
 	private:
-		std::vector<TEXTURE_KEY> mTextureKeys;
+		std::vector<TEXTURE_KEY> m_textureKeys;
 		
 	public:
 	};

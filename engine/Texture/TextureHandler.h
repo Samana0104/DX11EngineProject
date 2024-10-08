@@ -7,7 +7,7 @@ namespace HBSoft
     class TextureHandler : public ResourceHandler<Texture, TEXTURE_KEY>
     {
     public:
-        bool CreateTextureResource(const wstringV _filePath);
-        void CreateTextureAsFolderPath(const wstringV _folderPath);
+        bool CreateTextureResource(const wstringV filePath);
+        void CreateTextureAsFolderPath(const wstringV folderPath);
     };
 }  // namespace HBSoft

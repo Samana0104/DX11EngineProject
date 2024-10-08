@@ -4,17 +4,17 @@ using namespace HBSoft;
 
 void SceneLobby::Init()
 {
-    mCurrentButton = 0;
-    mTitle.SetTextureKey(L"title1.png");
-    mTitle->SetScale({135.f, 25.f});
-    mTitle->SetLocation({0.f, 17.f});
-    mBackground.SetImageScale();
-    mBackground.SetColor({0.f, 0.f, 0.f, 1.f});
+    test->SetScale({100.f, 100.f});
+    test->SetLocation({0.f, 0.f});
+    test.SetColor({1.f, 1.f, 1.f, 1.f});
 }
 
-void SceneLobby::Update(float _deltaTime) {}
+void SceneLobby::Update(float deltaTime) {}
 
-void SceneLobby::Render() {}
+void SceneLobby::Render()
+{
+    test.Render();
+}
 
 void SceneLobby::Release() {}
 

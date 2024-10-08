@@ -4,11 +4,11 @@
 using namespace HBSoft;
 
 Shader::Shader(const ShaderDesc& _desc) : 
-	mShaderDesc(_desc)
+	m_shaderDesc(_desc)
 {
 }
 
 const ShaderDesc& Shader::GetShaderDesc() const
 {
-	return mShaderDesc;
+	return m_shaderDesc;
 }

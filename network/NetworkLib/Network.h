@@ -2,7 +2,7 @@
 
 #include "pch.h"
 
-namespace MyProject
+namespace HBSoft
 {
 	enum class IPProtocol
 	{
@@ -10,22 +10,22 @@ namespace MyProject
 		UDP 
 	};
 
-	class MyNetwork
+	class Network
 	{
 	private:
 		bool InitWinSock() const noexcept;
 		bool DelWinSock() const noexcept;
 
-		void operator=(const MyNetwork&) = delete;
-		void operator=(MyNetwork&&)		 = delete;
-		MyNetwork(const MyNetwork&)		 = delete;
-		MyNetwork(MyNetwork&&)			 = delete;
+		void operator=(const Network&) = delete;
+		void operator=(Network&&)		 = delete;
+		Network(const Network&)		 = delete;
+		Network(Network&&)			 = delete;
 		
 	protected:
-		MyNetwork();
+		Network();
 
 	public:
-		virtual ~MyNetwork();
+		virtual ~Network();
 
 		bool IsError() const noexcept;
 		bool IsError(int errorCode) const noexcept;

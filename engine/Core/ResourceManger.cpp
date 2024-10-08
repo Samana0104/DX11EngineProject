@@ -1,65 +1,67 @@
 #include "pch.h"
-#include "MyResourceManger.h"
+#include "ResourceManger.h"
 using namespace HBSoft;
 
-void MyResourceManager::CreateDafultResource()
+void ResourceManager::CreateDafultResource()
 {
-	CreateDefaultFonts();
-	CreateDefaultMeshes();
-	CreateDefaultTextures();
-	CreateDefaultShaders();
-	CreateDefaultSounds();
-	CreateDefaultSprites();
+    CreateDefaultFonts();
+    CreateDefaultMeshes();
+    CreateDefaultTextures();
+    CreateDefaultShaders();
+    CreateDefaultSounds();
+    CreateDefaultSprites();
 }
 
-void MyResourceManager::CreateDefaultFonts()
+void ResourceManager::CreateDefaultFonts()
 {
-	for(auto& font : gFontPath)
-		mFont.LoadExternalFontsAsFolder(font);
+    for (auto& font : gFontPath)
+        m_font.LoadExternalFontsAsFolder(font);
 
-	for (auto& font : gDefaultFonts)
-	{
-		if(!mFont.CreateFontResource(font.first, font.second))
-			MessageBoxA(NULL, "Not created default font[Key Error]", "[Font creation]", MB_OK);
-	}
-
+    for (auto& font : gDefaultFonts)
+    {
+        if (!m_font.CreateFontResource(font.first, font.second))
+            MessageBoxA(NULL, "Not created default font[Key Error]", "[Font creation]", MB_OK);
+    }
 }
 
-void MyResourceManager::CreateDefaultMeshes()
+void ResourceManager::CreateDefaultMeshes()
 {
-	for (auto& mesh : gDefaultMeshes)
-	{
-		if(!mMesh.CreateMeshResource(mesh.first, mesh.second))
-			MessageBoxA(NULL, "Not created default mesh[Key Error]", "[Mesh creation]", MB_OK);
-	}
+    for (auto& mesh : gDefaultMeshes)
+    {
+        if (!m_mesh.CreateMeshResource(mesh.first, mesh.second))
+            MessageBoxA(NULL, "Not created default mesh[Key Error]", "[Mesh creation]", MB_OK);
+    }
 }
 
-void MyResourceManager::CreateDefaultTextures()
+void ResourceManager::CreateDefaultTextures()
 {
-	for(auto& path : gTexturePath)
-		mTexture.CreateTextureAsFolderPath(path);
-	//if(!mTexture.CreateTextureComponent(texture))
-	//	MessageBoxA(NULL, "Not created default texture[Key Error]", "[Texture creation]", MB_OK);
+    for (auto& path : gTexturePath)
+        m_texture.CreateTextureAsFolderPath(path);
+    // if(!m_texture.CreateTextureComponent(texture))
+    //	MessageBoxA(NULL, "Not created default texture[Key Error]", "[Texture creation]",
+    //MB_OK);
 }
 
-void MyResourceManager::CreateDefaultShaders()
+void ResourceManager::CreateDefaultShaders()
 {
-	for (auto& shader : gDefaultShaders)
-	{
-		if(!mShader.CreateShaderResource(shader))
-			MessageBoxA(NULL, "Not created default shader[Key Error]", "[Shader creation]", MB_OK);
-	}
+    for (auto& shader : gDefaultShaders)
+    {
+        if (!m_shader.CreateShaderResource(shader))
+            MessageBoxA(NULL,
+                        "Not created default shader[Key Error]",
+                        "[Shader creation]",
+                        MB_OK);
+    }
 }
 
-void MyResourceManager::CreateDefaultSounds()
+void ResourceManager::CreateDefaultSounds()
 {
-	for(auto& path : gSoundPath)
-		mSound.CreateSoundAsFolderPath(path);
+    for (auto& path : gSoundPath)
+        m_sound.CreateSoundAsFolderPath(path);
 }
 
-void MyResourceManager::CreateDefaultSprites()
+void ResourceManager::CreateDefaultSprites()
 {
-	for (auto& path : gSpritePath)
-		mSprite.CreateSpriteAsFolderPath(path);
+    for (auto& path : gSpritePath)
+        m_sprite.CreateSpriteAsFolderPath(path);
 }
-

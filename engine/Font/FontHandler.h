@@ -1,15 +1,15 @@
 #pragma once
-#include "MyWriterFont.h"
+#include "Font.h"
 #include "ResourceHandler.h"
 
 namespace HBSoft
 {
-    class FontHandler : public ResourceHandler<MyWriterFont, FONT_KEY>
+    class FontHandler : public ResourceHandler<Font, FONT_KEY>
     {
     private:
         std::vector<wstringV> externalFontNames;
 
-        std::map<UINT, RECT_F> mDebugRect;
+        std::map<UINT, RECT_F> m_debugRect;
 
     public:
         ~FontHandler();

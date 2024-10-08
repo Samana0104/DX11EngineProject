@@ -81,7 +81,7 @@
     <ClCompile Include="Font\FontHandler.cpp">
       <Filter>Font</Filter>
     </ClCompile>
-    <ClCompile Include="Font\WriterFont.cpp">
+    <ClCompile Include="Font\Font.cpp">
       <Filter>Font</Filter>
     </ClCompile>
     <ClCompile Include="GameStart\Main.cpp">
@@ -177,7 +177,7 @@
     <ClCompile Include="Object\Camera.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Object.cpp">
+    <ClCompile Include="Object\Object2D.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Object\ObjectManager.cpp">
@@ -233,7 +233,7 @@
     <ClInclude Include="Font\FontHandler.h">
       <Filter>Font</Filter>
     </ClInclude>
-    <ClInclude Include="Font\WriterFont.h">
+    <ClInclude Include="Font\Font.h">
       <Filter>Font</Filter>
     </ClInclude>
     <ClInclude Include="Input\Input.h">
@@ -329,7 +329,7 @@
     <ClInclude Include="Object\Camera.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Object.h">
+    <ClInclude Include="Object\Object2D.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Object\ObjectManager.h">
@@ -344,9 +344,6 @@
     <ClInclude Include="EventHandler.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="InputHandler.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Transform3D.h">
       <Filter>Mesh</Filter>
     </ClInclude>
@@ -355,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="FiniteStateM\FiniteStateM.h">
       <Filter>FiniteStateM</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,29 +1,29 @@
 #include "pch.h"
-#include "Object.h"
+#include "Object2D.h"
 #include "Sprite.h"
 using namespace HBSoft;
 
 const RECT_F& Sprite::GetUVRect(size_t _idx)
 {
-    return mSpriteUVRects[_idx];
+    return m_spriteUVRects[_idx];
 }
 
 const TEXTURE_KEY& Sprite::GetTextureKey(size_t _idx) const
 {
-    if (mSpriteType == SpriteType::UV_RECT)
-        return mSpriteMainKey;
+    if (m_spriteType == SpriteType::UV_RECT)
+        return m_spriteMainKey;
     else
-        return mSpriteTextures[_idx];
+        return m_spriteTextures[_idx];
 }
 
 const TEXTURE_KEY& Sprite::GetTextureMainKey() const
 {
-    return mSpriteMainKey;
+    return m_spriteMainKey;
 }
 
 const SpriteType& Sprite::GetSpriteType() const
 {
-    return mSpriteType;
+    return m_spriteType;
 }
 
 bool Sprite::LoadScript(wstringV _filePath)
@@ -45,41 +45,35 @@ bool Sprite::LoadScript(wstringV _filePath)
     _fgetts(pBuffer, _countof(pBuffer), fp_src);
     _stscanf_s(pBuffer,
                L"%d %d %s %s",
-               &mSpriteCount,
-               &mSpriteType,
+               &m_spriteCount,
+               &m_spriteType,
                textureName,
                (unsigned int)_countof(textureName),
                shaderName,
                (unsigned int)_countof(shaderName));
     // ---------------------------
 
-    mSpriteMainKey   = textureName;
-    mSpriteShaderKey = shaderName;
+    m_spriteMainKey   = textureName;
+    m_spriteShaderKey = shaderName;
 
-    switch (mSpriteType)
+    switch (m_spriteType)
     {
     case SpriteType::UV_RECT:
-        mSpriteUVRects.reserve(mSpriteCount);
+        m_spriteUVRects.reserve(m_spriteCount);
         RECT_F rt;
 
-        for (int iFrame = 0; iFrame < mSpriteCount; iFrame++)
+        for (int iFrame = 0; iFrame < m_spriteCount; iFrame++)
         {
             _fgetts(pBuffer, _countof(pBuffer), fp_src);
-            _stscanf_s(pBuffer,
-                       L"%d %f %f %f %f",
-                       &readFrame,
-                       &rt.left,
-                       &rt.top,
-                       &rt.right,
-                       &rt.bottom);
+            _stscanf_s(pBuffer, L"%d %f %f %f %f", &readFrame, &rt.left, &rt.top, &rt.right, &rt.bottom);
 
-            mSpriteUVRects.push_back(rt);
+            m_spriteUVRects.push_back(rt);
         }
         break;
     case SpriteType::IMAGE:
-        mSpriteTextures.reserve(mSpriteCount);
+        m_spriteTextures.reserve(m_spriteCount);
 
-        for (int iFrame = 0; iFrame < mSpriteCount; iFrame++)
+        for (int iFrame = 0; iFrame < m_spriteCount; iFrame++)
         {
             _fgetts(pBuffer, _countof(pBuffer), fp_src);
             _stscanf_s(pBuffer,
@@ -87,7 +81,7 @@ bool Sprite::LoadScript(wstringV _filePath)
                        &readFrame,
                        textureName,
                        (unsigned int)_countof(textureName));
-            mSpriteTextures.push_back(textureName);
+            m_spriteTextures.push_back(textureName);
         }
         break;
     }
@@ -96,27 +90,27 @@ bool Sprite::LoadScript(wstringV _filePath)
     return true;
 }
 
-void Sprite::Render(Object& _obj, size_t idx)
+void Sprite::Render(Object2D& obj, size_t idx)
 {
-    MyResourceManager& mManager = MyResourceManager::GetInstance();
+    ResourceManager& m_manager = ResourceManager::GetInstance();
 
-    mManager.mShader[mSpriteShaderKey]->SetUpConfiguration();
+    m_manager.m_shader[m_spriteShaderKey]->SetUpConfiguration();
 
-    switch (mSpriteType)
+    switch (m_spriteType)
     {
     case SpriteType::UV_RECT:
-        vec2 imageSize = mManager.mTexture[mSpriteMainKey]->GetTextureSizeVec2();
-        mManager.mTexture[mSpriteMainKey]->Render();
-        mManager.mMesh[_obj.GetMeshKey()]->SetUVVertexAsRect(mSpriteUVRects[idx], imageSize);
+        vec2 imageSize = m_manager.m_texture[m_spriteMainKey]->GetTextureSizeVec2();
+        m_manager.m_texture[m_spriteMainKey]->Render();
+        m_manager.m_mesh[obj.GetMeshKey()]->SetUVVertexAsRect(m_spriteUVRects[idx], imageSize);
         break;
 
     case SpriteType::IMAGE:
-        mManager.mTexture[mSpriteTextures[idx]]->Render();
+        m_manager.m_texture[m_spriteTextures[idx]]->Render();
         break;
     }
 }
 
 size_t Sprite::GetSize() const
 {
-    return mSpriteCount;
+    return m_spriteCount;
 }

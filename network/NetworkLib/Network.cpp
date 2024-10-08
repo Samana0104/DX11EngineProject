@@ -1,19 +1,19 @@
 #include "pch.h"
-#include "MyNetwork.h"
-using namespace MyProject;
+#include "Network.h"
+using namespace HBSoft;
 
 
-MyNetwork::MyNetwork()
+Network::Network()
 {
 	assert(!InitWinSock());
 }
 
-MyNetwork::~MyNetwork()
+Network::~Network()
 {
 	DelWinSock();
 }
 
-bool MyNetwork::InitWinSock() const noexcept
+bool Network::InitWinSock() const noexcept
 {
 	int errorCode;
 	WSADATA lpWSAData;
@@ -22,7 +22,7 @@ bool MyNetwork::InitWinSock() const noexcept
 	return IsError(errorCode);
 }
 
-bool MyNetwork::DelWinSock() const noexcept
+bool Network::DelWinSock() const noexcept
 {
 	int errorCode;
 	errorCode = WSACleanup();
@@ -30,7 +30,7 @@ bool MyNetwork::DelWinSock() const noexcept
 	return IsError(errorCode);
 }
 
-//bool MyNetwork::bind() const noexcept
+//bool Network::bind() const noexcept
 //{
 //    inet_pton(AF_INET, "192.168.0.12", &sa.sin_addr.s_addr);
 //    sa.sin_port = htons(10000);
@@ -39,13 +39,13 @@ bool MyNetwork::DelWinSock() const noexcept
 //    int ret = bind(g_hListenSock,(sockaddr*)&sa,namelen);
 //}
 
-bool MyNetwork::IsError() const noexcept
+bool Network::IsError() const noexcept
 {
 	int errorCode = WSAGetLastError();
 	return IsError(errorCode);
 }
 
-bool MyNetwork::IsError(int errorCode) const noexcept
+bool Network::IsError(int errorCode) const noexcept
 {
 	switch (errorCode)
 	{
@@ -58,7 +58,7 @@ bool MyNetwork::IsError(int errorCode) const noexcept
 	return true;
 }
 
-std::string MyNetwork::GetErrorMsg(int errorCode) const noexcept
+std::string Network::GetErrorMsg(int errorCode) const noexcept
 {
 	std::string msg;
 	LPVOID		msgErrorBuffer;

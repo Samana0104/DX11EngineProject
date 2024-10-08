@@ -1,34 +1,33 @@
 #pragma once
 #include "CoreAPI.h"
-#include "Object.h"
+#include "Object2D.h"
 
 namespace HBSoft
 {
-	class SpriteComponent
-	{
-	private:
-		SPRITE_KEY	mSpriteKey;
+    class SpriteComponent
+    {
+    private:
+        SPRITE_KEY m_spriteKey;
 
-		float	mTimer			= 0.f;
-		float	mChangeTime		= 1.f;
+        float m_timer      = 0.f;
+        float m_changeTime = 1.f;
 
-		size_t  mAnimationCount	= 0;
-		size_t	mAnimationIdx	= 0;
-		
-		bool	mIsLoop			= true;
+        size_t m_animationCount = 0;
+        size_t m_animationIdx   = 0;
 
-		MyResourceManager& mManager = MyResourceManager::GetInstance();
+        bool m_isLoop = true;
 
-	public:
-		void ResetAnimation();
+        ResourceManager& m_manager = ResourceManager::GetInstance();
 
-		void SetLoop(const bool _loop);
-		void SetAnimationIdx(const size_t _idx);
-		void SetChangeTime(const float _time);
-		void SetSpriteKey(const SPRITE_KEY _spriteKey);
-		
-		void Update(const float _deltaTime);
-		void Render(Object& _obj);
-	};
-}
+    public:
+        void ResetAnimation();
 
+        void SetLoop(const bool loop);
+        void SetAnimationIdx(const size_t idx);
+        void SetChangeTime(const float time);
+        void SetSpriteKey(const SPRITE_KEY spriteKey);
+
+        void Update(const float deltaTime);
+        void Render(Object2D& obj);
+    };
+}  // namespace HBSoft

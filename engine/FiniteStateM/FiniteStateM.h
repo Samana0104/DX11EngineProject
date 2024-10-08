@@ -9,50 +9,50 @@ namespace HBSoft
     class FiniteStateM
     {
     private:
-        std::map<S, std::shared_ptr<MyFiniteState<S, E>>> mFSM;
+        std::map<S, std::shared_ptr<Transition<S, E>>> m_states;
 
     public:
         FiniteStateM() = default;
 
-        bool    AddEventTransition(const S _inState, const E _event, const S _outState);
-        const S GetTransition(const S _inState, const E _event) const;
+        bool    AddTransition(const S inState, const E event, const S outState);
+        const S GetTransition(const S inState, const E event) const;
 
-        const MyFiniteState<S, E>& operator[](const S _inState) const;
+        const FiniteStateM<S, E>& operator[](const S _inState) const;
     };
 
     TEMPLATE_SE
-    inline bool FiniteStateM<S, E>::AddEventTransition(const S _inState, const E _event,
-                                                       const S _outState)
+    inline bool FiniteStateM<S, E>::AddTransition(const S inState, const E event,
+                                                  const S outState)
     {
-        if (mFSM.contains(_inState))
+        if (m_states.contains(inState))
         {
-            return mFSM[_inState]->AddEventTransition(_event, _outState);
+            return m_states[inState]->AddEventTransition(event, outState);
         }
         else
         {
-            auto state = std::make_shared<MyFiniteState<S, E>>();
-            state->AddEventTransition(_event, _outState);
-            return mFSM.insert(std::make_pair(_inState, state)).second;
+            auto state = std::make_shared<Transition<S, E>>();
+            state->Add(event, outState);
+            return m_states.insert(std::make_pair(inState, state)).second;
         }
     }
 
     TEMPLATE_SE
-    inline const S FiniteStateM<S, E>::GetTransition(const S _inState, const E _event) const
+    inline const S FiniteStateM<S, E>::GetTransition(const S inState, const E event) const
     {
-        if (mFSM.contains(_inState))
+        if (m_states.contains(inState))
         {
-            return mFSM[_inState]->GetTransition(_event);
+            return m_states[inState]->Get(event);
         }
         else
         {
-            MessageBoxA(NULL, "Not exist id", "[FSM id error]", MB_OK);
+            MessageBoxA(NULL, "Not exist id", "[FiniteState id error]", MB_OK);
             return NULL;
         }
     }
 
     TEMPLATE_SE
-    inline const MyFiniteState<S, E>& FiniteStateM<S, E>::operator[](const S _inState) const
+    inline const FiniteStateM<S, E>& FiniteStateM<S, E>::operator[](const S inState) const
     {
-        return *mFSM.at(_inState);
+        return *(m_states.at(inState));
     }
 }  // namespace HBSoft

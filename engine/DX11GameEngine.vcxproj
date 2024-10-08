@@ -31,7 +31,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Font\FontHandler.cpp" />
-    <ClCompile Include="Font\WriterFont.cpp" />
+    <ClCompile Include="Font\Font.cpp" />
     <ClCompile Include="GameStart\Main.cpp" />
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Mesh\Box2D.cpp" />
@@ -43,7 +43,7 @@
     <ClCompile Include="Object\Actor.cpp" />
     <ClCompile Include="Object\Button.cpp" />
     <ClCompile Include="Object\Camera.cpp" />
-    <ClCompile Include="Object\Object.cpp" />
+    <ClCompile Include="Object\Object2D.cpp" />
     <ClCompile Include="Object\ObjectManager.cpp" />
     <ClCompile Include="Object\Pawn.cpp" />
     <ClCompile Include="Scene\SceneLobby.cpp" />
@@ -86,7 +86,7 @@
     <ClInclude Include="FiniteStateM\FiniteStateM.h" />
     <ClInclude Include="FiniteStateM\Transition.h" />
     <ClInclude Include="Font\FontHandler.h" />
-    <ClInclude Include="Font\WriterFont.h" />
+    <ClInclude Include="Font\Font.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Mesh\Box2D.h" />
@@ -98,7 +98,7 @@
     <ClInclude Include="Object\Actor.h" />
     <ClInclude Include="Object\Button.h" />
     <ClInclude Include="Object\Camera.h" />
-    <ClInclude Include="Object\Object.h" />
+    <ClInclude Include="Object\Object2D.h" />
     <ClInclude Include="Object\ObjectManager.h" />
     <ClInclude Include="Object\Pawn.h" />
     <ClInclude Include="Object\ObjectCode.h" />

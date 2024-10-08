@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-namespace MyProject
+namespace HBSoft
 {
 	enum class PacketType : std::uint8_t
 	{

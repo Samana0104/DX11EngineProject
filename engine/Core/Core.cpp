@@ -6,13 +6,13 @@ void Core::GameFrame()
 {
     m_input.Update();
     m_sceneManager.Update(m_timer.GetDeltaTime());
-    m_manager.mSound.Update();
+    m_manager.m_sound.Update();
 }
 
 void Core::GamePreRender()
 {
     float clearColor[] = {0.f, 0.f, 0.f, 1.0f};
-    m_device.mContext->ClearRenderTargetView(m_device.mRTV.Get(), clearColor);
+    m_device.m_context->ClearRenderTargetView(m_device.m_rtv.Get(), clearColor);
 }
 
 void Core::GameRender()
@@ -25,10 +25,10 @@ void Core::GameRender()
 void Core::GamePostRender()
 {
 #ifdef _DEBUG
-    m_manager.mFont.DrawRectForDebugging();
+    m_manager.m_font.DrawRectForDebugging();
 #endif
 
-    m_device.mSwapChain->Present(1, 0);
+    m_device.m_swapChain->Present(1, 0);
 }
 
 void Core::GameInit()
@@ -66,17 +66,17 @@ void Core::ENGINE_BEGIN(HINSTANCE _hinstance, LONG _width, LONG _height)
     _ASSERT(Window::GetInstance().CreateWin(_width, _height));
     _ASSERT(D3Device::GetInstance().CreateDevice());
 #else
-    MyWindow::GetInstance().CreateWin(_width, _height);
+    Window::GetInstance().CreateWin(_width, _height);
     D3Device::GetInstance().CreateDevice();
 #endif
 
-    MyResourceManager::GetInstance().CreateDafultResource();
+    ResourceManager::GetInstance().CreateDafultResource();
 }
 
 void Core::ENGINE_END()
 {
-    MyResourceManager::GetInstance().Release();
+    ResourceManager::GetInstance().Release();
     Input::GetInstance().Release();
     D3Device::GetInstance().Release();
-    MyWindow::GetInstance().Release();
+    Window::GetInstance().Release();
 }

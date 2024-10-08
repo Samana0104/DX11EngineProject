@@ -3,6 +3,6 @@
 
 namespace HBSoft
 {
-    class MyPawn : public Actor
+    class Pawn : public Actor
     {};
 }  // namespace HBSoft

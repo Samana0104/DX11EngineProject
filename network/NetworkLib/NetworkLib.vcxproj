@@ -164,20 +164,20 @@ copy "../../exe/Debug/Network_d.lib" "../../extern/lib/network/"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="MyNetClient.cpp" />
-    <ClCompile Include="MyNetIOCPServ.cpp" />
-    <ClCompile Include="MyNetwork.cpp" />
-    <ClCompile Include="MySession.cpp" />
+    <ClCompile Include="NetClient.cpp" />
+    <ClCompile Include="NetIOCPServ.cpp" />
+    <ClCompile Include="Network.cpp" />
+    <ClCompile Include="Session.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MyNetClient.h" />
-    <ClInclude Include="MyNetIOCPServ.h" />
-    <ClInclude Include="MyNetwork.h" />
-    <ClInclude Include="MyPacket.h" />
-    <ClInclude Include="MySession.h" />
+    <ClInclude Include="NetClient.h" />
+    <ClInclude Include="NetIOCPServ.h" />
+    <ClInclude Include="Network.h" />
+    <ClInclude Include="Packet.h" />
+    <ClInclude Include="Session.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

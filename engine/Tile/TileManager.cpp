@@ -74,7 +74,7 @@ bool TileManager::LoadScript(const wstringV _filePath)
         tile->SetShaderKey(buffer2);
         tile->GetCollisionComponent().SetCollisionable(static_cast<bool>(isCollision));
 
-        mTiles.insert(std::make_pair(tileKey[0], tile));
+        m_tiles.insert(std::make_pair(tileKey[0], tile));
     }
 
     //-----------------------------------------------------
@@ -92,102 +92,102 @@ bool TileManager::LoadScript(const wstringV _filePath)
 
         for (int i = 0; i < converter.size(); i++)
         {
-            if (mTiles.contains(converter[i]))
+            if (m_tiles.contains(converter[i]))
             {
                 auto tile = std::make_shared<Tile>();
                 {
-                    tile->SetTextureKey(mTiles[converter[i]]->GetTextureKey());
-                    tile->SetUVRect(mTiles[converter[i]]->GetUVRect());
-                    tile->SetShaderKey(mTiles[converter[i]]->GetShaderKey());
+                    tile->SetTextureKey(m_tiles[converter[i]]->GetTextureKey());
+                    tile->SetUVRect(m_tiles[converter[i]]->GetUVRect());
+                    tile->SetShaderKey(m_tiles[converter[i]]->GetShaderKey());
                     tile->GetCollisionComponent().SetCollisionable(
-                    mTiles[converter[i]]->GetCollisionComponent().IsCollisionable());
+                    m_tiles[converter[i]]->GetCollisionComponent().IsCollisionable());
                     tile->SetRow(i);
-                    tile->SetColumn(mColumns);
+                    tile->SetColumn(m_columns);
                 }
 
                 if (tile->GetCollisionComponent().IsCollisionable())
-                    mCollisions.push_back(tile);
-                mTileMap.emplace_back(std::move(tile));
+                    m_collisions.push_back(tile);
+                m_tileMap.emplace_back(std::move(tile));
             }
         }
-        mColumns++;
-        mRows = static_cast<int>(converter.size());
+        m_columns++;
+        m_rows = static_cast<int>(converter.size());
     }
 
     fclose(fp_src);
 
-    mIsScriptLoaded = true;
+    m_isScriptLoaded = true;
 
     SetSize({162.f, 92.f});
     SetPosition({0.f, 0.f});
     return true;
 }
 
-void TileManager::SetPosition(const vec2 _pos)
+void TileManager::SetPosition(const vec2 pos)
 {
-    if (!mIsScriptLoaded)
+    if (!m_isScriptLoaded)
     {
         MessageBoxA(NULL, "Script Is Not Loaded", "[TileManager error]", MB_OK);
         return;
     }
 
-    for (auto& tile : mTileMap)
+    for (auto& tile : m_tileMap)
     {
         (*tile)->SetLocation(
-        {_pos.x + tile->GetRow() * mTileSize.x - mSize.x * 0.5f + mTileSize.x * 0.5f,
-         _pos.y + -tile->GetColumn() * mTileSize.y + mSize.y * 0.5f - mTileSize.y * 0.5f});
+        {pos.x + tile->GetRow() * m_tileSize.x - m_size.x * 0.5f + m_tileSize.x * 0.5f,
+         pos.y + -tile->GetColumn() * m_tileSize.y + m_size.y * 0.5f - m_tileSize.y * 0.5f});
     }
 
-    mPosition = _pos;
+    m_position = pos;
 }
 
 void TileManager::SetSize(const vec2 _size)
 {
-    if (!mIsScriptLoaded)
+    if (!m_isScriptLoaded)
     {
         MessageBoxA(NULL, "Script Is Not Loaded", "[TileManager error]", MB_OK);
         return;
     }
 
-    float widthPerTile  = _size.x / static_cast<float>(mRows);
-    float heightPerTile = _size.y / static_cast<float>(mColumns);
+    float widthPerTile  = _size.x / static_cast<float>(m_rows);
+    float heightPerTile = _size.y / static_cast<float>(m_columns);
 
-    for (auto& tile : mTileMap)
+    for (auto& tile : m_tileMap)
     {
         (*tile)->SetScale({widthPerTile, heightPerTile});
         tile->GetCollisionComponent().ResizeCollisionArea();
     }
 
-    (*mBackground)->SetScale({widthPerTile * 2.5f, heightPerTile * 2.5f});
-    mSize     = _size;
-    mTileSize = {widthPerTile, heightPerTile};
+    (*m_background)->SetScale({widthPerTile * 2.5f, heightPerTile * 2.5f});
+    m_size     = _size;
+    m_tileSize = {widthPerTile, heightPerTile};
 }
 
 const vec2& TileManager::GetTileSize() const
 {
-    return mTileSize;
+    return m_tileSize;
 }
 
 void TileManager::ProcessCollision(Actor& _actor)
 {
-    for (auto& tile : mCollisions)
+    for (auto& tile : m_collisions)
         tile->GetCollisionComponent().IsCollisionWithEvent(_actor.GetCollisionComponent());
 }
 
 void TileManager::Render()
 {
     // background size = 2 * tile size
-    for (float i = 0; i < mColumns + 0.5f; i += 2.5f)
+    for (float i = 0; i < m_columns + 0.5f; i += 2.5f)
     {
-        for (float j = 0; j < mRows + 0.5f; j += 2.5f)
+        for (float j = 0; j < m_rows + 0.5f; j += 2.5f)
         {
-            (*mBackground)
-            ->SetLocation({j * mTileSize.x - mSize.x * 0.5f, -i * mTileSize.y + mSize.y * 0.5f});
+            (*m_background)
+            ->SetLocation({j * m_tileSize.x - m_size.x * 0.5f, -i * m_tileSize.y + m_size.y * 0.5f});
 
-            mBackground->Render();
+            m_background->Render();
         }
     }
 
-    for (auto& tile : mTileMap)
+    for (auto& tile : m_tileMap)
         tile->Render();
 }

@@ -24,9 +24,9 @@ void Mesh2D::AddVertexAndUV(const vec2 vertex, const vec2 uv)
     m_uv.emplace_back(uv);
 }
 
-void Mesh2D::AddVertexIndex(std::initializer_list<size_t> _index)
+void Mesh2D::AddVertexIndex(std::initializer_list<size_t> index)
 {
-    for (auto idx : _index)
+    for (auto idx : index)
     {
         m_indices.emplace_back(idx);
         m_renderVertices.push_back({
@@ -77,7 +77,7 @@ bool Mesh2D::CreateVertexBuffer()
 
     sd.pSysMem = m_renderVertices.data();
 
-    hr = m_device.mD3dDevice->CreateBuffer(&bd, &sd, m_vertexBuffer.GetAddressOf());
+    hr = m_device.m_d3dDevice->CreateBuffer(&bd, &sd, m_vertexBuffer.GetAddressOf());
 
     return SUCCEEDED(hr);
 }
@@ -89,11 +89,11 @@ void Mesh2D::SetIAVertexBuffer()
     UINT pStrides   = sizeof(Vertex2D);  // 1개의 정점 크기
     UINT pOffsets   = 0;                 // 버퍼에 시작 인덱스
 
-    m_device.mContext->IASetVertexBuffers(StartSlot,
-                                          NumBuffers,
-                                          m_vertexBuffer.GetAddressOf(),
-                                          &pStrides,
-                                          &pOffsets);
+    m_device.m_context->IASetVertexBuffers(StartSlot,
+                                           NumBuffers,
+                                           m_vertexBuffer.GetAddressOf(),
+                                           &pStrides,
+                                           &pOffsets);
 }
 
 void Mesh2D::UpdateRenderVertices(const mat3& matrix, const vec4& color)
@@ -114,15 +114,14 @@ void Mesh2D::UpdateRenderVertices(const mat3& matrix, const vec4& color)
                                m_tempUV[m_indices[i]]};
     }
 
-    m_device.mContext
-    ->UpdateSubresource(m_vertexBuffer.Get(), 0, NULL, m_renderVertices.data(), 0, 0);
+    m_device.m_context->UpdateSubresource(m_vertexBuffer.Get(), 0, NULL, m_renderVertices.data(), 0, 0);
 }
 
 void Mesh2D::Draw(const mat3& _matrix, const vec4 _color)
 {
     UpdateRenderVertices(_matrix, _color);
     SetIAVertexBuffer();
-    m_device.mContext->Draw(static_cast<UINT>(m_renderVertices.size()), 0);
+    m_device.m_context->Draw(static_cast<UINT>(m_renderVertices.size()), 0);
     PostRender();
 }
 

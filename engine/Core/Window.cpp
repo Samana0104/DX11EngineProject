@@ -4,157 +4,154 @@ using namespace HBSoft;
 
 void Window::CreateRegisterClass(HINSTANCE _hInstance)
 {
-	WNDCLASS wc = {};
-	wc.lpfnWndProc = [](HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM	lParam) -> LRESULT
-		{
-			switch (uMsg)
-			{
-			case WM_ACTIVATE:
-				Window::GetInstance().CallEventWMActivate(hwnd, uMsg, wParam, lParam);
-				return 0;
+    WNDCLASS wc    = {};
+    wc.lpfnWndProc = [](HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) -> LRESULT
+    {
+        switch (uMsg)
+        {
+        case WM_ACTIVATE:
+            Window::GetInstance().CallEventWMActivate(hwnd, uMsg, wParam, lParam);
+            return 0;
 
-			case WM_DESTROY:
-				Window::GetInstance().CallEventWMDestroy(hwnd, uMsg, wParam, lParam);
-				return 0;
+        case WM_DESTROY:
+            Window::GetInstance().CallEventWMDestroy(hwnd, uMsg, wParam, lParam);
+            return 0;
 
-			case WM_SIZE:
-				Window::GetInstance().CallEventWMSize(hwnd, uMsg, wParam, lParam);
-				return 0;
+        case WM_SIZE:
+            Window::GetInstance().CallEventWm_size(hwnd, uMsg, wParam, lParam);
+            return 0;
+        }
+        return DefWindowProc(hwnd, uMsg, wParam, lParam);
+    };
 
-			}
-			return DefWindowProc(hwnd, uMsg, wParam, lParam);
-		};
-
-	wc.hInstance = _hInstance;
-	wc.lpszClassName = MY_WINDOW_CLASS_NAME;
-	RegisterClass(&wc);
+    wc.hInstance     = _hInstance;
+    wc.lpszClassName = MY_Window_CLASS_NAME;
+    RegisterClass(&wc);
 }
 
 bool Window::CreateWin(LONG _width, LONG _height)
 {
-	m_windowSize = { _width, _height };
-	RECT rt{ 0, 0, _width, _height };
+    m_windowSize = {_width, _height};
+    RECT rt {0, 0, _width, _height};
 
-	CreateRegisterClass(mHinstance);
-	AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, FALSE);
+    CreateRegisterClass(m_hinstance);
+    AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, FALSE);
 
-	HWND hwnd = CreateWindowEx(
-		0, // Optional window styles.
-		MY_WINDOW_CLASS_NAME,
-		MY_WINDOW_NAME,
-		WS_OVERLAPPEDWINDOW,// Window style
-		GetSystemMetrics(SM_CXSCREEN) / 2 - (rt.right - rt.left) / 2, // 영역 중앙에 윈도우 생성
-		GetSystemMetrics(SM_CYSCREEN) / 2 - (rt.bottom - rt.top) / 2, // 하단 영역 45px
-		rt.right - rt.left,
-		rt.bottom - rt.top,
-		NULL, // Parent window
-		NULL, // Menu
-		mHinstance, // Instance handle
-		NULL // Additional application data
-	);
+    HWND hwnd = CreateWindowEx(
+    0,  // Optional Window styles.
+    MY_Window_CLASS_NAME,
+    MY_Window_NAME,
+    WS_OVERLAPPEDWINDOW,                                           // Window style
+    GetSystemMetrics(SM_CXSCREEN) / 2 - (rt.right - rt.left) / 2,  // 영역 중앙에 윈도우 생성
+    GetSystemMetrics(SM_CYSCREEN) / 2 - (rt.bottom - rt.top) / 2,  // 하단 영역 45px
+    rt.right - rt.left,
+    rt.bottom - rt.top,
+    NULL,         // Parent Window
+    NULL,         // Menu
+    m_hinstance,  // Instance handle
+    NULL          // Additional application data
+    );
 
-	if (hwnd == NULL)
-		return false;
+    if (hwnd == NULL)
+        return false;
 
-	mHwnd = hwnd;
-	ShowWindow(hwnd, SW_SHOW);
+    m_hwnd = hwnd;
+    ShowWindow(hwnd, SW_SHOW);
 
-	return true;
+    return true;
 }
 
-
-bool MyWindow::WindowRun() const
+bool Window::WindowRun() const
 {
-	MSG msg = { };
-	while (WM_QUIT != msg.message)
-	{
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-		else
-		{
-			return true;
-		}
-	}
-	return false;
+    MSG msg = {};
+    while (WM_QUIT != msg.message)
+    {
+        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+        else
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
-void MyWindow::CallEventWMActivate(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM _lParam)
+void Window::CallEventWMActivate(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM _lParam)
 {
-	if (LOWORD(_wParam) == WA_INACTIVE)
-		MyWindow::mIsActivate = false;
-	else
-		MyWindow::mIsActivate = true;
+    if (LOWORD(_wParam) == WA_INACTIVE)
+        Window::m_isActivate = false;
+    else
+        Window::m_isActivate = true;
 }
 
-void MyWindow::CallEventWMDestroy(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM _lParam)
+void Window::CallEventWMDestroy(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM _lParam)
 {
-	PostQuitMessage(0);
+    PostQuitMessage(0);
 }
 
-void MyWindow::CallEventWMSize(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM _lParam)
+void Window::CallEventWm_size(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM _lParam)
 {
-	RECT rc;
+    RECT rc;
 
-	GetClientRect(_hwnd, &rc);
+    GetClientRect(_hwnd, &rc);
 
-	MyWindow::mWindowSize.x = rc.right;
-	MyWindow::mWindowSize.y = rc.bottom;
+    Window::m_windowSize.x = rc.right;
+    Window::m_windowSize.y = rc.bottom;
 
-	for (auto& obj : mCallbackWMSize)
-		obj.second(MyWindow::mWindowSize.x, MyWindow::mWindowSize.y);
+    for (auto& obj : m_callbackWm_size)
+        obj.second(Window::m_windowSize.x, Window::m_windowSize.y);
 }
 
-bool MyWindow::IsActivate() const
+bool Window::IsActivate() const
 {
-	return mIsActivate;
+    return m_isActivate;
 }
 
-void MyWindow::SetHinstance(HINSTANCE _hinstance)
+void Window::SetHinstance(HINSTANCE _hinstance)
 {
-	mHinstance = _hinstance;
+    m_hinstance = _hinstance;
 }
 
-POINT MyWindow::GetWindowSize() const
+POINT Window::GetWindowSize() const
 {
-	return mWindowSize;
+    return m_windowSize;
 }
 
-POINTFLOAT MyWindow::GetWindowSizeF() const
+POINTFLOAT Window::GetWindowSizeF() const
 {
-	return { static_cast<FLOAT>(mWindowSize.x), static_cast<FLOAT>(mWindowSize.y) };
+    return {static_cast<FLOAT>(m_windowSize.x), static_cast<FLOAT>(m_windowSize.y)};
 }
 
-glm::vec2 MyWindow::GetWindowSizeVec2() const
+glm::vec2 Window::GetWindowSizeVec2() const
 {
-	return { static_cast<FLOAT>(mWindowSize.x), static_cast<FLOAT>(mWindowSize.y) };
+    return {static_cast<FLOAT>(m_windowSize.x), static_cast<FLOAT>(m_windowSize.y)};
 }
 
-HWND MyWindow::GetWindowHandle() const
+HWND Window::GetWindowHandle() const
 {
-	return mHwnd;
+    return m_hwnd;
 }
 
-CALLBACK_ID MyWindow::RegisterCallBackWMSize(WMSIZE_FUNC _func)
+CALLBACK_ID Window::RegisterCallBackWm_size(Wm_size_FUNC _func)
 {
-	registerCallbackID++;
-	mCallbackWMSize.insert(std::make_pair(registerCallbackID, _func));
-	return registerCallbackID;
+    m_registerCallbackID++;
+    m_callbackWm_size.insert(std::make_pair(m_registerCallbackID, _func));
+    return m_registerCallbackID;
 }
 
-bool MyWindow::DeleteCallBack(CALLBACK_ID _id)
+bool Window::DeleteCallBack(CALLBACK_ID _id)
 {
-	if (mCallbackWMSize.contains(_id))
-	{
-		mCallbackWMSize.erase(_id);
-		return true;
-	}
-	else
-	{
-		MessageBoxA(NULL, "Not existed event id[id Error]", "[WM Size event]", MB_OK);
-		return false;
-	}
+    if (m_callbackWm_size.contains(_id))
+    {
+        m_callbackWm_size.erase(_id);
+        return true;
+    }
+    else
+    {
+        MessageBoxA(NULL, "Not existed event id[id Error]", "[WM Size event]", MB_OK);
+        return false;
+    }
 }
-

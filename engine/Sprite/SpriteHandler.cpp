@@ -14,7 +14,7 @@ bool SpriteHandler::CreateSpriteResource(const wstringV _filePath)
 		return false;
 
 	SPRITE_KEY key = fileInfo.first + fileInfo.second;
-	return AddResource(key, sprite);
+	return Add(key, sprite);
 }
 
 void SpriteHandler::CreateSpriteAsFolderPath(const wstringV _folderPath)

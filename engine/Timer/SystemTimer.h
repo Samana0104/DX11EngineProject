@@ -6,14 +6,14 @@ namespace HBSoft
     class SystemTimer : public Timer
     {
     private:
-        double mOneSecond;
-        double mMaxFPSTime;
-        double mSecondPerMaxFPS;
-        double mDeltaTime;
+        double m_oneSecond;
+        double m_maxFPSTime;
+        double m_secondPerMaxFPS;
+        double m_deltaTime;
 
-        int mMaxFPS;
-        int mFPS;
-        int mCurrentFPS;
+        int m_maxFPS;
+        int m_fps;
+        int m_currentFPS;
 
     public:
         std::wstring m_csBuffer;

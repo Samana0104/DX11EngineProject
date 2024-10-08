@@ -11,19 +11,19 @@ namespace HBSoft
 
     struct ShaderDesc
     {
-        ShaderType   mShaderType;
-        std::wstring mShaderPath;
-        std::string  mShaderEntry;
+        ShaderType   m_shaderType;
+        std::wstring m_shaderPath;
+        std::string  m_shaderEntry;
     };
 
     class Shader
     {
     protected:
-        ComPtr<ID3DBlob> mShaderByteCode;
-        ShaderDesc       mShaderDesc;
+        ComPtr<ID3DBlob> m_shaderByteCode;
+        ShaderDesc       m_shaderDesc;
 
     protected:
-        inline static D3Device& mDevice = D3Device::GetInstance();
+        inline static D3Device& m_device = D3Device::GetInstance();
 
     protected:
         Shader(const ShaderDesc& _desc);

@@ -4,54 +4,54 @@ using namespace HBSoft;
 
 void SpriteComponent::ResetAnimation()
 {
-	SetAnimationIdx(0);
+    SetAnimationIdx(0);
 }
 
-void SpriteComponent::SetLoop(const bool _loop)
+void SpriteComponent::SetLoop(const bool loop)
 {
-	mIsLoop = _loop;
+    m_isLoop = loop;
 }
 
-void SpriteComponent::SetAnimationIdx(const size_t _idx)
+void SpriteComponent::SetAnimationIdx(const size_t idx)
 {
-	mAnimationIdx = _idx;
+    m_animationIdx = idx;
 }
 
-void SpriteComponent::SetSpriteKey(const SPRITE_KEY _spriteKey)
+void SpriteComponent::SetSpriteKey(const SPRITE_KEY spriteKey)
 {
-	mSpriteKey = _spriteKey;
-	mAnimationCount = mManager.mSprite[_spriteKey]->GetSize();
+    m_spriteKey      = spriteKey;
+    m_animationCount = m_manager.m_sprite[spriteKey]->GetSize();
 }
 
-void SpriteComponent::SetChangeTime(const float _time)
+void SpriteComponent::SetChangeTime(const float time)
 {
-	mChangeTime = _time;
+    m_changeTime = time;
 }
 
-void SpriteComponent::Update(const float _deltaTime)
+void SpriteComponent::Update(const float deltaTime)
 {
-	if (mAnimationCount == 0)
-		return;
+    if (m_animationCount == 0)
+        return;
 
-	mTimer += _deltaTime;
+    m_timer += deltaTime;
 
-	if (mTimer >= mChangeTime)
-	{
-		mTimer -= mChangeTime;
-		mAnimationIdx++;
+    if (m_timer >= m_changeTime)
+    {
+        m_timer -= m_changeTime;
+        m_animationIdx++;
 
-		if (mIsLoop)
-		{
-			mAnimationIdx %= mAnimationCount;
-		}
-		else
-		{
-			mAnimationIdx = min(mAnimationIdx, mAnimationCount - 1);
-		}
-	}
+        if (m_isLoop)
+        {
+            m_animationIdx %= m_animationCount;
+        }
+        else
+        {
+            m_animationIdx = min(m_animationIdx, m_animationCount - 1);
+        }
+    }
 }
 
-void SpriteComponent::Render(Object& mObj)
+void SpriteComponent::Render(Object2D& mObj)
 {
-	mManager.mSprite[mSpriteKey]->Render(mObj, mAnimationIdx);
+    m_manager.m_sprite[m_spriteKey]->Render(mObj, m_animationIdx);
 }

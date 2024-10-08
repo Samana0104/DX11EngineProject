@@ -3,7 +3,7 @@
 
 namespace HBSoft
 {
-    class Object;
+    class Object2D;
 
     enum class SpriteType : int
     {
@@ -14,14 +14,14 @@ namespace HBSoft
     class Sprite
     {
     private:
-        std::vector<RECT_F>      mSpriteUVRects;
-        std::vector<TEXTURE_KEY> mSpriteTextures;
+        std::vector<RECT_F>      m_spriteUVRects;
+        std::vector<TEXTURE_KEY> m_spriteTextures;
 
-        SpriteType  mSpriteType;
-        TEXTURE_KEY mSpriteMainKey;
-        SHADER_KEY  mSpriteShaderKey;
+        SpriteType  m_spriteType;
+        TEXTURE_KEY m_spriteMainKey;
+        SHADER_KEY  m_spriteShaderKey;
 
-        int mSpriteCount;
+        int m_spriteCount;
 
     public:
         Sprite() = default;
@@ -33,7 +33,7 @@ namespace HBSoft
 
         bool LoadScript(wstringV _filePath);
 
-        void Render(Object& _obj, size_t idx);
+        void Render(Object2D& obj, size_t idx);
 
         size_t GetSize() const;
     };

@@ -1,5 +1,5 @@
 #pragma once
-#include "MyWindow.h"
+#include "Window.h"
 
 namespace HBSoft
 {
@@ -14,25 +14,25 @@ namespace HBSoft
     class D3Device : public Singleton<D3Device>
     {
     public:
-        ComPtr<ID3D11Device>           mD3dDevice;
-        ComPtr<ID3D11DeviceContext>    mContext;
-        ComPtr<ID3D11RenderTargetView> mRTV;
-        ComPtr<ID3D11BlendState>       mAlphaBlend;
-        ComPtr<ID3D11SamplerState>     mSamplerState;
-        ComPtr<IDXGISwapChain>         mSwapChain;
-        ComPtr<ID2D1RenderTarget>      mD2dRT;
-        ComPtr<ID2D1Factory>           mD2dFactory;
+        ComPtr<ID3D11Device>           m_d3dDevice;
+        ComPtr<ID3D11DeviceContext>    m_context;
+        ComPtr<ID3D11RenderTargetView> m_rtv;  // rtv = render target view
+        ComPtr<ID3D11BlendState>       m_alphaBlend;
+        ComPtr<ID3D11SamplerState>     m_samplerState;
+        ComPtr<IDXGISwapChain>         m_swapChain;
+        ComPtr<ID2D1RenderTarget>      m_d2dRT;
+        ComPtr<ID2D1Factory>           m_d2dFactory;
 
-        D3D11_VIEWPORT       mViewPort;
-        DXGI_SWAP_CHAIN_DESC mSwapChainDesc;
+        D3D11_VIEWPORT       m_viewPort;
+        DXGI_SWAP_CHAIN_DESC m_swapChainDesc;
 
-        CALLBACK_ID mWMSizeID;
+        CALLBACK_ID m_wm_sizeID;
 
     private:
         friend class Singleton<D3Device>;
         D3Device() = default;
 
-        void OnWMSize(UINT _width, UINT _height);
+        void OnWm_size(UINT width, UINT height);
 
         bool CreateDeviceAndSwapChain();
         bool CreateRenderTargetView();
@@ -41,13 +41,13 @@ namespace HBSoft
         void CreateViewport();
         bool SetAlphaBlendingState();
 
-        void SetViewportSize(ViewType _viewType, glm::vec2 _size);
+        void SetViewportSize(ViewType viewType, glm::vec2 size);
 
     public:
         ~D3Device();
 
-        void SetViewportSizeOnCenter(glm::vec2 _size);
-        void SetViewportSizeOnLeftTop(glm::vec2 _size);
+        void SetViewportSizeOnCenter(glm::vec2 size);
+        void SetViewportSizeOnLeftTop(glm::vec2 size);
 
         glm::vec2 GetViewportSize() const;
         bool      CreateDevice();

@@ -9,19 +9,19 @@
 
 namespace HBSoft
 {
-    class MyResourceManager : public Singleton<MyResourceManager>
+    class ResourceManager : public Singleton<ResourceManager>
     {
     public:
-        TextureHandler mTexture;
-        MeshHandler    mMesh;
-        FontHandler    mFont;
-        ShaderHandler  mShader;
-        SoundHandler   mSound;
-        SpriteHandler  mSprite;
+        TextureHandler m_texture;
+        MeshHandler    m_mesh;
+        FontHandler    m_font;
+        ShaderHandler  m_shader;
+        SoundHandler   m_sound;
+        SpriteHandler  m_sprite;
 
     private:
-        friend class Singleton<MyResourceManager>;
-        MyResourceManager() = default;
+        friend class Singleton<ResourceManager>;
+        ResourceManager() = default;
 
         void CreateDefaultFonts();
         void CreateDefaultMeshes();

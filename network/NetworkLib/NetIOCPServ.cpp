@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "MyNetIOCPServ.h"
-using namespace MyProject;
+#include "NetIOCPServ.h"
+using namespace HBSoft;
 
-MyNetIOCPServ::MyNetIOCPServ(const PORT servPort)
+NetIOCPServ::NetIOCPServ(const PORT servPort)
 {
     assert(CreateSock(servPort));
     assert(BindSock());
@@ -11,12 +11,12 @@ MyNetIOCPServ::MyNetIOCPServ(const PORT servPort)
     m_iocpHandle = ::CreateIoCompletionPort(INVALID_HANDLE_VALUE, 0, 0, 0);
     
     for (int i = 0; i < MAX_WORKERS; i++)
-        m_workers[i] = std::thread(&MyNetIOCPServ::WorkerMain, this, std::ref(*this));
+        m_workers[i] = std::thread(&NetIOCPServ::WorkerMain, this, std::ref(*this));
 
     m_isRunning = true;
 }
 
-MyNetIOCPServ::~MyNetIOCPServ()
+NetIOCPServ::~NetIOCPServ()
 {
     closesocket(m_servSock);
     m_isRunning = false;
@@ -27,7 +27,7 @@ MyNetIOCPServ::~MyNetIOCPServ()
     }
 }
 
-void MyNetIOCPServ::WorkerMain(MyNetIOCPServ& iocpServer)
+void NetIOCPServ::WorkerMain(NetIOCPServ& iocpServer)
 {
     {
         std::unique_lock<std::mutex> lock(m_beginMutex);
@@ -40,7 +40,7 @@ void MyNetIOCPServ::WorkerMain(MyNetIOCPServ& iocpServer)
     }
 }
 
-void MyNetIOCPServ::Run()
+void NetIOCPServ::Run()
 {
     while(true)
     {
@@ -56,7 +56,7 @@ void MyNetIOCPServ::Run()
     }
 }
 
-bool MyNetIOCPServ::BindSock() noexcept
+bool NetIOCPServ::BindSock() noexcept
 {
     int errorCode;
     errorCode = bind(m_servSock, reinterpret_cast<sockaddr*>(&m_servAddr), sizeof(m_servAddr));
@@ -64,11 +64,11 @@ bool MyNetIOCPServ::BindSock() noexcept
 }
 
 
-void MyNetIOCPServ::Disconnet(Session& session) noexcept
+void NetIOCPServ::Disconnet(Session& session) noexcept
 {
 }
 
-bool MyNetIOCPServ::ListenSock() noexcept
+bool NetIOCPServ::ListenSock() noexcept
 {
     int errorCode;
     errorCode = listen(m_servSock, SOMAXCONN);
@@ -76,7 +76,7 @@ bool MyNetIOCPServ::ListenSock() noexcept
     return !IsError(errorCode);
 }
 
-bool MyNetIOCPServ::AcceptSock() noexcept
+bool NetIOCPServ::AcceptSock() noexcept
 {
     sockaddr_in addr;
     int addrlen = sizeof(addr);
@@ -93,7 +93,7 @@ bool MyNetIOCPServ::AcceptSock() noexcept
     return true;
 }
 
-bool MyNetIOCPServ::CreateSock(const PORT servPort) noexcept
+bool NetIOCPServ::CreateSock(const PORT servPort) noexcept
 {
     u_long nonBlockSock = TRUE;
     int errorCode;

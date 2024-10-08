@@ -14,7 +14,7 @@ bool SoundHandler::CreateSoundResource(const wstringV _filePath)
 	SOUND_KEY key = fileInfo.first + fileInfo.second;
 
 	auto sound = std::make_shared<Sound>(_filePath);
-	return AddResource(key, sound);
+	return Add(key, sound);
 }
 
 void SoundHandler::CreateSoundAsFolderPath(const wstringV _folderPath)

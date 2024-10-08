@@ -2,89 +2,89 @@
 #include "MoveComponent.h"
 using namespace HBSoft;
 
-MoveComponent::MoveComponent(Transform2D& _transform)
-    : mTransform(_transform)
+MoveComponent::MoveComponent(Transform2D& transform)
+    : m_transform(transform)
 {}
 
-void MoveComponent::SetSpeedX(const float _speedX)
+void MoveComponent::SetSpeedX(const float speedX)
 {
-    mVelocity.x = _speedX;
+    m_velocity.x = speedX;
 }
 
-void MoveComponent::SetSpeedY(const float _speedY)
+void MoveComponent::SetSpeedY(const float speedY)
 {
-    mVelocity.y = _speedY;
+    m_velocity.y = speedY;
 }
 
-void MoveComponent::SetAccelX(const float _acclerationX)
+void MoveComponent::SetAccelX(const float acclerationX)
 {
-    mAcceleration.x = _acclerationX;
+    m_acceleration.x = acclerationX;
 }
 
-void MoveComponent::SetAccelY(const float _acclerationY)
+void MoveComponent::SetAccelY(const float acclerationY)
 {
-    mAcceleration.y = _acclerationY;
+    m_acceleration.y = acclerationY;
 }
 
 const vec2& MoveComponent::GetOffset() const
 {
-    return mOffset;
+    return m_offset;
 }
 
-void MoveComponent::AddSpeedX(const float _speed)
+void MoveComponent::AddSpeedX(const float speed)
 {
-    mVelocity.x += _speed;
+    m_velocity.x += speed;
 }
 
-void MoveComponent::AddSpeedY(const float _speed)
+void MoveComponent::AddSpeedY(const float speed)
 {
-    mVelocity.y += _speed;
+    m_velocity.y += speed;
 }
 
-void MoveComponent::AddAccelX(const float _acceleration)
+void MoveComponent::AddAccelX(const float acceleration)
 {
-    mAcceleration.x += _acceleration;
+    m_acceleration.x += acceleration;
 }
 
-void MoveComponent::AddAccelY(const float _acceleration)
+void MoveComponent::AddAccelY(const float acceleration)
 {
-    mAcceleration.y += _acceleration;
+    m_acceleration.y += acceleration;
 }
 
-void MoveComponent::Break(const vec2 _accleration)
+void MoveComponent::Break(const vec2 accleration)
 {
-    if (mVelocity.x <= TOLERANCE && mVelocity.y <= TOLERANCE)
+    if (m_velocity.x <= TOLERANCE && m_velocity.y <= TOLERANCE)
         return;
 
-    if (mVelocity.x > 0.f)
+    if (m_velocity.x > 0.f)
     {
-        mIsXposBreaking = true;
+        m_isXposBreaking = true;
     }
-    else if (mVelocity.x < 0.f)
+    else if (m_velocity.x < 0.f)
     {
-        mIsXposBreaking = false;
+        m_isXposBreaking = false;
     }
 }
 
 void MoveComponent::Stop()
 {
-    mVelocity     = {0.f, 0.f};
-    mAcceleration = {0.f, 0.f};
+    m_velocity     = {0.f, 0.f};
+    m_acceleration = {0.f, 0.f};
 }
 
 vec2 MoveComponent::GetVelocity() const
 {
-    return mVelocity;
+    return m_velocity;
 }
 
 vec2 MoveComponent::GetAccel() const
 {
-    return mAcceleration;
+    return m_acceleration;
 }
 
 void MoveComponent::Update(float _deltaTime)
 {
-    mVelocity += mAcceleration * _deltaTime;
-    mOffset = mVelocity * _deltaTime;
-    mTransform->AddLocation(mOffset);
+    m_velocity += m_acceleration * _deltaTime;
+    m_offset = m_velocity * _deltaTime;
+    m_transform->AddLocation(m_offset);
 }

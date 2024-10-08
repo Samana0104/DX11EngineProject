@@ -50,9 +50,9 @@ void Tile::Update(const float _deltaTime)
 
 void Tile::Render()
 {
-	vec2 imageSize = mManager.mTexture[mTextureKey]->GetTextureSizeVec2();
-	mManager.mShader[mShaderKey]->SetUpConfiguration();
-	mManager.mTexture[mTextureKey]->Render();
-	mManager.mMesh[mMeshKey]->SetUVVertexAsRect(mUV, imageSize);
-	mManager.mMesh[mMeshKey]->Draw(mTransform.GetModelMat(), mColor);
+	vec2 imageSize = m_manager.m_texture[m_textureKey]->GetTextureSizeVec2();
+	m_manager.m_shader[m_shaderKey]->SetUpConfiguration();
+	m_manager.m_texture[m_textureKey]->Render();
+	m_manager.m_mesh[m_meshKey]->SetUVVertexAsRect(mUV, imageSize);
+	m_manager.m_mesh[m_meshKey]->Draw(m_transform.GetModelMat(), m_color);
 }

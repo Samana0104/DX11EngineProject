@@ -9,22 +9,22 @@ namespace HBSoft
 
     class ObjectManager;
 
-    class Object
+    class Object2D
     {
     private:
-        OBJECT_ID  mObjectID;  // 오브젝트 매니저에서 생성한 아이디
-        ObjectCode mObjectCode = ObjectCode::NOT;
+        OBJECT_ID  m_objectID;  // 오브젝트 매니저에서 생성한 아이디
+        ObjectCode m_objectCode = ObjectCode::NOT;
 
     protected:
-        TEXTURE_KEY mTextureKey = L"Default.jpg";
-        MESH_KEY    mMeshKey    = L"DEFAULT_MESH";
-        SHADER_KEY  mShaderKey  = L"PixelShader.hlsl";
-        vec4        mColor      = {1.f, 1.f, 1.f, 1.f};
-        Transform2D mTransform;
+        TEXTURE_KEY m_textureKey = L"Default.jpg";
+        MESH_KEY    m_meshKey    = L"DEFAULT_MESH";
+        SHADER_KEY  m_shaderKey  = L"PixelShader.hlsl";
+        vec4        m_color      = {1.f, 1.f, 1.f, 1.f};
+        Transform2D m_transform;
 
 
-        MyResourceManager& mManager = MyResourceManager::GetInstance();
-        Input&             mInput   = Input::GetInstance();
+        ResourceManager& m_manager = ResourceManager::GetInstance();
+        Input&           m_input   = Input::GetInstance();
 
     private:
 
@@ -32,7 +32,7 @@ namespace HBSoft
         void SetObjectCode(const ObjectCode _objCode);
 
     public:
-        Object() = default;
+        Object2D() = default;
 
         void SetColor(const vec4 _color);
         void SetTextureKey(const TEXTURE_KEY _key);
@@ -53,7 +53,7 @@ namespace HBSoft
         Transform2D& GetTransform();
         Transform2D* operator->();  // 위치 변환 편하게 하려고 오버로딩 함
 
-        virtual void Update(const float _deltaTime);
+        virtual void Update(const float deltaTime);
         virtual void Render();
     };
 }  // namespace HBSoft

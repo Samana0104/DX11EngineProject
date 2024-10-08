@@ -18,7 +18,9 @@ namespace HBSoft
 
     using stringV  = std::string_view;
     using wstringV = std::wstring_view;
-
+    /* string_view는 기존의 스트링을 복사해서 가져오는 것이 아니라
+       스트링이 갖고 있는 주소만 가져와 복사를 안해 메모리 이점이 있는 라이브러리
+    */
     using MESH_KEY = std::wstring;
     using FONT_KEY = std::wstring;
 
@@ -27,10 +29,12 @@ namespace HBSoft
     using TEXTURE_KEY = std::wstring;
     using SOUND_KEY   = std::wstring;
 
-    class Component
+    class RendererInterface
     {
     protected:
-        virtual void UpdateComponent() = 0;
-        virtual void RenderComponent() = 0;
+        virtual void Init()    = 0;
+        virtual void Release() = 0;
+        virtual void Update()  = 0;
+        virtual void Render()  = 0;
     };
 }  // namespace HBSoft

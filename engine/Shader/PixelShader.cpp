@@ -18,14 +18,14 @@ bool PixelShader::CreatePixelShader()
     HRESULT          hr;
     ComPtr<ID3DBlob> errorMsg;
 
-    hr = D3DCompileFromFile(mShaderDesc.mShaderPath.c_str(),
+    hr = D3DCompileFromFile(m_shaderDesc.m_shaderPath.c_str(),
                             nullptr,
                             nullptr,
-                            mShaderDesc.mShaderEntry.c_str(),
+                            m_shaderDesc.m_shaderEntry.c_str(),
                             "ps_5_0",  // dx11 정점쉐이더 컴파일러
                             0,
                             0,
-                            mShaderByteCode.GetAddressOf(),
+                            m_shaderByteCode.GetAddressOf(),
                             errorMsg.GetAddressOf());
 
     if (FAILED(hr))
@@ -34,8 +34,8 @@ bool PixelShader::CreatePixelShader()
         return false;
     }
 
-    mDevice.mD3dDevice->CreatePixelShader(mShaderByteCode->GetBufferPointer(),
-                                          mShaderByteCode->GetBufferSize(),
+    m_device.m_d3dDevice->CreatePixelShader(m_shaderByteCode->GetBufferPointer(),
+                                          m_shaderByteCode->GetBufferSize(),
                                           nullptr,
                                           mPixelShader.GetAddressOf());
 
@@ -52,5 +52,5 @@ bool PixelShader::CreateShader()
 
 void PixelShader::SetUpConfiguration() const
 {
-    mDevice.mContext->PSSetShader(mPixelShader.Get(), nullptr, 0);
+    m_device.m_context->PSSetShader(mPixelShader.Get(), nullptr, 0);
 }

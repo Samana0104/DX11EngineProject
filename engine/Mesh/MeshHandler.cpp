@@ -2,28 +2,28 @@
 #include "MeshHandler.h"
 using namespace HBSoft;
 
-bool MeshHandler::CreateMeshResource(const MESH_KEY _key, MeshShape _meshShape)
+bool MeshHandler::CreateMeshResource(const MESH_KEY key, MeshShape meshShape)
 {
-    switch (_meshShape)
+    switch (meshShape)
     {
     case MeshShape::BOX2D:
-        return CreateBox2DMesh(_key);
+        return CreateBox2DMesh(key);
 
     case MeshShape::CIRCLE2D:
-        return CreateCircle2DMesh(_key);
+        return CreateCircle2DMesh(key);
     }
 
     return false;
 }
 
-bool MeshHandler::CreateBox2DMesh(const MESH_KEY& _key)
+bool MeshHandler::CreateBox2DMesh(const MESH_KEY& key)
 {
-    std::shared_ptr<Mesh2D> boxMesh = std::make_shared<MyBox2D>();
-    return AddResource(_key, boxMesh);
+    std::shared_ptr<Mesh2D> boxMesh = std::make_shared<Box2D>();
+    return Add(key, boxMesh);
 }
 
-bool MeshHandler::CreateCircle2DMesh(const MESH_KEY& _key)
+bool MeshHandler::CreateCircle2DMesh(const MESH_KEY& key)
 {
-    std::shared_ptr<Mesh2D> circleMesh = std::make_shared<MyCircle2D>();
-    return AddResource(_key, circleMesh);
+    std::shared_ptr<Mesh2D> circleMesh = std::make_shared<Circle2D>();
+    return Add(key, circleMesh);
 }

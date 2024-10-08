@@ -8,12 +8,8 @@ namespace HBSoft
 {
     class SceneLobby : public Scene
     {
-    private:
-        Object mTitle;
-        Object mBackground;
-        int    mCurrentButton;
-
     public:
+        Object2D test;
         using Scene::Scene;
 
 

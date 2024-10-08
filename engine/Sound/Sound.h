@@ -1,21 +1,21 @@
 #pragma once
 #include "CoreAPI.h"
-#include "MyFmodSystem.h"
+#include "FmodSystem.h"
 
 namespace HBSoft
 {
     class Sound
     {
     private:
-        MyFmodSystem   mFmodSys;
-        FMOD::Sound*   mSound;
-        FMOD::Channel* mSoundChannel;
+        FmodSystem     mFmodSys;
+        FMOD::Sound*   m_sound;
+        FMOD::Channel* m_soundChannel;
 
-        std::wstring mSoundPath;
-        float        mSoundVolume;
+        std::wstring m_soundPath;
+        float        m_soundVolume;
 
-        // wchar_t			mSoundTimer[MAX_PATH];
-        // unsigned int	mSoundSizeInMS;
+        // wchar_t			m_soundTimer[MAX_PATH];
+        // unsigned int	m_soundSizeInMS;
 
     private:
         bool CreateSound(const wstringV _filePath);

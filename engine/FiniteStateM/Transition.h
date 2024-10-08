@@ -9,28 +9,28 @@ namespace HBSoft
     class Transition
     {
     private:
-        std::map<E, S> mFiniteState;
+        std::map<E, S> m_finiteState;
 
     public:
         Transition() = default;
 
-        bool    AddEventTransition(const E _event, const S _outState);
-        const S GetTransition(const E _event) const;
+        bool    Add(const E event, const S outState);
+        const S Get(const E event) const;
         const S operator[](const E _event) const;
     };
 
     TEMPLATE_SE
-    inline bool Transition<S, E>::AddEventTransition(const E _event, const S _outState)
+    inline bool Transition<S, E>::Add(const E event, const S outState)
     {
-        return mFiniteState.insert(std::make_pair(_event, _outState)).second;
+        return m_finiteState.insert(std::make_pair(event, outState)).second;
     }
 
     TEMPLATE_SE
-    inline const S Transition<S, E>::GetTransition(const E _event) const
+    inline const S Transition<S, E>::Get(const E event) const
     {
-        if (mFiniteState.contains(_event))
+        if (m_finiteState.contains(event))
         {
-            return mFiniteState[_event];
+            return m_finiteState[event];
         }
         else
         {
@@ -40,8 +40,8 @@ namespace HBSoft
     }
 
     TEMPLATE_SE
-    inline const S Transition<S, E>::operator[](const E _event) const
+    inline const S Transition<S, E>::operator[](const E event) const
     {
-        return mFiniteState.at(_event);
+        return m_finiteState.at(event);
     }
 }  // namespace HBSoft

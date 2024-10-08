@@ -8,10 +8,10 @@ namespace HBSoft
     class MeshHandler : public ResourceHandler<Mesh2D, MESH_KEY>
     {
     private:
-        bool CreateBox2DMesh(const MESH_KEY& _key);
-        bool CreateCircle2DMesh(const MESH_KEY& _key);
+        bool CreateBox2DMesh(const MESH_KEY& key);
+        bool CreateCircle2DMesh(const MESH_KEY& key);
 
     public:
-        bool CreateMeshResource(const MESH_KEY _key, const MeshShape _meshShape);
+        bool CreateMeshResource(const MESH_KEY key, const MeshShape meshShape);
     };
 }  // namespace HBSoft

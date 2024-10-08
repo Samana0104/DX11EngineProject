@@ -1,5 +1,5 @@
 #pragma once
-#include "MyWriterFont.h"
+#include "Font.h"
 #include "Mesh2D.h"
 #include "Shader.h"
 
@@ -8,13 +8,13 @@ namespace HBSoft
     /*
         struct FontDesc
         {
-            std::wstring mFontName;
-            std::wstring mFontLocalName;
-            FLOAT		 mFontSize;
+            std::wstring m_fontName;
+            std::wstring m_fontLocalName;
+            FLOAT		 m_fontSize;
 
-            DWRITE_FONT_WEIGHT	mFontWeight;
-            DWRITE_FONT_STYLE	mFontStyle;
-            DWRITE_FONT_STRETCH mFontStretch;
+            DWRITE_FONT_WEIGHT	m_fontWeight;
+            DWRITE_FONT_STYLE	m_fontStyle;
+            DWRITE_FONT_STRETCH m_fontStretch;
         };
     */
     inline static const std::vector<std::wstring> gFontPath = {{L"../res/Font/"}};
@@ -57,9 +57,9 @@ namespace HBSoft
     /*
         struct ShaderDesc
         {
-            ShaderType		mShaderType;
-            std::wstring	mShaderPath;
-            std::string		mShaderEntry;
+            ShaderType		m_shaderType;
+            std::wstring	m_shaderPath;
+            std::string		m_shaderEntry;
         };
     */
 
@@ -70,6 +70,5 @@ namespace HBSoft
 
     inline static const std::vector<std::wstring> gSoundPath = {{L"../res/Sound/"}};
 
-    inline static const std::vector<std::wstring> gSpritePath = {
-        {L"../res/Image/Sprite/SpriteScript/"}};
+    inline static const std::vector<std::wstring> gSpritePath = {{L"../res/Image/"}};
 }  // namespace HBSoft

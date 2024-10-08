@@ -3,7 +3,8 @@
 #include "Actor.h"
 using namespace HBSoft;
 
-CollisionComponent::CollisionComponent(Actor& obj) : m_obj(obj)
+CollisionComponent::CollisionComponent(Actor& obj)
+    : m_obj(obj)
 {
     m_collisionAreas.reserve(5);
 }
@@ -150,11 +151,11 @@ vec2 CollisionComponent::GetCorrectionForCollision(const vec2 offsetDir, const v
     // }
     if (IsXAxisCollided)
     {
-        if (_offsetDir.x >= TOLERANCE)
+        if (offsetDir.x >= TOLERANCE)
         {
             correctionVec.x = -intersectWidth - TOLERANCE;
         }
-        else if (_offsetDir.x <= -TOLERANCE)
+        else if (offsetDir.x <= -TOLERANCE)
         {
             correctionVec.x = intersectWidth + TOLERANCE;
         }
@@ -168,11 +169,11 @@ vec2 CollisionComponent::GetCorrectionForCollision(const vec2 offsetDir, const v
     }
     else if (IsYAxisCollided)
     {
-        if (_offsetDir.y >= TOLERANCE)
+        if (offsetDir.y >= TOLERANCE)
         {
             correctionVec.y = -intersectHeight - TOLERANCE;
         }
-        else if (_offsetDir.y <= -TOLERANCE)
+        else if (offsetDir.y <= -TOLERANCE)
         {
             correctionVec.y = intersectHeight + TOLERANCE;
         }

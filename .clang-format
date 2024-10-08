@@ -1,10 +1,33 @@
+# author : HanBit Byeon
+# description : Standard formatting for the Hanbit Soft team
+# version: 1.0.1
+# date: 2024-10-08
+# Why i wrote in english, The formatter has not support Hangule
 ---
 Language: Cpp
 BasedOnStyle: Microsoft
 AccessModifierOffset: -4
 AlignArrayOfStructures: Right
-AlignConsecutiveAssignments: true
-AlignConsecutiveDeclarations: true
+AlignConsecutiveAssignments:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignCompound: true
+AlignConsecutiveBitFields:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignCompound: true
+AlignConsecutiveDeclarations:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignCompound: true
+AlignConsecutiveMacros:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignCompound: true
 AlignEscapedNewlines: Left
 AlignOperands: true
 AlignTrailingComments: true
@@ -37,7 +60,7 @@ BraceWrapping:
   SplitEmptyRecord: false
   SplitEmptyNamespace: false
 BitFieldColonSpacing: Both
-ColumnLimit: 100
+ColumnLimit: 105
 ContinuationIndentWidth: 0
 Cpp11BracedListStyle: true
 EmptyLineBeforeAccessModifier: Always
@@ -60,9 +83,10 @@ MacroBlockBegin: ''
 MacroBlockEnd: ''
 MaxEmptyLinesToKeep: 2
 NamespaceIndentation: All
-PackConstructorInitializers: NextLine
+PackConstructorInitializers: NextLineOnly
 PointerAlignment: Left
 ReferenceAlignment: Left
+ReflowComments: true
 SeparateDefinitionBlocks: Always
 SortIncludes: Never
 SortUsingDeclarations: Lexicographic

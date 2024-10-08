@@ -5,21 +5,21 @@ using namespace HBSoft;
 bool ShaderHandler::CreateVertexShader(const MESH_KEY& _key, const ShaderDesc& _desc)
 {
     std::shared_ptr<Shader> vertexShader = std::make_shared<VertexShader>(_desc);
-    return AddResource(_key, vertexShader);
+    return Add(_key, vertexShader);
 }
 
 bool ShaderHandler::CreatePixelShader(const MESH_KEY& _key, const ShaderDesc& _desc)
 {
     std::shared_ptr<Shader> pixelShader = std::make_shared<PixelShader>(_desc);
-    return AddResource(_key, pixelShader);
+    return Add(_key, pixelShader);
 }
 
 bool ShaderHandler::CreateShaderResource(const ShaderDesc _desc)
 {
-    auto         fileInfo = CoreAPI::GetFileNameAndExt(_desc.mShaderPath);
+    auto         fileInfo = CoreAPI::GetFileNameAndExt(_desc.m_shaderPath);
     std::wstring key      = fileInfo.first + fileInfo.second;
 
-    switch (_desc.mShaderType)
+    switch (_desc.m_shaderType)
     {
     case ShaderType::VERTEX:
         return CreateVertexShader(key, _desc);
