@@ -1,11 +1,10 @@
 #include "pch.h"
 #include "MoveComponent.h"
-using namespace MyProject;
+using namespace HBSoft;
 
-MoveComponent::MoveComponent(MyTransformer2D & _transform) :
-    mTransform(_transform)
-{
-}
+MoveComponent::MoveComponent(Transform2D& _transform)
+    : mTransform(_transform)
+{}
 
 void MoveComponent::SetSpeedX(const float _speedX)
 {
@@ -59,19 +58,18 @@ void MoveComponent::Break(const vec2 _accleration)
 
     if (mVelocity.x > 0.f)
     {
-		mIsXposBreaking = true;
+        mIsXposBreaking = true;
     }
-    else if(mVelocity.x < 0.f)
+    else if (mVelocity.x < 0.f)
     {
-		mIsXposBreaking = false;
+        mIsXposBreaking = false;
     }
-
 }
 
 void MoveComponent::Stop()
 {
-    mVelocity = { 0.f, 0.f };
-    mAcceleration = { 0.f, 0.f };
+    mVelocity     = {0.f, 0.f};
+    mAcceleration = {0.f, 0.f};
 }
 
 vec2 MoveComponent::GetVelocity() const

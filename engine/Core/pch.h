@@ -38,16 +38,17 @@
 #pragma comment(lib, "glm/glm.lib")
 
 #ifdef _DEBUG
-	#pragma comment(lib, "DirectXTK/DirectXTK_d.lib")
+#pragma comment(lib, "DirectXTK/DirectXTK_d.lib")
 #else
-	#pragma comment(lib, "DirectXTK/DirectXTK_r.lib")
+#pragma comment(lib, "DirectXTK/DirectXTK_r.lib")
 #endif
 
 // ---------------------------------------
 //			Internal Sources
 // ---------------------------------------
 
+#include "CoreAPI.h"
 #include "Singleton.h"
-#include "MyWindow.h"
+#include "Window.h"
 #include "D3Device.h"
 #include "ResourceHandler.h"

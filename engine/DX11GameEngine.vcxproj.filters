@@ -13,9 +13,6 @@
     <Filter Include="Font">
       <UniqueIdentifier>{0b2d3dce-a871-4846-9de8-ec21f4f3e115}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FSM">
-      <UniqueIdentifier>{f89ee3ea-bb09-4027-b202-8a408fd1ef4f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object">
       <UniqueIdentifier>{e159133b-dfba-4a57-93df-8fd33fe01ccc}</UniqueIdentifier>
     </Filter>
@@ -46,15 +43,15 @@
     <Filter Include="Timer">
       <UniqueIdentifier>{21ddd6cd-dc53-4b4e-8c51-4e56a9f5e14f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="HLSL">
-      <UniqueIdentifier>{40dd7436-a5ac-433b-bac6-256650a24fc8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Mesh">
       <UniqueIdentifier>{000ae2ae-2f9b-4809-8c05-1f1b6bfe2878}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FiniteStateM">
+      <UniqueIdentifier>{bf0ed2d4-fbc2-4126-b96f-36fb83bb8b25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Color\MyColor.cpp">
+    <ClCompile Include="Color\Color.cpp">
       <Filter>Color</Filter>
     </ClCompile>
     <ClCompile Include="Component\CollisionComponent.cpp">
@@ -69,129 +66,129 @@
     <ClCompile Include="Core\D3Device.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\MyCore.cpp">
+    <ClCompile Include="Core\Core.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\MyResourceManger.cpp">
+    <ClCompile Include="Core\ResourceManger.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\MyWindow.cpp">
+    <ClCompile Include="Core\Window.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\pch.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Font\MyFontHandler.cpp">
+    <ClCompile Include="Font\FontHandler.cpp">
       <Filter>Font</Filter>
     </ClCompile>
-    <ClCompile Include="Font\MyWriterFont.cpp">
+    <ClCompile Include="Font\WriterFont.cpp">
       <Filter>Font</Filter>
     </ClCompile>
     <ClCompile Include="GameStart\Main.cpp">
       <Filter>GameStart</Filter>
     </ClCompile>
-    <ClCompile Include="Input\MyInput.cpp">
+    <ClCompile Include="Input\Input.cpp">
       <Filter>Input</Filter>
     </ClCompile>
-    <ClCompile Include="Shader\MyShaderHandler.cpp">
+    <ClCompile Include="Shader\ShaderHandler.cpp">
       <Filter>Shader</Filter>
     </ClCompile>
-    <ClCompile Include="Shader\MyVertexShader.cpp">
+    <ClCompile Include="Shader\VertexShader.cpp">
       <Filter>Shader</Filter>
     </ClCompile>
-    <ClCompile Include="Shader\MyPixelShader.cpp">
+    <ClCompile Include="Shader\PixelShader.cpp">
       <Filter>Shader</Filter>
     </ClCompile>
-    <ClCompile Include="Shader\MyShader.cpp">
+    <ClCompile Include="Shader\Shader.cpp">
       <Filter>Shader</Filter>
     </ClCompile>
-    <ClCompile Include="Sound\MySoundHandler.cpp">
+    <ClCompile Include="Sound\SoundHandler.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
-    <ClCompile Include="Sound\MyFmodSystem.cpp">
+    <ClCompile Include="Sound\FmodSystem.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
-    <ClCompile Include="Sound\MySound.cpp">
+    <ClCompile Include="Sound\Sound.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite\MySpriteTexture.cpp">
+    <ClCompile Include="Sprite\SpriteTexture.cpp">
       <Filter>Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite\MySpriteUV.cpp">
+    <ClCompile Include="Sprite\SpriteUV.cpp">
       <Filter>Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite\MySprite.cpp">
+    <ClCompile Include="Sprite\Sprite.cpp">
       <Filter>Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite\MySpriteHandler.cpp">
+    <ClCompile Include="Sprite\SpriteHandler.cpp">
       <Filter>Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="Texture\MyTextureHandler.cpp">
+    <ClCompile Include="Texture\TextureHandler.cpp">
       <Filter>Texture</Filter>
     </ClCompile>
-    <ClCompile Include="Texture\MyTexture.cpp">
+    <ClCompile Include="Texture\Texture.cpp">
       <Filter>Texture</Filter>
     </ClCompile>
-    <ClCompile Include="Tile\MyTileManager.cpp">
+    <ClCompile Include="Tile\TileManager.cpp">
       <Filter>Tile</Filter>
     </ClCompile>
-    <ClCompile Include="Tile\MyTile.cpp">
+    <ClCompile Include="Tile\Tile.cpp">
       <Filter>Tile</Filter>
     </ClCompile>
-    <ClCompile Include="Timer\MyTimer.cpp">
+    <ClCompile Include="Timer\Timer.cpp">
       <Filter>Timer</Filter>
     </ClCompile>
-    <ClCompile Include="Timer\MyNormalTimer.cpp">
+    <ClCompile Include="Timer\NormalTimer.cpp">
       <Filter>Timer</Filter>
     </ClCompile>
-    <ClCompile Include="Timer\MySystemTimer.cpp">
+    <ClCompile Include="Timer\SystemTimer.cpp">
       <Filter>Timer</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\MySceneLobby.cpp">
+    <ClCompile Include="Scene\SceneLobby.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\MySceneManager.cpp">
+    <ClCompile Include="Scene\SceneManager.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh\MyBox2D.cpp">
+    <ClCompile Include="Mesh\Box2D.cpp">
       <Filter>Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh\MyCircle2D.cpp">
+    <ClCompile Include="Mesh\Circle2D.cpp">
       <Filter>Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh\MyMesh2D.cpp">
+    <ClCompile Include="Mesh\Mesh2D.cpp">
       <Filter>Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh\MyMeshHandler.cpp">
+    <ClCompile Include="Mesh\MeshHandler.cpp">
       <Filter>Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh\MySphere2D.cpp">
+    <ClCompile Include="Mesh\Sphere2D.cpp">
       <Filter>Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh\MyTransformer2D.cpp">
+    <ClCompile Include="Mesh\Transform2D.cpp">
       <Filter>Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="Object\MyActor.cpp">
+    <ClCompile Include="Object\Actor.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\MyButton.cpp">
+    <ClCompile Include="Object\Button.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\MyCamera.cpp">
+    <ClCompile Include="Object\Camera.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\MyObject.cpp">
+    <ClCompile Include="Object\Object.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\MyObjectManager.cpp">
+    <ClCompile Include="Object\ObjectManager.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\MyPawn.cpp">
+    <ClCompile Include="Object\Pawn.cpp">
       <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Color\MyColor.h">
+    <ClInclude Include="Color\Color.h">
       <Filter>Color</Filter>
     </ClInclude>
     <ClInclude Include="Component\CollisionComponent.h">
@@ -212,16 +209,16 @@
     <ClInclude Include="Core\DefaultResource.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\MyCore.h">
+    <ClInclude Include="Core\Core.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\MyCoreAPI.h">
+    <ClInclude Include="Core\CoreAPI.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\MyResourceManger.h">
+    <ClInclude Include="Core\ResourceManger.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\MyWindow.h">
+    <ClInclude Include="Core\Window.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\pch.h">
@@ -233,130 +230,134 @@
     <ClInclude Include="Core\Singleton.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Font\MyFontHandler.h">
+    <ClInclude Include="Font\FontHandler.h">
       <Filter>Font</Filter>
     </ClInclude>
-    <ClInclude Include="Font\MyWriterFont.h">
+    <ClInclude Include="Font\WriterFont.h">
       <Filter>Font</Filter>
     </ClInclude>
-    <ClInclude Include="FSM\MyTransition.h">
-      <Filter>FSM</Filter>
-    </ClInclude>
-    <ClInclude Include="FSM\MyFSM.h">
-      <Filter>FSM</Filter>
-    </ClInclude>
-    <ClInclude Include="Input\MyInput.h">
+    <ClInclude Include="Input\Input.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="Shader\MyShaderHandler.h">
+    <ClInclude Include="Shader\ShaderHandler.h">
       <Filter>Shader</Filter>
     </ClInclude>
-    <ClInclude Include="Shader\MyVertexShader.h">
+    <ClInclude Include="Shader\VertexShader.h">
       <Filter>Shader</Filter>
     </ClInclude>
-    <ClInclude Include="Shader\MyPixelShader.h">
+    <ClInclude Include="Shader\PixelShader.h">
       <Filter>Shader</Filter>
     </ClInclude>
-    <ClInclude Include="Shader\MyShader.h">
+    <ClInclude Include="Shader\Shader.h">
       <Filter>Shader</Filter>
     </ClInclude>
-    <ClInclude Include="Sound\MySound.h">
+    <ClInclude Include="Sound\Sound.h">
       <Filter>Sound</Filter>
     </ClInclude>
-    <ClInclude Include="Sound\MySoundHandler.h">
+    <ClInclude Include="Sound\SoundHandler.h">
       <Filter>Sound</Filter>
     </ClInclude>
-    <ClInclude Include="Sound\MyFmodSystem.h">
+    <ClInclude Include="Sound\FmodSystem.h">
       <Filter>Sound</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite\MySpriteTexture.h">
+    <ClInclude Include="Sprite\SpriteTexture.h">
       <Filter>Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite\MySpriteUV.h">
+    <ClInclude Include="Sprite\SpriteUV.h">
       <Filter>Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite\MySprite.h">
+    <ClInclude Include="Sprite\Sprite.h">
       <Filter>Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite\MySpriteHandler.h">
+    <ClInclude Include="Sprite\SpriteHandler.h">
       <Filter>Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="Texture\MyTextureHandler.h">
+    <ClInclude Include="Texture\TextureHandler.h">
       <Filter>Texture</Filter>
     </ClInclude>
-    <ClInclude Include="Texture\MyTexture.h">
+    <ClInclude Include="Texture\Texture.h">
       <Filter>Texture</Filter>
     </ClInclude>
-    <ClInclude Include="Tile\MyTileManager.h">
+    <ClInclude Include="Tile\TileManager.h">
       <Filter>Tile</Filter>
     </ClInclude>
-    <ClInclude Include="Tile\MyTile.h">
+    <ClInclude Include="Tile\Tile.h">
       <Filter>Tile</Filter>
     </ClInclude>
-    <ClInclude Include="Timer\MyTimer.h">
+    <ClInclude Include="Timer\Timer.h">
       <Filter>Timer</Filter>
     </ClInclude>
-    <ClInclude Include="Timer\MyNormalTimer.h">
+    <ClInclude Include="Timer\NormalTimer.h">
       <Filter>Timer</Filter>
     </ClInclude>
-    <ClInclude Include="Timer\MySystemTimer.h">
+    <ClInclude Include="Timer\SystemTimer.h">
       <Filter>Timer</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\MyScene.h">
+    <ClInclude Include="Scene\Scene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\MySceneLobby.h">
+    <ClInclude Include="Scene\SceneLobby.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\MySceneManager.h">
+    <ClInclude Include="Scene\SceneManager.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh\MyTransformer2D.h">
+    <ClInclude Include="Mesh\Transform2D.h">
       <Filter>Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh\MyBox2D.h">
+    <ClInclude Include="Mesh\Box2D.h">
       <Filter>Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh\MyCircle2D.h">
+    <ClInclude Include="Mesh\Circle2D.h">
       <Filter>Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh\MyMesh2D.h">
+    <ClInclude Include="Mesh\Mesh2D.h">
       <Filter>Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh\MyMeshHandler.h">
+    <ClInclude Include="Mesh\MeshHandler.h">
       <Filter>Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh\MySphere2D.h">
+    <ClInclude Include="Mesh\Sphere2D.h">
       <Filter>Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="Object\MyActor.h">
+    <ClInclude Include="Object\Actor.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\MyButton.h">
+    <ClInclude Include="Object\Button.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\MyCamera.h">
+    <ClInclude Include="Object\Camera.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\MyObject.h">
+    <ClInclude Include="Object\Object.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\MyObjectManager.h">
+    <ClInclude Include="Object\ObjectManager.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\MyPawn.h">
+    <ClInclude Include="Object\Pawn.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Object\ObjectCode.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform3D.h">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="FiniteStateM\Transition.h">
+      <Filter>FiniteStateM</Filter>
+    </ClInclude>
+    <ClInclude Include="FiniteStateM\FiniteStateM.h">
+      <Filter>FiniteStateM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="HLSL\PixelShader.hlsl">
-      <Filter>HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="HLSL\VertexShader.hlsl">
-      <Filter>HLSL</Filter>
-    </FxCompile>
+    <None Include="..\.clang-format" />
   </ItemGroup>
 </Project>

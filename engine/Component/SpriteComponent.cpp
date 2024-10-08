@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "SpriteComponent.h"
-using namespace MyProject;
+using namespace HBSoft;
 
 void SpriteComponent::ResetAnimation()
 {
@@ -51,7 +51,7 @@ void SpriteComponent::Update(const float _deltaTime)
 	}
 }
 
-void SpriteComponent::Render(MyObject& mObj)
+void SpriteComponent::Render(Object& mObj)
 {
 	mManager.mSprite[mSpriteKey]->Render(mObj, mAnimationIdx);
 }

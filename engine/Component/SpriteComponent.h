@@ -1,8 +1,8 @@
 #pragma once
-#include "MyCoreAPI.h"
-#include "MyObject.h"
+#include "CoreAPI.h"
+#include "Object.h"
 
-namespace MyProject
+namespace HBSoft
 {
 	class SpriteComponent
 	{
@@ -28,7 +28,7 @@ namespace MyProject
 		void SetSpriteKey(const SPRITE_KEY _spriteKey);
 		
 		void Update(const float _deltaTime);
-		void Render(MyObject& _obj);
+		void Render(Object& _obj);
 	};
 }
 

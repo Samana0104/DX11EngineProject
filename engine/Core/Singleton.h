@@ -1,6 +1,6 @@
 #pragma once
 
-namespace MyProject
+namespace HBSoft
 {
 	/*
 		파생클래스에서 반드시 선언할 것

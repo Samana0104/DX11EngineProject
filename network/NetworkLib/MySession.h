@@ -21,7 +21,7 @@ namespace MyProject
 		
 	public:
 		void Add(SOCKET sock, sockaddr_in& addr);
-		void Disconnect()
+		void Disconnect();
 	};
 }
 

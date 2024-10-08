@@ -1,46 +1,46 @@
 #pragma once
-#include "MyCoreAPI.h"
-#include "MyTransformer2D.h"
+#include "CoreAPI.h"
+#include "Transform2D.h"
 
-namespace MyProject
+namespace HBSoft
 {
 	class MoveComponent
 	{
 	private:
-		vec2	mVelocity	  = { 0.f, 0.f };
-		vec2 	mAcceleration = { 0.f, 0.f };
-		vec2 	mOffset		  = { 0.f, 0.f };
-		vec2	mDir		  = { 0.f, 0.f };
+		vec2 m_velocity = { 0.f, 0.f };
+		vec2 m_acceleration = { 0.f, 0.f };
+		vec2 m_offset = { 0.f, 0.f };
+		vec2 m_dir = { 0.f, 0.f };
 		// °è»ê¿ë
 
-		bool	mIsXposBreaking = false;
-		bool	mIsYposBreaking = false;
+		bool	m_isXposBreaking = false;
+		bool	m_isYposBreaking = false;
 
-		MyTransformer2D & mTransform;
+		Transform2D& m_transform;
 
 	public:
-		MoveComponent(MyTransformer2D & _transform);
+		MoveComponent(Transform2D& transform);
 
-		void SetSpeedX(const float _speedX);
-		void SetSpeedY(const float _speedY);
+		void SetSpeedX(const float speedX);
+		void SetSpeedY(const float speedY);
 
-		void SetAccelX(const float _acclerationX);
-		void SetAccelY(const float _acclerationY);
+		void SetAccelX(const float acclerationX);
+		void SetAccelY(const float acclerationY);
 
 		const vec2& GetOffset() const;
-		
-		void AddSpeedX(const float _speed);
-		void AddSpeedY(const float _speed);
-		void AddAccelX(const float _acceleration);
-		void AddAccelY(const float _acceleration);
 
-		void Break(const vec2 _scalar);
+		void AddSpeedX(const float speed);
+		void AddSpeedY(const float speed);
+		void AddAccelX(const float acceleration);
+		void AddAccelY(const float acceleration);
+
+		void Break(const vec2 scalar);
 		void Stop();
 
 		vec2  GetVelocity() const;
 		vec2  GetAccel() const;
 
-		void  Update(float _deltaTime);
+		void  Update(float deltaTime);
 	};
 }
 

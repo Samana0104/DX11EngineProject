@@ -1,6 +1,6 @@
 #pragma once
 
-namespace MyProject
+namespace HBSoft
 {
 	#define TEMPLATE_VKA template<typename V, typename K, typename A>
 
