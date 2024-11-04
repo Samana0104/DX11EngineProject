@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 리소스의 경로 작성을 위한 파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #pragma once
 #include "Font.h"
 #include "Mesh2D.h"

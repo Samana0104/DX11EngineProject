@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 2D상으로 그려질 오브젝트를 정의하기 위한 소스 파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
 #include "Object2D.h"
 using namespace HBSoft;

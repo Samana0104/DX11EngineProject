@@ -1,9 +1,9 @@
 /*
 author : 변한빛
-description : 2D 오브젝트의 이동, 회전, 스케일을 조정하기 위해 만들어진 클래스
+description : 2D공간에서의 회전 스케일 이동을 표현하기 위한 클래스 헤더 파일
 
 version: 1.0.0
-date: 2024-10-08
+date: 2024-11-04
 */
 
 #pragma once
@@ -11,10 +11,12 @@ date: 2024-10-08
 
 namespace HBSoft
 {
+    using namespace glm;
+
     class Transform2D
     {
     private:
-        inline static vec2 mCartesianSize = {160.f, 90.f};
+        inline static vec2 m_cartesianSize = {160.f, 90.f};
 
         vec2  m_location;
         vec2  m_scale;
@@ -73,16 +75,6 @@ namespace HBSoft
         static vec2 RotateAsAngle(const vec2 pos, const float angle);
         static vec2 RotateAsRadian(const vec2 pos, const float radian);
         static vec2 ResizeScale(const vec2 pos, const vec2 scale);
-
-        template <typename T>
-        static T    lerp(const T a, const T b, float t);
-        static vec2 Slerp(const vec2 pos1, const vec2 pos2, float t);
     };
 
-    template <typename T>
-    inline T Transform2D::lerp(const T a, const T b, float t)
-    {
-        t = glm::clamp(t, 0.f, 1.f);
-        return b * t + a * (1 - t);
-    }
 }  // namespace HBSoft

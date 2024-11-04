@@ -1,7 +1,23 @@
+/*
+author : 변한빛
+description : 리소스들을 관리하기 위한 클래스 헤더파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #pragma once
 #include "DefaultResource.h"
 #include "TextureHandler.h"
 #include "MeshHandler.h"
+/*
+author : 변한빛
+description : 리소스들을 관리하기 위한 클래스 헤더파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "FontHandler.h"
 #include "ShaderHandler.h"
 #include "SoundHandler.h"

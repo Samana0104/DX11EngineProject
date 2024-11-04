@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 씬의 기본 정의를 위한 헤더 파일 모든 씬은 이 파일을 상속한다
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #pragma once
 #include "pch.h"
 
@@ -13,7 +21,6 @@ namespace HBSoft
     public:
         Scene() = default;
 
-        virtual void Init()                  = 0;
         virtual void Render()                = 0;
         virtual void Release()               = 0;
         virtual void Reset()                 = 0;

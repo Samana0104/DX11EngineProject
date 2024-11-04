@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 윈도우 관련 클래스 소스 파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
 #include "Window.h"
 using namespace HBSoft;
@@ -34,7 +42,7 @@ void Window::CreateRegisterClass(HINSTANCE _hInstance)
     };
 
     wc.hInstance     = _hInstance;
-    wc.lpszClassName = MY_Window_CLASS_NAME;
+    wc.lpszClassName = WINDOW_CLASS_NAME;
     RegisterClass(&wc);
 }
 
@@ -48,8 +56,8 @@ bool Window::CreateWin(LONG _width, LONG _height)
 
     HWND hwnd = CreateWindowEx(
     0,  // Optional Window styles.
-    MY_Window_CLASS_NAME,
-    MY_Window_NAME,
+    WINDOW_CLASS_NAME,
+    WINDOW_NAME,
     WS_OVERLAPPEDWINDOW,                                           // Window style
     GetSystemMetrics(SM_CXSCREEN) / 2 - (rt.right - rt.left) / 2,  // 영역 중앙에 윈도우 생성
     GetSystemMetrics(SM_CYSCREEN) / 2 - (rt.bottom - rt.top) / 2,  // 하단 영역 45px

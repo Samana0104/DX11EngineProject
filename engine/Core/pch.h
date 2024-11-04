@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : Precompile header 기능을 사용하기 위해 만든 헤더파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #pragma once
 #include <memory>
 #include <initializer_list>
@@ -46,6 +54,8 @@
 // ---------------------------------------
 //			Internal Sources
 // ---------------------------------------
+
+using namespace Microsoft::WRL;
 
 #include "CoreAPI.h"
 #include "Singleton.h"

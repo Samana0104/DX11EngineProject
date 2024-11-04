@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 리소스들을 관리하기 위한 클래스 소스파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
 #include "ResourceManger.h"
 using namespace HBSoft;

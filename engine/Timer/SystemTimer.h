@@ -1,3 +1,12 @@
+/*
+author : 변한빛
+description : 시스템 타이머를 관리하기 위해 만든 헤더 파일
+여기서 fps나 델타 타임을 정의한다
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #pragma once
 
 namespace HBSoft

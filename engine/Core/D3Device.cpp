@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 다이렉트 디바이스 관련 정리한 소스파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
 #include "D3Device.h"
 using namespace HBSoft;

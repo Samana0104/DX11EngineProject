@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 싱글톤 패턴을 위한 클래스 파일
+모든 싱글톤 클래스는 이 파일을 상속한다
+
+version: 1.0.0
+date: 2024-11-04
+*/
 #pragma once
 
 namespace HBSoft

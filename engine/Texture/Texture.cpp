@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 텍스쳐 정의를 하기 위해 만든 소스 파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
 #include "Texture.h"
 using namespace HBSoft;
@@ -44,31 +52,21 @@ void Texture::LoadTextureSize()
     }
 }
 
-void Texture::Load1DTextureSize()
+void Texture::Load1DTextureDesc()
 {
-    D3D11_TEXTURE1D_DESC desc;
-    static_cast<ID3D11Texture1D*>(m_texture.Get())->GetDesc(&desc);
-
-    m_textureWidth = desc.Width;
+    static_cast<ID3D11Texture1D*>(m_texture.Get())->GetDesc(&m_textureDesc);
 }
 
-void Texture::Load2DTextureSize()
+void Texture::Load2DTextureDesc()
 {
     D3D11_TEXTURE2D_DESC desc;
-    static_cast<ID3D11Texture2D*>(m_texture.Get())->GetDesc(&desc);
-
-    m_textureWidth  = desc.Width;
-    m_textureHeight = desc.Height;
+    static_cast<ID3D11Texture2D*>(m_texture.Get())->GetDesc(&m_textureDesc);
 }
 
 void Texture::Load3DTextureSize()
 {
     D3D11_TEXTURE3D_DESC desc;
-    static_cast<ID3D11Texture3D*>(m_texture.Get())->GetDesc(&desc);
-
-    m_textureWidth  = desc.Width;
-    m_textureHeight = desc.Height;
-    // desc.Depth ?? 언젠가 필요하면 추가
+    static_cast<ID3D11Texture3D*>(m_texture.Get())->GetDesc(&m_textureDesc);
 }
 
 POINT_F Texture::GetTextureSizeF() const

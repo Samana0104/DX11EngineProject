@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 폰트를 관리하기 위한 매니징 소스 파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
 #include "FontHandler.h"
 using namespace HBSoft;

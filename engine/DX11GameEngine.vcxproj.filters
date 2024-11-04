@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Component">
-      <UniqueIdentifier>{54ea8b12-fb8e-4368-bbf4-bbf6847423c1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{7385d030-05ef-4bd3-b6e8-21eb1a632d19}</UniqueIdentifier>
     </Filter>
@@ -123,9 +120,6 @@
     <ClCompile Include="Mesh\Sphere2D.cpp">
       <Filter>Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh\Transform2D.cpp">
-      <Filter>Mesh</Filter>
-    </ClCompile>
     <ClCompile Include="Object\Actor.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -141,19 +135,19 @@
     <ClCompile Include="Object\Pawn.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Rect.cpp" />
-    <ClCompile Include="Point.cpp" />
-    <ClCompile Include="Subject.cpp">
+    <ClCompile Include="HRect.cpp" />
+    <ClCompile Include="HPoint.cpp" />
+    <ClCompile Include="Object\Transform2D.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="DesignPattern\Observer.cpp">
       <Filter>DesignPattern</Filter>
     </ClCompile>
-    <ClCompile Include="Observer.cpp">
+    <ClCompile Include="DesignPattern\Subject.cpp">
       <Filter>DesignPattern</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core\Component.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\D3Device.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -176,9 +170,6 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\MgrTemplate.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Singleton.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Font\FontHandler.h">
@@ -229,9 +220,6 @@
     <ClInclude Include="Scene\SceneManager.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh\Transform2D.h">
-      <Filter>Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="Mesh\Box2D.h">
       <Filter>Mesh</Filter>
     </ClInclude>
@@ -265,21 +253,30 @@
     <ClInclude Include="EventHandler.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Transform3D.h">
-      <Filter>Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="FiniteStateM\Transition.h">
       <Filter>FiniteStateM</Filter>
     </ClInclude>
     <ClInclude Include="FiniteStateM\FiniteStateM.h">
       <Filter>FiniteStateM</Filter>
     </ClInclude>
-    <ClInclude Include="Rect.h" />
-    <ClInclude Include="Point.h" />
-    <ClInclude Include="Subject.h">
+    <ClInclude Include="HRect.h" />
+    <ClInclude Include="HPoint.h" />
+    <ClInclude Include="Object\Transform2D.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Transform3D.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="DesignPattern\Composite.h">
       <Filter>DesignPattern</Filter>
     </ClInclude>
-    <ClInclude Include="Observer.h">
+    <ClInclude Include="DesignPattern\Observer.h">
+      <Filter>DesignPattern</Filter>
+    </ClInclude>
+    <ClInclude Include="DesignPattern\Subject.h">
+      <Filter>DesignPattern</Filter>
+    </ClInclude>
+    <ClInclude Include="DesignPattern\Singleton.h">
       <Filter>DesignPattern</Filter>
     </ClInclude>
   </ItemGroup>

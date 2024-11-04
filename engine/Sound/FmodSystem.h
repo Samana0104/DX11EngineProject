@@ -1,9 +1,13 @@
+/*
+author : 변한빛
+description : Fmod 시스템을 스마트 포인터화 시키기 위해 만든 헤더 파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #pragma once
 #include "pch.h"
-
-/*
-    FMOD SYSTEM SMART POINTER
-*/
 
 namespace HBSoft
 {

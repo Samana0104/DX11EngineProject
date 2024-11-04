@@ -1,10 +1,18 @@
+/*
+author : 변한빛
+description : 윈도우 관련 헤더 파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #pragma once
 #include "pch.h"
 
 namespace HBSoft
 {
-#define MY_Window_NAME       L"Untitled Goose"
-#define MY_Window_CLASS_NAME L"HBSOFT_WINDOW"
+#define WINDOW_NAME       L"Untitled Goose"
+#define WINDOW_CLASS_NAME L"HBSOFT_WINDOW"
 
     using CALLBACK_ID  = UINT;
     using Wm_size_FUNC = std::function<void(UINT, UINT)>;

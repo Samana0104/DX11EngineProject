@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : GUI 버튼을 정의하기 위한 소스 파일 오브젝트2D를 상속하여 구현 한다.
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
 #include "Button.h"
 using namespace HBSoft;

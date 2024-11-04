@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 메인 엔진 헤더파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #pragma once
 #include "pch.h"
 #include "SystemTimer.h"
@@ -9,7 +17,7 @@ namespace HBSoft
 {
     class Core
     {
-    protected:
+    public:
         SceneManager m_sceneManager;
         SystemTimer  m_timer;
 
@@ -23,23 +31,15 @@ namespace HBSoft
         Core& operator=(const Core&) = delete;
         Core& operator=(Core&&)      = delete;
 
-        void InternalUpdate();
-        void InternalRender();
-        void InternalInit();
-        void InternalRelease();
-
     protected:
-        virtual void Update() {}
-
-        virtual void Render() {}
-
-        virtual void Init() {}
-
-        virtual void Release() {}
+        void Init();
+        void Update();
+        void Render();
+        void Release();
 
     public:
         virtual ~Core() = default;
-        Core()          = default;
+        Core(HINSTANCE hInstance, UINT windowWidth, UINT windowHeight);
 
         void Run();
     };

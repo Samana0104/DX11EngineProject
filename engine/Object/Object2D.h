@@ -1,12 +1,22 @@
+/*
+author : 변한빛
+description : 2D상으로 그려질 오브젝트를 정의하기 위한 헤더 파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #pragma once
 #include "ResourceManger.h"
+#include "Composite.h"
 
 namespace HBSoft
 {
+    // 나중에 public : Composite
     class Object2D
     {
     protected:
-        TEXTURE_KEY m_textureKey = std::move(L"Default.jpg");
+        TEXTURE_KEY m_textureKey = std::move(L"1KGCABK.bmp");
         MESH_KEY    m_meshKey    = std::move(L"DEFAULT_MESH");
         SHADER_KEY  m_shaderKey  = std::move(L"PixelShader.hlsl");
         vec4        m_color      = {1.f, 1.f, 1.f, 1.f};

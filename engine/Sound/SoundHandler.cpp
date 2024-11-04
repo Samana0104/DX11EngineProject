@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 사운드 전체를 매니징 하기 위해 만든 소스 파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
 #include "SoundHandler.h"
 using namespace HBSoft;

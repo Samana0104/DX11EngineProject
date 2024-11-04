@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : Fmod 시스템을 스마트 포인터화 시키기 위해 만든 소스 파잃
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
 #include "FmodSystem.h"
 using namespace HBSoft;

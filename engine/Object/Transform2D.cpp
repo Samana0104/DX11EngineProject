@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 2D공간에서의 회전 스케일 이동을 표현하기 위한 클래스 소스 파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
 #include "Transform2D.h"
 using namespace HBSoft;
@@ -167,12 +175,12 @@ Transform2D& Transform2D::operator=(const Transform2D& _ref)
 
 void Transform2D::SetCartesianSize(const vec2 _pos)
 {
-    Transform2D::mCartesianSize = _pos;
+    Transform2D::m_cartesianSize = _pos;
 }
 
 vec2 Transform2D::GetCartesianSize()
 {
-    return mCartesianSize;
+    return m_cartesianSize;
 }
 
 void Transform2D::CalculateScaleRotationMat()
@@ -203,7 +211,7 @@ RECT_F Transform2D::CartesianToPixelRect(const RECT_F rect)
 
 vec2 Transform2D::CartesianToNDC(const vec2 pos)
 {
-    return (pos / mCartesianSize) * 2.f;
+    return (pos / m_cartesianSize) * 2.f;
 }
 
 vec2 Transform2D::CartesianToPixel(const vec2 pos)
@@ -213,8 +221,8 @@ vec2 Transform2D::CartesianToPixel(const vec2 pos)
 
     const vec2 viewportSize = D3Device::GetInstance().GetViewportSize();
 
-    return {leftTopX + pos.x * viewportSize.x / mCartesianSize.x + 0.5f * viewportSize.x,
-            leftTopY - pos.y * viewportSize.y / mCartesianSize.y + 0.5f * viewportSize.y};
+    return {leftTopX + pos.x * viewportSize.x / m_cartesianSize.x + 0.5f * viewportSize.x,
+            leftTopY - pos.y * viewportSize.y / m_cartesianSize.y + 0.5f * viewportSize.y};
 }
 
 vec2 Transform2D::PixelToCartesian(const vec2 pos)
@@ -235,8 +243,8 @@ vec2 Transform2D::PixelToCartesian(const vec2 pos)
 
     const vec2 viewportSize = D3Device::GetInstance().GetViewportSize();
 
-    return {mCartesianSize.x * (pos.x - leftTopX) / viewportSize.x - mCartesianSize.x / 2,
-            -mCartesianSize.y * (pos.y - leftTopY) / viewportSize.y + mCartesianSize.y / 2};
+    return {m_cartesianSize.x * (pos.x - leftTopX) / viewportSize.x - m_cartesianSize.x / 2,
+            -m_cartesianSize.y * (pos.y - leftTopY) / viewportSize.y + m_cartesianSize.y / 2};
 }
 
 vec2 Transform2D::PixelToNDC(const vec2 pos, const vec2 rectSize)
@@ -270,25 +278,4 @@ vec2 Transform2D::RotateAsRadian(const vec2 pos, const float radian)
 vec2 Transform2D::ResizeScale(const vec2 pos, const vec2 scale)
 {
     return {pos.x * scale.x, pos.y * scale.y};
-}
-
-vec2 Transform2D::Slerp(const vec2 pos1, const vec2 pos2, float t)
-{
-    /*
-        sin((1-t)Θ)*a  + sin(t*Θ) * b
-          sin(Θ)		sin(Θ)
-    */
-    t = glm::clamp(t, 0.f, 1.f);
-
-    const vec2 normalizedPos1 = glm::normalize(pos1);
-    const vec2 normalizedPos2 = glm::normalize(pos2);
-
-    const float theta = glm::acos(glm::dot(normalizedPos1, normalizedPos2));
-
-    const float T1         = glm::sin((1 - t) * theta) / glm::sin(theta);
-    const float T2         = glm::sin((t)*theta) / glm::sin(theta);
-    const vec2  slerpedVec = normalizedPos1 * T1 + normalizedPos2 * T2;
-    // slerpedVec [0, 1]
-
-    return glm::length(pos1) * slerpedVec;
 }
