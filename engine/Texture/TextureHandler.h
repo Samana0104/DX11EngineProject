@@ -1,10 +1,10 @@
 #pragma once
-#include "ResourceHandler.h"
+#include "MgrTemplate.h"
 #include "Texture.h"
 
 namespace HBSoft
 {
-    class TextureHandler : public ResourceHandler<Texture, TEXTURE_KEY>
+    class TextureHandler : public MgrTemplate<Texture, TEXTURE_KEY>
     {
     public:
         bool CreateTextureResource(const wstringV filePath);

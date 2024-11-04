@@ -1,17 +1,12 @@
 #pragma once
 #include "Object2D.h"
 #include "Camera.h"
-#include "CollisionComponent.h"
-#include "MoveComponent.h"
 
 namespace HBSoft
 {
     class Actor : public Object2D
     {
     protected:
-        CollisionComponent mCollision;
-        MoveComponent      mMove;
-
         Camera* mCamera = nullptr;
 
     private:
@@ -22,9 +17,6 @@ namespace HBSoft
 
     public:
         void SetViewedCamera(Camera* _camera);
-
-        CollisionComponent& GetCollisionComponent();
-        MoveComponent&      GetMoveComponent();
 
         // virtual void Front(vec2 _move) = 0;
         // virtual void Back(vec2 _move) = 0;

@@ -1,10 +1,10 @@
 #pragma once
 #include "Font.h"
-#include "ResourceHandler.h"
+#include "MgrTemplate.h"
 
 namespace HBSoft
 {
-    class FontHandler : public ResourceHandler<Font, FONT_KEY>
+    class FontHandler : public MgrTemplate<Font, FONT_KEY>
     {
     private:
         std::vector<wstringV> externalFontNames;

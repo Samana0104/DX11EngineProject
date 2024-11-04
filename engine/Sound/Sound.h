@@ -1,5 +1,5 @@
 #pragma once
-#include "CoreAPI.h"
+#include "pch.h"
 #include "FmodSystem.h"
 
 namespace HBSoft
@@ -7,7 +7,7 @@ namespace HBSoft
     class Sound
     {
     private:
-        FmodSystem     mFmodSys;
+        FmodSystem     m_fmodSys;
         FMOD::Sound*   m_sound;
         FMOD::Channel* m_soundChannel;
 

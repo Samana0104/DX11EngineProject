@@ -1,8 +1,6 @@
 #pragma once
 #include "SceneManager.h"
-#include "Input.h"
 #include "Camera.h"
-#include "Button.h"
 
 namespace HBSoft
 {
@@ -10,8 +8,8 @@ namespace HBSoft
     {
     public:
         Object2D test;
-        using Scene::Scene;
-
+        
+        SceneLobby() { Init(); }
 
         virtual void Init() override;
         virtual void Update(float _deltaTime) override;

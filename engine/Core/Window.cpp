@@ -10,15 +10,24 @@ void Window::CreateRegisterClass(HINSTANCE _hInstance)
         switch (uMsg)
         {
         case WM_ACTIVATE:
-            Window::GetInstance().CallEventWMActivate(hwnd, uMsg, wParam, lParam);
+            if (LOWORD(wParam) == WA_INACTIVE)
+                Window::m_isActivate = false;
+            else
+                Window::m_isActivate = true;
             return 0;
 
         case WM_DESTROY:
-            Window::GetInstance().CallEventWMDestroy(hwnd, uMsg, wParam, lParam);
+            PostQuitMessage(0);
             return 0;
 
         case WM_SIZE:
-            Window::GetInstance().CallEventWm_size(hwnd, uMsg, wParam, lParam);
+            RECT rc;
+
+            GetClientRect(hwnd, &rc);
+
+            Window::m_windowSize.x = rc.right;
+            Window::m_windowSize.y = rc.bottom;
+
             return 0;
         }
         return DefWindowProc(hwnd, uMsg, wParam, lParam);
@@ -79,32 +88,6 @@ bool Window::WindowRun() const
     return false;
 }
 
-void Window::CallEventWMActivate(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM _lParam)
-{
-    if (LOWORD(_wParam) == WA_INACTIVE)
-        Window::m_isActivate = false;
-    else
-        Window::m_isActivate = true;
-}
-
-void Window::CallEventWMDestroy(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM _lParam)
-{
-    PostQuitMessage(0);
-}
-
-void Window::CallEventWm_size(HWND _hwnd, UINT _uMsg, WPARAM _wParam, LPARAM _lParam)
-{
-    RECT rc;
-
-    GetClientRect(_hwnd, &rc);
-
-    Window::m_windowSize.x = rc.right;
-    Window::m_windowSize.y = rc.bottom;
-
-    for (auto& obj : m_callbackWm_size)
-        obj.second(Window::m_windowSize.x, Window::m_windowSize.y);
-}
-
 bool Window::IsActivate() const
 {
     return m_isActivate;
@@ -133,25 +116,4 @@ glm::vec2 Window::GetWindowSizeVec2() const
 HWND Window::GetWindowHandle() const
 {
     return m_hwnd;
-}
-
-CALLBACK_ID Window::RegisterCallBackWm_size(Wm_size_FUNC _func)
-{
-    m_registerCallbackID++;
-    m_callbackWm_size.insert(std::make_pair(m_registerCallbackID, _func));
-    return m_registerCallbackID;
-}
-
-bool Window::DeleteCallBack(CALLBACK_ID _id)
-{
-    if (m_callbackWm_size.contains(_id))
-    {
-        m_callbackWm_size.erase(_id);
-        return true;
-    }
-    else
-    {
-        MessageBoxA(NULL, "Not existed event id[id Error]", "[WM Size event]", MB_OK);
-        return false;
-    }
 }

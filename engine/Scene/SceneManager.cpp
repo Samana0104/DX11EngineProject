@@ -1,57 +1,41 @@
 #include "pch.h"
 #include "SceneManager.h"
-#include "SceneLobby.h"
 using namespace HBSoft;
 
-void SceneManager::AddScene(std::shared_ptr<Scene> _scene, SCENE_KEY _key)
+void SceneManager::SetCurrentScene(SCENE_KEY key)
 {
-    _scene->Init();
-    Add(_key, _scene);
+    auto& scene = this->Get(key);
+    if (!m_currentScene)  // nullptr 처리
+        m_currentScene = &scene;
+
+    m_queueForWaiting.push(&scene);
 }
 
-void SceneManager::SetCurrentScene(SCENE_KEY _key)
+void SceneManager::Update(const float deltaTime)
 {
-    m_queueForWaiting.push(Get(_key));
-}
-
-void SceneManager::SetCurrentScene(std::shared_ptr<Scene> _scene)
-{
-    m_queueForWaiting.push(_scene);
-}
-
-void SceneManager::Init()
-{
-    AddScene(std::make_shared<SceneLobby>(*this), L"LOBBY");
-
-    m_currentScene = Get(L"LOBBY");
-    m_currentScene->Start();
-}
-
-void SceneManager::Update(const float _deltaTime)
-{
-    // 이거 없으면 현재 실행되고 있는 다 끝나기도 전에 바뀜
+    // 이거 없으면 Render에서 누가 신을 삭제하거나 바꿔버리면 다 끝나기도 전에 바뀜
     if (!m_queueForWaiting.empty())
     {
-        m_currentScene->End();
+        (*m_currentScene)->End();  // 신 끝나면 호출되는 함수
         m_currentScene = m_queueForWaiting.front();
-        m_currentScene->Start();
+        (*m_currentScene)->Start();  // 신 시작하면 호출되는 함수
         m_queueForWaiting.pop();
     }
-
-    m_currentScene->Update(_deltaTime);
+    (*m_currentScene)->Update(deltaTime);
 }
 
 void SceneManager::Render()
 {
-    m_currentScene->Render();
+    (*m_currentScene)->Render();
 }
 
 void SceneManager::Release()
 {
-    auto& scenes = GetAllResources();
+    auto& scenes = GetAll();
 
     for (auto& scene : scenes)
         scene.second->Release();
+    // 전체 신 Release 호출 후 제거
 
     Clear();
 }

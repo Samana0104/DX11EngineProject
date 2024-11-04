@@ -18,12 +18,12 @@ bool MeshHandler::CreateMeshResource(const MESH_KEY key, MeshShape meshShape)
 
 bool MeshHandler::CreateBox2DMesh(const MESH_KEY& key)
 {
-    std::shared_ptr<Mesh2D> boxMesh = std::make_shared<Box2D>();
-    return Add(key, boxMesh);
+    auto boxMesh = std::make_unique<Box2D>();
+    return Add(key, std::move(boxMesh));
 }
 
 bool MeshHandler::CreateCircle2DMesh(const MESH_KEY& key)
 {
-    std::shared_ptr<Mesh2D> circleMesh = std::make_shared<Circle2D>();
-    return Add(key, circleMesh);
+    auto circleMesh = std::make_unique<Circle2D>();
+    return Add(key, std::move(circleMesh));
 }

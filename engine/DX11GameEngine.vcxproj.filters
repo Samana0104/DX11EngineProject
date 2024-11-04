@@ -7,9 +7,6 @@
     <Filter Include="Core">
       <UniqueIdentifier>{7385d030-05ef-4bd3-b6e8-21eb1a632d19}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Color">
-      <UniqueIdentifier>{d0df1bf1-4221-4cac-80fd-1b969bff801d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Font">
       <UniqueIdentifier>{0b2d3dce-a871-4846-9de8-ec21f4f3e115}</UniqueIdentifier>
     </Filter>
@@ -31,14 +28,8 @@
     <Filter Include="Sound">
       <UniqueIdentifier>{67f0fc60-f163-44ea-91b6-b73616548bb6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sprite">
-      <UniqueIdentifier>{d2edd44c-bc6f-421e-968e-3990b26b5b8f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Texture">
       <UniqueIdentifier>{af25a8a4-ce3c-4ac3-b235-8b55e00eadbf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tile">
-      <UniqueIdentifier>{b27729ec-1295-491f-bf56-95fcb4920563}</UniqueIdentifier>
     </Filter>
     <Filter Include="Timer">
       <UniqueIdentifier>{21ddd6cd-dc53-4b4e-8c51-4e56a9f5e14f}</UniqueIdentifier>
@@ -49,20 +40,11 @@
     <Filter Include="FiniteStateM">
       <UniqueIdentifier>{bf0ed2d4-fbc2-4126-b96f-36fb83bb8b25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DesignPattern">
+      <UniqueIdentifier>{65f1f11e-fd03-46be-80ed-895df7e42037}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Color\Color.cpp">
-      <Filter>Color</Filter>
-    </ClCompile>
-    <ClCompile Include="Component\CollisionComponent.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Component\MoveComponent.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Component\SpriteComponent.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
     <ClCompile Include="Core\D3Device.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -111,35 +93,11 @@
     <ClCompile Include="Sound\Sound.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite\SpriteTexture.cpp">
-      <Filter>Sprite</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite\SpriteUV.cpp">
-      <Filter>Sprite</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite\Sprite.cpp">
-      <Filter>Sprite</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite\SpriteHandler.cpp">
-      <Filter>Sprite</Filter>
-    </ClCompile>
     <ClCompile Include="Texture\TextureHandler.cpp">
       <Filter>Texture</Filter>
     </ClCompile>
     <ClCompile Include="Texture\Texture.cpp">
       <Filter>Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="Tile\TileManager.cpp">
-      <Filter>Tile</Filter>
-    </ClCompile>
-    <ClCompile Include="Tile\Tile.cpp">
-      <Filter>Tile</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer\Timer.cpp">
-      <Filter>Timer</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer\NormalTimer.cpp">
-      <Filter>Timer</Filter>
     </ClCompile>
     <ClCompile Include="Timer\SystemTimer.cpp">
       <Filter>Timer</Filter>
@@ -180,26 +138,19 @@
     <ClCompile Include="Object\Object2D.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\ObjectManager.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Object\Pawn.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Subject.cpp">
+      <Filter>DesignPattern</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>DesignPattern</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Color\Color.h">
-      <Filter>Color</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\CollisionComponent.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\MoveComponent.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\SpriteComponent.h">
-      <Filter>Component</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Component.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -224,7 +175,7 @@
     <ClInclude Include="Core\pch.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\ResourceHandler.h">
+    <ClInclude Include="Core\MgrTemplate.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Singleton.h">
@@ -260,35 +211,11 @@
     <ClInclude Include="Sound\FmodSystem.h">
       <Filter>Sound</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite\SpriteTexture.h">
-      <Filter>Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite\SpriteUV.h">
-      <Filter>Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite\Sprite.h">
-      <Filter>Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite\SpriteHandler.h">
-      <Filter>Sprite</Filter>
-    </ClInclude>
     <ClInclude Include="Texture\TextureHandler.h">
       <Filter>Texture</Filter>
     </ClInclude>
     <ClInclude Include="Texture\Texture.h">
       <Filter>Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Tile\TileManager.h">
-      <Filter>Tile</Filter>
-    </ClInclude>
-    <ClInclude Include="Tile\Tile.h">
-      <Filter>Tile</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer\Timer.h">
-      <Filter>Timer</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer\NormalTimer.h">
-      <Filter>Timer</Filter>
     </ClInclude>
     <ClInclude Include="Timer\SystemTimer.h">
       <Filter>Timer</Filter>
@@ -332,13 +259,7 @@
     <ClInclude Include="Object\Object2D.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\ObjectManager.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="Object\Pawn.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\ObjectCode.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="EventHandler.h">
@@ -353,8 +274,13 @@
     <ClInclude Include="FiniteStateM\FiniteStateM.h">
       <Filter>FiniteStateM</Filter>
     </ClInclude>
-    <ClInclude Include="InputHandler.h">
-      <Filter>Input</Filter>
+    <ClInclude Include="Rect.h" />
+    <ClInclude Include="Point.h" />
+    <ClInclude Include="Subject.h">
+      <Filter>DesignPattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>DesignPattern</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -18,6 +18,7 @@ namespace HBSoft
     using stringV  = std::string_view;
     using wstringV = std::wstring_view;
 
+    // 파일 이름으로 키 값을 받아오기에 이 3개는 wstring으로 선언 안하면 큰일
     using MESH_KEY  = std::wstring;
     using FONT_KEY  = std::wstring;
     using SCENE_KEY = std::wstring;
@@ -28,42 +29,38 @@ namespace HBSoft
     using SOUND_KEY   = std::wstring;
     using SPRITE_KEY  = std::wstring;
 
-    inline static const float TOLERANCE = 1e-4f;
+    const float TOLERANCE = 1e-4f;
 
-    class CoreAPI
+    static std::wstring ToUnicode(const stringV _src)
     {
-    public:
-        static std::wstring ToUnicode(const stringV _src)
-        {
-            USES_CONVERSION;
-            return std::wstring(A2W(_src.data()));
-        }
+        USES_CONVERSION;
+        return std::wstring(A2W(_src.data()));
+    }
 
-        static std::string ToMultiByte(const wstringV _src)
-        {
-            USES_CONVERSION;
-            return std::string(W2A(_src.data()));
-        }
+    static std::string ToMultiByte(const wstringV _src)
+    {
+        USES_CONVERSION;
+        return std::string(W2A(_src.data()));
+    }
 
-        static std::pair<std::wstring, std::wstring> GetFileNameAndExt(const wstringV _filePath)
-        {
-            wchar_t szDrive[MAX_PATH] = {
-                0,
-            };
-            wchar_t szDir[MAX_PATH] = {
-                0,
-            };
-            wchar_t szFileName[MAX_PATH] = {
-                0,
-            };
-            wchar_t szFileExt[MAX_PATH] = {
-                0,
-            };
-            _tsplitpath_s(_filePath.data(), szDrive, szDir, szFileName, szFileExt);
-            // fileNameKey = szFileName;
-            // fileNameKey += szFileExt;
+    static std::pair<std::wstring, std::wstring> GetFileNameAndExt(const wstringV _filePath)
+    {
+        wchar_t szDrive[MAX_PATH] = {
+            0,
+        };
+        wchar_t szDir[MAX_PATH] = {
+            0,
+        };
+        wchar_t szFileName[MAX_PATH] = {
+            0,
+        };
+        wchar_t szFileExt[MAX_PATH] = {
+            0,
+        };
+        _tsplitpath_s(_filePath.data(), szDrive, szDir, szFileName, szFileExt);
+        // fileNameKey = szFileName;
+        // fileNameKey += szFileExt;
 
-            return std::make_pair(szFileName, szFileExt);
-        }
-    };
+        return std::make_pair(szFileName, szFileExt);
+    }
 }  // namespace HBSoft

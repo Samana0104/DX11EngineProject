@@ -4,44 +4,44 @@ using namespace HBSoft;
 
 FmodSystem::FmodSystem()
 {
-    if (mFmodSys == nullptr && mRefSysCount == 0)
+    if (m_fmodSys == nullptr && m_refSysCount == 0)
     {
         if (CreateFmodSystem())
-            mRefSysCount = 1;
+            m_refSysCount = 1;
     }
     else
     {
-        mRefSysCount++;
+        m_refSysCount++;
     }
-    // OutputDebugString((std::to_wstring(mRefSysCount) + L"\n").c_str());
+    // OutputDebugString((std::to_wstring(m_refSysCount) + L"\n").c_str());
 }
 
 FmodSystem::~FmodSystem()
 {
-    if (mRefSysCount <= 1)
+    if (m_refSysCount <= 1)
     {
         DeleteFmodSystem();
-        mRefSysCount = 0;
+        m_refSysCount = 0;
     }
     else
     {
-        mRefSysCount--;
+        m_refSysCount--;
     }
 
-    // OutputDebugString((std::to_wstring(mRefSysCount) + L"\n").c_str());
+    // OutputDebugString((std::to_wstring(m_refSysCount) + L"\n").c_str());
 }
 
 bool FmodSystem::CreateFmodSystem()
 {
-    FMOD_RESULT hr = FMOD::System_Create(&mFmodSys);
+    FMOD_RESULT hr = FMOD::System_Create(&m_fmodSys);
 
     if (hr != FMOD_OK)
     {
-        mFmodSys = nullptr;
+        m_fmodSys = nullptr;
         return false;
     }
 
-    hr = mFmodSys->init(MAX_CHANNELS, FMOD_INIT_NORMAL, nullptr);
+    hr = m_fmodSys->init(MAX_CHANNELS, FMOD_INIT_NORMAL, nullptr);
 
     if (hr != FMOD_OK)
     {
@@ -55,25 +55,25 @@ bool FmodSystem::CreateFmodSystem()
 
 void FmodSystem::DeleteFmodSystem()
 {
-    if (mFmodSys != nullptr)
+    if (m_fmodSys != nullptr)
     {
-        mFmodSys->close();
-        mFmodSys->release();
+        m_fmodSys->close();
+        m_fmodSys->release();
     }
 
     // OutputDebugString(L"\nFMOD System Delete\n");
-    mFmodSys = nullptr;
+    m_fmodSys = nullptr;
 }
 
 UINT FmodSystem::GetRefCount() const
 {
-    return mRefSysCount;
+    return m_refSysCount;
 }
 
 FMOD_SYS* const FmodSystem::operator->()
 {
-    if (mFmodSys == nullptr)
+    if (m_fmodSys == nullptr)
         MessageBoxA(NULL, "Not created fmod system[Pointer error]", "[Fmod System]", MB_OK);
 
-    return mFmodSys;
+    return m_fmodSys;
 }

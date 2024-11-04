@@ -19,5 +19,5 @@ void Camera::ZoomOut(const float scale)
 
 void Camera::LookAtObject(Object2D& obj)
 {
-    m_transform.SetLocation(obj->GetLocation());
+    m_transform.SetLocation(obj.m_transform.GetLocation());
 }

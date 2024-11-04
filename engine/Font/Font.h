@@ -1,5 +1,5 @@
 #pragma once
-#include "CoreAPI.h"
+#include "pch.h"
 #include "Transform2D.h"
 
 namespace HBSoft
@@ -27,8 +27,6 @@ namespace HBSoft
         FontDesc          m_fontDesc;
         Transform2D       m_transform;
         D2D1_MATRIX_3X2_F m_tempMat;
-        CALLBACK_ID       m_wm_sizeID;
-
 
     private:
         void DrawBegin();

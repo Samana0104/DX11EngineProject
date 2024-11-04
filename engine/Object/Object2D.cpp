@@ -31,16 +31,6 @@ void Object2D::SetShaderKey(const SHADER_KEY key)
     m_shaderKey = key;
 }
 
-void Object2D::SetObjectID(const OBJECT_ID objID)
-{
-    m_objectID = objID;
-}
-
-void Object2D::SetObjectCode(const ObjectCode objCode)
-{
-    m_objectCode = objCode;
-}
-
 const vec4& Object2D::GetColor() const
 {
     return m_color;
@@ -59,26 +49,6 @@ const TEXTURE_KEY& Object2D::GetTextureKey() const
 const SHADER_KEY& Object2D::GetShaderKey() const
 {
     return m_shaderKey;
-}
-
-const ObjectCode& Object2D::GetObjectCode() const
-{
-    return m_objectCode;
-}
-
-const OBJECT_ID& Object2D::GetObjectID() const
-{
-    return m_objectID;
-}
-
-Transform2D& Object2D::GetTransform()
-{
-    return m_transform;
-}
-
-Transform2D* Object2D::operator->()
-{
-    return &m_transform;
 }
 
 void Object2D::Update(const float _deltaTime) {}

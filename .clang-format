@@ -2,7 +2,7 @@
 # description : Standard formatting for the Hanbit Soft team
 # version: 1.0.1
 # date: 2024-10-08
-# Why i wrote in english, The formatter has not support Hangule
+# Why i wrote in english, The formatter has not supported Hangule
 ---
 Language: Cpp
 BasedOnStyle: Microsoft
@@ -78,7 +78,7 @@ IndentWidth: 4
 IntegerLiteralSeparator: 
   Binary: 4
   BinaryMinDigits: 8
-  Decimal: 3
+  Decimal: 4
 MacroBlockBegin: ''
 MacroBlockEnd: ''
 MaxEmptyLinesToKeep: 2

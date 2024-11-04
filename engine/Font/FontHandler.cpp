@@ -12,13 +12,13 @@ FontHandler::~FontHandler()
 
 bool FontHandler::CreateFontResource(const FONT_KEY _key, const FontDesc& _desc)
 {
-    auto font = std::make_shared<Font>(_desc);
-    return Add(_key, font);
+    auto font = std::make_unique<Font>(_desc);
+    return Add(_key, std::move(font));
 }
 
 bool FontHandler::LoadExternalFont(const wstringV fontPath)
 {
-    auto fileInfo = CoreAPI::GetFileNameAndExt(fontPath);
+    auto fileInfo = HBSoft::GetFileNameAndExt(fontPath);
 
     if (fileInfo.second.compare(L".ttf") != 0)
         return false;
@@ -37,18 +37,18 @@ void FontHandler::LoadExternalFontsAsFolder(const wstringV fontFolder)
 
     while (iter != std::filesystem::end(iter))
     {
-        const auto& currentFile = *(iter++);
+        const auto& file = *(iter++);
 
-        if (currentFile.is_directory())
-            LoadExternalFontsAsFolder(currentFile.path().wstring());
+        if (file.is_directory())
+            LoadExternalFontsAsFolder(file.path().wstring());
         else
-            LoadExternalFont(currentFile.path().wstring());
+            LoadExternalFont(file.path().wstring());
     }
 }
 
 void FontHandler::DrawTextAsKey(FONT_KEY key, wstringV msg, RECT_F rect, COLOR_F color)
 {
-    auto data = Get(key);
+    auto& data = Get(key);
     data->DrawTexts(msg, rect, color);
 }
 
@@ -76,7 +76,7 @@ void FontHandler::DrawTextForDebugging(const wchar_t* format, ...)
     RECT_F rc1    = {mySize.x * 0.1f, mySize.y * 0.7f, mySize.x * 0.6f, mySize.y * 0.95f};
     RECT_F rc2    = {rc1.left + rc1.left * 0.1f, rc1.top + rc1.top * 0.05f, rc1.right, rc1.bottom};
 
-    std::shared_ptr<Font> brush = Get(L"DEBUG_FONT");
+    auto& brush = Get(L"DEBUG_FONT");
 
     D3Device::GetInstance().m_d2dRT->BeginDraw();
     brush->GetBrush()->SetColor({1.f, 1.f, 1.f, 0.3f});

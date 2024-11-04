@@ -1,11 +1,11 @@
 #pragma once
-#include "ResourceHandler.h"
+#include "MgrTemplate.h"
 #include "Box2D.h"
 #include "Circle2D.h"
 
 namespace HBSoft
 {
-    class MeshHandler : public ResourceHandler<Mesh2D, MESH_KEY>
+    class MeshHandler : public MgrTemplate<Mesh2D, MESH_KEY>
     {
     private:
         bool CreateBox2DMesh(const MESH_KEY& key);

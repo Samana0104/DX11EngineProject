@@ -1,15 +1,49 @@
 #include "pch.h"
 #include "Core.h"
-using namespace HBSoft;
+#include "SceneLobby.h"
+
+namespace HBSoft
+{
+    class Sample : public Core
+    {
+    private:
+        virtual void Init() override
+        {
+            auto lobbyScene = std::make_unique<SceneLobby>();
+
+            m_sceneManager.Add(L"Lobby", std::move(lobbyScene));
+            m_sceneManager.SetCurrentScene(L"Lobby");
+        }
+
+        virtual void Update() override {}
+
+        virtual void Render() override {}
+
+        virtual void Release() override {}
+
+    public:
+        Sample(HINSTANCE hInstance, UINT width, UINT height)
+        {
+            Window::GetInstance().SetHinstance(hInstance);
+            assert(Window::GetInstance().CreateWin(width, height));
+            assert(D3Device::GetInstance().CreateDevice());
+            ResourceManager::GetInstance().CreateDafultResource();
+        }
+    };
+
+}  // namespace HBSoft
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
-    Core::ENGINE_BEGIN(hInstance, 960, 720);
-    std::shared_ptr<Core> core = std::make_shared<Core>();
-    core->GameRun();
+#ifdef DEBUG
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);  // 메모리 누수 확인
+#endif                                                             // DEBUG
 
-    core.reset();  // 메모리 초기화 순서가 있기에 무조건 리셋 해야함
-    // 나중에 begin end에서 자동 처리 하게 만들예정
-    Core::ENGINE_END();
+    HBSoft::Sample s(hInstance, 1280, 960);
+    s.Run();
+
+#ifdef DEBUG
+    _CrtCheckMemory();
+#endif  // DEBUG
     return 0;
 }

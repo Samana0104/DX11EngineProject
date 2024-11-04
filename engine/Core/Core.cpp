@@ -2,81 +2,50 @@
 #include "Core.h"
 using namespace HBSoft;
 
-void Core::GameFrame()
+void Core::InternalUpdate()
 {
+    m_timer.Update();
     m_input.Update();
     m_sceneManager.Update(m_timer.GetDeltaTime());
     m_manager.m_sound.Update();
+    Update();
 }
 
-void Core::GamePreRender()
+void Core::InternalRender()
 {
     float clearColor[] = {0.f, 0.f, 0.f, 1.0f};
     m_device.m_context->ClearRenderTargetView(m_device.m_rtv.Get(), clearColor);
-}
-
-void Core::GameRender()
-{
-    GamePreRender();
     m_sceneManager.Render();
-    GamePostRender();
-}
-
-void Core::GamePostRender()
-{
-#ifdef _DEBUG
-    m_manager.m_font.DrawRectForDebugging();
-#endif
-
     m_device.m_swapChain->Present(1, 0);
+    Render();
 }
 
-void Core::GameInit()
-{
-    m_timer.Reset();
-    m_sceneManager.Init();
-}
-
-void Core::GameRelease()
+void Core::InternalRelease()
 {
     m_sceneManager.Release();
+    ResourceManager::GetInstance().Release();
+    Input::GetInstance().Release();
+    D3Device::GetInstance().Release();
+    Window::GetInstance().Release();
+    Release();
 }
 
-void Core::GameRun()
+void Core::InternalInit()
 {
-    GameInit();
+    m_timer.Reset();
+    Init();
+}
+
+void Core::Run()
+{
+    InternalInit();
     while (1)
     {
         if (!m_window.WindowRun())
             break;
 
-        if (m_timer.HasPassedTime())
-        {
-            GameFrame();
-            GameRender();
-        }
+        InternalUpdate();
+        InternalRender();
     }
-    GameRelease();
-}
-
-void Core::ENGINE_BEGIN(HINSTANCE _hinstance, LONG _width, LONG _height)
-{
-    Window::GetInstance().SetHinstance(_hinstance);
-#ifdef _DEBUG
-    _ASSERT(Window::GetInstance().CreateWin(_width, _height));
-    _ASSERT(D3Device::GetInstance().CreateDevice());
-#else
-    Window::GetInstance().CreateWin(_width, _height);
-    D3Device::GetInstance().CreateDevice();
-#endif
-
-    ResourceManager::GetInstance().CreateDafultResource();
-}
-
-void Core::ENGINE_END()
-{
-    ResourceManager::GetInstance().Release();
-    Input::GetInstance().Release();
-    D3Device::GetInstance().Release();
-    Window::GetInstance().Release();
+    InternalRelease();
 }

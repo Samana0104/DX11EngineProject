@@ -2,11 +2,6 @@
 #include "D3Device.h"
 using namespace HBSoft;
 
-D3Device::~D3Device()
-{
-    Window::GetInstance().DeleteCallBack(m_wm_sizeID);
-}
-
 glm::vec2 D3Device::GetViewportSize() const
 {
     return {m_viewPort.Width, m_viewPort.Height};
@@ -30,8 +25,6 @@ bool D3Device::CreateDevice()
         return false;
 
     CreateViewport();
-    m_wm_sizeID = Window::GetInstance().RegisterCallBackWm_size(
-    std::bind(&D3Device::OnWm_size, this, std::placeholders::_1, std::placeholders::_2));
     return true;
 }
 
@@ -250,16 +243,4 @@ void D3Device::SetViewportSizeOnLeftTop(glm::vec2 _size)
     m_viewPort.MaxDepth = 1;
 
     m_context->RSSetViewports(1, &m_viewPort);
-}
-
-void D3Device::SetViewportSize(ViewType _viewType, glm::vec2 _size)
-{
-    switch (_viewType)
-    {
-    case ViewType::CENTER:
-        SetViewportSizeOnCenter(_size);
-        break;
-    case ViewType::LEFT_TOP:
-        SetViewportSizeOnLeftTop(_size);
-    }
 }

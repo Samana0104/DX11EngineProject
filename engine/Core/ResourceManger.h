@@ -5,7 +5,6 @@
 #include "FontHandler.h"
 #include "ShaderHandler.h"
 #include "SoundHandler.h"
-#include "SpriteHandler.h"
 
 namespace HBSoft
 {
@@ -17,7 +16,6 @@ namespace HBSoft
         FontHandler    m_font;
         ShaderHandler  m_shader;
         SoundHandler   m_sound;
-        SpriteHandler  m_sprite;
 
     private:
         friend class Singleton<ResourceManager>;
@@ -28,9 +26,10 @@ namespace HBSoft
         void CreateDefaultTextures();
         void CreateDefaultShaders();
         void CreateDefaultSounds();
-        void CreateDefaultSprites();
 
     public:
+        ~ResourceManager();
+
         void CreateDafultResource();
     };
 }  // namespace HBSoft

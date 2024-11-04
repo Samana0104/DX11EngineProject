@@ -19,10 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Color\Color.cpp" />
-    <ClCompile Include="Component\CollisionComponent.cpp" />
-    <ClCompile Include="Component\MoveComponent.cpp" />
-    <ClCompile Include="Component\SpriteComponent.cpp" />
     <ClCompile Include="Core\D3Device.cpp" />
     <ClCompile Include="Core\Core.cpp" />
     <ClCompile Include="Core\ResourceManger.cpp" />
@@ -44,8 +40,10 @@
     <ClCompile Include="Object\Button.cpp" />
     <ClCompile Include="Object\Camera.cpp" />
     <ClCompile Include="Object\Object2D.cpp" />
-    <ClCompile Include="Object\ObjectManager.cpp" />
     <ClCompile Include="Object\Pawn.cpp" />
+    <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Scene\SceneLobby.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Shader\PixelShader.cpp" />
@@ -55,23 +53,12 @@
     <ClCompile Include="Sound\FmodSystem.cpp" />
     <ClCompile Include="Sound\Sound.cpp" />
     <ClCompile Include="Sound\SoundHandler.cpp" />
-    <ClCompile Include="Sprite\Sprite.cpp" />
-    <ClCompile Include="Sprite\SpriteHandler.cpp" />
-    <ClCompile Include="Sprite\SpriteTexture.cpp" />
-    <ClCompile Include="Sprite\SpriteUV.cpp" />
+    <ClCompile Include="Subject.cpp" />
     <ClCompile Include="Texture\Texture.cpp" />
     <ClCompile Include="Texture\TextureHandler.cpp" />
-    <ClCompile Include="Tile\Tile.cpp" />
-    <ClCompile Include="Tile\TileManager.cpp" />
-    <ClCompile Include="Timer\NormalTimer.cpp" />
     <ClCompile Include="Timer\SystemTimer.cpp" />
-    <ClCompile Include="Timer\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Color\Color.h" />
-    <ClInclude Include="Component\CollisionComponent.h" />
-    <ClInclude Include="Component\MoveComponent.h" />
-    <ClInclude Include="Component\SpriteComponent.h" />
     <ClInclude Include="Core\Component.h" />
     <ClInclude Include="Core\D3Device.h" />
     <ClInclude Include="Core\DefaultResource.h" />
@@ -80,14 +67,13 @@
     <ClInclude Include="Core\ResourceManger.h" />
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="Core\pch.h" />
-    <ClInclude Include="Core\ResourceHandler.h" />
+    <ClInclude Include="Core\MgrTemplate.h" />
     <ClInclude Include="Core\Singleton.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="FiniteStateM\FiniteStateM.h" />
     <ClInclude Include="FiniteStateM\Transition.h" />
     <ClInclude Include="Font\FontHandler.h" />
     <ClInclude Include="Font\Font.h" />
-    <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Mesh\Box2D.h" />
     <ClInclude Include="Mesh\Circle2D.h" />
@@ -99,9 +85,10 @@
     <ClInclude Include="Object\Button.h" />
     <ClInclude Include="Object\Camera.h" />
     <ClInclude Include="Object\Object2D.h" />
-    <ClInclude Include="Object\ObjectManager.h" />
     <ClInclude Include="Object\Pawn.h" />
-    <ClInclude Include="Object\ObjectCode.h" />
+    <ClInclude Include="Observer.h" />
+    <ClInclude Include="Point.h" />
+    <ClInclude Include="Rect.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneLobby.h" />
     <ClInclude Include="Scene\SceneManager.h" />
@@ -112,17 +99,10 @@
     <ClInclude Include="Sound\FmodSystem.h" />
     <ClInclude Include="Sound\Sound.h" />
     <ClInclude Include="Sound\SoundHandler.h" />
-    <ClInclude Include="Sprite\Sprite.h" />
-    <ClInclude Include="Sprite\SpriteHandler.h" />
-    <ClInclude Include="Sprite\SpriteTexture.h" />
-    <ClInclude Include="Sprite\SpriteUV.h" />
+    <ClInclude Include="Subject.h" />
     <ClInclude Include="Texture\Texture.h" />
     <ClInclude Include="Texture\TextureHandler.h" />
-    <ClInclude Include="Tile\Tile.h" />
-    <ClInclude Include="Tile\TileManager.h" />
-    <ClInclude Include="Timer\NormalTimer.h" />
     <ClInclude Include="Timer\SystemTimer.h" />
-    <ClInclude Include="Timer\Timer.h" />
     <ClInclude Include="Transform3D.h" />
   </ItemGroup>
   <ItemGroup>

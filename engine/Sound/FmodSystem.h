@@ -1,5 +1,5 @@
 #pragma once
-#include "CoreAPI.h"
+#include "pch.h"
 
 /*
     FMOD SYSTEM SMART POINTER
@@ -14,8 +14,8 @@ namespace HBSoft
     private:
         inline static const int MAX_CHANNELS = 32;
 
-        inline static UINT      mRefSysCount = 0;
-        inline static FMOD_SYS* mFmodSys     = nullptr;
+        inline static UINT      m_refSysCount = 0;
+        inline static FMOD_SYS* m_fmodSys     = nullptr;
 
     private:
         bool CreateFmodSystem();

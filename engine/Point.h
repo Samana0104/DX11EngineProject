@@ -2,6 +2,6 @@
 
 namespace HBSoft
 {
-    class NormalTimer
+    class Point
     {};
 }  // namespace HBSoft

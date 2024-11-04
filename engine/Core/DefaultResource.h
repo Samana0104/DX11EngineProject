@@ -17,10 +17,10 @@ namespace HBSoft
             DWRITE_FONT_STRETCH m_fontStretch;
         };
     */
-    inline static const std::vector<std::wstring> gFontPath = {{L"../res/Font/"}};
+    inline static const std::vector<std::wstring> g_fontPath = {{L"../res/Font/"}};
 
     // 폰트는 직접 추가해서 써야함 크기 차이도 있고 위에는 단순 폰트 메모리에 올려주는 거 뿐
-    inline static const std::map<FONT_KEY, FontDesc> gDefaultFonts = {
+    inline static const std::map<FONT_KEY, FontDesc> g_defaultFonts = {
         {L"DEBUG_FONT",
          {L"맑은 고딕",
          L"ko-kr",
@@ -39,7 +39,7 @@ namespace HBSoft
         };
     */
     // 만약 UV값을 따로 주고 싶으면 메쉬 따로 추가해서 넣을 것
-    inline static const std::map<MESH_KEY, MeshShape> gDefaultMeshes = {
+    inline static const std::map<MESH_KEY, MeshShape> g_defaultMeshes = {
         { L"DEFAULT_MESH",    {MeshShape::BOX2D}},
         {   L"BOX2D_MESH",    {MeshShape::BOX2D}},
         {L"CIRCLE2D_MESH", {MeshShape::CIRCLE2D}}
@@ -52,7 +52,7 @@ namespace HBSoft
     //	{ L"../data/Default.jpg"}
     // };
 
-    inline static const std::vector<std::wstring> gTexturePath = {{L"../res/Image/"}};
+    inline static const std::vector<std::wstring> g_texturePath = {{L"../res/Image/"}};
 
     /*
         struct ShaderDesc
@@ -63,12 +63,10 @@ namespace HBSoft
         };
     */
 
-    inline static const std::vector<ShaderDesc> gDefaultShaders = {
+    inline static const std::vector<ShaderDesc> g_defaultShaders = {
         {ShaderType::VERTEX, L"../res/Shader/VertexShader.hlsl", "VSMain"},
         { ShaderType::PIXEL,  L"../res/Shader/PixelShader.hlsl", "PSMain"}
     };
 
-    inline static const std::vector<std::wstring> gSoundPath = {{L"../res/Sound/"}};
-
-    inline static const std::vector<std::wstring> gSpritePath = {{L"../res/Image/"}};
+    inline static const std::vector<std::wstring> g_soundPath = {{L"../res/Sound/"}};
 }  // namespace HBSoft

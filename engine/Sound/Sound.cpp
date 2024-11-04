@@ -28,7 +28,7 @@ Sound::~Sound()
 bool Sound::CreateSound(const wstringV _filePath)
 {
     FMOD_RESULT hr =
-    mFmodSys->createSound(CoreAPI::ToMultiByte(_filePath).c_str(), FMOD_DEFAULT, 0, &m_sound);
+    m_fmodSys->createSound(HBSoft::ToMultiByte(_filePath).c_str(), FMOD_DEFAULT, 0, &m_sound);
 
     if (hr == FMOD_OK)
         return true;
@@ -48,7 +48,7 @@ void Sound::InitSound()
 
 bool Sound::Play(bool _loop)
 {
-    FMOD_RESULT hr = mFmodSys->playSound(m_sound, nullptr, false, &m_soundChannel);
+    FMOD_RESULT hr = m_fmodSys->playSound(m_sound, nullptr, false, &m_soundChannel);
 
     if (hr != FMOD_OK)
         return false;
@@ -119,7 +119,7 @@ void Sound::Update()
     if (!IsPlaying())
         return;
 
-    mFmodSys->update();
+    m_fmodSys->update();
 
     // unsigned int ms;
     // m_soundChannel->getPosition(&ms, FMOD_TIMEUNIT_MS);

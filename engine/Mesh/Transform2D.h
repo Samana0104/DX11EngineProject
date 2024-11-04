@@ -7,7 +7,7 @@ date: 2024-10-08
 */
 
 #pragma once
-#include "CoreAPI.h"
+#include "pch.h"
 
 namespace HBSoft
 {

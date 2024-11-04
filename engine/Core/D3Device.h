@@ -5,12 +5,6 @@ namespace HBSoft
 {
     using namespace Microsoft::WRL;
 
-    enum class ViewType
-    {
-        CENTER   = 0,
-        LEFT_TOP = 1
-    };
-
     class D3Device : public Singleton<D3Device>
     {
     public:
@@ -26,8 +20,6 @@ namespace HBSoft
         D3D11_VIEWPORT       m_viewPort;
         DXGI_SWAP_CHAIN_DESC m_swapChainDesc;
 
-        CALLBACK_ID m_wm_sizeID;
-
     private:
         friend class Singleton<D3Device>;
         D3Device() = default;
@@ -41,10 +33,8 @@ namespace HBSoft
         void CreateViewport();
         bool SetAlphaBlendingState();
 
-        void SetViewportSize(ViewType viewType, glm::vec2 size);
-
     public:
-        ~D3Device();
+        ~D3Device() = default;
 
         void SetViewportSizeOnCenter(glm::vec2 size);
         void SetViewportSizeOnLeftTop(glm::vec2 size);

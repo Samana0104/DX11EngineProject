@@ -4,15 +4,15 @@ using namespace HBSoft;
 
 bool TextureHandler::CreateTextureResource(const wstringV filePath)
 {
-    auto fileInfo = CoreAPI::GetFileNameAndExt(filePath);
+    auto fileInfo = HBSoft::GetFileNameAndExt(filePath);
 
     if (fileInfo.second.compare(L".png") != 0 && fileInfo.second.compare(L".jpg") != 0 &&
         fileInfo.second.compare(L".bmp") != 0)
         return false;
 
     TEXTURE_KEY key     = fileInfo.first + fileInfo.second;
-    auto        texture = std::make_shared<Texture>(filePath);
-    return Add(key, texture);
+    auto        texture = std::make_unique<Texture>(filePath);
+    return Add(key, std::move(texture));
 }
 
 void TextureHandler::CreateTextureAsFolderPath(const wstringV folderPath)

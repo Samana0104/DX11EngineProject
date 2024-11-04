@@ -10,14 +10,9 @@ Font::Font(const FontDesc& _desc)
 #else
     CreateFontComponent();
 #endif
-    m_wm_sizeID = Window::GetInstance().RegisterCallBackWm_size(
-    std::bind(&Font::OnWm_size, this, std::placeholders::_1, std::placeholders::_2));
 }
 
-Font::~Font()
-{
-    Window::GetInstance().DeleteCallBack(m_wm_sizeID);
-}
+Font::~Font() {}
 
 void Font::OnWm_size(UINT _weight, UINT _height)
 {

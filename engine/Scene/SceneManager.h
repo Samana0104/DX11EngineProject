@@ -1,23 +1,18 @@
 #pragma once
 #include "Scene.h"
-#include "ResourceHandler.h"
+#include "MgrTemplate.h"
 
 namespace HBSoft
 {
-    class SceneManager : public ResourceHandler<Scene, SCENE_KEY>
+    class SceneManager : public MgrTemplate<Scene, SCENE_KEY>
     {
     private:
-        std::shared_ptr<Scene>             m_currentScene;
-        std::queue<std::shared_ptr<Scene>> m_queueForWaiting;
-
-    private:
-        void AddScene(std::shared_ptr<Scene> scene, SCENE_KEY key);
+        const std::unique_ptr<Scene>*             m_currentScene;
+        std::queue<const std::unique_ptr<Scene>*> m_queueForWaiting;
+        // 해당 변수는 신이 삭제될 때 Update에서 바뀌는 걸 보장하도록 하기 위해 선언함
 
     public:
         void SetCurrentScene(SCENE_KEY key);
-        void SetCurrentScene(std::shared_ptr<Scene> scene);
-
-        void Init();
         void Update(const float deltaTime);
         void Render();
         void Release();

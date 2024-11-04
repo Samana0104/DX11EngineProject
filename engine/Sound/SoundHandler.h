@@ -1,10 +1,10 @@
 #pragma once
-#include "ResourceHandler.h"
+#include "MgrTemplate.h"
 #include "Sound.h"
 
 namespace HBSoft
 {
-    class SoundHandler : public ResourceHandler<Sound, SOUND_KEY>
+    class SoundHandler : public MgrTemplate<Sound, SOUND_KEY>
     {
     private:
 

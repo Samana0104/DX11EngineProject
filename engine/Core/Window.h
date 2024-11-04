@@ -27,10 +27,6 @@ namespace HBSoft
 
         void CreateRegisterClass(HINSTANCE hInstance);
 
-        void CallEventWMActivate(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-        void CallEventWMDestroy(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-        void CallEventWm_size(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
     public:
         bool CreateWin(LONG width, LONG height);
         bool WindowRun() const;
@@ -42,8 +38,5 @@ namespace HBSoft
         POINTFLOAT GetWindowSizeF() const;
         glm::vec2  GetWindowSizeVec2() const;
         HWND       GetWindowHandle() const;
-
-        CALLBACK_ID RegisterCallBackWm_size(Wm_size_FUNC func);
-        bool        DeleteCallBack(CALLBACK_ID id);
     };
 }  // namespace HBSoft

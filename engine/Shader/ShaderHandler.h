@@ -1,11 +1,11 @@
 #pragma once
-#include "ResourceHandler.h"
+#include "MgrTemplate.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
 
 namespace HBSoft
 {
-    class ShaderHandler : public ResourceHandler<Shader, SHADER_KEY>
+    class ShaderHandler : public MgrTemplate<Shader, SHADER_KEY>
     {
     private:
         bool CreateVertexShader(const MESH_KEY& _key, const ShaderDesc& _desc);

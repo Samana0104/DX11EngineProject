@@ -1,20 +1,17 @@
 #pragma once
 #include "pch.h"
 #include "SystemTimer.h"
-#include "Input.h"
-#include "Window.h"
-#include "ResourceManger.h"
 #include "SceneManager.h"
-#include "ObjectManager.h"
+#include "ResourceManger.h"
+#include "Input.h"
 
 namespace HBSoft
 {
-    class Core : public CoreAPI
+    class Core
     {
     protected:
         SceneManager m_sceneManager;
         SystemTimer  m_timer;
-        Object2D     m_wideScreen;
 
         Input&           m_input   = Input::GetInstance();
         Window&          m_window  = Window::GetInstance();
@@ -22,21 +19,28 @@ namespace HBSoft
         ResourceManager& m_manager = ResourceManager::GetInstance();
 
     private:
-        Core(const Core&)           = delete;
-        void operator=(const Core&) = delete;
+        Core(Core&&)                 = delete;
+        Core& operator=(const Core&) = delete;
+        Core& operator=(Core&&)      = delete;
 
-        void GameFrame();
-        void GamePreRender();
-        void GameRender();
-        void GamePostRender();
-        void GameInit();
-        void GameRelease();
+        void InternalUpdate();
+        void InternalRender();
+        void InternalInit();
+        void InternalRelease();
+
+    protected:
+        virtual void Update() {}
+
+        virtual void Render() {}
+
+        virtual void Init() {}
+
+        virtual void Release() {}
 
     public:
-        Core() = default;
-        void GameRun();
+        virtual ~Core() = default;
+        Core()          = default;
 
-        static void ENGINE_BEGIN(HINSTANCE _hinstance, LONG _width, LONG _height);
-        static void ENGINE_END();
+        void Run();
     };
 }  // namespace HBSoft
