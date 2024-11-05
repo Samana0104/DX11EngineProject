@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 메쉬의 기본 리소스를 정의하기 위한 소스 파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
 #include "Mesh2D.h"
 using namespace HBSoft;
@@ -36,34 +44,16 @@ void Mesh2D::AddVertexIndex(std::initializer_list<size_t> index)
         });
     }
 
-    m_tempUV = m_uv;
+    m_uv;
 }
 
-void Mesh2D::CreateMesh(const POINT_F meshCom)
+void Mesh2D::CreateMesh(const HPoint meshCom)
 {
 #ifdef _DEBUG
     _ASSERT(CreateVertexBuffer());
 #else
     CreateVertexBuffer();
 #endif
-    m_meshCom = meshCom;
-}
-
-void Mesh2D::SetUVVertex(const size_t uvVertex, const vec2 uv)
-{
-    try
-    {
-        m_tempUV.at(uvVertex) = uv;
-    }
-    catch (std::out_of_range e)
-    {
-        MessageBoxA(NULL, e.what(), "UV indexing error[Mesh2D]", MB_OK);
-    }
-}
-
-POINT_F Mesh2D::GetMeshCom() const
-{
-    return m_meshCom;
 }
 
 bool Mesh2D::CreateVertexBuffer()
@@ -121,7 +111,6 @@ void Mesh2D::Draw(const mat3& _matrix, const vec4 _color)
 {
     UpdateRenderVertices(_matrix, _color);
     SetIAVertexBuffer();
-    m_device.m_context->Draw(static_cast<UINT>(m_renderVertices.size()), 0);
     PostRender();
 }
 

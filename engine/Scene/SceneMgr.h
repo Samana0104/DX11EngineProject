@@ -1,10 +1,18 @@
+/*
+author : 변한빛
+description : 씬 전체를 관리하기 위해 만든 헤더파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #pragma once
 #include "Scene.h"
 #include "MgrTemplate.h"
 
 namespace HBSoft
 {
-    class SceneManager : public MgrTemplate<Scene, SCENE_KEY>
+    class SceneMgr : public MgrTemplate<Scene, SCENE_KEY>
     {
     private:
         const std::unique_ptr<Scene>*             m_currentScene;

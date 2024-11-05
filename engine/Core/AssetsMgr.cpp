@@ -1,10 +1,29 @@
+/*
+author : 변한빛
+description : 리소스들을 관리하기 위한 클래스 소스파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
-#include "ResourceManger.h"
+#include "AssetsMgr.h"
 using namespace HBSoft;
 
-ResourceManager::~ResourceManager() {}
+AssetsMgr::AssetsMgr(std::shared_ptr<D3Device>& device)
+    : m_device(device)
+{}
 
-void ResourceManager::CreateDafultResource()
+AssetsMgr::~AssetsMgr()
+{
+    m_font.Clear();
+    m_mesh.Clear();
+    m_shader.Clear();
+    m_sound.Clear();
+    m_texture.Clear();
+}
+
+void AssetsMgr::CreateDafultResource()
 {
     CreateDefaultFonts();
     CreateDefaultMeshes();
@@ -13,7 +32,7 @@ void ResourceManager::CreateDafultResource()
     CreateDefaultSounds();
 }
 
-void ResourceManager::CreateDefaultFonts()
+void AssetsMgr::CreateDefaultFonts()
 {
     for (auto& font : g_fontPath)
         m_font.LoadExternalFontsAsFolder(font);
@@ -25,7 +44,7 @@ void ResourceManager::CreateDefaultFonts()
     }
 }
 
-void ResourceManager::CreateDefaultMeshes()
+void AssetsMgr::CreateDefaultMeshes()
 {
     for (auto& mesh : g_defaultMeshes)
     {
@@ -34,7 +53,7 @@ void ResourceManager::CreateDefaultMeshes()
     }
 }
 
-void ResourceManager::CreateDefaultTextures()
+void AssetsMgr::CreateDefaultTextures()
 {
     for (auto& path : g_texturePath)
         m_texture.CreateTextureAsFolderPath(path);
@@ -43,7 +62,7 @@ void ResourceManager::CreateDefaultTextures()
     // MB_OK);
 }
 
-void ResourceManager::CreateDefaultShaders()
+void AssetsMgr::CreateDefaultShaders()
 {
     for (auto& shader : g_defaultShaders)
     {
@@ -52,7 +71,7 @@ void ResourceManager::CreateDefaultShaders()
     }
 }
 
-void ResourceManager::CreateDefaultSounds()
+void AssetsMgr::CreateDefaultSounds()
 {
     for (auto& path : g_soundPath)
         m_sound.CreateSoundAsFolderPath(path);

@@ -1,19 +1,19 @@
+/*
+author : 변한빛
+description :
+HBSoft 전역 함수들 및
+기본 자료형 타입 변경내역 모음
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #pragma once
 #include "pch.h"
 
 namespace HBSoft
 {
-    using namespace Microsoft::WRL;
-    using namespace glm;
-
     using COLOR_F = D2D1_COLOR_F;
-
-    using RECT_L  = D2D1_RECT_L;
-    using RECT_F  = D2D1_RECT_F;
-    using RECT_U  = D2D1_RECT_U;
-    using POINT_L = D2D1_POINT_2L;
-    using POINT_F = D2D1_POINT_2F;
-    using POINT_U = D2D1_POINT_2U;
 
     using stringV  = std::string_view;
     using wstringV = std::wstring_view;

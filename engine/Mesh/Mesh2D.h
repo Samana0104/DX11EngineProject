@@ -1,7 +1,14 @@
+/*
+author : 변한빛
+description : 메쉬의 기본 리소스를 정의하기 위한 헤더 파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #pragma once
 #include "pch.h"
 #include "Transform2D.h"
-#include "Texture.h"
 
 namespace HBSoft
 {
@@ -24,17 +31,11 @@ namespace HBSoft
     private:
         std::vector<vec2>     m_vertices;
         std::vector<vec2>     m_uv;
-        std::vector<vec2>     m_tempUV;  // UV 좌표 관리를 위해서 억지로 넣음
         std::vector<size_t>   m_indices;
         std::vector<Vertex2D> m_renderVertices;
 
         ComPtr<ID3D11Buffer> m_vertexBuffer;
         MeshShape            m_meshShape;
-        POINT_F              m_meshCom;  // 무게중심
-
-    protected:
-        D3Device& m_device = D3Device::GetInstance();
-        Window&   m_window = Window::GetInstance();
 
     private:
         bool CreateVertexBuffer();
@@ -49,14 +50,12 @@ namespace HBSoft
         void ReserveVertexSize(size_t vertexCount);
         void AddVertexAndUV(const vec2 vertex, const vec2 uv);
         void AddVertexIndex(std::initializer_list<size_t> index);
-        void CreateMesh(const POINT_F meshCom = {0.f, 0.f});
+        void CreateMesh(const HPoint meshCom = {0.f, 0.f});
         void SetUVVertex(const size_t uvVertex, const vec2 uv);
 
     public:
-        POINT_F GetMeshCom() const;
-
         void Draw(const mat3& matrix, const vec4 color = {1.f, 1.f, 1.f, 1.f});
 
-        virtual void SetUVVertexAsRect(const RECT_F& rect, const vec2& imageSize) = 0;
+        virtual void SetUVVertexAsRect(const HRect& rect, const vec2& imageSize) = 0;
     };
 }  // namespace HBSoft

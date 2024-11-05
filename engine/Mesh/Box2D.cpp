@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 박스2D 메쉬를 만드는 소스 파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
 #include "Box2D.h"
 using namespace HBSoft;
@@ -10,7 +18,7 @@ Box2D::Box2D()
 
 void Box2D::CreateBox2DVertex()
 {
-    RECT_F rect = {-0.5f, 0.5f, 0.5f, -0.5f};
+    HRect rect = {-0.5f, 0.5f, 0.5f, -0.5f};
     ReserveVertexSize(4);
     AddVertexAndUV({rect.left, rect.top}, {0, 0});
     AddVertexAndUV({rect.right, rect.top}, {1, 0});
@@ -24,7 +32,7 @@ void Box2D::CreateBox2DVertex()
 2D 아니고는 안쓸 방식
 */
 
-void Box2D::SetUVVertexAsRect(const RECT_F& rect, const vec2& imageSize)
+void Box2D::SetUVVertexAsRect(const HRect& rect, const vec2& imageSize)
 {
     SetUVVertex(0, {rect.left / imageSize.x, rect.top / imageSize.y});
     SetUVVertex(1, {rect.right / imageSize.x, rect.top / imageSize.y});

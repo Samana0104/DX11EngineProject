@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 원 메쉬를 만드는 소스 파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
 #include "Circle2D.h"
 using namespace HBSoft;
@@ -31,7 +39,7 @@ void Circle2D::CreateCircle2DVertex()
     CreateMesh();
 }
 
-void Circle2D::SetUVVertexAsRect(const RECT_F& _rect, const vec2& _imageSize)
+void Circle2D::SetUVVertexAsRect(const HRect& _rect, const vec2& _imageSize)
 {
     // 크기 1 반지름 0.5 원
     // const float anglePerTriangles = 360.f / static_cast<float>(mTriangles);

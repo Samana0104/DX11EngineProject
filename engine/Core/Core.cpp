@@ -1,51 +1,65 @@
+/*
+author : 변한빛
+description : 메인 엔진 소스파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
 #include "Core.h"
 using namespace HBSoft;
 
-void Core::InternalUpdate()
+Core::Core(HINSTANCE hInstance, HPoint windowSize)
+{
+    m_window = std::make_shared<Window>(hInstance, windowSize);
+    m_device = std::make_shared<D3Device>(m_window);
+    m_input  = std::make_shared<Input>(m_window);
+    m_assets = std::make_unique<AssetsMgr>(m_window, m_device);
+    m_timer.Reset();
+}
+
+void Core::Update()
 {
     m_timer.Update();
     m_input.Update();
-    m_sceneManager.Update(m_timer.GetDeltaTime());
-    m_manager.m_sound.Update();
-    Update();
+    m_sceneMgr.Update(m_timer.GetDeltaTime());
+    m_assets->m_sound.Update();
 }
 
-void Core::InternalRender()
+void Core::Render()
 {
     float clearColor[] = {0.f, 0.f, 0.f, 1.0f};
-    m_device.m_context->ClearRenderTargetView(m_device.m_rtv.Get(), clearColor);
-    m_sceneManager.Render();
-    m_device.m_swapChain->Present(1, 0);
-    Render();
+    m_device->m_context->ClearRenderTargetView(m_device->m_rtv.Get(), clearColor);
+    m_sceneMgr.Render();
+    m_device->m_swapChain->Present(1, 0);
 }
 
-void Core::InternalRelease()
+void Core::Release()
 {
-    m_sceneManager.Release();
-    ResourceManager::GetInstance().Release();
-    Input::GetInstance().Release();
-    D3Device::GetInstance().Release();
-    Window::GetInstance().Release();
-    Release();
-}
-
-void Core::InternalInit()
-{
-    m_timer.Reset();
-    Init();
+    m_sceneMgr.Release();
 }
 
 void Core::Run()
 {
-    InternalInit();
+    if (m_isRunning)  // 두번 호출 하지 말라고 안전문 걸어둠
+        return;
+    else
+        m_isRunning = true;
+
     while (1)
     {
-        if (!m_window.WindowRun())
+        if (!m_window->Run())
             break;
 
-        InternalUpdate();
-        InternalRender();
+        Update();
+        Render();
     }
-    InternalRelease();
+    Release();
+}
+
+void Core::CreateEngine(HINSTANCE hInstance, HPoint windowSize)
+{
+    if (engine != nullptr)
+        engine = std::make_unique<Core>(hInstance, windowSize);
 }

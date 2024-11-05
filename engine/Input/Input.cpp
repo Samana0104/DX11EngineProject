@@ -1,8 +1,17 @@
+/*
+author : 변한빛
+description : 인풋 처리를 위한 소스 파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
 #include "Input.h"
 using namespace HBSoft;
 
-Input::Input()
+Input::Input(std::shared_ptr<Window>& window)
+    : m_window(window)
 {
     ZeroMemory(&m_keyState, sizeof(KeyState) * 256);
 }
@@ -29,19 +38,9 @@ KeyState Input::GetKeyState(const UINT key) const
     return m_keyState[key];
 }
 
-POINT_L Input::GetMousePos() const
+HPoint Input::GetMousePos() const
 {
     return m_mousePos;
-}
-
-POINT_F Input::GetMousePosF() const
-{
-    return {static_cast<float>(m_mousePos.x), static_cast<float>(m_mousePos.y)};
-}
-
-vec2 Input::GetMousePosVec2() const
-{
-    return {static_cast<float>(m_mousePos.x), static_cast<float>(m_mousePos.y)};
 }
 
 bool Input::IsKeyUp(const UINT key) const
@@ -91,16 +90,17 @@ void Input::SetKeyHold(const UINT key)
 
 void Input::Update()
 {
-    if (!m_window.IsActivate())
+    if (!m_window->IsActivate())  // 게임 윈도우가 켜져있으면 ( 활성화 될 때 )
         return;
 
-    m_preMousePos = m_mousePos;
+    POINT mousePos;
 
     for (UINT key = 0; key < KEY_COUNT; key++)
     {
         UpdateKeyState(key);
     }
 
-    GetCursorPos(&m_mousePos);
-    ScreenToClient(m_window.GetWindowHandle(), &m_mousePos);
+    GetCursorPos(&mousePos);
+    ScreenToClient(m_window->GetHandle(), &mousePos);
+    m_mousePos = mousePos;
 }

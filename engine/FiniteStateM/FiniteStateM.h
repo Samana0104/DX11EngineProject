@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 유한 상태 기계의 매니징을 위한 템플릿
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #pragma once
 #include "Transition.h"
 
@@ -21,8 +29,7 @@ namespace HBSoft
     };
 
     TEMPLATE_SE
-    inline bool FiniteStateM<S, E>::AddTransition(const S inState, const E event,
-                                                  const S outState)
+    inline bool FiniteStateM<S, E>::AddTransition(const S inState, const E event, const S outState)
     {
         if (m_states.contains(inState))
         {

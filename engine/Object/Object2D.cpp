@@ -1,15 +1,14 @@
+/*
+author : 변한빛
+description : 2D상으로 그려질 오브젝트를 정의하기 위한 소스 파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
 #include "Object2D.h"
 using namespace HBSoft;
-
-void Object2D::SetImageScale()
-{
-    vec2 windowSize    = Window::GetInstance().GetWindowSizeVec2();
-    vec2 imageSize     = m_manager.m_texture[m_textureKey]->GetTextureSizeVec2();
-    vec2 cartesianSize = m_transform.GetCartesianSize();
-
-    m_transform.SetScale((imageSize / windowSize) * cartesianSize);
-}
 
 void Object2D::SetColor(const vec4 color)
 {
@@ -53,9 +52,4 @@ const SHADER_KEY& Object2D::GetShaderKey() const
 
 void Object2D::Update(const float _deltaTime) {}
 
-void Object2D::Render()
-{
-    m_manager.m_shader[m_shaderKey]->SetUpConfiguration();
-    m_manager.m_texture[m_textureKey]->Render();
-    m_manager.m_mesh[m_meshKey]->Draw(m_transform.GetModelMat(), m_color);
-}
+void Object2D::Render() {}

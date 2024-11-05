@@ -1,6 +1,6 @@
 /*
 author : 변한빛
-description : 리소스를 관리하기 위한 클래스
+description : 리소스를 관리하기 위한 표준 템플릿
 
 version: 1.0.0
 date: 2024-11-04

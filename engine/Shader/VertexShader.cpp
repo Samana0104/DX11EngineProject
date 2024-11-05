@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 버텍스 쉐이더를 정의하기 위한 소스 파일
+
+version: 1.0.0
+date: 2024-11-04
+*/
+
 #include "pch.h"
 #include "VertexShader.h"
 using namespace HBSoft;
@@ -35,9 +43,9 @@ bool VertexShader::CreateVertexShader()
     }
 
     hr = m_device.m_d3dDevice->CreateVertexShader(m_shaderByteCode->GetBufferPointer(),
-                                                m_shaderByteCode->GetBufferSize(),
-                                                nullptr,
-                                                mVertexShader.GetAddressOf());
+                                                  m_shaderByteCode->GetBufferSize(),
+                                                  nullptr,
+                                                  mVertexShader.GetAddressOf());
 
     return SUCCEEDED(hr);
 }
@@ -52,10 +60,10 @@ bool VertexShader::CreateIALayout()
 
     UINT    NumElements = sizeof(layout) / sizeof(layout[0]);
     HRESULT hr          = m_device.m_d3dDevice->CreateInputLayout(layout,
-                                                       NumElements,
-                                                       m_shaderByteCode->GetBufferPointer(),
-                                                       m_shaderByteCode->GetBufferSize(),
-                                                       mVertexLayout.GetAddressOf());
+                                                         NumElements,
+                                                         m_shaderByteCode->GetBufferPointer(),
+                                                         m_shaderByteCode->GetBufferSize(),
+                                                         mVertexLayout.GetAddressOf());
 
     return SUCCEEDED(hr);
 }
