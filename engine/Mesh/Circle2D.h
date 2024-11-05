@@ -22,6 +22,6 @@ namespace HBSoft
     public:
         Circle2D(const size_t triangles = 50);
 
-        virtual void SetUVVertexAsRect(const RECT_F& rect, const vec2& imageSize) override;
+        virtual void SetUVVertexAsRect(const HRect& rect, const vec2& imageSize) override;
     };
 }  // namespace HBSoft

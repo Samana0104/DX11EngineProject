@@ -39,7 +39,7 @@ void Circle2D::CreateCircle2DVertex()
     CreateMesh();
 }
 
-void Circle2D::SetUVVertexAsRect(const RECT_F& _rect, const vec2& _imageSize)
+void Circle2D::SetUVVertexAsRect(const HRect& _rect, const vec2& _imageSize)
 {
     // 크기 1 반지름 0.5 원
     // const float anglePerTriangles = 360.f / static_cast<float>(mTriangles);

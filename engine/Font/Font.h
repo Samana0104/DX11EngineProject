@@ -26,19 +26,17 @@ namespace HBSoft
     class Font
     {
     private:
-        D3Device& m_device = D3Device::GetInstance();
-
         ComPtr<IDWriteFactory>       m_writeFactory;
         ComPtr<IDWriteTextFormat>    m_textFormat;
         ComPtr<ID2D1SolidColorBrush> m_brush;
 
         FontDesc          m_fontDesc;
-        Transform2D       m_transform;
         D2D1_MATRIX_3X2_F m_tempMat;
 
+    public:
+        Transform2D m_transform;
+
     private:
-        void DrawBegin();
-        void DrawEnd();
         bool CreateFontComponent();
         bool CreateDWriteFactory();
         bool CreateTextFormat();
@@ -50,15 +48,13 @@ namespace HBSoft
         Font(const FontDesc& _desc);
         ~Font();
 
-        void                                DrawTexts(const wstringV _msg, RECT_F _rect, COLOR_F _color);
+        void DrawTexts(const wstringV msg, HRect rect, COLOR_F color);
+
         const ComPtr<ID2D1SolidColorBrush>& GetBrush() const;
 
-        void SetBold();
-        bool isBold() const;
+        void SetBold(bool bold);
 
         float GetFontSize() const;
         vec2  GetTextSize(const wstringV _text) const;
-
-        Transform2D* operator->();
     };
 }  // namespace HBSoft

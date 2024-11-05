@@ -28,36 +28,30 @@ namespace HBSoft
         KEY_HOLD
     };
 
-    class Input : public Singleton<Input>
+    class Input
     {
     private:
         inline static const UINT  KEY_COUNT   = 256;
         inline static const SHORT PRESSED_KEY = static_cast<SHORT>(0x8000);
 
+        std::shared_ptr<Window> m_window;
+
         KeyState m_keyState[KEY_COUNT];
-
-        POINT_L m_mousePos    = {0, 0};
-        POINT_L m_preMousePos = {0, 0};
-
-    protected:
-        Window& m_window = Window::GetInstance();
+        HPoint   m_mousePos = {0, 0};
 
     private:
-        friend class Singleton<Input>;
-        Input();
+        void UpdateKeyState(UINT key);
 
-        void UpdateKeyState(UINT _key);
-
-        void SetKeyUp(const UINT _key);
-        void SetKeyDown(const UINT _key);
-        void SetKeyFree(const UINT _key);
-        void SetKeyHold(const UINT _key);
+        void SetKeyUp(const UINT key);
+        void SetKeyDown(const UINT key);
+        void SetKeyFree(const UINT key);
+        void SetKeyHold(const UINT key);
 
     public:
+        Input(std::shared_ptr<Window>& window);
+
         KeyState GetKeyState(const UINT _key) const;
-        POINT_L  GetMousePos() const;
-        POINT_F  GetMousePosF() const;
-        vec2     GetMousePosVec2() const;
+        HPoint   GetMousePos() const;
 
         bool IsKeyUp(const UINT key) const;
         bool IsKeyDown(const UINT key) const;

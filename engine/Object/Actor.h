@@ -19,7 +19,7 @@ namespace HBSoft
         Camera* mCamera = nullptr;
 
     private:
-        virtual void OnCollision(RECT_F& _self, RECT_F& _target, Actor& _targetObj) = 0;
+        virtual void OnCollision(HRect& _self, HRect& _target, Actor& _targetObj) = 0;
 
     protected:
         Actor();

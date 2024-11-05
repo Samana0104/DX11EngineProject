@@ -18,7 +18,7 @@ namespace HBSoft
     private:
         inline static vec2 m_cartesianSize = {160.f, 90.f};
 
-        vec2  m_location;
+        vec2  m_pos;
         vec2  m_scale;
         float m_angle;
         mat3  m_trsMat;
@@ -38,11 +38,6 @@ namespace HBSoft
         Transform2D& SetRotation(const float angle);
         Transform2D& SetScale(const vec2 scale);
 
-        void MultiplyToTRSMat(const mat3& mat);
-
-        // 벡터로 계산하고 맵핑된 벡터 반환
-        vec2 CalculateTRSAsVec(const vec2 pos);
-
         const mat3& GetModelMat() const;
         const mat3  GetViewMat() const;
         const mat3  GetTransposMat() const;
@@ -53,28 +48,9 @@ namespace HBSoft
         const vec2& GetScale() const;
         float       GetAngle() const;
 
-        // 위치 기준 플레이어 rect
-        RECT_F GetCartesianRectF() const;
-        RECT_F GetCartesianScaleRectF() const;
-        RECT_F GetPixelRectF() const;
-
-        Transform2D* operator->();
         Transform2D& operator=(const Transform2D& ref);
 
-        static void SetCartesianSize(const vec2 pos);
-        static vec2 GetCartesianSize();
-
-        static RECT_F CartesianToPixelRect(const RECT_F rect);
-        static vec2   CartesianToNDC(const vec2 pos);
-        static vec2   CartesianToPixel(const vec2 pos);
-        static vec2   CartesianToPolar(const vec2 pos);
-        static vec2   PolarToCartesian(const vec2 pos);
-        static vec2   PixelToCartesian(const vec2 pos);
-        static vec2   PixelToNDC(const vec2 pos, const vec2 rectSize);
-
-        static vec2 RotateAsAngle(const vec2 pos, const float angle);
-        static vec2 RotateAsRadian(const vec2 pos, const float radian);
-        static vec2 ResizeScale(const vec2 pos, const vec2 scale);
+        static vec2 CartesianToNDC(const vec2 pos);
     };
 
 }  // namespace HBSoft

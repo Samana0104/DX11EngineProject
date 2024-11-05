@@ -10,8 +10,8 @@ date: 2024-11-04
 #include "Font.h"
 using namespace HBSoft;
 
-Font::Font(const FontDesc& _desc)
-    : m_fontDesc(_desc)
+Font::Font(const FontDesc& desc)
+    : m_fontDesc(desc)
 {
 #ifdef _DEBUG
     _ASSERT(CreateFontComponent());
@@ -75,43 +75,19 @@ bool Font::CreateBrush()
     return SUCCEEDED(hr);
 }
 
-void Font::DrawBegin()
+void Font::DrawTexts(const wstringV msg, HRect rect, COLOR_F color)
 {
-    D2D1_MATRIX_3X2_F convertMat;
-    mat3              trsMat = m_transform->GetViewMat();
-
-    m_device.m_d2dRT->GetTransform(&m_tempMat);
-
-    convertMat.m11 = trsMat[0][0];
-    convertMat.m12 = trsMat[0][1];
-    convertMat.m21 = trsMat[1][0];
-    convertMat.m22 = trsMat[1][1];
-    convertMat.dx  = trsMat[2][0];
-    convertMat.dy  = trsMat[2][1];
-
-    m_device.m_d2dRT->SetTransform(convertMat);
-}
-
-void Font::DrawEnd()
-{
-    m_device.m_d2dRT->SetTransform(m_tempMat);
-}
-
-void Font::DrawTexts(const wstringV _msg, RECT_F _rect, COLOR_F _color)
-{
-    DrawBegin();
     m_device.m_d2dRT->BeginDraw();
-    m_brush->SetColor(_color);
+    m_brush->SetColor(color);
     // m_device.m_d2dRT->DrawRectangle(rc, mDefaultColor.Get());
     // m_device.m_d2dRT->DrawText(_msg.data(), _msg.size(), mWriteFont.Get(),&rc, mDefaultColor.Get());
     // m_device.m_d2dRT->SetTransform(D2D1::Matrix3x2F::Rotation(-10.f));
-    m_device.m_d2dRT->DrawText(_msg.data(),
-                               static_cast<UINT32>(_msg.size()),
+    m_device.m_d2dRT->DrawText(msg.data(),
+                               static_cast<UINT32>(msg.size()),
                                m_textFormat.Get(),
-                               &_rect,
+                               static_cast<const D2D1_RECT_F>(rect),
                                m_brush.Get());
     m_device.m_d2dRT->EndDraw();
-    DrawEnd();
 }
 
 const ComPtr<ID2D1SolidColorBrush>& Font::GetBrush() const
@@ -119,28 +95,20 @@ const ComPtr<ID2D1SolidColorBrush>& Font::GetBrush() const
     return m_brush;
 }
 
-void Font::SetBold()
+void Font::SetBold(bool bold)
 {
-    if (isBold())
-    {
-        m_textFormat->Release();
-        m_fontDesc.m_fontWeight = DWRITE_FONT_WEIGHT_NORMAL;
-        CreateTextFormat();
-    }
-    else
+    if (bold)
     {
         m_textFormat->Release();
         m_fontDesc.m_fontWeight = DWRITE_FONT_WEIGHT_BOLD;
         CreateTextFormat();
     }
-}
-
-bool Font::isBold() const
-{
-    if (m_fontDesc.m_fontWeight == DWRITE_FONT_WEIGHT_BOLD)
-        return true;
     else
-        return false;
+    {
+        m_textFormat->Release();
+        m_fontDesc.m_fontWeight = DWRITE_FONT_WEIGHT_NORMAL;
+        CreateTextFormat();
+    }
 }
 
 float Font::GetFontSize() const
@@ -148,13 +116,13 @@ float Font::GetFontSize() const
     return m_fontDesc.m_fontSize;
 }
 
-vec2 Font::GetTextSize(const wstringV _text) const
+vec2 Font::GetTextSize(const wstringV text) const
 {
     ComPtr<IDWriteTextLayout> textLayout;
     DWRITE_TEXT_METRICS       textMetrics;
 
-    m_writeFactory->CreateTextLayout(_text.data(),
-                                     static_cast<UINT32>(_text.size()),
+    m_writeFactory->CreateTextLayout(text.data(),
+                                     static_cast<UINT32>(text.size()),
                                      m_textFormat.Get(),
                                      FLT_MAX,  // Max width
                                      FLT_MAX,  // Max height
@@ -163,9 +131,4 @@ vec2 Font::GetTextSize(const wstringV _text) const
     textLayout->GetMetrics(&textMetrics);
 
     return {textMetrics.width, textMetrics.height};
-}
-
-Transform2D* Font::operator->()
-{
-    return &m_transform;
 }

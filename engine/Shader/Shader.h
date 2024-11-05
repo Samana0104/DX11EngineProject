@@ -32,9 +32,6 @@ namespace HBSoft
         ShaderDesc       m_shaderDesc;
 
     protected:
-        inline static D3Device& m_device = D3Device::GetInstance();
-
-    protected:
         Shader(const ShaderDesc& _desc);
 
     public:

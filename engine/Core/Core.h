@@ -1,6 +1,6 @@
 /*
 author : 변한빛
-description : 메인 엔진 헤더파일
+description : 메인 엔진 헤더파일 전역변수로 자유롭게 접근 가능하다
 
 version: 1.0.0
 date: 2024-11-04
@@ -9,22 +9,32 @@ date: 2024-11-04
 #pragma once
 #include "pch.h"
 #include "SystemTimer.h"
-#include "SceneManager.h"
-#include "ResourceManger.h"
+#include "SceneMgr.h"
+#include "AssetsMgr.h"
 #include "Input.h"
+
+#define HENGINE HBSoft::Core::engine
+#define HINPUT  HBSoft::Core::engine->m_input
+#define HASSET  HBSoft::Core::engine->m_assets
+#define HTIMER  HBSoft::Core::engine->m_timer
 
 namespace HBSoft
 {
     class Core
     {
-    public:
-        SceneManager m_sceneManager;
-        SystemTimer  m_timer;
+    private:
+        bool m_isRunning = false;
 
-        Input&           m_input   = Input::GetInstance();
-        Window&          m_window  = Window::GetInstance();
-        D3Device&        m_device  = D3Device::GetInstance();
-        ResourceManager& m_manager = ResourceManager::GetInstance();
+    public:
+        static std::unique_ptr<Core> engine;
+
+        SceneMgr    m_sceneMgr;
+        SystemTimer m_timer;
+        Input       m_input;
+
+        std::unique_ptr<AssetsMgr> m_assets;
+        std::shared_ptr<D3Device>  m_device;
+        std::shared_ptr<Window>    m_window;
 
     private:
         Core(Core&&)                 = delete;
@@ -32,15 +42,19 @@ namespace HBSoft
         Core& operator=(Core&&)      = delete;
 
     protected:
-        void Init();
         void Update();
         void Render();
         void Release();
 
     public:
-        virtual ~Core() = default;
-        Core(HINSTANCE hInstance, UINT windowWidth, UINT windowHeight);
+        Core(HINSTANCE hInstance, HPoint windowSize);
+        // 접근 지시 제어자가 퍼블릭이라고 해서 코어 또 만들지 않겠지??
+        // 일반 포인터는 너무 불안해서 일단 스마트 포인터로 코어 만듬
+        ~Core() = default;
 
         void Run();
+
+        static void CreateEngine(HINSTANCE hInstance, HPoint windowSize);
+        // 시작 종료 확실하게 하기 스마트포인터로 제작하게 만듬
     };
 }  // namespace HBSoft

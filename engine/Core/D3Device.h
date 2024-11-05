@@ -13,8 +13,7 @@ date: 2024-11-04
 
 namespace HBSoft
 {
-
-    class D3Device : public Singleton<D3Device>
+    class D3Device
     {
     public:
         ComPtr<ID3D11Device>           m_d3dDevice;
@@ -26,30 +25,26 @@ namespace HBSoft
         ComPtr<ID2D1RenderTarget>      m_d2dRT;
         ComPtr<ID2D1Factory>           m_d2dFactory;
 
-        D3D11_VIEWPORT       m_viewPort;
-        DXGI_SWAP_CHAIN_DESC m_swapChainDesc;
+        D3D11_VIEWPORT          m_viewPort;
+        DXGI_SWAP_CHAIN_DESC    m_swapChainDesc;
+        std::shared_ptr<Window> m_window;
 
     private:
-        friend class Singleton<D3Device>;
-        D3Device() = default;
-
         void OnWm_size(UINT width, UINT height);
 
-        bool CreateDeviceAndSwapChain();
+        bool CreateDevice(HPoint windowSize);
+        bool CreateDeviceAndSwapChain(HPoint windowSize);
         bool CreateRenderTargetView();
         bool CreateDirect2DRenderTarget();
         bool CreateSamplerState();
-        void CreateViewport();
+        void CreateViewport(HPoint windowSize);
         bool SetAlphaBlendingState();
 
     public:
+        D3Device(const std::shared_ptr<Window>& window);
         ~D3Device() = default;
 
-        void SetViewportSizeOnCenter(glm::vec2 size);
-        void SetViewportSizeOnLeftTop(glm::vec2 size);
-
         glm::vec2 GetViewportSize() const;
-        bool      CreateDevice();
     };
 
 }  // namespace HBSoft

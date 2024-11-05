@@ -2,22 +2,28 @@
 author : 변한빛
 description : 다이렉트 디바이스 관련 정리한 소스파일
 
-version: 1.0.0
-date: 2024-11-04
+version: 1.0.1
+date: 2024-11-05
 */
 
 #include "pch.h"
 #include "D3Device.h"
 using namespace HBSoft;
 
+D3Device::D3Device(const std::shared_ptr<Window>& window)
+    : m_window(window)
+{
+    assert(CreateDevice);
+}
+
 glm::vec2 D3Device::GetViewportSize() const
 {
     return {m_viewPort.Width, m_viewPort.Height};
 }
 
-bool D3Device::CreateDevice()
+bool D3Device::CreateDevice(HPoint windowSize)
 {
-    if (!CreateDeviceAndSwapChain())
+    if (!CreateDeviceAndSwapChain(windowSize))
         return false;
 
     if (!CreateRenderTargetView())
@@ -32,11 +38,11 @@ bool D3Device::CreateDevice()
     if (!SetAlphaBlendingState())
         return false;
 
-    CreateViewport();
+    CreateViewport(windowSize);
     return true;
 }
 
-void D3Device::OnWm_size(UINT _width, UINT _height)
+void D3Device::OnWm_size(UINT width, UINT height)
 {
     /* 해상도 자동 변경 이벤트 */
     m_context->OMSetRenderTargets(0, nullptr, nullptr);
@@ -49,8 +55,8 @@ void D3Device::OnWm_size(UINT _width, UINT _height)
     m_d2dFactory->Release();
     m_samplerState->Release();
 
-    m_swapChainDesc.BufferDesc.Width  = _width;
-    m_swapChainDesc.BufferDesc.Height = _height;
+    m_swapChainDesc.BufferDesc.Width  = width;
+    m_swapChainDesc.BufferDesc.Height = height;
 
     HRESULT hr = m_swapChain->ResizeBuffers(m_swapChainDesc.BufferCount,
                                             m_swapChainDesc.BufferDesc.Width,
@@ -62,19 +68,19 @@ void D3Device::OnWm_size(UINT _width, UINT _height)
     CreateDirect2DRenderTarget();
     CreateSamplerState();
     SetAlphaBlendingState();
-    CreateViewport();
+    CreateViewport({width, height});
 }
 
-bool D3Device::CreateDeviceAndSwapChain()
+bool D3Device::CreateDeviceAndSwapChain(HPoint windowSize)
 {
     HRESULT                 hr;
     CONST D3D_FEATURE_LEVEL pFeatureLevels = D3D_FEATURE_LEVEL_11_0;
 
     m_swapChainDesc = {};
     {
-        m_swapChainDesc.OutputWindow                       = Window::GetInstance().GetWindowHandle();
-        m_swapChainDesc.BufferDesc.Width                   = Window::GetInstance().GetWindowSize().x;
-        m_swapChainDesc.BufferDesc.Height                  = Window::GetInstance().GetWindowSize().y;
+        m_swapChainDesc.OutputWindow                       = m_window->GetHandle();
+        m_swapChainDesc.BufferDesc.Width                   = (UINT)windowSize.x;
+        m_swapChainDesc.BufferDesc.Height                  = (UINT)windowSize.y;
         m_swapChainDesc.BufferDesc.RefreshRate.Numerator   = 60;
         m_swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
         m_swapChainDesc.BufferDesc.Format                  = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -212,41 +218,12 @@ bool D3Device::SetAlphaBlendingState()
     return SUCCEEDED(hr);
 }
 
-void D3Device::CreateViewport()
-{
-    auto WindowSize = Window::GetInstance().GetWindowSizeF();
-    {
-        m_viewPort.TopLeftX = 0;
-        m_viewPort.TopLeftY = 0;
-        m_viewPort.Width    = WindowSize.x;
-        m_viewPort.Height   = WindowSize.y;
-        m_viewPort.MinDepth = 0;
-        m_viewPort.MaxDepth = 1;
-    }
-
-    m_context->RSSetViewports(1, &m_viewPort);
-}
-
-void D3Device::SetViewportSizeOnCenter(glm::vec2 _size)
-{
-    auto WindowSize = Window::GetInstance().GetWindowSizeVec2();
-
-    m_viewPort.TopLeftX = WindowSize.x * 0.5f - _size.x * 0.5f;
-    m_viewPort.TopLeftY = WindowSize.y * 0.5f - _size.y * 0.5f;
-    m_viewPort.Width    = _size.x;
-    m_viewPort.Height   = _size.y;
-    m_viewPort.MinDepth = 0;
-    m_viewPort.MaxDepth = 1;
-
-    m_context->RSSetViewports(1, &m_viewPort);
-}
-
-void D3Device::SetViewportSizeOnLeftTop(glm::vec2 _size)
+void D3Device::CreateViewport(HPoint windowSize)
 {
     m_viewPort.TopLeftX = 0;
     m_viewPort.TopLeftY = 0;
-    m_viewPort.Width    = _size.x;
-    m_viewPort.Height   = _size.y;
+    m_viewPort.Width    = windowSize.x;
+    m_viewPort.Height   = windowSize.y;
     m_viewPort.MinDepth = 0;
     m_viewPort.MaxDepth = 1;
 

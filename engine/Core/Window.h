@@ -3,7 +3,7 @@ author : 변한빛
 description : 윈도우 관련 헤더 파일
 
 version: 1.0.0
-date: 2024-11-04
+date: 2024-11-05
 */
 
 #pragma once
@@ -17,11 +17,11 @@ namespace HBSoft
     using CALLBACK_ID  = UINT;
     using Wm_size_FUNC = std::function<void(UINT, UINT)>;
 
-    class Window : public Singleton<Window>
+    class Window
     {
     private:
-        inline static bool  m_isActivate = false;
-        inline static POINT m_windowSize = {0, 0};
+        inline static bool   m_isActivate = false;
+        inline static HPoint m_windowSize = {0.f, 0.f};
 
         CALLBACK_ID                         m_registerCallbackID = 0;
         std::map<CALLBACK_ID, Wm_size_FUNC> m_callbackWm_size;
@@ -30,21 +30,17 @@ namespace HBSoft
         HWND      m_hwnd;
 
     private:
-        friend class Singleton<Window>;
-        Window() = default;
-
-        void CreateRegisterClass(HINSTANCE hInstance);
+        void CreateRegisterClass();
+        bool CreateWin();
 
     public:
-        bool CreateWin(LONG width, LONG height);
-        bool WindowRun() const;
+        void Init(HINSTANCE hinstance, HPoint windowSize);
+        bool Run() const;
         bool IsActivate() const;
 
-        void SetHinstance(HINSTANCE hinstance);
+        HPoint GetSize() const;
+        HWND   GetHandle() const;
 
-        POINT      GetWindowSize() const;
-        POINTFLOAT GetWindowSizeF() const;
-        glm::vec2  GetWindowSizeVec2() const;
-        HWND       GetWindowHandle() const;
+        static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
     };
 }  // namespace HBSoft

@@ -18,7 +18,7 @@ Texture::Texture(const wstringV _filePath)
 #else
     CreateTexture();
 #endif
-    LoadTextureSize();
+    LoadTextureDesc();
 }
 
 bool Texture::CreateTexture()
@@ -31,57 +31,23 @@ bool Texture::CreateTexture()
     return SUCCEEDED(hr);
 }
 
-void Texture::LoadTextureSize()
+void Texture::LoadTextureDesc()
 {
     D3D11_RESOURCE_DIMENSION resourceType;
     m_texture->GetType(&resourceType);
 
     switch (resourceType)
     {
-    case D3D11_RESOURCE_DIMENSION_TEXTURE1D:
-        Load1DTextureSize();
-        break;
-
     case D3D11_RESOURCE_DIMENSION_TEXTURE2D:
-        Load2DTextureSize();
+        static_cast<ID3D11Texture2D*>(m_texture.Get())->GetDesc(&m_textureDesc);
         break;
-
-    case D3D11_RESOURCE_DIMENSION_TEXTURE3D:
-        Load3DTextureSize();
-        break;
+        // 2D 텍스쳐 아니면 다 컷
     }
 }
 
-void Texture::Load1DTextureDesc()
+HPoint Texture::GetTextureSize() const
 {
-    static_cast<ID3D11Texture1D*>(m_texture.Get())->GetDesc(&m_textureDesc);
-}
-
-void Texture::Load2DTextureDesc()
-{
-    D3D11_TEXTURE2D_DESC desc;
-    static_cast<ID3D11Texture2D*>(m_texture.Get())->GetDesc(&m_textureDesc);
-}
-
-void Texture::Load3DTextureSize()
-{
-    D3D11_TEXTURE3D_DESC desc;
-    static_cast<ID3D11Texture3D*>(m_texture.Get())->GetDesc(&m_textureDesc);
-}
-
-POINT_F Texture::GetTextureSizeF() const
-{
-    return {static_cast<float>(m_textureWidth), static_cast<float>(m_textureHeight)};
-}
-
-POINT_U Texture::GetTextureSizeU() const
-{
-    return {m_textureWidth, m_textureHeight};
-}
-
-vec2 Texture::GetTextureSizeVec2() const
-{
-    return {static_cast<float>(m_textureWidth), static_cast<float>(m_textureHeight)};
+    return {static_cast<float>(m_textureDesc.Width), static_cast<float>(m_textureDesc.Height)};
 }
 
 void Texture::Render()

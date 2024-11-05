@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Core\D3Device.cpp" />
     <ClCompile Include="Core\Core.cpp" />
-    <ClCompile Include="Core\ResourceManger.cpp" />
+    <ClCompile Include="Core\AssetsMgr.cpp" />
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="Core\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -43,10 +43,8 @@
     <ClCompile Include="Object\Object2D.cpp" />
     <ClCompile Include="Object\Pawn.cpp" />
     <ClCompile Include="Object\Transform2D.cpp" />
-    <ClCompile Include="HPoint.cpp" />
-    <ClCompile Include="HRect.cpp" />
     <ClCompile Include="Scene\SceneLobby.cpp" />
-    <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Scene\SceneMgr.cpp" />
     <ClCompile Include="Shader\PixelShader.cpp" />
     <ClCompile Include="Shader\Shader.cpp" />
     <ClCompile Include="Shader\ShaderHandler.cpp" />
@@ -63,11 +61,12 @@
     <ClInclude Include="Core\DefaultResource.h" />
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Core\CoreAPI.h" />
-    <ClInclude Include="Core\ResourceManger.h" />
+    <ClInclude Include="Core\HPoint.h" />
+    <ClInclude Include="Core\HRect.h" />
+    <ClInclude Include="Core\AssetsMgr.h" />
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="Core\pch.h" />
     <ClInclude Include="Core\MgrTemplate.h" />
-    <ClInclude Include="DesignPattern\Composite.h" />
     <ClInclude Include="DesignPattern\Observer.h" />
     <ClInclude Include="DesignPattern\Singleton.h" />
     <ClInclude Include="DesignPattern\Subject.h" />
@@ -87,13 +86,12 @@
     <ClInclude Include="Object\Camera.h" />
     <ClInclude Include="Object\Object2D.h" />
     <ClInclude Include="Object\Pawn.h" />
+    <ClInclude Include="Object\Renderable.h" />
     <ClInclude Include="Object\Transform2D.h" />
     <ClInclude Include="Object\Transform3D.h" />
-    <ClInclude Include="HPoint.h" />
-    <ClInclude Include="HRect.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneLobby.h" />
-    <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Scene\SceneMgr.h" />
     <ClInclude Include="Shader\PixelShader.h" />
     <ClInclude Include="Shader\Shader.h" />
     <ClInclude Include="Shader\ShaderHandler.h" />

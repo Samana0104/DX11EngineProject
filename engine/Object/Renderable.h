@@ -1,6 +1,6 @@
 /*
 author : 변한빛
-description : composite패턴을 위한 헤더 파일
+description : 렌더가 가능한 composite&prototype패턴 헤더 파일
 
 version: 1.0.0
 date: 2024-11-04
@@ -11,7 +11,7 @@ date: 2024-11-04
 
 namespace HBSoft
 {
-    class Composite
+    class Renderable
     {
     protected:
         virtual void Init()    = 0;

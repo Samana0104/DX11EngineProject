@@ -12,7 +12,7 @@ date: 2024-11-04
 
 namespace HBSoft
 {
-    class SceneManager : public MgrTemplate<Scene, SCENE_KEY>
+    class SceneMgr : public MgrTemplate<Scene, SCENE_KEY>
     {
     private:
         const std::unique_ptr<Scene>*             m_currentScene;

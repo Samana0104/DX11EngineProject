@@ -57,6 +57,8 @@ date: 2024-11-04
 
 using namespace Microsoft::WRL;
 
+#include "HRect.h"
+#include "HPoint.h"
 #include "CoreAPI.h"
 #include "Singleton.h"
 #include "Window.h"
