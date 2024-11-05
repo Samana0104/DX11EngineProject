@@ -2,7 +2,7 @@
 author : 변한빛
 description : 윈도우 관련 클래스 소스 파일
 
-version: 1.0.0
+version: 1.1.0
 date: 2024-11-05
 */
 
@@ -10,9 +10,10 @@ date: 2024-11-05
 #include "Window.h"
 using namespace HBSoft;
 
-void Window::Init(HINSTANCE hinstance, HPoint windowSize)
+Window::Window(HINSTANCE hinstance, HPoint windowSize)
 {
     m_windowSize = windowSize;
+
     CreateRegisterClass();
     assert(CreateWin());
 }

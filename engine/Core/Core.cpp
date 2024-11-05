@@ -14,6 +14,7 @@ Core::Core(HINSTANCE hInstance, HPoint windowSize)
 {
     m_window = std::make_shared<Window>(hInstance, windowSize);
     m_device = std::make_shared<D3Device>(m_window);
+    m_input  = std::make_shared<Input>(m_window);
     m_assets = std::make_unique<AssetsMgr>(m_window, m_device);
     m_timer.Reset();
 }

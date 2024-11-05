@@ -34,7 +34,7 @@ namespace HBSoft
         bool CreateWin();
 
     public:
-        void Init(HINSTANCE hinstance, HPoint windowSize);
+        Window(HINSTANCE hinstance, HPoint windowSize);
         bool Run() const;
         bool IsActivate() const;
 

@@ -44,7 +44,7 @@ void Mesh2D::AddVertexIndex(std::initializer_list<size_t> index)
         });
     }
 
-    m_tempUV = m_uv;
+    m_uv;
 }
 
 void Mesh2D::CreateMesh(const HPoint meshCom)
@@ -54,18 +54,6 @@ void Mesh2D::CreateMesh(const HPoint meshCom)
 #else
     CreateVertexBuffer();
 #endif
-}
-
-void Mesh2D::SetUVVertex(const size_t uvVertex, const vec2 uv)
-{
-    try
-    {
-        m_tempUV.at(uvVertex) = uv;
-    }
-    catch (std::out_of_range e)
-    {
-        MessageBoxA(NULL, e.what(), "UV indexing error[Mesh2D]", MB_OK);
-    }
 }
 
 bool Mesh2D::CreateVertexBuffer()
