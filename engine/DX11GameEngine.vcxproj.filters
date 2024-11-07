@@ -4,9 +4,6 @@
     <Filter Include="Core">
       <UniqueIdentifier>{7385d030-05ef-4bd3-b6e8-21eb1a632d19}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Font">
-      <UniqueIdentifier>{0b2d3dce-a871-4846-9de8-ec21f4f3e115}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object">
       <UniqueIdentifier>{e159133b-dfba-4a57-93df-8fd33fe01ccc}</UniqueIdentifier>
     </Filter>
@@ -19,26 +16,32 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{5360846c-2956-48ea-82d0-51b67e579db6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader">
-      <UniqueIdentifier>{defbed7b-f262-49c5-8be4-217014eae063}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sound">
-      <UniqueIdentifier>{67f0fc60-f163-44ea-91b6-b73616548bb6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Texture">
-      <UniqueIdentifier>{af25a8a4-ce3c-4ac3-b235-8b55e00eadbf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Timer">
       <UniqueIdentifier>{21ddd6cd-dc53-4b4e-8c51-4e56a9f5e14f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Mesh">
-      <UniqueIdentifier>{000ae2ae-2f9b-4809-8c05-1f1b6bfe2878}</UniqueIdentifier>
     </Filter>
     <Filter Include="FiniteStateM">
       <UniqueIdentifier>{bf0ed2d4-fbc2-4126-b96f-36fb83bb8b25}</UniqueIdentifier>
     </Filter>
     <Filter Include="DesignPattern">
       <UniqueIdentifier>{65f1f11e-fd03-46be-80ed-895df7e42037}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset">
+      <UniqueIdentifier>{f8bd002f-81c7-42d8-b568-56b00a534725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Font">
+      <UniqueIdentifier>{39f6a218-fbec-487f-a26f-a1c01949a2aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Mesh">
+      <UniqueIdentifier>{cf96bd79-ff87-4d46-8575-e3ebb900efba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Shader">
+      <UniqueIdentifier>{3d20c6db-375e-4d45-b24c-adff6f794a26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Sound">
+      <UniqueIdentifier>{8f349d87-615f-49cc-b4b4-1d9f02c7c2df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Texture">
+      <UniqueIdentifier>{470eddf9-7644-45b3-ae55-dfe9770dd500}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -48,53 +51,17 @@
     <ClCompile Include="Core\Core.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\AssetsMgr.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Window.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\pch.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Font\FontHandler.cpp">
-      <Filter>Font</Filter>
-    </ClCompile>
-    <ClCompile Include="Font\Font.cpp">
-      <Filter>Font</Filter>
-    </ClCompile>
     <ClCompile Include="GameStart\Main.cpp">
       <Filter>GameStart</Filter>
     </ClCompile>
     <ClCompile Include="Input\Input.cpp">
       <Filter>Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader\ShaderHandler.cpp">
-      <Filter>Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader\VertexShader.cpp">
-      <Filter>Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader\PixelShader.cpp">
-      <Filter>Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader\Shader.cpp">
-      <Filter>Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound\SoundHandler.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound\FmodSystem.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound\HSound.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture\TextureHandler.cpp">
-      <Filter>Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture\Texture.cpp">
-      <Filter>Texture</Filter>
     </ClCompile>
     <ClCompile Include="Timer\SystemTimer.cpp">
       <Filter>Timer</Filter>
@@ -104,21 +71,6 @@
     </ClCompile>
     <ClCompile Include="Scene\SceneMgr.cpp">
       <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh\Box2D.cpp">
-      <Filter>Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh\Circle2D.cpp">
-      <Filter>Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh\Mesh2D.cpp">
-      <Filter>Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh\MeshHandler.cpp">
-      <Filter>Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh\Sphere2D.cpp">
-      <Filter>Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Object\Actor.cpp">
       <Filter>Object</Filter>
@@ -144,21 +96,54 @@
     <ClCompile Include="DesignPattern\Subject.cpp">
       <Filter>DesignPattern</Filter>
     </ClCompile>
+    <ClCompile Include="Asset\AssetsMgr.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Mesh\Box2D.cpp">
+      <Filter>Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Mesh\Circle2D.cpp">
+      <Filter>Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Font\Font.cpp">
+      <Filter>Asset\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Sound\FmodSystem.cpp">
+      <Filter>Asset\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Sound\HSound.cpp">
+      <Filter>Asset\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Mesh\Mesh2D.cpp">
+      <Filter>Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Mesh\MeshHandler.cpp">
+      <Filter>Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Shader\PixelShader.cpp">
+      <Filter>Asset\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Shader\Shader.cpp">
+      <Filter>Asset\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Shader\VertexShader.cpp">
+      <Filter>Asset\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Texture\Texture.cpp">
+      <Filter>Asset\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Mesh\Sphere2D.cpp">
+      <Filter>Asset\Mesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\DefaultResource.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Core.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\CoreAPI.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\AssetsMgr.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Window.h">
@@ -170,41 +155,8 @@
     <ClInclude Include="Core\MgrTemplate.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Font\FontHandler.h">
-      <Filter>Font</Filter>
-    </ClInclude>
-    <ClInclude Include="Font\Font.h">
-      <Filter>Font</Filter>
-    </ClInclude>
     <ClInclude Include="Input\Input.h">
       <Filter>Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader\ShaderHandler.h">
-      <Filter>Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader\VertexShader.h">
-      <Filter>Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader\PixelShader.h">
-      <Filter>Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader\Shader.h">
-      <Filter>Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\HSound.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\SoundHandler.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\FmodSystem.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture\TextureHandler.h">
-      <Filter>Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture\Texture.h">
-      <Filter>Texture</Filter>
     </ClInclude>
     <ClInclude Include="Timer\SystemTimer.h">
       <Filter>Timer</Filter>
@@ -217,21 +169,6 @@
     </ClInclude>
     <ClInclude Include="Scene\SceneMgr.h">
       <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh\Box2D.h">
-      <Filter>Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh\Circle2D.h">
-      <Filter>Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh\Mesh2D.h">
-      <Filter>Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh\MeshHandler.h">
-      <Filter>Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh\Sphere2D.h">
-      <Filter>Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Object\Actor.h">
       <Filter>Object</Filter>
@@ -280,6 +217,48 @@
     </ClInclude>
     <ClInclude Include="Object\Renderable.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\AssetsMgr.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\DefaultResource.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Mesh\Box2D.h">
+      <Filter>Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Mesh\Circle2D.h">
+      <Filter>Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Font\Font.h">
+      <Filter>Asset\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Sound\FmodSystem.h">
+      <Filter>Asset\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Sound\HSound.h">
+      <Filter>Asset\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Mesh\Mesh2D.h">
+      <Filter>Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Mesh\MeshHandler.h">
+      <Filter>Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Shader\PixelShader.h">
+      <Filter>Asset\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Shader\Shader.h">
+      <Filter>Asset\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Shader\VertexShader.h">
+      <Filter>Asset\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Texture\Texture.h">
+      <Filter>Asset\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Mesh\Sphere2D.h">
+      <Filter>Asset\Mesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

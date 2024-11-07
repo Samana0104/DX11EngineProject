@@ -29,7 +29,7 @@ namespace HBSoft
         /*
         description : 모든 Resource를 담은 변수를 반환한다.
         */
-        typename const Alloc& GetAll() const;
+        typename Alloc& GetAll();
 
         const std::unique_ptr<V>& Get(const K key);
         const std::unique_ptr<V>& operator[](const K key);
@@ -74,7 +74,7 @@ namespace HBSoft
     }
 
     TEMPLATE_VKA
-    typename const A& MgrTemplate<V, K, A>::GetAll() const
+    typename A& MgrTemplate<V, K, A>::GetAll()
     {
         return m_resourceDatas;
     }

@@ -32,6 +32,7 @@ void Core::Render()
     float clearColor[] = {0.f, 0.f, 0.f, 1.0f};
     m_device->m_context->ClearRenderTargetView(m_device->m_rtv.Get(), clearColor);
     m_sceneMgr.Render();
+    m_assets->m_fonts[L"DEBUG_FONT"]->DrawTexts(L"¸¼À½", {10.f, 10.f, 50.f, 50.f}, {1.f, 1.f, 1.f, 1.f});
     m_device->m_swapChain->Present(1, 0);
 }
 
@@ -60,12 +61,12 @@ void Core::Run()
 
 void Core::Create(HINSTANCE hInstance, HPoint windowSize)
 {
-    if (engine != nullptr)
-        engine = std::make_unique<Core>(hInstance, windowSize);
+    if (engine == nullptr)
+        engine = new Core(hInstance, windowSize);
 }
 
 void Core::Delete()
 {
     if (engine != nullptr)
-        engine.reset();
+        delete engine;
 }

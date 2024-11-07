@@ -28,7 +28,7 @@ namespace HBSoft
         bool m_isRunning = false;
 
     public:
-        static std::unique_ptr<Core> engine;
+        inline static Core* engine = nullptr;
 
         SceneMgr    m_sceneMgr;
         SystemTimer m_timer;

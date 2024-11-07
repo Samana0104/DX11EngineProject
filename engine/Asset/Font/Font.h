@@ -28,19 +28,18 @@ namespace HBSoft
         ComPtr<IDWriteFactory>       m_writeFactory;
         ComPtr<IDWriteTextFormat>    m_textFormat;
         ComPtr<ID2D1SolidColorBrush> m_brush;
+        ComPtr<ID2D1RenderTarget>    m_d2dRT;
+        ComPtr<ID2D1Factory>         m_d2dFactory;
 
         FontDesc          m_fontDesc;
         D2D1_MATRIX_3X2_F m_tempMat;
-
-        std::shared_ptr<D3Device> m_device;
-
-        inline static std::set<wstringV> m_loadedFonts;
 
     public:
         Transform2D m_transform;  // 혹시 회전할 일 있으면 추가하려함
 
     private:
-        bool CreateFontComponent();
+        bool CreateFontComponent(std::shared_ptr<D3Device>& device);
+        bool Create2DRenderTarget(std::shared_ptr<D3Device>& device);
         bool CreateDWriteFactory();
         bool CreateTextFormat();
         bool CreateBrush();
@@ -48,7 +47,7 @@ namespace HBSoft
         void OnWm_size(UINT weight, UINT height);
 
     public:
-        Font(std::shared_ptr<D3Device> device, const FontDesc& desc);
+        Font(std::shared_ptr<D3Device>& device, const FontDesc& desc);
         ~Font();
 
         void DrawTexts(const wstringV msg, HRect rect, COLOR_F color);
@@ -58,7 +57,5 @@ namespace HBSoft
         void  SetBold(bool bold);
         float GetFontSize() const;
         vec2  GetTextSize(const wstringV text) const;
-
-        static void AddExternalFont(const wstringV path);
     };
 }  // namespace HBSoft

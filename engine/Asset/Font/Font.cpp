@@ -10,25 +10,28 @@ date: 2024-11-07
 #include "Font.h"
 using namespace HBSoft;
 
-Font::Font(std::shared_ptr<D3Device> device, const FontDesc& desc)
-    : m_device(device), m_fontDesc(desc)
+Font::Font(std::shared_ptr<D3Device>& device, const FontDesc& desc)
+    : m_fontDesc(desc)
 {
-    assert(CreateFontComponent());
+    assert(CreateFontComponent(device));
 }
 
 Font::~Font() {}
 
-void Font::OnWm_size(UINT _weight, UINT _height)
+void Font::OnWm_size(UINT weight, UINT height)
 {
     m_writeFactory->Release();
     m_textFormat->Release();
     m_brush->Release();
 
-    CreateFontComponent();
+    // CreateFontComponent();
 }
 
-bool Font::CreateFontComponent()
+bool Font::CreateFontComponent(std::shared_ptr<D3Device>& device)
 {
+    if (!Create2DRenderTarget(device))
+        return false;
+
     if (!CreateDWriteFactory())
         return false;
 
@@ -37,6 +40,7 @@ bool Font::CreateFontComponent()
 
     if (!CreateTextFormat())
         return false;
+
 
     return true;
 }
@@ -67,23 +71,54 @@ bool Font::CreateTextFormat()
 bool Font::CreateBrush()
 {
     COLOR_F color = {1.f, 1.f, 1.f, 1.f};
-    HRESULT hr    = m_device->m_d2dRT->CreateSolidColorBrush(color, m_brush.GetAddressOf());
+    HRESULT hr    = m_d2dRT->CreateSolidColorBrush(color, m_brush.GetAddressOf());
+    return SUCCEEDED(hr);
+}
+
+bool Font::Create2DRenderTarget(std::shared_ptr<D3Device>& device)
+{
+    HRESULT              hr;
+    ComPtr<IDXGISurface> dxgiSurface;
+
+    hr = device->m_swapChain->GetBuffer(0, IID_PPV_ARGS(dxgiSurface.GetAddressOf()));
+
+    if (FAILED(hr))
+        return false;
+
+    hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, m_d2dFactory.GetAddressOf());
+
+    if (FAILED(hr))
+        return false;
+
+    D2D1_RENDER_TARGET_PROPERTIES rtp;
+    {
+        rtp.type                  = D2D1_RENDER_TARGET_TYPE_DEFAULT;
+        rtp.pixelFormat.format    = DXGI_FORMAT_UNKNOWN;
+        rtp.pixelFormat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
+        rtp.dpiX                  = 0;
+        rtp.dpiY                  = 0;
+        rtp.usage                 = D2D1_RENDER_TARGET_USAGE_NONE;
+        rtp.minLevel              = D2D1_FEATURE_LEVEL_DEFAULT;
+    }
+
+    hr = m_d2dFactory->CreateDxgiSurfaceRenderTarget(dxgiSurface.Get(), &rtp, m_d2dRT.GetAddressOf());
+
     return SUCCEEDED(hr);
 }
 
 void Font::DrawTexts(const wstringV msg, HRect rect, COLOR_F color)
 {
-    m_device->m_d2dRT->BeginDraw();
+    m_d2dRT->BeginDraw();
     m_brush->SetColor(color);
     // m_device.m_d2dRT->DrawRectangle(rc, mDefaultColor.Get());
     // m_device.m_d2dRT->DrawText(_msg.data(), _msg.size(), mWriteFont.Get(),&rc, mDefaultColor.Get());
     // m_device.m_d2dRT->SetTransform(D2D1::Matrix3x2F::Rotation(-10.f));
-    m_device->m_d2dRT->DrawText(msg.data(),
-                                static_cast<UINT32>(msg.size()),
-                                m_textFormat.Get(),
-                                static_cast<const D2D1_RECT_F>(rect),
-                                m_brush.Get());
-    m_device->m_d2dRT->EndDraw();
+    m_d2dRT->DrawText(msg.data(),
+                      static_cast<UINT32>(msg.size()),
+                      m_textFormat.Get(),
+                      static_cast<const D2D1_RECT_F>(rect),
+                      m_brush.Get());
+    m_d2dRT->EndDraw();
 }
 
 const ComPtr<ID2D1SolidColorBrush>& Font::GetBrush() const
@@ -127,13 +162,4 @@ vec2 Font::GetTextSize(const wstringV text) const
     textLayout->GetMetrics(&textMetrics);
 
     return {textMetrics.width, textMetrics.height};
-}
-
-void Font::AddExternalFont(const wstringV path)
-{
-    if (!m_loadedFonts.contains(path))
-    {
-        AddFontResourceEx(path.data(), FR_PRIVATE, 0);
-        m_loadedFonts.insert(path);
-    }
 }

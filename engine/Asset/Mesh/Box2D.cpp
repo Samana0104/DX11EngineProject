@@ -25,7 +25,7 @@ void Box2D::CreateBox2DVertex()
     AddVertexAndUV({rect.left, rect.bottom}, {0, 1});
     AddVertexAndUV({rect.right, rect.bottom}, {1, 1});
     AddVertexIndex({0, 1, 2, 1, 3, 2});
-    CreateMesh({0.f, 0.f});
+    // CreateMesh({0.f, 0.f});
 }
 
 /*

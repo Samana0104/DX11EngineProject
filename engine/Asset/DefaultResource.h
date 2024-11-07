@@ -13,6 +13,8 @@ date: 2024-11-04
 
 namespace HBSoft
 {
+    inline static const std::wstring g_defaultPath = L"../res/";
+
     /*
         struct FontDesc
         {
@@ -25,12 +27,11 @@ namespace HBSoft
             DWRITE_FONT_STRETCH m_fontStretch;
         };
     */
-    inline static const std::wstring g_defaultPath = L"../res/";
 
-    // 폰트는 직접 추가해서 써야함 크기 차이도 있고 위에는 단순 폰트 메모리에 올려주는 거 뿐
+    // 폰트는 직접 추가해서 써야함 크기 차이도 있고
     inline static const std::map<FONT_KEY, FontDesc> g_defaultFonts = {
         {L"DEBUG_FONT",
-         {L"맑은 고딕",
+         {L"malgun",
          L"ko-kr",
          20.f,
          DWRITE_FONT_WEIGHT_THIN,
@@ -41,7 +42,6 @@ namespace HBSoft
     /*
         enum class MeshShape
         {
-            CUSTOM = 0, 이 기능은 3D때 구현 예정
             BOX = 1,
             SPEHERE = 2
         };
@@ -53,26 +53,16 @@ namespace HBSoft
         {L"CIRCLE2D_MESH", {MeshShape::CIRCLE2D}}
     };
 
-
-    // using TexturePath = std::wstring;
-    // inline static const std::vector<TexturePath> gDefaultTextures = {
-    //	{ L"../data/KGCA1.png"},
-    //	{ L"../data/Default.jpg"}
-    // };
-
-    inline static const std::vector<std::wstring> g_texturePath = {{L"../res/Image/"}};
-
     /*
-        struct ShaderDesc
-        {
-            ShaderType		m_shaderType;
-            std::wstring	m_shaderPath;
-            std::string		m_shaderEntry;
-        };
+            struct ShaderDesc
+            {
+                ShaderType		m_shaderType;
+                std::string		m_shaderEntry;
+            };
     */
 
-    inline static const std::vector<ShaderDesc> g_defaultShaders = {
-        {ShaderType::VERTEX, L"../res/Shader/VertexShader.hlsl", "VSMain"},
-        { ShaderType::PIXEL,  L"../res/Shader/PixelShader.hlsl", "PSMain"}
+    inline static const std::map<SHADER_KEY, ShaderDesc> g_defaultShaders = {
+        {L"VertexShader.hlsl", {ShaderType::VERTEX, "VSMain"}},
+        { L"PixelShader.hlsl",  {ShaderType::PIXEL, "PSMain"}}
     };
 }  // namespace HBSoft

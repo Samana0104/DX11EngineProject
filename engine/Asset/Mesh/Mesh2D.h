@@ -38,8 +38,6 @@ namespace HBSoft
         MeshShape            m_meshShape;
 
     private:
-        bool CreateVertexBuffer();
-        void SetIAVertexBuffer();
         void UpdateRenderVertices(const mat3& matrix, const vec4& color);
 
     protected:
@@ -48,7 +46,6 @@ namespace HBSoft
         void ReserveVertexSize(size_t vertexCount);
         void AddVertexAndUV(const vec2 vertex, const vec2 uv);
         void AddVertexIndex(std::initializer_list<size_t> index);
-        void CreateMesh(const HPoint meshCom = {0.f, 0.f});
 
     public:
         void Draw(const mat3& matrix, const vec4 color = {1.f, 1.f, 1.f, 1.f});

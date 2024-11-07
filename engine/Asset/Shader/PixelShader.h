@@ -17,12 +17,9 @@ namespace HBSoft
         ComPtr<ID3D11PixelShader> m_pixelShader;
 
     private:
-        bool CreatePixelShader();
+        virtual bool CreateShader(std::shared_ptr<D3Device>& device);
 
     public:
-        PixelShader(const ShaderDesc& _desc);
-
-        virtual bool CreateShader() override;
-        virtual void SetUpConfiguration() const override;
+        PixelShader(std::shared_ptr<D3Device>& device, const wstringV path, const ShaderDesc& desc);
     };
 }  // namespace HBSoft

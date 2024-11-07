@@ -20,24 +20,25 @@ namespace HBSoft
 
     struct ShaderDesc
     {
-        ShaderType   m_shaderType;
-        std::wstring m_shaderPath;
-        std::string  m_shaderEntry;
+        ShaderType  m_shaderType;
+        std::string m_shaderEntry;
     };
 
     class Shader
     {
     protected:
         ComPtr<ID3DBlob> m_shaderByteCode;
-        ShaderDesc       m_shaderDesc;
+
+        std::wstring m_path;
+        ShaderDesc   m_shaderDesc;
+
 
     protected:
-        Shader(const ShaderDesc& desc);
+        Shader(const wstringV path, const ShaderDesc& desc);
 
     public:
-        const ShaderDesc& GetShaderDesc() const;
+        virtual bool CreateShader(std::shared_ptr<D3Device>& device) = 0;
 
-        virtual bool CreateShader()             = 0;
-        virtual void SetUpConfiguration() const = 0;
+        const ShaderDesc& GetShaderDesc() const;
     };
 }  // namespace HBSoft

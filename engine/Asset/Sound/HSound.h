@@ -26,7 +26,7 @@ namespace HBSoft
         // unsigned int	m_soundSizeInMS;
 
     private:
-        bool CreateSound(const wstringV _filePath);
+        bool CreateSound(const wstringV filePath);
 
     public:
         HSound(const wstringV filePath);
@@ -36,7 +36,7 @@ namespace HBSoft
         bool Play(bool _loop = false);
         void Stop();
         void Paused();
-        void VolumeUp(float _volume);
+        void VolumeUp(float volume);
         void VolumneDown(float _volume);
 
         void Update();

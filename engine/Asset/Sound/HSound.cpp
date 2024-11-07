@@ -10,7 +10,7 @@ date: 2024-11-04
 #include "HSound.h"
 using namespace HBSoft;
 
-HSound : H : Sound(const wstringV _filePath)
+HSound::HSound(const wstringV _filePath)
     : m_soundPath(_filePath)
 {
 #ifdef _DEBUG

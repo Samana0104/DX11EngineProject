@@ -45,44 +45,21 @@ void Mesh2D::AddVertexIndex(std::initializer_list<size_t> index)
     }
 }
 
-void Mesh2D::CreateMesh(const HPoint meshCom)
-{
-#ifdef _DEBUG
-    _ASSERT(CreateVertexBuffer());
-#else
-    CreateVertexBuffer();
-#endif
-}
-
-bool Mesh2D::CreateVertexBuffer()
-{
-    HRESULT                hr;
-    D3D11_BUFFER_DESC      bd = {};
-    D3D11_SUBRESOURCE_DATA sd = {};
-
-    bd.ByteWidth = sizeof(Vertex2D) * static_cast<UINT>(m_renderVertices.size());
-    bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-
-    sd.pSysMem = m_renderVertices.data();
-
-    hr = HDEVICE->m_d3dDevice->CreateBuffer(&bd, &sd, m_vertexBuffer.GetAddressOf());
-
-    return SUCCEEDED(hr);
-}
-
-void Mesh2D::SetIAVertexBuffer()
-{
-    UINT StartSlot  = 0;
-    UINT NumBuffers = 1;
-    UINT pStrides   = sizeof(Vertex2D);  // 1개의 정점 크기
-    UINT pOffsets   = 0;                 // 버퍼에 시작 인덱스
-
-    HDEVICE->m_context->IASetVertexBuffers(StartSlot,
-                                           NumBuffers,
-                                           m_vertexBuffer.GetAddressOf(),
-                                           &pStrides,
-                                           &pOffsets);
-}
+// bool Mesh2D::CreateVertexBuffer()
+//{
+//     HRESULT                hr;
+//     D3D11_BUFFER_DESC      bd = {};
+//     D3D11_SUBRESOURCE_DATA sd = {};
+//
+//     bd.ByteWidth = sizeof(Vertex2D) * static_cast<UINT>(m_renderVertices.size());
+//     bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+//
+//     sd.pSysMem = m_renderVertices.data();
+//
+//     hr = HDEVICE->m_d3dDevice->CreateBuffer(&bd, &sd, m_vertexBuffer.GetAddressOf());
+//
+//     return SUCCEEDED(hr);
+// }
 
 void Mesh2D::UpdateRenderVertices(const mat3& matrix, const vec4& color)
 {
@@ -101,12 +78,9 @@ void Mesh2D::UpdateRenderVertices(const mat3& matrix, const vec4& color)
                                color,
                                m_uv[m_indices[i]]};
     }
-
-    HDEVICE->m_context->UpdateSubresource(m_vertexBuffer.Get(), 0, NULL, m_renderVertices.data(), 0, 0);
 }
 
-void Mesh2D::Draw(const mat3& _matrix, const vec4 _color)
+void Mesh2D::Draw(const mat3& matrix, const vec4 color)
 {
-    UpdateRenderVertices(_matrix, _color);
-    SetIAVertexBuffer();
+    UpdateRenderVertices(matrix, color);
 }

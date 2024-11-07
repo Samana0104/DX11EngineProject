@@ -36,5 +36,5 @@ void Circle2D::CreateCircle2DVertex()
     }
 
     AddVertexIndex({0, 1, m_triangles});
-    CreateMesh();
+    // CreateMesh();
 }

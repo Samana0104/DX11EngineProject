@@ -58,13 +58,11 @@ date: 2024-11-07
 
 using namespace Microsoft::WRL;
 
-#include "MgrTemplate.h"
 #include "HRect.h"
 #include "HPoint.h"
-#include "CoreAPI.h"
-#include "Singleton.h"
 #include "Window.h"
 #include "D3Device.h"
+#include "CoreAPI.h"
+#include "Singleton.h"
 #include "MgrTemplate.h"
-#include "Mesh2D.h"
-#include "Font.h"
+#include "Scene.h"

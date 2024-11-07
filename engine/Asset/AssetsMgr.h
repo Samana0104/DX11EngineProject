@@ -11,7 +11,8 @@ date: 2024-11-05
 #include "Texture.h"
 #include "Mesh2D.h"
 #include "Font.h"
-#include "Shader.h"
+#include "VertexShader.h"
+#include "PixelShader.h"
 #include "HSound.h"
 
 namespace HBSoft
@@ -20,6 +21,7 @@ namespace HBSoft
     {
     private:
         std::shared_ptr<D3Device> m_device;
+        std::set<wstringV>        m_loadedFonts;
 
     public:
         MgrTemplate<Texture> m_textures;
@@ -40,6 +42,14 @@ namespace HBSoft
 
     public:
         AssetsMgr(std::shared_ptr<D3Device>& device);
+
+        bool CreateTexture(const wstringV path);
+        bool CreateMesh(const wstringV path);
+        bool CreateFont(const FONT_KEY key, const FontDesc& desc);
+        bool CreateShader(const wstringV path);
+        bool CreateSound(const wstringV path);
+
+        bool AddExternalFont(const wstringV path);
 
         void Update();
 

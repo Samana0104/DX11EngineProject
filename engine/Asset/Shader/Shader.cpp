@@ -12,8 +12,8 @@ date: 2024-11-04
 #include "Mesh2D.h"
 using namespace HBSoft;
 
-Shader::Shader(const ShaderDesc& _desc)
-    : m_shaderDesc(_desc)
+Shader::Shader(const wstringV path, const ShaderDesc& desc)
+    : m_shaderDesc(desc), m_path(path)
 {}
 
 const ShaderDesc& Shader::GetShaderDesc() const
