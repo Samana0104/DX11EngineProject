@@ -43,8 +43,6 @@ void Mesh2D::AddVertexIndex(std::initializer_list<size_t> index)
             m_uv[idx]
         });
     }
-
-    m_uv;
 }
 
 void Mesh2D::CreateMesh(const HPoint meshCom)
@@ -67,7 +65,7 @@ bool Mesh2D::CreateVertexBuffer()
 
     sd.pSysMem = m_renderVertices.data();
 
-    hr = m_device.m_d3dDevice->CreateBuffer(&bd, &sd, m_vertexBuffer.GetAddressOf());
+    hr = HDEVICE->m_d3dDevice->CreateBuffer(&bd, &sd, m_vertexBuffer.GetAddressOf());
 
     return SUCCEEDED(hr);
 }
@@ -79,7 +77,7 @@ void Mesh2D::SetIAVertexBuffer()
     UINT pStrides   = sizeof(Vertex2D);  // 1개의 정점 크기
     UINT pOffsets   = 0;                 // 버퍼에 시작 인덱스
 
-    m_device.m_context->IASetVertexBuffers(StartSlot,
+    HDEVICE->m_context->IASetVertexBuffers(StartSlot,
                                            NumBuffers,
                                            m_vertexBuffer.GetAddressOf(),
                                            &pStrides,
@@ -101,20 +99,14 @@ void Mesh2D::UpdateRenderVertices(const mat3& matrix, const vec4& color)
     {
         m_renderVertices[i] = {Transform2D::CartesianToNDC(copyVertices[m_indices[i]]),
                                color,
-                               m_tempUV[m_indices[i]]};
+                               m_uv[m_indices[i]]};
     }
 
-    m_device.m_context->UpdateSubresource(m_vertexBuffer.Get(), 0, NULL, m_renderVertices.data(), 0, 0);
+    HDEVICE->m_context->UpdateSubresource(m_vertexBuffer.Get(), 0, NULL, m_renderVertices.data(), 0, 0);
 }
 
 void Mesh2D::Draw(const mat3& _matrix, const vec4 _color)
 {
     UpdateRenderVertices(_matrix, _color);
     SetIAVertexBuffer();
-    PostRender();
-}
-
-void Mesh2D::PostRender()
-{
-    m_tempUV = m_uv;  // 원본 UV 복귀
 }

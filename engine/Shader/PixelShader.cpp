@@ -42,7 +42,7 @@ bool PixelShader::CreatePixelShader()
         return false;
     }
 
-    m_device.m_d3dDevice->CreatePixelShader(m_shaderByteCode->GetBufferPointer(),
+    HDEVICE->m_d3dDevice->CreatePixelShader(m_shaderByteCode->GetBufferPointer(),
                                             m_shaderByteCode->GetBufferSize(),
                                             nullptr,
                                             m_pixelShader.GetAddressOf());
@@ -60,5 +60,5 @@ bool PixelShader::CreateShader()
 
 void PixelShader::SetUpConfiguration() const
 {
-    m_device.m_context->PSSetShader(m_pixelShader.Get(), nullptr, 0);
+    HDEVICE->m_context->PSSetShader(m_pixelShader.Get(), nullptr, 0);
 }

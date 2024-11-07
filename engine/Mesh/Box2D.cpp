@@ -31,11 +31,3 @@ void Box2D::CreateBox2DVertex()
 /*
 2D 아니고는 안쓸 방식
 */
-
-void Box2D::SetUVVertexAsRect(const HRect& rect, const vec2& imageSize)
-{
-    SetUVVertex(0, {rect.left / imageSize.x, rect.top / imageSize.y});
-    SetUVVertex(1, {rect.right / imageSize.x, rect.top / imageSize.y});
-    SetUVVertex(2, {rect.left / imageSize.x, rect.bottom / imageSize.y});
-    SetUVVertex(3, {rect.right / imageSize.x, rect.bottom / imageSize.y});
-}

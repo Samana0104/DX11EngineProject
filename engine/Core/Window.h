@@ -31,7 +31,7 @@ namespace HBSoft
 
     private:
         void CreateRegisterClass();
-        bool CreateWin();
+        bool Create();
 
     public:
         Window(HINSTANCE hinstance, HPoint windowSize);

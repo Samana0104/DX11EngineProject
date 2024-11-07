@@ -42,7 +42,7 @@ bool VertexShader::CreateVertexShader()
         return false;
     }
 
-    hr = m_device.m_d3dDevice->CreateVertexShader(m_shaderByteCode->GetBufferPointer(),
+    hr = HDEVICE->m_d3dDevice->CreateVertexShader(m_shaderByteCode->GetBufferPointer(),
                                                   m_shaderByteCode->GetBufferSize(),
                                                   nullptr,
                                                   mVertexShader.GetAddressOf());
@@ -59,7 +59,7 @@ bool VertexShader::CreateIALayout()
     };
 
     UINT    NumElements = sizeof(layout) / sizeof(layout[0]);
-    HRESULT hr          = m_device.m_d3dDevice->CreateInputLayout(layout,
+    HRESULT hr          = HDEVICE->m_d3dDevice->CreateInputLayout(layout,
                                                          NumElements,
                                                          m_shaderByteCode->GetBufferPointer(),
                                                          m_shaderByteCode->GetBufferSize(),
@@ -81,7 +81,7 @@ bool VertexShader::CreateShader()
 
 void VertexShader::SetUpConfiguration() const
 {
-    m_device.m_context->IASetInputLayout(mVertexLayout.Get());
-    m_device.m_context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-    m_device.m_context->VSSetShader(mVertexShader.Get(), nullptr, 0);
+    HDEVICE->m_context->IASetInputLayout(mVertexLayout.Get());
+    HDEVICE->m_context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    HDEVICE->m_context->VSSetShader(mVertexShader.Get(), nullptr, 0);
 }

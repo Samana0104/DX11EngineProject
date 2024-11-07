@@ -42,8 +42,6 @@ namespace HBSoft
         void SetIAVertexBuffer();
         void UpdateRenderVertices(const mat3& matrix, const vec4& color);
 
-        void PostRender();
-
     protected:
         Mesh2D(MeshShape meshShape);
 
@@ -51,11 +49,8 @@ namespace HBSoft
         void AddVertexAndUV(const vec2 vertex, const vec2 uv);
         void AddVertexIndex(std::initializer_list<size_t> index);
         void CreateMesh(const HPoint meshCom = {0.f, 0.f});
-        void SetUVVertex(const size_t uvVertex, const vec2 uv);
 
     public:
         void Draw(const mat3& matrix, const vec4 color = {1.f, 1.f, 1.f, 1.f});
-
-        virtual void SetUVVertexAsRect(const HRect& rect, const vec2& imageSize) = 0;
     };
 }  // namespace HBSoft

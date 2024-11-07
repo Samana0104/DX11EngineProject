@@ -32,12 +32,12 @@ namespace HBSoft
     private:
         void OnWm_size(UINT width, UINT height);
 
-        bool CreateDevice(HPoint windowSize);
-        bool CreateDeviceAndSwapChain(HPoint windowSize);
+        bool CreateDevice();
+        bool CreateDeviceAndSwapChain();
         bool CreateRenderTargetView();
         bool CreateDirect2DRenderTarget();
         bool CreateSamplerState();
-        void CreateViewport(HPoint windowSize);
+        void CreateViewport();
         bool SetAlphaBlendingState();
 
     public:

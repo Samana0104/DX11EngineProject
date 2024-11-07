@@ -14,6 +14,7 @@ namespace HBSoft
     class Texture
     {
     private:
+        std::shared_ptr<D3Device>        m_device;
         ComPtr<ID3D11ShaderResourceView> m_srv;
         ComPtr<ID3D11Resource>           m_texture;
         D3D11_TEXTURE2D_DESC             m_textureDesc;
@@ -25,10 +26,11 @@ namespace HBSoft
         void LoadTextureDesc();
 
     public:
-        Texture(const wstringV _filePath);
+        Texture(std::shared_ptr<D3Device> device, const wstringV filePath);
 
         HPoint GetTextureSize() const;
 
-        virtual void Render();
+        ComPtr<ID3D11ShaderResourceView>& GetSRV();
+        ComPtr<ID3D11Resource>&           GetResource();
     };
 }  // namespace HBSoft

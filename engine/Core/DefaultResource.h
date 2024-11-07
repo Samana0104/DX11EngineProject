@@ -17,7 +17,7 @@ namespace HBSoft
         struct FontDesc
         {
             std::wstring m_fontName;
-            std::wstring m_fontLocalName;
+            std::wstring m_fontLocaleName;
             FLOAT		 m_fontSize;
 
             DWRITE_FONT_WEIGHT	m_fontWeight;
@@ -25,7 +25,7 @@ namespace HBSoft
             DWRITE_FONT_STRETCH m_fontStretch;
         };
     */
-    inline static const std::vector<std::wstring> g_fontPath = {{L"../res/Font/"}};
+    inline static const std::wstring g_defaultPath = L"../res/";
 
     // 폰트는 직접 추가해서 써야함 크기 차이도 있고 위에는 단순 폰트 메모리에 올려주는 거 뿐
     inline static const std::map<FONT_KEY, FontDesc> g_defaultFonts = {
@@ -46,9 +46,9 @@ namespace HBSoft
             SPEHERE = 2
         };
     */
-    // 만약 UV값을 따로 주고 싶으면 메쉬 따로 추가해서 넣을 것
+
+    // 기본 메쉬
     inline static const std::map<MESH_KEY, MeshShape> g_defaultMeshes = {
-        { L"DEFAULT_MESH",    {MeshShape::BOX2D}},
         {   L"BOX2D_MESH",    {MeshShape::BOX2D}},
         {L"CIRCLE2D_MESH", {MeshShape::CIRCLE2D}}
     };
@@ -75,6 +75,4 @@ namespace HBSoft
         {ShaderType::VERTEX, L"../res/Shader/VertexShader.hlsl", "VSMain"},
         { ShaderType::PIXEL,  L"../res/Shader/PixelShader.hlsl", "PSMain"}
     };
-
-    inline static const std::vector<std::wstring> g_soundPath = {{L"../res/Sound/"}};
 }  // namespace HBSoft

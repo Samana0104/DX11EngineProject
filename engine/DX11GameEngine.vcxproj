@@ -50,7 +50,7 @@
     <ClCompile Include="Shader\ShaderHandler.cpp" />
     <ClCompile Include="Shader\VertexShader.cpp" />
     <ClCompile Include="Sound\FmodSystem.cpp" />
-    <ClCompile Include="Sound\Sound.cpp" />
+    <ClCompile Include="Sound\HSound.cpp" />
     <ClCompile Include="Sound\SoundHandler.cpp" />
     <ClCompile Include="Texture\Texture.cpp" />
     <ClCompile Include="Texture\TextureHandler.cpp" />
@@ -97,7 +97,7 @@
     <ClInclude Include="Shader\ShaderHandler.h" />
     <ClInclude Include="Shader\VertexShader.h" />
     <ClInclude Include="Sound\FmodSystem.h" />
-    <ClInclude Include="Sound\Sound.h" />
+    <ClInclude Include="Sound\HSound.h" />
     <ClInclude Include="Sound\SoundHandler.h" />
     <ClInclude Include="Texture\Texture.h" />
     <ClInclude Include="Texture\TextureHandler.h" />

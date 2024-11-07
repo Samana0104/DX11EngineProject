@@ -12,7 +12,7 @@ date: 2024-11-04
 
 namespace HBSoft
 {
-    class Sound
+    class HSound
     {
     private:
         FmodSystem     m_fmodSys;
@@ -29,8 +29,8 @@ namespace HBSoft
         bool CreateSound(const wstringV _filePath);
 
     public:
-        Sound(const wstringV _filePath);
-        ~Sound();
+        HSound(const wstringV filePath);
+        ~HSound();
 
         bool IsPlaying() const;
         bool Play(bool _loop = false);

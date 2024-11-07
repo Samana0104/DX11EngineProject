@@ -13,7 +13,7 @@ using namespace HBSoft;
 D3Device::D3Device(const std::shared_ptr<Window>& window)
     : m_window(window)
 {
-    assert(CreateDevice);
+    assert(CreateDevice());
 }
 
 glm::vec2 D3Device::GetViewportSize() const
@@ -21,9 +21,9 @@ glm::vec2 D3Device::GetViewportSize() const
     return {m_viewPort.Width, m_viewPort.Height};
 }
 
-bool D3Device::CreateDevice(HPoint windowSize)
+bool D3Device::CreateDevice()
 {
-    if (!CreateDeviceAndSwapChain(windowSize))
+    if (!CreateDeviceAndSwapChain())
         return false;
 
     if (!CreateRenderTargetView())
@@ -38,7 +38,7 @@ bool D3Device::CreateDevice(HPoint windowSize)
     if (!SetAlphaBlendingState())
         return false;
 
-    CreateViewport(windowSize);
+    CreateViewport();
     return true;
 }
 
@@ -68,12 +68,14 @@ void D3Device::OnWm_size(UINT width, UINT height)
     CreateDirect2DRenderTarget();
     CreateSamplerState();
     SetAlphaBlendingState();
-    CreateViewport({width, height});
+    CreateViewport();
 }
 
-bool D3Device::CreateDeviceAndSwapChain(HPoint windowSize)
+bool D3Device::CreateDeviceAndSwapChain()
 {
-    HRESULT                 hr;
+    HRESULT hr;
+    HPoint  windowSize = m_window->GetSize();
+
     CONST D3D_FEATURE_LEVEL pFeatureLevels = D3D_FEATURE_LEVEL_11_0;
 
     m_swapChainDesc = {};
@@ -218,8 +220,10 @@ bool D3Device::SetAlphaBlendingState()
     return SUCCEEDED(hr);
 }
 
-void D3Device::CreateViewport(HPoint windowSize)
+void D3Device::CreateViewport()
 {
+    HPoint windowSize = m_window->GetSize();
+
     m_viewPort.TopLeftX = 0;
     m_viewPort.TopLeftY = 0;
     m_viewPort.Width    = windowSize.x;

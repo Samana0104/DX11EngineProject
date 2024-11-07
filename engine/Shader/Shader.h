@@ -32,7 +32,7 @@ namespace HBSoft
         ShaderDesc       m_shaderDesc;
 
     protected:
-        Shader(const ShaderDesc& _desc);
+        Shader(const ShaderDesc& desc);
 
     public:
         const ShaderDesc& GetShaderDesc() const;

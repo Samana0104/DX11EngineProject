@@ -14,17 +14,17 @@ Core::Core(HINSTANCE hInstance, HPoint windowSize)
 {
     m_window = std::make_shared<Window>(hInstance, windowSize);
     m_device = std::make_shared<D3Device>(m_window);
-    m_input  = std::make_shared<Input>(m_window);
-    m_assets = std::make_unique<AssetsMgr>(m_window, m_device);
+    m_input  = std::make_unique<Input>(m_window);
+    m_assets = std::make_unique<AssetsMgr>(m_device);
     m_timer.Reset();
 }
 
 void Core::Update()
 {
     m_timer.Update();
-    m_input.Update();
+    m_input->Update();
     m_sceneMgr.Update(m_timer.GetDeltaTime());
-    m_assets->m_sound.Update();
+    m_assets->Update();
 }
 
 void Core::Render()
@@ -58,8 +58,14 @@ void Core::Run()
     Release();
 }
 
-void Core::CreateEngine(HINSTANCE hInstance, HPoint windowSize)
+void Core::Create(HINSTANCE hInstance, HPoint windowSize)
 {
     if (engine != nullptr)
         engine = std::make_unique<Core>(hInstance, windowSize);
+}
+
+void Core::Delete()
+{
+    if (engine != nullptr)
+        engine.reset();
 }

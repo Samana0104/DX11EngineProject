@@ -18,7 +18,5 @@ namespace HBSoft
 
     public:
         Box2D();
-
-        virtual void SetUVVertexAsRect(const HRect& _rect, const vec2& _imageSize) override;
     };
 }  // namespace HBSoft

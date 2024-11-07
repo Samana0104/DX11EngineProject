@@ -8,11 +8,11 @@ date: 2024-11-05
 
 #pragma once
 #include "DefaultResource.h"
-#include "TextureHandler.h"
-#include "MeshHandler.h"
-#include "FontHandler.h"
-#include "ShaderHandler.h"
-#include "SoundHandler.h"
+#include "Texture.h"
+#include "Mesh2D.h"
+#include "Font.h"
+#include "Shader.h"
+#include "HSound.h"
 
 namespace HBSoft
 {
@@ -22,23 +22,27 @@ namespace HBSoft
         std::shared_ptr<D3Device> m_device;
 
     public:
-        TextureHandler m_texture;
-        MeshHandler    m_mesh;
-        FontHandler    m_font;
-        ShaderHandler  m_shader;
-        SoundHandler   m_sound;
+        MgrTemplate<Texture> m_textures;
+        MgrTemplate<Mesh2D>  m_meshes;
+        MgrTemplate<Font>    m_fonts;
+        MgrTemplate<Shader>  m_shaders;
+        MgrTemplate<HSound>  m_sounds;
 
     private:
-        void CreateDefaultFonts();
-        void CreateDefaultMeshes();
-        void CreateDefaultTextures();
-        void CreateDefaultShaders();
-        void CreateDefaultSounds();
+        void CreateDefaultResource();
+        void CreateAssetAsFormat(const wstringV path);
+
+        bool IsTextureFormat(const wstringV ext) const;
+        bool IsMeshFormat(const wstringV ext) const;
+        bool IsFontFormat(const wstringV ext) const;
+        bool IsShaderFormat(const wstringV ext) const;
+        bool IsSoundFormat(const wstringV ext) const;
 
     public:
         AssetsMgr(std::shared_ptr<D3Device>& device);
-        ~AssetsMgr();
 
-        void CreateDafultResource();
+        void Update();
+
+        ~AssetsMgr();
     };
 }  // namespace HBSoft

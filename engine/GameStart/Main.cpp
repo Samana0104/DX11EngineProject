@@ -16,7 +16,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);  // 메모리 누수 확인
 #endif
 
-    HBSoft::Core::CreateEngine(hInstance, {1280, 720});
+    HBSoft::Core::Create(hInstance, {1280, 720});
     auto lobbyScene = std::make_unique<HBSoft::SceneLobby>();
     HENGINE->m_sceneMgr.Add(L"Lobby", std::move(lobbyScene));
     HENGINE->m_sceneMgr.SetCurrentScene(L"Lobby");
@@ -25,5 +25,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 #ifdef DEBUG
     _CrtCheckMemory();  // 메모리 누수 확인용
 #endif                  // DEBUG
+    HBSoft::Core::Delete();
     return 0;
 }

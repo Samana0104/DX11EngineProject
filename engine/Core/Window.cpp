@@ -15,7 +15,7 @@ Window::Window(HINSTANCE hinstance, HPoint windowSize)
     m_windowSize = windowSize;
 
     CreateRegisterClass();
-    assert(CreateWin());
+    assert(Create());
 }
 
 void Window::CreateRegisterClass()
@@ -30,9 +30,10 @@ void Window::CreateRegisterClass()
     RegisterClass(&wc);
 }
 
-bool Window::CreateWin()
+bool Window::Create()
 {
-    RECT rt {0, 0, static_cast<float>(m_windowSize.x), static_cast<float>(m_windowSize.y)};
+    RECT rt {0, 0, static_cast<LONG>(m_windowSize.x), static_cast<LONG>(m_windowSize.y)};
+
     AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, FALSE);
 
     HWND hwnd = CreateWindowEx(
@@ -50,10 +51,13 @@ bool Window::CreateWin()
     NULL          // Additional application data
     );
 
-    if (hwnd == NULL)
+    if (m_hwnd == NULL)
         return false;
 
     m_hwnd = hwnd;
+    GetClientRect(m_hwnd, &rt);
+    m_windowSize = HPoint {rt.right, rt.bottom};
+
     ShowWindow(hwnd, SW_SHOW);
 
     return true;

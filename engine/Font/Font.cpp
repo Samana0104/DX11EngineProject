@@ -2,22 +2,18 @@
 author : 변한빛
 description : 폰트 리소스를 정의하기 위해 만든 소스 파일
 
-version: 1.0.0
-date: 2024-11-04
+version: 1.0.2
+date: 2024-11-07
 */
 
 #include "pch.h"
 #include "Font.h"
 using namespace HBSoft;
 
-Font::Font(const FontDesc& desc)
-    : m_fontDesc(desc)
+Font::Font(std::shared_ptr<D3Device> device, const FontDesc& desc)
+    : m_device(device), m_fontDesc(desc)
 {
-#ifdef _DEBUG
-    _ASSERT(CreateFontComponent());
-#else
-    CreateFontComponent();
-#endif
+    assert(CreateFontComponent());
 }
 
 Font::~Font() {}
@@ -62,7 +58,7 @@ bool Font::CreateTextFormat()
                                                   m_fontDesc.m_fontStyle,
                                                   m_fontDesc.m_fontStretch,
                                                   m_fontDesc.m_fontSize,
-                                                  m_fontDesc.m_fontLocalName.c_str(),
+                                                  m_fontDesc.m_fontLocaleName.c_str(),
                                                   m_textFormat.GetAddressOf());
 
     return SUCCEEDED(hr);
@@ -71,23 +67,23 @@ bool Font::CreateTextFormat()
 bool Font::CreateBrush()
 {
     COLOR_F color = {1.f, 1.f, 1.f, 1.f};
-    HRESULT hr    = m_device.m_d2dRT->CreateSolidColorBrush(color, m_brush.GetAddressOf());
+    HRESULT hr    = m_device->m_d2dRT->CreateSolidColorBrush(color, m_brush.GetAddressOf());
     return SUCCEEDED(hr);
 }
 
 void Font::DrawTexts(const wstringV msg, HRect rect, COLOR_F color)
 {
-    m_device.m_d2dRT->BeginDraw();
+    m_device->m_d2dRT->BeginDraw();
     m_brush->SetColor(color);
     // m_device.m_d2dRT->DrawRectangle(rc, mDefaultColor.Get());
     // m_device.m_d2dRT->DrawText(_msg.data(), _msg.size(), mWriteFont.Get(),&rc, mDefaultColor.Get());
     // m_device.m_d2dRT->SetTransform(D2D1::Matrix3x2F::Rotation(-10.f));
-    m_device.m_d2dRT->DrawText(msg.data(),
-                               static_cast<UINT32>(msg.size()),
-                               m_textFormat.Get(),
-                               static_cast<const D2D1_RECT_F>(rect),
-                               m_brush.Get());
-    m_device.m_d2dRT->EndDraw();
+    m_device->m_d2dRT->DrawText(msg.data(),
+                                static_cast<UINT32>(msg.size()),
+                                m_textFormat.Get(),
+                                static_cast<const D2D1_RECT_F>(rect),
+                                m_brush.Get());
+    m_device->m_d2dRT->EndDraw();
 }
 
 const ComPtr<ID2D1SolidColorBrush>& Font::GetBrush() const
@@ -131,4 +127,13 @@ vec2 Font::GetTextSize(const wstringV text) const
     textLayout->GetMetrics(&textMetrics);
 
     return {textMetrics.width, textMetrics.height};
+}
+
+void Font::AddExternalFont(const wstringV path)
+{
+    if (!m_loadedFonts.contains(path))
+    {
+        AddFontResourceEx(path.data(), FR_PRIVATE, 0);
+        m_loadedFonts.insert(path);
+    }
 }

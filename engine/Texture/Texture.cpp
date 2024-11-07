@@ -10,8 +10,8 @@ date: 2024-11-04
 #include "Texture.h"
 using namespace HBSoft;
 
-Texture::Texture(const wstringV _filePath)
-    : m_texturePath(_filePath)
+Texture::Texture(std::shared_ptr<D3Device> device, const wstringV filePath)
+    : m_texturePath(filePath)
 {
 #ifdef _DEBUG
     _ASSERT(CreateTexture());
@@ -23,7 +23,7 @@ Texture::Texture(const wstringV _filePath)
 
 bool Texture::CreateTexture()
 {
-    HRESULT hr = DirectX::CreateWICTextureFromFile(m_device.m_d3dDevice.Get(),
+    HRESULT hr = DirectX::CreateWICTextureFromFile(HDEVICE->m_d3dDevice.Get(),
                                                    m_texturePath.c_str(),
                                                    m_texture.GetAddressOf(),  //&m_pTexture
                                                    m_srv.GetAddressOf());
@@ -50,7 +50,12 @@ HPoint Texture::GetTextureSize() const
     return {static_cast<float>(m_textureDesc.Width), static_cast<float>(m_textureDesc.Height)};
 }
 
-void Texture::Render()
+ComPtr<ID3D11ShaderResourceView>& Texture::GetSRV()
 {
-    m_device.m_context->PSSetShaderResources(0, 1, m_srv.GetAddressOf());
+    return m_srv;
+}
+
+ComPtr<ID3D11Resource>& HBSoft::Texture::GetResource()
+{
+    return m_texture;
 }

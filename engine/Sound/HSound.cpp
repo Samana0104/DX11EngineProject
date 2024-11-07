@@ -7,10 +7,10 @@ date: 2024-11-04
 */
 
 #include "pch.h"
-#include "Sound.h"
+#include "HSound.h"
 using namespace HBSoft;
 
-Sound::Sound(const wstringV _filePath)
+HSound : H : Sound(const wstringV _filePath)
     : m_soundPath(_filePath)
 {
 #ifdef _DEBUG
@@ -22,7 +22,7 @@ Sound::Sound(const wstringV _filePath)
     InitSound();
 }
 
-Sound::~Sound()
+HSound::~HSound()
 {
     if (m_sound != nullptr)
     {
@@ -33,7 +33,7 @@ Sound::~Sound()
     m_sound = nullptr;
 }
 
-bool Sound::CreateSound(const wstringV _filePath)
+bool HSound::CreateSound(const wstringV _filePath)
 {
     FMOD_RESULT hr =
     m_fmodSys->createSound(HBSoft::ToMultiByte(_filePath).c_str(), FMOD_DEFAULT, 0, &m_sound);
@@ -44,7 +44,7 @@ bool Sound::CreateSound(const wstringV _filePath)
         return false;
 }
 
-void Sound::InitSound()
+void HSound::InitSound()
 {
     Stop();
 
@@ -54,7 +54,7 @@ void Sound::InitSound()
     m_soundVolume = 0.5f;
 }
 
-bool Sound::Play(bool _loop)
+bool HSound::Play(bool loop)
 {
     FMOD_RESULT hr = m_fmodSys->playSound(m_sound, nullptr, false, &m_soundChannel);
 
@@ -69,7 +69,7 @@ bool Sound::Play(bool _loop)
     //	m_soundSizeInMS / 1000 % 60,
     //	m_soundSizeInMS / 10 / 60);
 
-    if (_loop)
+    if (loop)
         m_soundChannel->setMode(FMOD_LOOP_NORMAL);
     else
         m_soundChannel->setMode(FMOD_LOOP_OFF);
@@ -77,13 +77,13 @@ bool Sound::Play(bool _loop)
     return true;
 }
 
-void Sound::Stop()
+void HSound::Stop()
 {
     if (IsPlaying())
         m_soundChannel->stop();
 }
 
-bool Sound::IsPlaying() const
+bool HSound::IsPlaying() const
 {
     if (m_soundChannel == nullptr)
         return false;
@@ -94,7 +94,7 @@ bool Sound::IsPlaying() const
     return isPlaying;
 }
 
-void Sound::Paused()
+void HSound::Paused()
 {
     bool paused;
     if (IsPlaying())
@@ -104,16 +104,16 @@ void Sound::Paused()
     }
 }
 
-void Sound::VolumeUp(float _volume)
+void HSound::VolumeUp(float volume)
 {
     if (m_soundChannel == nullptr)
         return;
 
-    m_soundVolume = glm::clamp(m_soundVolume + _volume, 0.f, 1.f);
+    m_soundVolume = glm::clamp(m_soundVolume + volume, 0.f, 1.f);
     m_soundChannel->setVolume(m_soundVolume);
 }
 
-void Sound::VolumneDown(float _volume)
+void HSound::VolumneDown(float _volume)
 {
     if (m_soundChannel == nullptr)
         return;
@@ -122,7 +122,7 @@ void Sound::VolumneDown(float _volume)
     m_soundChannel->setVolume(m_soundVolume);
 }
 
-void Sound::Update()
+void HSound::Update()
 {
     if (!IsPlaying())
         return;

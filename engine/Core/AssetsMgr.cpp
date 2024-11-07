@@ -2,8 +2,8 @@
 author : 변한빛
 description : 리소스들을 관리하기 위한 클래스 소스파일
 
-version: 1.0.0
-date: 2024-11-04
+version: 1.0.3
+date: 2024-11-07
 */
 
 #include "pch.h"
@@ -12,24 +12,122 @@ using namespace HBSoft;
 
 AssetsMgr::AssetsMgr(std::shared_ptr<D3Device>& device)
     : m_device(device)
-{}
+{
+    CreateDefaultResource();
+}
+
+void AssetsMgr::Update()
+{
+    auto& soundResources = m_sounds.GetAll();
+
+    for (auto& sound : soundResources)
+        sound.second->Update();
+}
 
 AssetsMgr::~AssetsMgr()
 {
-    m_font.Clear();
-    m_mesh.Clear();
-    m_shader.Clear();
-    m_sound.Clear();
-    m_texture.Clear();
+    m_fonts.Clear();
+    m_meshes.Clear();
+    m_shaders.Clear();
+    m_sounds.Clear();
+    m_textures.Clear();
 }
 
-void AssetsMgr::CreateDafultResource()
+void AssetsMgr::CreateDefaultResource()
 {
-    CreateDefaultFonts();
-    CreateDefaultMeshes();
-    CreateDefaultTextures();
-    CreateDefaultShaders();
-    CreateDefaultSounds();
+    // 파일 재귀 참조
+    std::filesystem::directory_iterator iter(g_defaultPath);
+    for (auto& file = iter; iter != std::filesystem::end(iter); iter++)
+    {
+        if (!(*file).is_directory())
+            CreateAssetAsFormat((*file).path().wstring());
+    }
+}
+
+void AssetsMgr::CreateAssetAsFormat(wstringV path)
+{
+    auto [fileName, fileExt] = HBSoft::GetFileNameAndExt(path);
+
+    if (IsTextureFormat(fileExt))
+    {
+        return;
+    }
+    else if (IsMeshFormat(fileExt))
+    {
+        return;
+    }
+    else if (IsFontFormat(fileExt))
+    {
+        Font::AddExternalFont(path);
+    }
+    else if (IsShaderFormat(fileExt))
+    {
+        return;
+    }
+    else if (IsSoundFormat(fileExt))
+    {
+        SOUND_KEY key = fileName + fileExt;
+
+        auto sound = std::make_unique<HSound>(path);
+        m_sounds.Add(key, std::move(sound));
+        return;
+    }
+    else
+    {
+        MessageBoxW(NULL, L"Not supported format", fileExt.c_str(), MB_OK);
+    }
+}
+
+bool AssetsMgr::IsTextureFormat(const wstringV ext) const
+{
+    if (ext.compare(L"png") == 0)
+        return true;
+    else if (ext.compare(L"jpg") == 0)
+        return true;
+    else if (ext.compare(L"bmp") == 0)
+        return true;
+
+    return false;
+}
+
+bool AssetsMgr::IsMeshFormat(const wstringV ext) const
+{
+    return false;
+}
+
+bool AssetsMgr::IsFontFormat(const wstringV ext) const
+{
+    if (ext.compare(L"ttf") == 0)
+        return true;
+
+    return false;
+}
+
+bool AssetsMgr::IsShaderFormat(const wstringV ext) const
+{
+    if (ext.compare(L"hlsl") == 0)
+        return true;
+
+    return false;
+}
+
+bool AssetsMgr::IsSoundFormat(const wstringV ext) const
+{
+    if (ext.compare(L"mp3") == 0)
+        return true;
+    else if (ext.compare(L"wav") == 0)
+        return true;
+
+    return false;
+}
+
+void AssetsMgr::CreateResource()
+{
+    CreateFonts();
+    CreateMeshes();
+    CreateTextures();
+    CreateShaders();
+    CreateSounds();
 }
 
 void AssetsMgr::CreateDefaultFonts()

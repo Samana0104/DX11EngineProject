@@ -43,7 +43,7 @@ namespace HBSoft
         return std::string(W2A(_src.data()));
     }
 
-    static std::pair<std::wstring, std::wstring> GetFileNameAndExt(const wstringV _filePath)
+    static std::pair<std::wstring, std::wstring> GetFileNameAndExt(const wstringV filePath)
     {
         wchar_t szDrive[MAX_PATH] = {
             0,
@@ -57,7 +57,7 @@ namespace HBSoft
         wchar_t szFileExt[MAX_PATH] = {
             0,
         };
-        _tsplitpath_s(_filePath.data(), szDrive, szDir, szFileName, szFileExt);
+        _tsplitpath_s(filePath.data(), szDrive, szDir, szFileName, szFileExt);
         // fileNameKey = szFileName;
         // fileNameKey += szFileExt;
 

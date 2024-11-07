@@ -87,7 +87,7 @@
     <ClCompile Include="Sound\FmodSystem.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
-    <ClCompile Include="Sound\Sound.cpp">
+    <ClCompile Include="Sound\HSound.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
     <ClCompile Include="Texture\TextureHandler.cpp">
@@ -191,7 +191,7 @@
     <ClInclude Include="Shader\Shader.h">
       <Filter>Shader</Filter>
     </ClInclude>
-    <ClInclude Include="Sound\Sound.h">
+    <ClInclude Include="Sound\HSound.h">
       <Filter>Sound</Filter>
     </ClInclude>
     <ClInclude Include="Sound\SoundHandler.h">

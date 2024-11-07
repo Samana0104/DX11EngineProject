@@ -14,6 +14,8 @@ date: 2024-11-04
 #include "Input.h"
 
 #define HENGINE HBSoft::Core::engine
+#define HWINDOW HBSoft::Core::engine->m_window
+#define HDEVICE HBSoft::Core::engine->m_device
 #define HINPUT  HBSoft::Core::engine->m_input
 #define HASSET  HBSoft::Core::engine->m_assets
 #define HTIMER  HBSoft::Core::engine->m_timer
@@ -32,7 +34,7 @@ namespace HBSoft
         SystemTimer m_timer;
 
         std::unique_ptr<AssetsMgr> m_assets;
-        std::shared_ptr<Input>     m_input;
+        std::unique_ptr<Input>     m_input;
         std::shared_ptr<D3Device>  m_device;
         std::shared_ptr<Window>    m_window;
 
@@ -54,7 +56,8 @@ namespace HBSoft
 
         void Run();
 
-        static void CreateEngine(HINSTANCE hInstance, HPoint windowSize);
+        static void Create(HINSTANCE hInstance, HPoint windowSize);
         // 시작 종료 확실하게 하기 스마트포인터로 제작하게 만듬
+        static void Delete();
     };
 }  // namespace HBSoft
