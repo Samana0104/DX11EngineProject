@@ -57,6 +57,7 @@ date: 2024-11-07
 // ---------------------------------------
 
 using namespace Microsoft::WRL;
+using namespace glm;
 
 #include "HRect.h"
 #include "HPoint.h"

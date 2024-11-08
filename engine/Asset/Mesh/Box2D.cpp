@@ -11,7 +11,7 @@ date: 2024-11-04
 using namespace HBSoft;
 
 Box2D::Box2D()
-    : Mesh2D(MeshShape::BOX2D)
+    : Mesh(MeshShape::BOX2D)
 {
     CreateBox2DVertex();
 }

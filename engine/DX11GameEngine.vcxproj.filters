@@ -114,7 +114,7 @@
     <ClCompile Include="Asset\Sound\HSound.cpp">
       <Filter>Asset\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="Asset\Mesh\Mesh2D.cpp">
+    <ClCompile Include="Asset\Mesh\Mesh.cpp">
       <Filter>Asset\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Asset\Mesh\MeshHandler.cpp">
@@ -239,7 +239,7 @@
     <ClInclude Include="Asset\Sound\HSound.h">
       <Filter>Asset\Sound</Filter>
     </ClInclude>
-    <ClInclude Include="Asset\Mesh\Mesh2D.h">
+    <ClInclude Include="Asset\Mesh\Mesh.h">
       <Filter>Asset\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Asset\Mesh\MeshHandler.h">

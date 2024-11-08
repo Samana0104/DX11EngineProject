@@ -11,8 +11,6 @@ date: 2024-11-04
 
 namespace HBSoft
 {
-    using namespace glm;
-
     class Transform2D
     {
     private:

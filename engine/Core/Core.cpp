@@ -16,7 +16,7 @@ Core::Core(HINSTANCE hInstance, HPoint windowSize)
     m_device = std::make_shared<D3Device>(m_window);
     m_input  = std::make_unique<Input>(m_window);
     m_assets = std::make_unique<AssetsMgr>(m_device);
-    m_timer.Reset();
+    m_timer.Start();
 }
 
 void Core::Update()
@@ -32,8 +32,10 @@ void Core::Render()
     float clearColor[] = {0.f, 0.f, 0.f, 1.0f};
     m_device->m_context->ClearRenderTargetView(m_device->m_rtv.Get(), clearColor);
     m_sceneMgr.Render();
-    m_assets->m_fonts[L"DEBUG_FONT"]->DrawTexts(L"¸¼À½", {10.f, 10.f, 50.f, 50.f}, {1.f, 1.f, 1.f, 1.f});
-    m_device->m_swapChain->Present(1, 0);
+    m_assets->m_fonts[L"DEBUG_FONT"]->DrawTexts(m_timer.m_csBuffer,
+                                                {10.f, 10.f, 300.f, 300.f},
+                                                {1.f, 1.f, 1.f, 1.f});
+    m_device->m_swapChain->Present(0, 0);
 }
 
 void Core::Release()
@@ -62,11 +64,11 @@ void Core::Run()
 void Core::Create(HINSTANCE hInstance, HPoint windowSize)
 {
     if (engine == nullptr)
-        engine = new Core(hInstance, windowSize);
+        engine = std::make_unique<Core>(hInstance, windowSize);
 }
 
 void Core::Delete()
 {
     if (engine != nullptr)
-        delete engine;
+        engine.reset();
 }

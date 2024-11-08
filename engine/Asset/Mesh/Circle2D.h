@@ -7,11 +7,11 @@ date: 2024-11-04
 */
 
 #pragma once
-#include "Mesh2D.h"
+#include "Mesh.h"
 
 namespace HBSoft
 {
-    class Circle2D : public Mesh2D
+    class Circle2D : public Mesh
     {
     private:
         size_t m_triangles;

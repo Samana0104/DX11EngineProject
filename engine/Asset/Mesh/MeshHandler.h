@@ -13,7 +13,7 @@ date: 2024-11-04
 
 namespace HBSoft
 {
-    class MeshHandler : public MgrTemplate<Mesh2D, MESH_KEY>
+    class MeshHandler : public MgrTemplate<Mesh, MESH_KEY>
     {
     private:
         bool CreateBox2DMesh(const MESH_KEY& key);

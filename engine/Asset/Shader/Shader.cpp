@@ -9,7 +9,7 @@ date: 2024-11-04
 
 #include "pch.h"
 #include "Shader.h"
-#include "Mesh2D.h"
+#include "Mesh.h"
 using namespace HBSoft;
 
 Shader::Shader(const wstringV path, const ShaderDesc& desc)

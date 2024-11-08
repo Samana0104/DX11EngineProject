@@ -9,7 +9,7 @@ date: 2024-11-05
 #pragma once
 #include "DefaultResource.h"
 #include "Texture.h"
-#include "Mesh2D.h"
+#include "Mesh.h"
 #include "Font.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
@@ -25,7 +25,7 @@ namespace HBSoft
 
     public:
         MgrTemplate<Texture> m_textures;
-        MgrTemplate<Mesh2D>  m_meshes;
+        MgrTemplate<Mesh>    m_meshes;
         MgrTemplate<Font>    m_fonts;
         MgrTemplate<Shader>  m_shaders;
         MgrTemplate<HSound>  m_sounds;

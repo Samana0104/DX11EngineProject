@@ -8,12 +8,12 @@ date: 2024-11-04
 
 #pragma once
 #include "Font.h"
-#include "Mesh2D.h"
+#include "Mesh.h"
 #include "Shader.h"
 
 namespace HBSoft
 {
-    inline static const std::wstring g_defaultPath = L"../res/";
+    inline static const std::wstring g_defaultPath = L"../res/";  // 건들지 말 것
 
     /*
         struct FontDesc

@@ -11,7 +11,7 @@ date: 2024-11-04
 using namespace HBSoft;
 
 Circle2D::Circle2D(const size_t triangles)
-    : Mesh2D(MeshShape::CIRCLE2D), m_triangles(triangles)
+    : Mesh(MeshShape::CIRCLE2D), m_triangles(triangles)
 {
     CreateCircle2DVertex();
 }

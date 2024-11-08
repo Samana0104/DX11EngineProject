@@ -23,7 +23,7 @@
     <ClCompile Include="Asset\Font\Font.cpp" />
     <ClCompile Include="Asset\Mesh\Box2D.cpp" />
     <ClCompile Include="Asset\Mesh\Circle2D.cpp" />
-    <ClCompile Include="Asset\Mesh\Mesh2D.cpp" />
+    <ClCompile Include="Asset\Mesh\Mesh.cpp" />
     <ClCompile Include="Asset\Mesh\MeshHandler.cpp" />
     <ClCompile Include="Asset\Mesh\Sphere2D.cpp" />
     <ClCompile Include="Asset\Shader\PixelShader.cpp" />
@@ -58,7 +58,7 @@
     <ClInclude Include="Asset\Font\Font.h" />
     <ClInclude Include="Asset\Mesh\Box2D.h" />
     <ClInclude Include="Asset\Mesh\Circle2D.h" />
-    <ClInclude Include="Asset\Mesh\Mesh2D.h" />
+    <ClInclude Include="Asset\Mesh\Mesh.h" />
     <ClInclude Include="Asset\Mesh\MeshHandler.h" />
     <ClInclude Include="Asset\Mesh\Sphere2D.h" />
     <ClInclude Include="Asset\Shader\PixelShader.h" />
