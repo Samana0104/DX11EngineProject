@@ -10,20 +10,16 @@ date: 2024-11-04
 #include "Texture.h"
 using namespace HBSoft;
 
-Texture::Texture(const wstringV _filePath)
-    : m_texturePath(_filePath)
+Texture::Texture(std::shared_ptr<D3Device>& device, const wstringV filePath)
+    : m_texturePath(filePath)
 {
-#ifdef _DEBUG
-    _ASSERT(CreateTexture());
-#else
-    CreateTexture();
-#endif
+    assert(CreateTexture(device));
     LoadTextureDesc();
 }
 
-bool Texture::CreateTexture()
+bool Texture::CreateTexture(std::shared_ptr<D3Device>& device)
 {
-    HRESULT hr = DirectX::CreateWICTextureFromFile(m_device.m_d3dDevice.Get(),
+    HRESULT hr = DirectX::CreateWICTextureFromFile(device->m_d3dDevice.Get(),
                                                    m_texturePath.c_str(),
                                                    m_texture.GetAddressOf(),  //&m_pTexture
                                                    m_srv.GetAddressOf());
@@ -41,7 +37,7 @@ void Texture::LoadTextureDesc()
     case D3D11_RESOURCE_DIMENSION_TEXTURE2D:
         static_cast<ID3D11Texture2D*>(m_texture.Get())->GetDesc(&m_textureDesc);
         break;
-        // 2D 텍스쳐 아니면 다 컷
+        // 2D 텍스쳐 아니면 desc 못 불러옴
     }
 }
 
@@ -50,7 +46,12 @@ HPoint Texture::GetTextureSize() const
     return {static_cast<float>(m_textureDesc.Width), static_cast<float>(m_textureDesc.Height)};
 }
 
-void Texture::Render()
+ComPtr<ID3D11ShaderResourceView>& Texture::GetSRV()
 {
-    m_device.m_context->PSSetShaderResources(0, 1, m_srv.GetAddressOf());
+    return m_srv;
+}
+
+ComPtr<ID3D11Resource>& HBSoft::Texture::GetResource()
+{
+    return m_texture;
 }

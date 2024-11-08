@@ -2,8 +2,8 @@
 author : 변한빛
 description : Precompile header 기능을 사용하기 위해 만든 헤더파일
 
-version: 1.0.0
-date: 2024-11-04
+version: 1.0.1
+date: 2024-11-07
 */
 
 #pragma once
@@ -14,6 +14,7 @@ date: 2024-11-04
 #include <queue>
 #include <stack>
 #include <map>
+#include <set>
 #include <list>
 #include <algorithm>
 #include <chrono>
@@ -56,11 +57,13 @@ date: 2024-11-04
 // ---------------------------------------
 
 using namespace Microsoft::WRL;
+using namespace glm;
 
 #include "HRect.h"
 #include "HPoint.h"
-#include "CoreAPI.h"
-#include "Singleton.h"
 #include "Window.h"
 #include "D3Device.h"
+#include "CoreAPI.h"
+#include "Singleton.h"
 #include "MgrTemplate.h"
+#include "Scene.h"

@@ -21,14 +21,15 @@ namespace HBSoft
         std::wstring m_texturePath;
 
     private:
-        bool CreateTexture();
+        bool CreateTexture(std::shared_ptr<D3Device>& device);
         void LoadTextureDesc();
 
     public:
-        Texture(const wstringV _filePath);
+        Texture(std::shared_ptr<D3Device>& device, const wstringV filePath);
 
         HPoint GetTextureSize() const;
 
-        virtual void Render();
+        ComPtr<ID3D11ShaderResourceView>& GetSRV();
+        ComPtr<ID3D11Resource>&           GetResource();
     };
 }  // namespace HBSoft

@@ -16,23 +16,9 @@ SystemTimer::SystemTimer()
     Reset();
 }
 
-// #ifdef _DEBUG
-//     TCHAR msgKey[MAX_PATH] = {
-//         0,
-//     };
-//     _stprintf_s(msgKey,
-//                 L" FPS=%ld \n FPS=%ld \n %.10f \n GameTimer=%10.10f \n SPF=%10.10f\n",
-//                 m_currentFPS,
-//                 m_fps,
-//                 m_deltaTime,
-//                 m_elapsedTime.count(),
-//                 m_oneSecond);
-//     m_csBuffer = msgKey;
-// #endif
-
 float SystemTimer::GetDeltaTime() const
 {
-    return static_cast<float>(m_deltaTime);
+    return static_cast<float>(m_deltaTime.count());
 }
 
 float SystemTimer::GetElapsedTime() const
@@ -42,21 +28,43 @@ float SystemTimer::GetElapsedTime() const
 
 void SystemTimer::Update()
 {
-    m_currentTimeTick = steady_clock::now();
-    m_frameDuration   = m_currentTimeTick - m_startTimeTick;
-    m_secondPerFrame  = m_frameDuration - m_elapsedTime;
-    m_elapsedTime     = m_frameDuration;
+    m_currentTimeTick  = steady_clock::now();
+    m_frameDuration    = m_currentTimeTick - m_startTimeTick;
+    m_deltaTime        = m_frameDuration - m_elapsedTime;
+    m_secondTime      += m_deltaTime;
+    m_elapsedTime      = m_frameDuration;
+
+
+    if (m_secondTime >= m_oneSecond)
+    {
+        m_fps2        = m_fps;
+        m_fps         = 0;
+        m_secondTime -= m_oneSecond;
+    }
+
+    m_fps++;
+
+#ifdef _DEBUG
+    TCHAR msgKey[MAX_PATH] = {
+        0,
+    };
+    _stprintf_s(msgKey, L"FPS=%ld GameTimer=%10.10f", m_fps2, m_elapsedTime.count());
+    m_csBuffer = msgKey;
+#endif
 }
 
 void SystemTimer::Reset()
 {
-    m_startTimeTick  = steady_clock::now();
-    m_elapsedTime    = duration<double>(0);
-    m_frameDuration  = duration<double>(0);
-    m_secondPerFrame = duration<double>(0);
-    m_deltaTime      = 0.0;
-    m_fps            = 0;
-    m_oneSecond      = 0.0;
+    m_startTimeTick = steady_clock::now();
+    m_oneSecond     = std::chrono::seconds(1);
+    m_secondTime    = duration<double>(0);
+    m_elapsedTime   = duration<double>(0);
+    m_frameDuration = duration<double>(0);
+    m_deltaTime     = duration<double>(0);
+    m_fps           = 0;
 }
 
-void SystemTimer::Start() {}
+void SystemTimer::Start()
+{
+    Reset();
+}

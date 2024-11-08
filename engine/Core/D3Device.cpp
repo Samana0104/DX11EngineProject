@@ -13,7 +13,7 @@ using namespace HBSoft;
 D3Device::D3Device(const std::shared_ptr<Window>& window)
     : m_window(window)
 {
-    assert(CreateDevice);
+    assert(CreateDevice());
 }
 
 glm::vec2 D3Device::GetViewportSize() const
@@ -21,15 +21,12 @@ glm::vec2 D3Device::GetViewportSize() const
     return {m_viewPort.Width, m_viewPort.Height};
 }
 
-bool D3Device::CreateDevice(HPoint windowSize)
+bool D3Device::CreateDevice()
 {
-    if (!CreateDeviceAndSwapChain(windowSize))
+    if (!CreateDeviceAndSwapChain())
         return false;
 
     if (!CreateRenderTargetView())
-        return false;
-
-    if (!CreateDirect2DRenderTarget())
         return false;
 
     if (!CreateSamplerState())
@@ -38,7 +35,7 @@ bool D3Device::CreateDevice(HPoint windowSize)
     if (!SetAlphaBlendingState())
         return false;
 
-    CreateViewport(windowSize);
+    CreateViewport();
     return true;
 }
 
@@ -51,8 +48,8 @@ void D3Device::OnWm_size(UINT width, UINT height)
     m_context->Release();
     m_rtv->Release();
     m_alphaBlend->Release();
-    m_d2dRT->Release();
-    m_d2dFactory->Release();
+    // m_d2dRT->Release();
+    // m_d2dFactory->Release();
     m_samplerState->Release();
 
     m_swapChainDesc.BufferDesc.Width  = width;
@@ -65,15 +62,17 @@ void D3Device::OnWm_size(UINT width, UINT height)
                                             m_swapChainDesc.Flags);
 
     CreateRenderTargetView();
-    CreateDirect2DRenderTarget();
+    // CreateDirect2DRenderTarget();
     CreateSamplerState();
     SetAlphaBlendingState();
-    CreateViewport({width, height});
+    CreateViewport();
 }
 
-bool D3Device::CreateDeviceAndSwapChain(HPoint windowSize)
+bool D3Device::CreateDeviceAndSwapChain()
 {
-    HRESULT                 hr;
+    HRESULT hr;
+    HPoint  windowSize = m_window->GetSize();
+
     CONST D3D_FEATURE_LEVEL pFeatureLevels = D3D_FEATURE_LEVEL_11_0;
 
     m_swapChainDesc = {};
@@ -121,37 +120,6 @@ bool D3Device::CreateRenderTargetView()
                                              m_rtv.GetAddressOf());
 
     m_context->OMSetRenderTargets(1, m_rtv.GetAddressOf(), nullptr);
-
-    return SUCCEEDED(hr);
-}
-
-bool D3Device::CreateDirect2DRenderTarget()
-{
-    HRESULT              hr;
-    ComPtr<IDXGISurface> dxgiSurface;
-
-    hr = m_swapChain->GetBuffer(0, IID_PPV_ARGS(dxgiSurface.GetAddressOf()));
-
-    if (FAILED(hr))
-        return false;
-
-    hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, m_d2dFactory.GetAddressOf());
-
-    if (FAILED(hr))
-        return false;
-
-    D2D1_RENDER_TARGET_PROPERTIES rtp;
-    {
-        rtp.type                  = D2D1_RENDER_TARGET_TYPE_DEFAULT;
-        rtp.pixelFormat.format    = DXGI_FORMAT_UNKNOWN;
-        rtp.pixelFormat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
-        rtp.dpiX                  = 0;
-        rtp.dpiY                  = 0;
-        rtp.usage                 = D2D1_RENDER_TARGET_USAGE_NONE;
-        rtp.minLevel              = D2D1_FEATURE_LEVEL_DEFAULT;
-    }
-
-    hr = m_d2dFactory->CreateDxgiSurfaceRenderTarget(dxgiSurface.Get(), &rtp, m_d2dRT.GetAddressOf());
 
     return SUCCEEDED(hr);
 }
@@ -218,8 +186,10 @@ bool D3Device::SetAlphaBlendingState()
     return SUCCEEDED(hr);
 }
 
-void D3Device::CreateViewport(HPoint windowSize)
+void D3Device::CreateViewport()
 {
+    HPoint windowSize = m_window->GetSize();
+
     m_viewPort.TopLeftX = 0;
     m_viewPort.TopLeftY = 0;
     m_viewPort.Width    = windowSize.x;

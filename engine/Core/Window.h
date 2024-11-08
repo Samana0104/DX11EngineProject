@@ -7,7 +7,9 @@ date: 2024-11-05
 */
 
 #pragma once
-#include "pch.h"
+#include <Windows.h>
+#include "HPoint.h"
+#include "HRect.h"
 
 namespace HBSoft
 {
@@ -31,7 +33,7 @@ namespace HBSoft
 
     private:
         void CreateRegisterClass();
-        bool CreateWin();
+        bool Create();
 
     public:
         Window(HINSTANCE hinstance, HPoint windowSize);

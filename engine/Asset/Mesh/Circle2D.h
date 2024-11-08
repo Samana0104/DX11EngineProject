@@ -7,11 +7,11 @@ date: 2024-11-04
 */
 
 #pragma once
-#include "Mesh2D.h"
+#include "Mesh.h"
 
 namespace HBSoft
 {
-    class Circle2D : public Mesh2D
+    class Circle2D : public Mesh
     {
     private:
         size_t m_triangles;
@@ -21,7 +21,5 @@ namespace HBSoft
 
     public:
         Circle2D(const size_t triangles = 50);
-
-        virtual void SetUVVertexAsRect(const HRect& rect, const vec2& imageSize) override;
     };
 }  // namespace HBSoft
