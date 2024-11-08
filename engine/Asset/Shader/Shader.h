@@ -14,7 +14,8 @@ namespace HBSoft
 {
     enum class ShaderType
     {
-        VERTEX = 0,
+        NOTHING = 0,
+        VERTEX  = 1,
         PIXEL,
     };
 

@@ -11,20 +11,12 @@ date: 2024-11-04
 using namespace HBSoft;
 
 Box2D::Box2D()
-    : Mesh(MeshShape::BOX2D)
 {
     CreateBox2DVertex();
 }
 
 void Box2D::CreateBox2DVertex()
 {
-    HRect rect = {-0.5f, 0.5f, 0.5f, -0.5f};
-    ReserveVertexSize(4);
-    AddVertexAndUV({rect.left, rect.top}, {0, 0});
-    AddVertexAndUV({rect.right, rect.top}, {1, 0});
-    AddVertexAndUV({rect.left, rect.bottom}, {0, 1});
-    AddVertexAndUV({rect.right, rect.bottom}, {1, 1});
-    AddVertexIndex({0, 1, 2, 1, 3, 2});
     // CreateMesh({0.f, 0.f});
 }
 

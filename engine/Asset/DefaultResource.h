@@ -49,8 +49,7 @@ namespace HBSoft
 
     // 기본 메쉬
     inline static const std::map<MESH_KEY, MeshShape> g_defaultMeshes = {
-        {   L"BOX2D_MESH",    {MeshShape::BOX2D}},
-        {L"CIRCLE2D_MESH", {MeshShape::CIRCLE2D}}
+        {L"BOX3D", {MeshShape::BOX3D}}
     };
 
     /*
@@ -62,7 +61,7 @@ namespace HBSoft
     */
 
     inline static const std::map<SHADER_KEY, ShaderDesc> g_defaultShaders = {
-        {L"VertexShader.hlsl", {ShaderType::VERTEX, "VSMain"}},
-        { L"PixelShader.hlsl",  {ShaderType::PIXEL, "PSMain"}}
+        {L"VertexShader.hlsl", {ShaderType::VERTEX, "main"}},
+        { L"PixelShader.hlsl",  {ShaderType::PIXEL, "main"}}
     };
 }  // namespace HBSoft

@@ -13,7 +13,7 @@ namespace HBSoft
 {
     class VertexShader : public Shader
     {
-    private:
+    public:
         ComPtr<ID3D11VertexShader> m_vertexShader;
         ComPtr<ID3D11InputLayout>  m_vertexLayout;
 

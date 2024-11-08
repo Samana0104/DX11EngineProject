@@ -13,6 +13,7 @@ date: 2024-11-05
 #include "Font.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "Box3D.h"
 #include "HSound.h"
 
 namespace HBSoft
@@ -48,6 +49,8 @@ namespace HBSoft
         bool CreateFont(const FONT_KEY key, const FontDesc& desc);
         bool CreateShader(const wstringV path);
         bool CreateSound(const wstringV path);
+        bool CreateMesh(const MESH_KEY key, const MeshShape shape);
+        // bool CreateMesh(const wstringV path); 나중에 assimploader에서 쓸 예정
 
         bool AddExternalFont(const wstringV path);
 

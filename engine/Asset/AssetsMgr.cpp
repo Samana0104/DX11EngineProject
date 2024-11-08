@@ -54,11 +54,17 @@ void AssetsMgr::CreateDefaultResource()
     {
         std::wstring file2 = (*file).path().wstring();
         if (!(*file).is_directory())
-            CreateAssetAsFormat((*file).path().wstring());
+            CreateAssetAsFormat(std::filesystem::absolute((*file).path()).wstring());
+        // absolue는 절대경로로 바꿔주는거임
     }
 
+    // 작성한 폰트 규격 추가
     for (auto& fontDesc : g_defaultFonts)
         CreateFont(fontDesc.first, fontDesc.second);
+
+    // 작성한 메쉬 추가
+    for (auto& meshDesc : g_defaultMeshes)
+        CreateMesh(meshDesc.first, meshDesc.second);
 }
 
 bool AssetsMgr::CreateTexture(const wstringV path)
@@ -69,7 +75,7 @@ bool AssetsMgr::CreateTexture(const wstringV path)
     if (IsTextureFormat(fileExt))
     {
         TEXTURE_KEY key     = fileName + fileExt;
-        auto        texture = std::make_unique<Texture>(m_device, path);
+        auto        texture = std::make_shared<Texture>(m_device, path);
         return m_textures.Add(key, std::move(texture));
     }
 
@@ -90,7 +96,7 @@ bool AssetsMgr::CreateMesh(const wstringV path)
 
 bool AssetsMgr::CreateFont(const FONT_KEY key, const FontDesc& desc)
 {
-    auto font = std::make_unique<Font>(m_device, desc);
+    auto font = std::make_shared<Font>(m_device, desc);
     return m_fonts.Add(key, std::move(font));
 }
 
@@ -106,12 +112,12 @@ bool AssetsMgr::CreateShader(const wstringV path)
 
         if (shaderDesc.m_shaderType == ShaderType::VERTEX)
         {
-            std::unique_ptr<Shader> shader = std::make_unique<VertexShader>(m_device, path, shaderDesc);
+            std::shared_ptr<Shader> shader = std::make_shared<VertexShader>(m_device, path, shaderDesc);
             m_shaders.Add(shaderKey, std::move(shader));
         }
         else if (shaderDesc.m_shaderType == ShaderType::PIXEL)
         {
-            std::unique_ptr<Shader> shader = std::make_unique<PixelShader>(m_device, path, shaderDesc);
+            std::shared_ptr<Shader> shader = std::make_shared<PixelShader>(m_device, path, shaderDesc);
             m_shaders.Add(shaderKey, std::move(shader));
         }
 
@@ -129,12 +135,21 @@ bool AssetsMgr::CreateSound(const wstringV path)
     if (IsSoundFormat(path))
     {
         SOUND_KEY key   = fileName + fileExt;
-        auto      sound = std::make_unique<HSound>(path);
+        auto      sound = std::make_shared<HSound>(path);
         return m_sounds.Add(key, std::move(sound));
-
-        return true;
     }
 
+    return false;
+}
+
+bool AssetsMgr::CreateMesh(const MESH_KEY key, const MeshShape shape)
+{
+    switch (shape)
+    {
+    case MeshShape::BOX3D:
+        std::shared_ptr<Mesh> mesh = std::make_shared<Box3D>(m_device);
+        return m_meshes.Add(key, mesh);
+    }
     return false;
 }
 
@@ -185,7 +200,7 @@ bool AssetsMgr::IsShaderFormat(const wstringV ext) const
 {
     if (ext.compare(L".hlsl") == 0)
         return true;
-    auto test = ext.compare(L".hlsl");
+
     return false;
 }
 

@@ -42,6 +42,32 @@ namespace HBSoft
         ~D3Device() = default;
 
         glm::vec2 GetViewportSize() const;
+
+        template <class T>
+        bool CreateVertexBuffer(std::vector<T>& vertices, ComPtr<ID3D11Buffer>& vertexBuffer);
+
+        bool CreateIndexBuffer(std::vector<size_t>& indices, ComPtr<ID3D11Buffer>& idxBuffer);
     };
+
+    template <class T>
+    bool D3Device::CreateVertexBuffer(std::vector<T>& vertices, ComPtr<ID3D11Buffer>& vertexBuffer)
+    {
+        if (vertices.size() == 0)
+            return false;
+
+        D3D11_BUFFER_DESC bd;
+        ZeroMemory(&bd, sizeof(D3D11_BUFFER_DESC));
+        bd.ByteWidth = sizeof(T) * (UINT)vertices.size();
+        bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+
+
+        D3D11_SUBRESOURCE_DATA sd;
+        ZeroMemory(&sd, sizeof(D3D11_SUBRESOURCE_DATA));
+        sd.pSysMem = &vertices.at(0);
+
+        HRESULT hr = m_d3dDevice->CreateBuffer(&bd, &sd, vertexBuffer.GetAddressOf());
+
+        return SUCCEEDED(hr);
+    }
 
 }  // namespace HBSoft

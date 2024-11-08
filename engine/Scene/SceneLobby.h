@@ -9,13 +9,14 @@ date: 2024-11-04
 #pragma once
 #include "Scene.h"
 #include "Camera.h"
+#include "Object3D.h"
 
 namespace HBSoft
 {
     class SceneLobby : public Scene
     {
     public:
-        Object2D test;
+        Object3D test;
 
 
     public:

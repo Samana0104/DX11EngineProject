@@ -43,6 +43,9 @@
     <Filter Include="Asset\Texture">
       <UniqueIdentifier>{470eddf9-7644-45b3-ae55-dfe9770dd500}</UniqueIdentifier>
     </Filter>
+    <Filter Include="hlsl">
+      <UniqueIdentifier>{7bc20a05-7cf0-4ec4-bb42-315d2ffdc475}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\D3Device.cpp">
@@ -134,6 +137,15 @@
     </ClCompile>
     <ClCompile Include="Asset\Mesh\Sphere2D.cpp">
       <Filter>Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Mesh\Box3D.cpp">
+      <Filter>Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Object3D.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Transform3D.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -260,8 +272,28 @@
     <ClInclude Include="Asset\Mesh\Sphere2D.h">
       <Filter>Asset\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="ConstantBuffers.h">
+      <Filter>Asset\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Mesh\Box3D.h">
+      <Filter>Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Object3D.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.clang-format" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\res\Shader\PixelShader.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\VertexShader.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\HBStd.hlsli">
+      <Filter>hlsl</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

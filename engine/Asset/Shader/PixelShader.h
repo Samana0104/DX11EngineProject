@@ -13,7 +13,7 @@ namespace HBSoft
 {
     class PixelShader : public Shader
     {
-    private:
+    public:
         ComPtr<ID3D11PixelShader> m_pixelShader;
 
     private:

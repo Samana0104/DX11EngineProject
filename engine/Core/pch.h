@@ -59,11 +59,11 @@ date: 2024-11-07
 using namespace Microsoft::WRL;
 using namespace glm;
 
+#include "MgrTemplate.h"
 #include "HRect.h"
 #include "HPoint.h"
 #include "Window.h"
 #include "D3Device.h"
 #include "CoreAPI.h"
 #include "Singleton.h"
-#include "MgrTemplate.h"
 #include "Scene.h"

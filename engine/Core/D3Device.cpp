@@ -21,6 +21,26 @@ glm::vec2 D3Device::GetViewportSize() const
     return {m_viewPort.Width, m_viewPort.Height};
 }
 
+bool D3Device::CreateIndexBuffer(std::vector<size_t>& indices, ComPtr<ID3D11Buffer>& idxBuffer)
+{
+    if (indices.size() <= 0)
+        return true;
+
+    D3D11_BUFFER_DESC bd;
+    ZeroMemory(&bd, sizeof(D3D11_BUFFER_DESC));
+    bd.ByteWidth = sizeof(size_t) * (UINT)indices.size();
+    bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+
+
+    D3D11_SUBRESOURCE_DATA sd;
+    ZeroMemory(&sd, sizeof(D3D11_SUBRESOURCE_DATA));
+    sd.pSysMem = &indices.at(0);
+
+    HRESULT hr = m_d3dDevice->CreateBuffer(&bd, &sd, idxBuffer.GetAddressOf());
+
+    return SUCCEEDED(hr);
+}
+
 bool D3Device::CreateDevice()
 {
     if (!CreateDeviceAndSwapChain())

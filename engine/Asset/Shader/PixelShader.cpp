@@ -28,7 +28,7 @@ bool PixelShader::CreateShader(std::shared_ptr<D3Device>& device)
 
     hr = D3DCompileFromFile(m_path.c_str(),
                             nullptr,
-                            nullptr,
+                            D3D_COMPILE_STANDARD_FILE_INCLUDE,
                             m_shaderDesc.m_shaderEntry.c_str(),
                             "ps_5_0",  // dx11 정점쉐이더 컴파일러
                             compileFlags,

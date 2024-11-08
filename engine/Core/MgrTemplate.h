@@ -13,14 +13,14 @@ namespace HBSoft
 
     // 템플릿을 축약하기 위해 작성
 
-    template <typename V, typename K = std::wstring, typename Alloc = std::map<K, std::unique_ptr<V>>>
+    template <typename V, typename K = std::wstring, typename Alloc = std::map<K, std::shared_ptr<V>>>
     class MgrTemplate
     {
     private:
         Alloc m_resourceDatas;
 
     public:
-        bool Add(const K& key, std::unique_ptr<V> value);
+        bool Add(const K& key, std::shared_ptr<V> value);
         bool Delete(const K key);
         bool IsKeyContained(const K key) const;
 
@@ -31,8 +31,8 @@ namespace HBSoft
         */
         typename Alloc& GetAll();
 
-        const std::unique_ptr<V>& Get(const K key);
-        const std::unique_ptr<V>& operator[](const K key);
+        const std::shared_ptr<V>& Get(const K key);
+        const std::shared_ptr<V>& operator[](const K key);
     };
 
     /*
@@ -40,7 +40,7 @@ namespace HBSoft
     */
 
     TEMPLATE_VKA
-    bool MgrTemplate<V, K, A>::Add(const K& key, std::unique_ptr<V> value)
+    bool MgrTemplate<V, K, A>::Add(const K& key, std::shared_ptr<V> value)
     {
         return m_resourceDatas.insert(std::make_pair(key, std::move(value))).second;
     }
@@ -68,7 +68,7 @@ namespace HBSoft
     }
 
     TEMPLATE_VKA
-    const std::unique_ptr<V>& MgrTemplate<V, K, A>::Get(const K key)
+    const std::shared_ptr<V>& MgrTemplate<V, K, A>::Get(const K key)
     {
         return m_resourceDatas.at(key);
     }
@@ -80,7 +80,7 @@ namespace HBSoft
     }
 
     TEMPLATE_VKA
-    const std::unique_ptr<V>& MgrTemplate<V, K, A>::operator[](const K key)
+    const std::shared_ptr<V>& MgrTemplate<V, K, A>::operator[](const K key)
     {
         return m_resourceDatas[key];
     }

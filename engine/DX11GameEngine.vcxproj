@@ -22,6 +22,7 @@
     <ClCompile Include="Asset\AssetsMgr.cpp" />
     <ClCompile Include="Asset\Font\Font.cpp" />
     <ClCompile Include="Asset\Mesh\Box2D.cpp" />
+    <ClCompile Include="Asset\Mesh\Box3D.cpp" />
     <ClCompile Include="Asset\Mesh\Circle2D.cpp" />
     <ClCompile Include="Asset\Mesh\Mesh.cpp" />
     <ClCompile Include="Asset\Mesh\MeshHandler.cpp" />
@@ -46,8 +47,10 @@
     <ClCompile Include="Object\Button.cpp" />
     <ClCompile Include="Object\Camera.cpp" />
     <ClCompile Include="Object\Object2D.cpp" />
+    <ClCompile Include="Object\Object3D.cpp" />
     <ClCompile Include="Object\Pawn.cpp" />
     <ClCompile Include="Object\Transform2D.cpp" />
+    <ClCompile Include="Object\Transform3D.cpp" />
     <ClCompile Include="Scene\SceneLobby.cpp" />
     <ClCompile Include="Scene\SceneMgr.cpp" />
     <ClCompile Include="Timer\SystemTimer.cpp" />
@@ -57,6 +60,7 @@
     <ClInclude Include="Asset\DefaultResource.h" />
     <ClInclude Include="Asset\Font\Font.h" />
     <ClInclude Include="Asset\Mesh\Box2D.h" />
+    <ClInclude Include="Asset\Mesh\Box3D.h" />
     <ClInclude Include="Asset\Mesh\Circle2D.h" />
     <ClInclude Include="Asset\Mesh\Mesh.h" />
     <ClInclude Include="Asset\Mesh\MeshHandler.h" />
@@ -67,6 +71,7 @@
     <ClInclude Include="Asset\Sound\FmodSystem.h" />
     <ClInclude Include="Asset\Sound\HSound.h" />
     <ClInclude Include="Asset\Texture\Texture.h" />
+    <ClInclude Include="ConstantBuffers.h" />
     <ClInclude Include="Core\D3Device.h" />
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Core\CoreAPI.h" />
@@ -86,6 +91,7 @@
     <ClInclude Include="Object\Button.h" />
     <ClInclude Include="Object\Camera.h" />
     <ClInclude Include="Object\Object2D.h" />
+    <ClInclude Include="Object\Object3D.h" />
     <ClInclude Include="Object\Pawn.h" />
     <ClInclude Include="Object\Renderable.h" />
     <ClInclude Include="Object\Transform2D.h" />
@@ -97,6 +103,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.clang-format" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\res\Shader\HBStd.hlsli" />
+    <FxCompile Include="..\res\Shader\PixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <DisableOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DisableOptimizations>
+      <EnableDebuggingInformation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</EnableDebuggingInformation>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\VertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <DisableOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DisableOptimizations>
+      <EnableDebuggingInformation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</EnableDebuggingInformation>
+    </FxCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -208,7 +227,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Color\;$(ProjectDir)Core\;$(ProjectDir)DesignPattern\;$(ProjectDir)FSM\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Object\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\Font\;$(ProjectDir)Asset\Mesh\;$(ProjectDir)Asset\Shader\;$(ProjectDir)Asset\Sound\;$(ProjectDir)Asset\Texture\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)res\Shader;$(ProjectDir)Color\;$(ProjectDir)Core\;$(ProjectDir)DesignPattern\;$(ProjectDir)FSM\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Object\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\Font\;$(ProjectDir)Asset\Mesh\;$(ProjectDir)Asset\Shader\;$(ProjectDir)Asset\Sound\;$(ProjectDir)Asset\Texture\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
