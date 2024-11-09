@@ -2,8 +2,8 @@
 author : 변한빛
 description : 버텍스 쉐이더를 정의하기 위한 소스 파일
 
-version: 1.0.0
-date: 2024-11-04
+version: 1.0.3
+date: 2024-11-09
 */
 
 #include "pch.h"
@@ -22,10 +22,11 @@ bool VertexShader::CreateVertexShader(std::shared_ptr<D3Device>& device)
     HRESULT          hr;
     ComPtr<ID3DBlob> errorMsg;
 
-    UINT compileFlags;
+    UINT compileFlags = D3DCOMPILE_ENABLE_STRICTNESS;
 #if defined(DEBUG) || defined(_DEBUG)
-    compileFlags = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
+    compileFlags |= D3DCOMPILE_DEBUG;
 #endif
+
     hr = D3DCompileFromFile(m_path.c_str(),
                             nullptr,
                             D3D_COMPILE_STANDARD_FILE_INCLUDE,

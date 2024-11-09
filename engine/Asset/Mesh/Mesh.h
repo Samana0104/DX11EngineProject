@@ -33,7 +33,7 @@ namespace HBSoft
     public:
         std::wstring        m_textureName;   // 텍스쳐 담을 배열
         std::vector<Vertex> m_vertices;      // 버텍스 버퍼용 배열
-        std::vector<size_t> m_indices;       // 인덱스  버퍼용 배열
+        std::vector<UINT> m_indices;       // 인덱스  버퍼용 배열
         std::vector<mat4>   m_animationMat;  // 애니메이션 저장용 행렬
 
         std::shared_ptr<Mesh>              m_partentMesh;

@@ -21,14 +21,14 @@ glm::vec2 D3Device::GetViewportSize() const
     return {m_viewPort.Width, m_viewPort.Height};
 }
 
-bool D3Device::CreateIndexBuffer(std::vector<size_t>& indices, ComPtr<ID3D11Buffer>& idxBuffer)
+bool D3Device::CreateIndexBuffer(std::vector<UINT>& indices, ComPtr<ID3D11Buffer>& idxBuffer)
 {
     if (indices.size() <= 0)
         return true;
 
     D3D11_BUFFER_DESC bd;
     ZeroMemory(&bd, sizeof(D3D11_BUFFER_DESC));
-    bd.ByteWidth = sizeof(size_t) * (UINT)indices.size();
+    bd.ByteWidth = sizeof(UINT) * (UINT)indices.size();
     bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
 
 
@@ -52,6 +52,15 @@ bool D3Device::CreateDevice()
     if (!CreateSamplerState())
         return false;
 
+    if (!CreateDepthStencilState())
+        return false;
+
+    if (!CreateDepthStencilView())
+        return false;
+
+    if (!CreateRSState())
+        return false;
+
     if (!SetAlphaBlendingState())
         return false;
 
@@ -62,7 +71,6 @@ bool D3Device::CreateDevice()
 void D3Device::OnWm_size(UINT width, UINT height)
 {
     /* 해상도 자동 변경 이벤트 */
-    m_context->OMSetRenderTargets(0, nullptr, nullptr);
     m_context->Flush();
 
     m_context->Release();
@@ -161,8 +169,73 @@ bool D3Device::CreateSamplerState()
         return false;
 
     // 샘플러 상태를 파이프라인에 바인딩
-    m_context->PSSetSamplers(0, 1, m_samplerState.GetAddressOf());
+    //m_context->PSSetSamplers(0, 1, m_samplerState.GetAddressOf());
     return true;
+}
+
+bool D3Device::CreateRSState()
+{
+    HRESULT               hr;
+	D3D11_RASTERIZER_DESC rd;
+
+	ZeroMemory(&rd, sizeof(rd));
+	rd.FillMode= D3D11_FILL_SOLID;
+	rd.CullMode= D3D11_CULL_BACK; // backface culling
+	rd.DepthClipEnable = TRUE;
+
+	hr = m_d3dDevice->CreateRasterizerState(&rd, m_rsState.GetAddressOf());
+
+	//rd.FillMode = D3D11_FILL_WIREFRAME;
+	//hr = TDevice::m_pd3dDevice->CreateRasterizerState(&rd, m_pRSWireFrame.GetAddressOf());
+	//if (FAILED(hr)) return hr;
+    return SUCCEEDED(hr);
+}
+
+bool D3Device::CreateDepthStencilState()
+{
+    HRESULT                  hr;
+	D3D11_DEPTH_STENCIL_DESC dsDesc;
+
+	ZeroMemory(&dsDesc, sizeof(dsDesc));
+    {
+        dsDesc.DepthEnable    = TRUE;
+        dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+        dsDesc.DepthFunc      = D3D11_COMPARISON_LESS_EQUAL;
+    }
+	hr = m_d3dDevice->CreateDepthStencilState(&dsDesc, m_dsState.GetAddressOf());
+
+	return SUCCEEDED(hr);
+}
+
+bool D3Device::CreateDepthStencilView()
+{
+	HRESULT hr;
+	ComPtr<ID3D11Texture2D> tex;
+    D3D11_TEXTURE2D_DESC    td;
+
+	ZeroMemory(&td, sizeof(td));
+
+	td.Width = m_swapChainDesc.BufferDesc.Width;
+	td.Height= m_swapChainDesc.BufferDesc.Height;
+	td.MipLevels =1;
+	td.ArraySize = 1;
+	td.Format = DXGI_FORMAT_R24G8_TYPELESS; // D,S
+	td.SampleDesc.Count = 1;
+	td.Usage = D3D11_USAGE_DEFAULT;
+	td.BindFlags = D3D11_BIND_DEPTH_STENCIL;	
+
+	hr = m_d3dDevice->CreateTexture2D(&td, nullptr, tex.GetAddressOf());
+    if (FAILED(hr))
+        return false;
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc;
+	ZeroMemory(&dsvDesc, sizeof(dsvDesc));
+	dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	dsvDesc.ViewDimension= D3D11_DSV_DIMENSION_TEXTURE2D;
+	//dsvd.Texture2D.MipSlice  -> ShaderResourceView에서 사용됨.
+
+	hr = m_d3dDevice->CreateDepthStencilView(tex.Get(), &dsvDesc, m_dsv.GetAddressOf());
+    return SUCCEEDED(hr);
 }
 
 bool D3Device::SetAlphaBlendingState()

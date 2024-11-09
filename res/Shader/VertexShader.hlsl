@@ -12,7 +12,7 @@ cbuffer ModelViewProj : register(b0)
 PSInput main(VSInput vsIn)
 {
     PSInput psIn = (PSInput) 0;
-    psIn.p = float4(vsIn.p, 1);
+    psIn.p = float4(vsIn.p.xy, 0, 1);
     psIn.n = float4(vsIn.n, 0);
     psIn.c = vsIn.c;
     psIn.t = vsIn.t;

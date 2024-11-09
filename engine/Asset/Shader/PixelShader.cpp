@@ -2,8 +2,8 @@
 author : 변한빛
 description : 픽셀 쉐이더의 기본 정의를 하기 위해 만든 소스 파일
 
-version: 1.0.0
-date: 2024-11-04
+version: 1.0.3
+date: 2024-11-09
 */
 
 #include "pch.h"
@@ -21,9 +21,9 @@ bool PixelShader::CreateShader(std::shared_ptr<D3Device>& device)
     HRESULT          hr;
     ComPtr<ID3DBlob> errorMsg;
 
-    UINT compileFlags;
+    UINT compileFlags = D3DCOMPILE_ENABLE_STRICTNESS;
 #if defined(DEBUG) || defined(_DEBUG)
-    compileFlags = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
+    compileFlags |= D3DCOMPILE_DEBUG;
 #endif
 
     hr = D3DCompileFromFile(m_path.c_str(),
@@ -42,10 +42,10 @@ bool PixelShader::CreateShader(std::shared_ptr<D3Device>& device)
         return false;
     }
 
-    device->m_d3dDevice->CreatePixelShader(m_shaderByteCode->GetBufferPointer(),
-                                           m_shaderByteCode->GetBufferSize(),
-                                           nullptr,
-                                           m_pixelShader.GetAddressOf());
+    hr = device->m_d3dDevice->CreatePixelShader(m_shaderByteCode->GetBufferPointer(),
+                                                m_shaderByteCode->GetBufferSize(),
+                                                nullptr,
+                                                m_pixelShader.GetAddressOf());
 
     return SUCCEEDED(hr);
 }

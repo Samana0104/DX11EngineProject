@@ -22,6 +22,9 @@ namespace HBSoft
         ComPtr<ID3D11BlendState>       m_alphaBlend;
         ComPtr<ID3D11SamplerState>     m_samplerState;
         ComPtr<IDXGISwapChain>         m_swapChain;
+        ComPtr<ID3D11RasterizerState>  m_rsState;
+        ComPtr<ID3D11DepthStencilState> m_dsState;
+        ComPtr<ID3D11DepthStencilView>  m_dsv;
 
         D3D11_VIEWPORT          m_viewPort;
         DXGI_SWAP_CHAIN_DESC    m_swapChainDesc;
@@ -34,6 +37,9 @@ namespace HBSoft
         bool CreateDeviceAndSwapChain();
         bool CreateRenderTargetView();
         bool CreateSamplerState();
+        bool CreateRSState();
+        bool CreateDepthStencilState();
+        bool CreateDepthStencilView();
         void CreateViewport();
         bool SetAlphaBlendingState();
 
@@ -46,7 +52,7 @@ namespace HBSoft
         template <class T>
         bool CreateVertexBuffer(std::vector<T>& vertices, ComPtr<ID3D11Buffer>& vertexBuffer);
 
-        bool CreateIndexBuffer(std::vector<size_t>& indices, ComPtr<ID3D11Buffer>& idxBuffer);
+        bool CreateIndexBuffer(std::vector<UINT>& indices, ComPtr<ID3D11Buffer>& idxBuffer);
     };
 
     template <class T>
