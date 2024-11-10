@@ -17,10 +17,20 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     // #endif
 
     HBSoft::Core::Create(hInstance, {1280, 720});
-    auto lobbyScene = std::make_unique<HBSoft::SceneLobby>();
-    HENGINE->m_sceneMgr.Add(L"Lobby", std::move(lobbyScene));
+
+    /*
+		Scene begin
+		씬 등록은 이 이후로 작성할 것
+    */
+    auto lobbyScene = std::make_shared<HBSoft::SceneLobby>();
+    HENGINE->m_sceneMgr.Add(L"Lobby", lobbyScene);
     HENGINE->m_sceneMgr.SetCurrentScene(L"Lobby");
     HENGINE->Run();
+	/*
+		Scene end
+		여기 안에 작성할 것
+    */
+
 
     // #ifdef DEBUG
     //     _CrtCheckMemory();  // 메모리 누수 확인용

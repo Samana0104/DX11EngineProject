@@ -7,21 +7,28 @@ date: 2024-11-04
 */
 
 #pragma once
-#include "Object2D.h"
+#include "Object3D.h"
 
 namespace HBSoft
 {
-    class Camera
+    class Camera : public Object3D
     {
-    public:
-        Transform2D m_transform;
+    private:
+        float m_fov;
+        float m_projNear;
+        float m_projFar; // near에 왜 디파인 걸려있는거야
+
+        // 설마 카메라에 스케일 값 주는 미친 사람 없겠지?
+        // 줌인 줌아웃 따로 만들었으니 스케일 조정하지 마시오
 
     public:
-        const mat3 GetViewMat() const;
+        Camera(float fov, float projNear, float projFar);
+        const mat4 GetViewMat() const;
+        const mat4 GetProjMat() const;
 
         void ZoomIn(const float scale);
         void ZoomOut(const float scale);
 
-        void LookAtObject(Object2D& obj);
+        void LookAtObject(Object3D& obj);
     };
 }  // namespace HBSoft

@@ -108,16 +108,16 @@ bool AssetsMgr::CreateShader(const wstringV path)
     if (IsShaderFormat(fileExt))
     {
         SHADER_KEY shaderKey  = fileName + fileExt;
-        auto&      shaderDesc = g_defaultShaders.at(shaderKey);
+        auto&      shaderType = g_defaultShaders.at(shaderKey);
 
-        if (shaderDesc.m_shaderType == ShaderType::VERTEX)
+        if (shaderType == ShaderType::VERTEX)
         {
-            std::shared_ptr<Shader> shader = std::make_shared<VertexShader>(m_device, path, shaderDesc);
+            std::shared_ptr<Shader> shader = std::make_shared<VertexShader>(m_device, path, shaderType);
             m_shaders.Add(shaderKey, std::move(shader));
         }
-        else if (shaderDesc.m_shaderType == ShaderType::PIXEL)
+        else if (shaderType == ShaderType::PIXEL)
         {
-            std::shared_ptr<Shader> shader = std::make_shared<PixelShader>(m_device, path, shaderDesc);
+            std::shared_ptr<Shader> shader = std::make_shared<PixelShader>(m_device, path, shaderType);
             m_shaders.Add(shaderKey, std::move(shader));
         }
 

@@ -11,11 +11,11 @@ date: 2024-11-04
 #include "Shader.h"
 using namespace HBSoft;
 
-Shader::Shader(const wstringV path, const ShaderDesc& desc)
-    : m_shaderDesc(desc), m_path(path)
+Shader::Shader(const wstringV path, const ShaderType& type)
+    : m_shaderType(type), m_path(path)
 {}
 
-const ShaderDesc& Shader::GetShaderDesc() const
+const ShaderType& Shader::GetShaderType() const
 {
-    return m_shaderDesc;
+    return m_shaderType;
 }

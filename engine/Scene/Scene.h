@@ -22,7 +22,6 @@ namespace HBSoft
 
         virtual void Render()                = 0;
         virtual void Release()               = 0;
-        virtual void Reset()                 = 0;
         virtual void Start()                 = 0;
         virtual void End()                   = 0;
         virtual void Update(float deltaTime) = 0;

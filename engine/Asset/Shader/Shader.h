@@ -14,15 +14,8 @@ namespace HBSoft
 {
     enum class ShaderType
     {
-        NOTHING = 0,
         VERTEX  = 1,
         PIXEL,
-    };
-
-    struct ShaderDesc
-    {
-        ShaderType  m_shaderType;
-        std::string m_shaderEntry;
     };
 
     class Shader
@@ -31,15 +24,15 @@ namespace HBSoft
         ComPtr<ID3DBlob> m_shaderByteCode;
 
         std::wstring m_path;
-        ShaderDesc   m_shaderDesc;
+        ShaderType   m_shaderType;
 
 
     protected:
-        Shader(const wstringV path, const ShaderDesc& desc);
+        Shader(const wstringV path, const ShaderType& type);
 
     public:
         virtual bool CreateShader(std::shared_ptr<D3Device>& device) = 0;
 
-        const ShaderDesc& GetShaderDesc() const;
+        const ShaderType& GetShaderType() const;
     };
 }  // namespace HBSoft

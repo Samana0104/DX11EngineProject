@@ -10,22 +10,28 @@ date: 2024-11-04
 #include "Camera.h"
 using namespace HBSoft;
 
-const mat3 Camera::GetViewMat() const
+const mat4 Camera::GetViewMat() const
 {
-    return m_transform.GetViewMat();
+    return glm::inverse(m_transform.GetWorldMat());
+}
+
+const mat4 Camera::GetProjMat() const
+{
+    HPoint windowSize = HWINDOW->GetSize();
+
+    // directx를 위한 z 0 ~ 1 행렬을 만들어주는 함수
+    mat4 projMat = glm::perspectiveFovLH_ZO(m_fov, windowSize.x, windowSize.y, m_projNear, m_projFar);
+    return projMat;
 }
 
 void Camera::ZoomIn(const float scale)
 {
-    m_transform.AddScale({-scale, -scale});
 }
 
 void Camera::ZoomOut(const float scale)
 {
-    m_transform.AddScale({scale, scale});
 }
 
-void Camera::LookAtObject(Object2D& obj)
+void Camera::LookAtObject(Object3D& obj)
 {
-    m_transform.SetLocation(obj.m_transform.GetLocation());
 }

@@ -17,7 +17,7 @@ namespace HBSoft
     {
     public:
         Object3D test;
-
+        Camera   cameraTest;
 
     public:
         SceneLobby();

@@ -11,8 +11,8 @@ date: 2024-11-09
 using namespace HBSoft;
 
 VertexShader::VertexShader(std::shared_ptr<D3Device>& device, const wstringV path,
-                           const ShaderDesc& desc)
-    : Shader(path, desc)
+                           const ShaderType& type)
+    : Shader(path, type)
 {
     assert(CreateShader(device));
 }
@@ -30,7 +30,7 @@ bool VertexShader::CreateVertexShader(std::shared_ptr<D3Device>& device)
     hr = D3DCompileFromFile(m_path.c_str(),
                             nullptr,
                             D3D_COMPILE_STANDARD_FILE_INCLUDE,
-                            m_shaderDesc.m_shaderEntry.c_str(),
+                            "main",
                             "vs_5_0",  // dx11 정점쉐이더 컴파일러
                             compileFlags,
                             0,
@@ -63,14 +63,14 @@ bool VertexShader::CreateIALayout(std::shared_ptr<D3Device>& device)
                     (void**)&pReflector);
 
     // 셰이더 디스크립션 가져오기
-    D3D11_SHADER_DESC shaderDesc;
-    pReflector->GetDesc(&shaderDesc);
+    D3D11_SHADER_DESC ShaderType;
+    pReflector->GetDesc(&ShaderType);
 
     // Input Layout을 구성하기 위한 요소 정의
     std::vector<D3D11_INPUT_ELEMENT_DESC> inputLayoutDesc;
 
     // 입력 요소 순회
-    for (UINT i = 0; i < shaderDesc.InputParameters; ++i)
+    for (UINT i = 0; i < ShaderType.InputParameters; ++i)
     {
         D3D11_SIGNATURE_PARAMETER_DESC paramDesc;
         pReflector->GetInputParameterDesc(i, &paramDesc);

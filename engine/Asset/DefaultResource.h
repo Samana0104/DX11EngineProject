@@ -53,15 +53,15 @@ namespace HBSoft
     };
 
     /*
-            struct ShaderDesc
+            struct ShaderType
             {
                 ShaderType		m_shaderType;
                 std::string		m_shaderEntry;
             };
     */
 
-    inline static const std::map<SHADER_KEY, ShaderDesc> g_defaultShaders = {
-        {L"VertexShader.hlsl", {ShaderType::VERTEX, "main"}},
-        { L"PixelShader.hlsl",  {ShaderType::PIXEL, "main"}}
+    inline static const std::map<SHADER_KEY, ShaderType> g_defaultShaders = {
+        {L"VertexShader.hlsl", ShaderType::VERTEX},
+        { L"PixelShader.hlsl",  ShaderType::PIXEL}
     };
 }  // namespace HBSoft

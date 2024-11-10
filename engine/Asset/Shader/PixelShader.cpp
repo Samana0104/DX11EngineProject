@@ -10,8 +10,8 @@ date: 2024-11-09
 #include "PixelShader.h"
 using namespace HBSoft;
 
-PixelShader::PixelShader(std::shared_ptr<D3Device>& device, const wstringV path, const ShaderDesc& desc)
-    : Shader(path, desc)
+PixelShader::PixelShader(std::shared_ptr<D3Device>& device, const wstringV path, const ShaderType& type)
+    : Shader(path, type)
 {
     assert(CreateShader(device));
 }
@@ -29,7 +29,7 @@ bool PixelShader::CreateShader(std::shared_ptr<D3Device>& device)
     hr = D3DCompileFromFile(m_path.c_str(),
                             nullptr,
                             D3D_COMPILE_STANDARD_FILE_INCLUDE,
-                            m_shaderDesc.m_shaderEntry.c_str(),
+                            "main",
                             "ps_5_0",  // dx11 정점쉐이더 컴파일러
                             compileFlags,
                             0,

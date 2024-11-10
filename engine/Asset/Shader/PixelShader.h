@@ -20,6 +20,6 @@ namespace HBSoft
         virtual bool CreateShader(std::shared_ptr<D3Device>& device);
 
     public:
-        PixelShader(std::shared_ptr<D3Device>& device, const wstringV path, const ShaderDesc& desc);
+        PixelShader(std::shared_ptr<D3Device>& device, const wstringV path, const ShaderType& type);
     };
 }  // namespace HBSoft

@@ -3,7 +3,7 @@ author : 변한빛
 description : Precompile header 기능을 사용하기 위해 만든 헤더파일
 
 version: 1.0.1
-date: 2024-11-07
+date: 2024-11-09
 */
 
 #pragma once
@@ -34,6 +34,14 @@ date: 2024-11-07
 #include <tchar.h>
 #include <atlconv.h>
 #include "glm/glm.hpp"
+#include "glm/ext.hpp"
+#include "glm/ext/matrix_transform.hpp"
+#include <glm/ext/quaternion_float.hpp>
+#include <glm/ext/quaternion_common.hpp>
+#include <glm/ext/quaternion_transform.hpp>
+#include <glm/ext/quaternion_geometric.hpp>
+#include <glm/ext/quaternion_trigonometric.hpp>
+#include <glm/ext/quaternion_exponential.hpp>
 #include "fmod/fmod.hpp"
 #include "DirectXTK/WICTextureLoader.h"
 

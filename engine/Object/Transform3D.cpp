@@ -60,3 +60,8 @@ Transform3D& Transform3D::SetScale(const vec3 scale)
 {
     return *this;
 }
+
+const mat4& Transform3D::GetWorldMat() const
+{
+    return m_worldMat;
+}

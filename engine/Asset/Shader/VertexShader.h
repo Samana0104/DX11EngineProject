@@ -24,6 +24,6 @@ namespace HBSoft
         virtual bool CreateShader(std::shared_ptr<D3Device>& device) override;
 
     public:
-        VertexShader(std::shared_ptr<D3Device>& device, const wstringV path, const ShaderDesc& desc);
+        VertexShader(std::shared_ptr<D3Device>& device, const wstringV path, const ShaderType& type);
     };
 }  // namespace HBSoft
