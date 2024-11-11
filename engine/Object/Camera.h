@@ -14,14 +14,18 @@ namespace HBSoft
     class Camera : public Object3D
     {
     private:
-        float m_fov;
+        float m_fov;  // radian angle
         float m_projNear;
-        float m_projFar; // near에 왜 디파인 걸려있는거야
+        float m_projFar;  // near에 왜 디파인 걸려있는거야
 
         // 설마 카메라에 스케일 값 주는 미친 사람 없겠지?
         // 줌인 줌아웃 따로 만들었으니 스케일 조정하지 마시오
 
     public:
+        /*
+            param : fov -> fov angle(radian) | projNear -> 최소 거리 | projFar -> 최대 거리
+            description : fov값 라디안임 주의
+        */
         Camera(float fov, float projNear, float projFar);
         const mat4 GetViewMat() const;
         const mat4 GetProjMat() const;

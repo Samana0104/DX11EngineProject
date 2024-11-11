@@ -12,14 +12,6 @@ using namespace HBSoft;
 
 void Object3D::Update(const float deltaTime)
 {
-    static float test  = 0;
-    test              += deltaTime;
-
-    m_transform.SetLocation({3, 3, 3});
-    // m_cb.model = glm::scale(glm::mat4(1.f), glm::vec3(0.5f, 0.5f, 0.5f));
-    m_cb.model = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, 4.f));
-    m_cb.model = glm::rotate(m_cb.model, test, vec3(0.f, 1.f, 0.f));
-    // m_cb.model = glm::rotate(m_cb.model, cos(test), vec3(0.f, 1.f, 0.f));
     m_cb.view = glm::mat4(1.f);
     m_cb.proj = glm::perspectiveFovLH_ZO(glm::radians(90.f),
                                          HWINDOW->GetSize().x,
@@ -27,6 +19,7 @@ void Object3D::Update(const float deltaTime)
                                          1.f,
                                          10000.f);
 
+    m_cb.model = m_transform.GetWorldMat();
     HASSET->m_shaders[m_vsShaderKey]->SetConstantBuffer(HDEVICE, (void*)&m_cb, sizeof(m_cb), 0);
 }
 

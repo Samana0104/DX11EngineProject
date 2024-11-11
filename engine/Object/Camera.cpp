@@ -26,7 +26,10 @@ const mat4 Camera::GetProjMat() const
     return projMat;
 }
 
-void Camera::ZoomIn(const float scale) {}
+void Camera::ZoomIn(const float scale)
+{
+    m_fov = glm::radians(scale);
+}
 
 void Camera::ZoomOut(const float scale) {}
 

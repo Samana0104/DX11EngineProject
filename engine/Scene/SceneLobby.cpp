@@ -11,11 +11,17 @@ date: 2024-11-04
 using namespace HBSoft;
 
 SceneLobby::SceneLobby()
-    : cameraTest(90, 1.f, 10000.f)
+    : cameraTest(glm::radians(90.f), 1.f, 10000.f)
 {}
 
 void SceneLobby::Update(float deltaTime)
 {
+    static float test2  = 0;
+    test2              += deltaTime;
+
+    test.m_transform.SetLocation({0.f, 0.f, 5.f});
+    test.m_transform.SetRotation({-1.f, 3.f, 5.f}, glm::radians(100 * test2));
+    test.m_transform.SetScale({1.f, 1.f, 1.f});
     test.Update(deltaTime);
 }
 
