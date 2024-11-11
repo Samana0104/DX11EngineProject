@@ -10,6 +10,8 @@ date: 2024-11-04
 #include "Camera.h"
 using namespace HBSoft;
 
+Camera::Camera(float fov, float projNear, float projFar) {}
+
 const mat4 Camera::GetViewMat() const
 {
     return glm::inverse(m_transform.GetWorldMat());
@@ -24,14 +26,8 @@ const mat4 Camera::GetProjMat() const
     return projMat;
 }
 
-void Camera::ZoomIn(const float scale)
-{
-}
+void Camera::ZoomIn(const float scale) {}
 
-void Camera::ZoomOut(const float scale)
-{
-}
+void Camera::ZoomOut(const float scale) {}
 
-void Camera::LookAtObject(Object3D& obj)
-{
-}
+void Camera::LookAtObject(Object3D& obj) {}

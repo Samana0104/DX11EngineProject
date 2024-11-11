@@ -16,13 +16,13 @@ namespace HBSoft
     class D3Device
     {
     public:
-        ComPtr<ID3D11Device>           m_d3dDevice;
-        ComPtr<ID3D11DeviceContext>    m_context;
-        ComPtr<ID3D11RenderTargetView> m_rtv;  // rtv = render target view
-        ComPtr<ID3D11BlendState>       m_alphaBlend;
-        ComPtr<ID3D11SamplerState>     m_samplerState;
-        ComPtr<IDXGISwapChain>         m_swapChain;
-        ComPtr<ID3D11RasterizerState>  m_rsState;
+        ComPtr<ID3D11Device>            m_d3dDevice;
+        ComPtr<ID3D11DeviceContext>     m_context;
+        ComPtr<ID3D11RenderTargetView>  m_rtv;  // rtv = render target view
+        ComPtr<ID3D11BlendState>        m_alphaBlend;
+        ComPtr<ID3D11SamplerState>      m_samplerState;
+        ComPtr<IDXGISwapChain>          m_swapChain;
+        ComPtr<ID3D11RasterizerState>   m_rsState;
         ComPtr<ID3D11DepthStencilState> m_dsState;
         ComPtr<ID3D11DepthStencilView>  m_dsv;
 

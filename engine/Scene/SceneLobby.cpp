@@ -10,9 +10,14 @@ date: 2024-11-04
 #include "SceneLobby.h"
 using namespace HBSoft;
 
-SceneLobby::SceneLobby() {}
+SceneLobby::SceneLobby()
+    : cameraTest(90, 1.f, 10000.f)
+{}
 
-void SceneLobby::Update(float deltaTime) {}
+void SceneLobby::Update(float deltaTime)
+{
+    test.Update(deltaTime);
+}
 
 void SceneLobby::Render()
 {
@@ -20,8 +25,6 @@ void SceneLobby::Render()
 }
 
 void SceneLobby::Release() {}
-
-void SceneLobby::Reset() {}
 
 void SceneLobby::Start() {}
 

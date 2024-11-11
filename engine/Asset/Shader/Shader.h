@@ -14,14 +14,15 @@ namespace HBSoft
 {
     enum class ShaderType
     {
-        VERTEX  = 1,
+        VERTEX = 1,
         PIXEL,
     };
 
     class Shader
     {
     protected:
-        ComPtr<ID3DBlob> m_shaderByteCode;
+        ComPtr<ID3DBlob>                  m_shaderByteCode;
+        std::vector<ComPtr<ID3D11Buffer>> m_constantBuffers;
 
         std::wstring m_path;
         ShaderType   m_shaderType;
@@ -31,7 +32,35 @@ namespace HBSoft
         Shader(const wstringV path, const ShaderType& type);
 
     public:
-        virtual bool CreateShader(std::shared_ptr<D3Device>& device) = 0;
+        /*
+            return : Pixelshader obj
+            description :
+                해당 쉐이더가 픽셀 쉐이더의 경우 픽셀 쉐이더 파일을 넘긴다.
+                단 버텍스 쉐이더의 경우 nullptr을 반환한다.
+        */
+        virtual ComPtr<ID3D11PixelShader> GetPixselShader() = 0;
+
+        /*
+            return : Vertexshader obj
+            description :
+                해당 쉐이더가 버텍스 쉐이더의 경우 버텍스 쉐이더 파일을 넘긴다.
+                단 픽셀 쉐이더의 경우 nullptr을 반환한다.
+        */
+        virtual ComPtr<ID3D11VertexShader> GetVertexShader() = 0;
+
+        /*
+            return : IALayout obj
+            description :
+                해당 쉐이더가 버텍스 쉐이더의 경우 인풋 레이아웃을 넘긴다.
+                단 픽셀 쉐이더의 경우 nullptr을 반환한다.
+        */
+        virtual ComPtr<ID3D11InputLayout> GetIALayout() = 0;
+
+        ComPtr<ID3D11Buffer>& GetConstantBuffer(const UINT constantIdx);
+        size_t                GetConstantCount() const;
+
+        void SetConstantBuffer(std::shared_ptr<D3Device> device, const void* data, const size_t dataSize,
+                               const UINT constantIdx);
 
         const ShaderType& GetShaderType() const;
     };

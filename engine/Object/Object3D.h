@@ -1,15 +1,16 @@
 /*
 author : 변한빛
-description : 2D상으로 그려질 오브젝트를 정의하기 위한 헤더 파일
+description : 3D상으로 그려질 오브젝트를 정의하기 위한 헤더 파일
 
-version: 1.0.0
-date: 2024-11-08
+version: 1.0.5
+date: 2024-11-11
 */
 
 #pragma once
 #include "Core.h"
 #include "Renderable.h"
 #include "Transform3D.h"
+#include "ConstantBuffers.h"
 
 namespace HBSoft
 {
@@ -32,6 +33,7 @@ namespace HBSoft
 
     public:
         Transform3D m_transform;
+        VSShaderCB  m_cb;
 
     public:
         Object3D()          = default;

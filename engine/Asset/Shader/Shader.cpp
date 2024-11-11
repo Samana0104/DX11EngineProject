@@ -15,6 +15,34 @@ Shader::Shader(const wstringV path, const ShaderType& type)
     : m_shaderType(type), m_path(path)
 {}
 
+ComPtr<ID3D11Buffer>& Shader::GetConstantBuffer(const UINT constantIdx)
+{
+    return m_constantBuffers[constantIdx];
+}
+
+size_t Shader::GetConstantCount() const
+{
+    return m_constantBuffers.size();
+}
+
+void Shader::SetConstantBuffer(std::shared_ptr<D3Device> device, const void* data, const size_t dataSize,
+                               const UINT constantIdx)
+{
+    if (m_constantBuffers.size() <= 0)
+        return;
+
+    D3D11_MAPPED_SUBRESOURCE ms;
+    HRESULT                  hr;
+
+    hr = device->m_context->Map(m_constantBuffers[constantIdx].Get(),
+                                NULL,
+                                D3D11_MAP_WRITE_DISCARD,
+                                NULL,
+                                &ms);
+    memcpy(ms.pData, data, dataSize);
+    device->m_context->Unmap(m_constantBuffers[constantIdx].Get(), NULL);
+}
+
 const ShaderType& Shader::GetShaderType() const
 {
     return m_shaderType;

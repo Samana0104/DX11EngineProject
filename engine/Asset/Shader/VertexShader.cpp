@@ -17,6 +17,21 @@ VertexShader::VertexShader(std::shared_ptr<D3Device>& device, const wstringV pat
     assert(CreateShader(device));
 }
 
+ComPtr<ID3D11PixelShader> VertexShader::GetPixselShader()
+{
+    return nullptr;
+}
+
+ComPtr<ID3D11VertexShader> VertexShader::GetVertexShader()
+{
+    return m_vertexShader;
+}
+
+ComPtr<ID3D11InputLayout> VertexShader::GetIALayout()
+{
+    return m_vertexLayout;
+}
+
 bool VertexShader::CreateVertexShader(std::shared_ptr<D3Device>& device)
 {
     HRESULT          hr;
@@ -24,7 +39,7 @@ bool VertexShader::CreateVertexShader(std::shared_ptr<D3Device>& device)
 
     UINT compileFlags = D3DCOMPILE_ENABLE_STRICTNESS;
 #if defined(DEBUG) || defined(_DEBUG)
-    compileFlags |= D3DCOMPILE_DEBUG;
+    compileFlags = compileFlags | D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
 #endif
 
     hr = D3DCompileFromFile(m_path.c_str(),
@@ -51,7 +66,7 @@ bool VertexShader::CreateVertexShader(std::shared_ptr<D3Device>& device)
     return SUCCEEDED(hr);
 }
 
-bool VertexShader::CreateIALayout(std::shared_ptr<D3Device>& device)
+bool VertexShader::CreateIALayoutAndConstantBuffer(std::shared_ptr<D3Device>& device)
 {
     HRESULT hr;
 
@@ -62,15 +77,18 @@ bool VertexShader::CreateIALayout(std::shared_ptr<D3Device>& device)
                     IID_ID3D11ShaderReflection,
                     (void**)&pReflector);
 
+    if (FAILED(hr))
+        return false;
+
     // 셰이더 디스크립션 가져오기
-    D3D11_SHADER_DESC ShaderType;
-    pReflector->GetDesc(&ShaderType);
+    D3D11_SHADER_DESC shaderDesc;
+    pReflector->GetDesc(&shaderDesc);
 
     // Input Layout을 구성하기 위한 요소 정의
     std::vector<D3D11_INPUT_ELEMENT_DESC> inputLayoutDesc;
 
     // 입력 요소 순회
-    for (UINT i = 0; i < ShaderType.InputParameters; ++i)
+    for (UINT i = 0; i < shaderDesc.InputParameters; ++i)
     {
         D3D11_SIGNATURE_PARAMETER_DESC paramDesc;
         pReflector->GetInputParameterDesc(i, &paramDesc);
@@ -132,7 +150,36 @@ bool VertexShader::CreateIALayout(std::shared_ptr<D3Device>& device)
                                                 m_shaderByteCode->GetBufferSize(),
                                                 m_vertexLayout.GetAddressOf());
 
-    return SUCCEEDED(hr);
+    if (FAILED(hr))
+        return false;
+
+    m_constantBuffers.resize(shaderDesc.ConstantBuffers);
+
+    // 1. Vertex Shader의 상수 버퍼 정보를 가져옴
+    for (UINT i = 0; i < shaderDesc.ConstantBuffers; ++i)
+    {
+        ID3D11ShaderReflectionConstantBuffer* pCB = pReflector->GetConstantBufferByIndex(i);
+        D3D11_SHADER_BUFFER_DESC              cbDesc;
+        pCB->GetDesc(&cbDesc);
+
+        D3D11_BUFFER_DESC bufferDesc = {};
+        bufferDesc.BindFlags         = D3D11_BIND_CONSTANT_BUFFER;
+        bufferDesc.ByteWidth         = cbDesc.Size;
+        bufferDesc.Usage             = D3D11_USAGE_DYNAMIC;
+        bufferDesc.CPUAccessFlags    = D3D11_CPU_ACCESS_WRITE;
+
+        ComPtr<ID3D11Buffer> constantBuffer = nullptr;
+        hr = device->m_d3dDevice->CreateBuffer(&bufferDesc, nullptr, constantBuffer.GetAddressOf());
+        D3D11_BUFFER_DESC buf;
+        constantBuffer->GetDesc(&buf);
+
+        if (FAILED(hr))
+            return false;
+
+        m_constantBuffers[i] = constantBuffer;
+    }
+
+    return true;
 }
 
 bool VertexShader::CreateShader(std::shared_ptr<D3Device>& device)
@@ -140,15 +187,8 @@ bool VertexShader::CreateShader(std::shared_ptr<D3Device>& device)
     if (!CreateVertexShader(device))
         return false;
 
-    if (!CreateIALayout(device))
+    if (!CreateIALayoutAndConstantBuffer(device))
         return false;
 
     return true;
 }
-
-// void VertexShader::SetUpConfiguration() const
-//{
-//     HDEVICE->m_context->IASetInputLayout(mVertexLayout.Get());
-//     HDEVICE->m_context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-//     HDEVICE->m_context->VSSetShader(mVertexShader.Get(), nullptr, 0);
-// }

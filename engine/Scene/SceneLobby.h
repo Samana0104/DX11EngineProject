@@ -7,9 +7,8 @@ date: 2024-11-04
 */
 
 #pragma once
-#include "Scene.h"
+#include "pch.h"
 #include "Camera.h"
-#include "Object3D.h"
 
 namespace HBSoft
 {
@@ -25,7 +24,6 @@ namespace HBSoft
         virtual void Update(float deltaTime) override;
         virtual void Render() override;
         virtual void Release() override;
-        virtual void Reset() override;
         virtual void Start() override;
         virtual void End() override;
     };

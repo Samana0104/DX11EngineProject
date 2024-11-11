@@ -18,12 +18,35 @@ namespace HBSoft
         ComPtr<ID3D11InputLayout>  m_vertexLayout;
 
     private:
+        bool CreateShader(std::shared_ptr<D3Device>& device);
         bool CreateVertexShader(std::shared_ptr<D3Device>& device);
-        bool CreateIALayout(std::shared_ptr<D3Device>& device);
-
-        virtual bool CreateShader(std::shared_ptr<D3Device>& device) override;
+        bool CreateIALayoutAndConstantBuffer(std::shared_ptr<D3Device>& device);
 
     public:
         VertexShader(std::shared_ptr<D3Device>& device, const wstringV path, const ShaderType& type);
+
+        /*
+        return : Pixelshader obj
+        description :
+            해당 쉐이더가 픽셀 쉐이더의 경우 픽셀 쉐이더 파일을 넘긴다.
+            단 버텍스 쉐이더의 경우 nullptr을 반환한다.
+    */
+        virtual ComPtr<ID3D11PixelShader> GetPixselShader() override;
+
+        /*
+            return : Vertexshader obj
+            description :
+                해당 쉐이더가 버텍스 쉐이더의 경우 버텍스 쉐이더 파일을 넘긴다.
+                단 픽셀 쉐이더의 경우 nullptr을 반환한다.
+        */
+        virtual ComPtr<ID3D11VertexShader> GetVertexShader() override;
+
+        /*
+            return : IALayout obj
+            description :
+                해당 쉐이더가 버텍스 쉐이더의 경우 인풋 레이아웃을 넘긴다.
+                단 픽셀 쉐이더의 경우 nullptr을 반환한다.
+        */
+        virtual ComPtr<ID3D11InputLayout> GetIALayout() override;
     };
 }  // namespace HBSoft
