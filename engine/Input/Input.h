@@ -50,7 +50,7 @@ namespace HBSoft
     public:
         Input(std::shared_ptr<Window>& window);
 
-        KeyState GetKeyState(const UINT _key) const;
+        KeyState GetKeyState(const UINT key) const;
         HPoint   GetMousePos() const;
 
         bool IsKeyUp(const UINT key) const;

@@ -49,15 +49,20 @@ date: 2024-11-09
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "dwrite.lib")
 #pragma comment(lib, "winmm.lib")
-
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "fmod/fmod_vc.lib")
-#pragma comment(lib, "glm/glm.lib")
 
 #ifdef _DEBUG
     #pragma comment(lib, "DirectXTK/DirectXTK_d.lib")
+    #pragma comment(lib, "glm/glm_d.lib")
+    #pragma comment(lib, "imgui/imguid.lib")
+    #pragma comment(lib, "network/network_d.lib")
+    #pragma comment(lib, "assimp/assimp-vc143-mtd")
 #else
     #pragma comment(lib, "DirectXTK/DirectXTK_r.lib")
+    #pragma comment(lib, "glm/glm.lib")
+    #pragma comment(lib, "imgui/imgui.lib")
+    #pragma comment(lib, "assimp/assimp-vc143-mt")
 #endif
 
 // ---------------------------------------
