@@ -31,6 +31,7 @@ namespace HBSoft
         SHADER_KEY  m_psShaderKey = L"PixelShader.hlsl";
         vec4        m_color       = {1.f, 1.f, 1.f, 1.f};
 
+
     public:
         Transform3D m_transform;
         VSShaderCB  m_cb;
@@ -42,12 +43,14 @@ namespace HBSoft
         void SetColor(const vec4 color);
         void SetTextureKey(const TEXTURE_KEY key);
         void SetMeshKey(const MESH_KEY key);
-        void SetShaderKey(const SHADER_KEY key);
+        void SetVSShaderKey(const SHADER_KEY key);
+        void SetPSShaderKey(const SHADER_KEY key);
 
         const vec4&        GetColor() const;
         const MESH_KEY&    GetMeshKey() const;
         const TEXTURE_KEY& GetTextureKey() const;
-        const SHADER_KEY&  GetShaderKey() const;
+        const SHADER_KEY&  GetVSShaderKey() const;
+        const SHADER_KEY&  GetPSShaderKey() const;
 
         virtual void Update(const float deltaTime);
         virtual void Render();

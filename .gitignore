@@ -3,6 +3,10 @@
 ################################################################################
 
 /.vs
-/exe
 /network/.vs/NetworkLib/v16
+/exe/debug/bin
+/exe/release/bin
+/exe/debug/*.pdb
+/exe/debug/*.cso
+/exe/debug/*.exe
 /x64/Debug/NetTest.pdb

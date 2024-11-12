@@ -37,7 +37,7 @@ void Core::Render()
     m_device->m_context->ClearRenderTargetView(m_device->m_rtv.Get(), clearColor);
     m_sceneMgr.Render();
     m_assets->m_fonts[L"DEBUG_FONT"]->DrawTexts(m_timer.m_csBuffer,
-                                                {10.f, 10.f, 300.f, 300.f},
+                                                {10.f, 10.f, 1000.f, 1000.f},
                                                 {1.f, 1.f, 1.f, 1.f});
     m_device->m_swapChain->Present(0, 0);
 }

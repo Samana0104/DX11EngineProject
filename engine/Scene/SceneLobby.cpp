@@ -16,17 +16,15 @@ SceneLobby::SceneLobby()
 
 void SceneLobby::Update(float deltaTime)
 {
-    static float test2  = 0;
-    test2              += deltaTime;
-
-    test.m_transform.SetLocation({0.f, 0.f, 5.f});
-    test.m_transform.SetRotation({-1.f, 3.f, 5.f}, glm::radians(100 * test2));
-    test.m_transform.SetScale({1.f, 1.f, 1.f});
     test.Update(deltaTime);
 }
 
 void SceneLobby::Render()
 {
+    HASSET->m_fonts[L"DEBUG_FONT"]->DrawTexts(L"し し し し し し し",
+                                              {40.f, 40.f, 1000.f, 1000.f},
+                                              {1.f, 1.f, 1.f, 1.f});
+
     test.Render();
 }
 

@@ -16,10 +16,7 @@ namespace HBSoft
     private:
         vec3 m_pos;
         vec3 m_scale;
-
-        vec3  m_rotateAxis;
-        float m_rotateAngle;  // radian angle
-
+        quat m_rtQuat;
         mat4 m_worldMat;
 
     private:
@@ -31,11 +28,14 @@ namespace HBSoft
         void         InitTransform();
         Transform3D& SetLocation(const vec3 pos);
 
+        Transform3D& AddRotation(const vec3 axis, const float radian);
+
         /*
             param : axis -> 회전 축 | radian -> 회전 할 라디안 값
             description : 해당 오브젝트를 회전 축 기준으로
         */
         Transform3D& SetRotation(const vec3 axis, const float radian);
+
         Transform3D& SetScale(const vec3 scale);
 
         const mat4& GetWorldMat() const;
