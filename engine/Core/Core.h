@@ -8,10 +8,8 @@ date: 2024-11-04
 
 #pragma once
 #include "pch.h"
-#include "SystemTimer.h"
 #include "SceneMgr.h"
 #include "AssetsMgr.h"
-#include "Input.h"
 
 #define HENGINE HBSoft::Core::engine
 #define HWINDOW HBSoft::Core::engine->m_window
@@ -42,6 +40,10 @@ namespace HBSoft
         Core(Core&&)                 = delete;
         Core& operator=(const Core&) = delete;
         Core& operator=(Core&&)      = delete;
+
+#ifdef _DEBUG
+        bool InitImGui();
+#endif
 
     protected:
         void Update();

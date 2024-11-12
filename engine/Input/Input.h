@@ -37,7 +37,10 @@ namespace HBSoft
         std::shared_ptr<Window> m_window;
 
         KeyState m_keyState[KEY_COUNT];
-        HPoint   m_mousePos = {0, 0};
+        HPoint   m_mousePos      = {0, 0};
+        HPoint   m_mouseDeltaPos = {0, 0};
+
+        bool m_isDrag = false;
 
     private:
         void UpdateKeyState(UINT key);
@@ -50,8 +53,9 @@ namespace HBSoft
     public:
         Input(std::shared_ptr<Window>& window);
 
-        KeyState GetKeyState(const UINT key) const;
-        HPoint   GetMousePos() const;
+        KeyState      GetKeyState(const UINT key) const;
+        const HPoint& GetMousePos() const;
+        const HPoint& GetDeltaMousePos() const;
 
         bool IsKeyUp(const UINT key) const;
         bool IsKeyDown(const UINT key) const;

@@ -87,9 +87,6 @@
     <ClCompile Include="Object\Object2D.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Pawn.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Object\Transform2D.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -192,9 +189,6 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Object\Object2D.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Pawn.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="EventHandler.h">

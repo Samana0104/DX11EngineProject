@@ -98,6 +98,8 @@ HWND Window::GetHandle() const
 
 LRESULT Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+    ImGui_ImplWin32_WndProcHandler(hwnd, uMsg, wParam, lParam);
+
     switch (uMsg)
     {
     case WM_ACTIVATE:

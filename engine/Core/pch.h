@@ -2,8 +2,8 @@
 author : 변한빛
 description : Precompile header 기능을 사용하기 위해 만든 헤더파일
 
-version: 1.0.1
-date: 2024-11-09
+version: 1.0.3
+date: 2024-11-12
 */
 
 #pragma once
@@ -72,11 +72,20 @@ date: 2024-11-09
 using namespace Microsoft::WRL;
 using namespace glm;
 
+// imgui는 디버그용
+#ifdef _DEBUG
+    #include "imgui.h"
+    #include "imgui_impl_win32.h"
+    #include "imgui_impl_dx11.h"
+#endif
+
 #include "MgrTemplate.h"
+#include "SystemTimer.h"
 #include "HRect.h"
 #include "HPoint.h"
 #include "Window.h"
 #include "D3Device.h"
+#include "Input.h"
 #include "CoreAPI.h"
 #include "Singleton.h"
 #include "Scene.h"

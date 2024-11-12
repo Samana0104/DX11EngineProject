@@ -7,7 +7,7 @@ date: 2024-11-11
 */
 
 #pragma once
-#include "pch.h"
+#include "glm/glm.hpp"
 
 namespace HBSoft
 {

@@ -19,16 +19,16 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     HBSoft::Core::Create(hInstance, {1280, 720});
 
     /*
-		Scene begin
-		씬 등록은 이 이후로 작성할 것
+        Scene begin
+        씬 등록은 이 이후로 작성할 것
     */
     auto lobbyScene = std::make_shared<HBSoft::SceneLobby>();
     HENGINE->m_sceneMgr.Add(L"Lobby", lobbyScene);
     HENGINE->m_sceneMgr.SetCurrentScene(L"Lobby");
     HENGINE->Run();
-	/*
-		Scene end
-		여기 안에 작성할 것
+    /*
+        Scene end
+        여기 안에 작성할 것
     */
 
 

@@ -9,7 +9,7 @@ date: 2024-11-05
 
 #pragma once
 #include <Windows.h>
-#include <d2d1.h>
+#include "glm/glm.hpp"
 
 namespace HBSoft
 {

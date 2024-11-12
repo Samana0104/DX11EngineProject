@@ -17,10 +17,10 @@ Transform3D::Transform3D()
 
 void Transform3D::InitTransform()
 {
-    m_pos      = vec3(0.0f, 0.0f, 0.0f);
-    m_scale    = vec3(1.0f, 1.0f, 1.0f);
-    m_rtQuat   = quat(0.0f, 0.0f, 1.0f, 0.f);  // y축 고정
-    m_worldMat = mat4(1.0f);
+    m_pos        = vec3(0.0f, 0.0f, 0.0f);
+    m_scale      = vec3(1.0f, 1.0f, 1.0f);
+    m_eulerAngle = vec3(0.0f, 0.0f, 0.0f);
+    m_worldMat   = mat4(1.0f);
 }
 
 Transform3D& Transform3D::SetLocation(const vec3 pos)
@@ -30,22 +30,21 @@ Transform3D& Transform3D::SetLocation(const vec3 pos)
     return *this;
 }
 
-Transform3D& Transform3D::AddRotation(const vec3 axis, const float radian)
+Transform3D& Transform3D::AddLocation(const vec3 pos)
 {
-    vec3 normalizedAxis = glm::normalize(axis);
-
-    m_rtQuat = glm::rotate(m_rtQuat, radian, normalizedAxis);
-
-    CalculateWorldMat();
+    SetLocation(m_pos + pos);
     return *this;
 }
 
-Transform3D& Transform3D::SetRotation(const vec3 axis, const float radian)
+Transform3D& Transform3D::AddRotation(const vec3 eulerAngle)
 {
-    vec3 normalizedAxis = glm::normalize(axis);
+    SetRotation(eulerAngle + m_eulerAngle);
+    return *this;
+}
 
-    m_rtQuat = quat(glm::cos(radian * 0.5f), glm::sin(radian * 0.5f) * normalizedAxis);
-
+Transform3D& Transform3D::SetRotation(const vec3 eulerAngle)
+{
+    m_eulerAngle = eulerAngle;
     CalculateWorldMat();
 
     return *this;
@@ -64,21 +63,27 @@ void Transform3D::CalculateWorldMat()
     mat3 rotateMat(0.f);
 
     /*
-        https://blog.naver.com/sipack7297/220421092039?viewType=pc
+        https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
         참조
     */
+    quat axisX(cos(m_eulerAngle.x * 0.5f), sin(m_eulerAngle.x * 0.5f) * vec3(1.f, 0.f, 0.f));
+    quat axisY(cos(m_eulerAngle.y * 0.5f), sin(m_eulerAngle.y * 0.5f) * vec3(0.f, 1.f, 0.f));
+    quat axisZ(cos(m_eulerAngle.z * 0.5f), sin(m_eulerAngle.z * 0.5f) * vec3(0.f, 0.f, 1.f));
 
-    rotateMat[0][0] = 1 - 2 * m_rtQuat.y * m_rtQuat.y - 2 * m_rtQuat.z * m_rtQuat.z;
-    rotateMat[0][1] = 2 * m_rtQuat.x * m_rtQuat.y - 2 * m_rtQuat.w * m_rtQuat.z;
-    rotateMat[0][2] = 2 * m_rtQuat.x * m_rtQuat.z + 2 * m_rtQuat.w * m_rtQuat.y;
+    quat eulerToQuat = axisX * axisY * axisZ;
 
-    rotateMat[1][0] = 2 * m_rtQuat.x * m_rtQuat.y + 2 * m_rtQuat.w * m_rtQuat.z;
-    rotateMat[1][1] = 1 - 2 * m_rtQuat.x * m_rtQuat.x - 2 * m_rtQuat.z * m_rtQuat.z;
-    rotateMat[1][2] = 2 * m_rtQuat.y * m_rtQuat.z - 2 * m_rtQuat.w * m_rtQuat.x;
+    rotateMat[0][0] = 1 - 2 * eulerToQuat.y * eulerToQuat.y - 2 * eulerToQuat.z * eulerToQuat.z;
+    rotateMat[0][1] = 2 * eulerToQuat.x * eulerToQuat.y - 2 * eulerToQuat.w * eulerToQuat.z;
+    rotateMat[0][2] = 2 * eulerToQuat.x * eulerToQuat.z + 2 * eulerToQuat.w * eulerToQuat.y;
 
-    rotateMat[2][0] = 2 * m_rtQuat.x * m_rtQuat.z - 2 * m_rtQuat.w * m_rtQuat.y;
-    rotateMat[2][1] = 2 * m_rtQuat.y * m_rtQuat.z + 2 * m_rtQuat.w * m_rtQuat.x;
-    rotateMat[2][2] = 1 - 2 * m_rtQuat.x * m_rtQuat.x - 2 * m_rtQuat.y * m_rtQuat.y;
+    rotateMat[1][0] = 2 * eulerToQuat.x * eulerToQuat.y + 2 * eulerToQuat.w * eulerToQuat.z;
+    rotateMat[1][1] = 1 - 2 * eulerToQuat.x * eulerToQuat.x - 2 * eulerToQuat.z * eulerToQuat.z;
+    rotateMat[1][2] = 2 * eulerToQuat.y * eulerToQuat.z - 2 * eulerToQuat.w * eulerToQuat.x;
+
+    rotateMat[2][0] = 2 * eulerToQuat.x * eulerToQuat.z - 2 * eulerToQuat.w * eulerToQuat.y;
+    rotateMat[2][1] = 2 * eulerToQuat.y * eulerToQuat.z + 2 * eulerToQuat.w * eulerToQuat.x;
+    rotateMat[2][2] = 1 - 2 * eulerToQuat.x * eulerToQuat.x - 2 * eulerToQuat.y * eulerToQuat.y;
+    rotateMat       = glm::transpose(rotateMat);
 
     m_worldMat[0][0] = m_scale.x * rotateMat[0][0];
     m_worldMat[0][1] = m_scale.x * rotateMat[0][1];
@@ -100,4 +105,9 @@ void Transform3D::CalculateWorldMat()
 const mat4& Transform3D::GetWorldMat() const
 {
     return m_worldMat;
+}
+
+const vec3& Transform3D::GetPos() const
+{
+    return m_pos;
 }

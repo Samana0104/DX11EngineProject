@@ -2,8 +2,8 @@
 author : 변한빛
 description : 메인 엔진 소스파일
 
-version: 1.0.0
-date: 2024-11-04
+version: 1.0.5
+date: 2024-11-12
 */
 
 #include "pch.h"
@@ -17,14 +17,46 @@ Core::Core(HINSTANCE hInstance, HPoint windowSize)
     m_input  = std::make_unique<Input>(m_window);
     m_assets = std::make_unique<AssetsMgr>(m_device);
     m_timer.Start();
+
+    assert(InitImGui());
+}
+
+bool Core::InitImGui()
+{
+    // 환경설정
+    HPoint windowSize = m_window->GetSize();
+
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
+    (void)io;
+    // io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
+    // io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;   // Enable Gamepad Controls
+
+    io.DisplaySize = ImVec2(float(windowSize.x), float(windowSize.y));
+    ImGui::StyleColorsLight();
+
+    if (!ImGui_ImplWin32_Init(m_window->GetHandle()))
+        return false;
+
+    if (!ImGui_ImplDX11_Init(m_device->m_d3dDevice.Get(), m_device->m_context.Get()))
+        return false;
+
+    return true;
 }
 
 void Core::Update()
 {
+    ImGui_ImplDX11_NewFrame();
+    ImGui_ImplWin32_NewFrame();
+    ImGui::NewFrame();
+
+    ImGui::Begin("HBSoft");
     m_timer.Update();
     m_input->Update();
     m_sceneMgr.Update(m_timer.GetDeltaTime());
     m_assets->Update();
+    ImGui::End();
 }
 
 void Core::Render()
@@ -35,16 +67,25 @@ void Core::Render()
                                                1.0f,
                                                0);
     m_device->m_context->ClearRenderTargetView(m_device->m_rtv.Get(), clearColor);
+
+
     m_sceneMgr.Render();
     m_assets->m_fonts[L"DEBUG_FONT"]->DrawTexts(m_timer.m_csBuffer,
                                                 {10.f, 10.f, 1000.f, 1000.f},
                                                 {1.f, 1.f, 1.f, 1.f});
+
+    ImGui::Render();
+    ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
     m_device->m_swapChain->Present(0, 0);
 }
 
 void Core::Release()
 {
     m_sceneMgr.Release();
+
+    ImGui_ImplDX11_Shutdown();
+    ImGui_ImplWin32_Shutdown();
+    ImGui::DestroyContext();
 }
 
 void Core::Run()

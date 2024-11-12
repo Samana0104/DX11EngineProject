@@ -12,22 +12,6 @@ using namespace HBSoft;
 
 void Object3D::Update(const float deltaTime)
 {
-    m_cb.view = glm::mat4(1.f);
-    m_cb.proj = glm::perspectiveFovLH_ZO(glm::radians(90.f),
-                                         HWINDOW->GetSize().x,
-                                         HWINDOW->GetSize().y,
-                                         1.f,
-                                         10000.f);
-
-    m_transform.SetLocation({0.f, 0.f, 5.f});
-
-    if (HINPUT->IsKeyPressed(VK_F1))
-        m_transform.AddRotation({0.f, 0.f, 1.f}, 10 * deltaTime);
-    else if (HINPUT->IsKeyPressed(VK_F2))
-        m_transform.AddRotation({0.f, 1.f, 0.f}, 10 * deltaTime);
-    else if (HINPUT->IsKeyPressed(VK_F3))
-        m_transform.AddRotation({1.f, 0.f, 0.f}, 10 * deltaTime);
-
     m_cb.model = m_transform.GetWorldMat();
     HASSET->m_shaders[m_vsShaderKey]->SetConstantBuffer(HDEVICE, (void*)&m_cb, sizeof(m_cb), 0);
 }
@@ -94,6 +78,12 @@ void Object3D::SetVSShaderKey(const SHADER_KEY key)
 void Object3D::SetPSShaderKey(const SHADER_KEY key)
 {
     m_psShaderKey = key;
+}
+
+void Object3D::SetMatrix(mat4 viewMat, mat4 projMat)
+{
+    m_cb.view = viewMat;
+    m_cb.proj = projMat;
 }
 
 const vec4& Object3D::GetColor() const

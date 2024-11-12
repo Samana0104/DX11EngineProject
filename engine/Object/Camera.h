@@ -18,6 +18,11 @@ namespace HBSoft
         float m_projNear;
         float m_projFar;  // near에 왜 디파인 걸려있는거야
 
+        vec3 m_side;  // x
+        vec3 m_up;    // y
+        vec3 m_look;  // z
+
+        mat4 m_projMat;
         // 설마 카메라에 스케일 값 주는 미친 사람 없겠지?
         // 줌인 줌아웃 따로 만들었으니 스케일 조정하지 마시오
 
@@ -29,10 +34,15 @@ namespace HBSoft
         Camera(float fov, float projNear, float projFar);
         const mat4 GetViewMat() const;
         const mat4 GetProjMat() const;
+        const vec3 GetEyePos() const;
 
         void ZoomIn(const float scale);
         void ZoomOut(const float scale);
 
+        void LookAt(const vec3 eye, const vec3 target, const vec3 up);
         void LookAtObject(Object3D& obj);
+
+        virtual void Update(const float deltaTime) override;
+        virtual void Render() override;
     };
 }  // namespace HBSoft

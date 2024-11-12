@@ -11,20 +11,18 @@ date: 2024-11-04
 using namespace HBSoft;
 
 SceneLobby::SceneLobby()
-    : cameraTest(glm::radians(90.f), 1.f, 10000.f)
+    : cameraTest(glm::radians(90.f), 0.1f, 10000.f)
 {}
 
 void SceneLobby::Update(float deltaTime)
 {
+    cameraTest.Update(deltaTime);
     test.Update(deltaTime);
+    test.SetMatrix(cameraTest.GetViewMat(), cameraTest.GetProjMat());
 }
 
 void SceneLobby::Render()
 {
-    HASSET->m_fonts[L"DEBUG_FONT"]->DrawTexts(L"し し し し し し し",
-                                              {40.f, 40.f, 1000.f, 1000.f},
-                                              {1.f, 1.f, 1.f, 1.f});
-
     test.Render();
 }
 

@@ -48,7 +48,6 @@
     <ClCompile Include="Object\Camera.cpp" />
     <ClCompile Include="Object\Object2D.cpp" />
     <ClCompile Include="Object\Object3D.cpp" />
-    <ClCompile Include="Object\Pawn.cpp" />
     <ClCompile Include="Object\Transform2D.cpp" />
     <ClCompile Include="Object\Transform3D.cpp" />
     <ClCompile Include="Scene\SceneLobby.cpp" />
@@ -92,7 +91,6 @@
     <ClInclude Include="Object\Camera.h" />
     <ClInclude Include="Object\Object2D.h" />
     <ClInclude Include="Object\Object3D.h" />
-    <ClInclude Include="Object\Pawn.h" />
     <ClInclude Include="Object\Renderable.h" />
     <ClInclude Include="Object\Transform2D.h" />
     <ClInclude Include="Object\Transform3D.h" />

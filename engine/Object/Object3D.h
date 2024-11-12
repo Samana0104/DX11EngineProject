@@ -2,8 +2,8 @@
 author : 변한빛
 description : 3D상으로 그려질 오브젝트를 정의하기 위한 헤더 파일
 
-version: 1.0.5
-date: 2024-11-11
+version: 1.0.7
+date: 2024-11-12
 */
 
 #pragma once
@@ -45,6 +45,12 @@ namespace HBSoft
         void SetMeshKey(const MESH_KEY key);
         void SetVSShaderKey(const SHADER_KEY key);
         void SetPSShaderKey(const SHADER_KEY key);
+
+        /*
+            param : viewMat -> 카메라 행렬 요소 1 | projMat -> 카메라 행렬 요소 2
+            description : 해당 오브젝트의 view, proj 행렬을 설정한다. ( 카메라 클래스 활용 추천 )
+        */
+        void SetMatrix(mat4 viewMat, mat4 projMat);
 
         const vec4&        GetColor() const;
         const MESH_KEY&    GetMeshKey() const;

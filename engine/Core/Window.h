@@ -7,9 +7,11 @@ date: 2024-11-05
 */
 
 #pragma once
-#include <Windows.h>
+#include "Windows.h"
 #include "HPoint.h"
-#include "HRect.h"
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam,
+                                                             LPARAM lParam);
 
 namespace HBSoft
 {

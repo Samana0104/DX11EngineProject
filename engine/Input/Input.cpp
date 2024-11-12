@@ -24,13 +24,9 @@ void Input::UpdateKeyState(const UINT key)
     SHORT currentKey = GetAsyncKeyState(key);
 
     if (currentKey & PRESSED_KEY)
-    {
         (IsKeyFree(key) || IsKeyUp(key)) ? SetKeyDown(key) : SetKeyHold(key);
-    }
     else
-    {
         (IsKeyDown(key) || IsKeyHold(key)) ? SetKeyUp(key) : SetKeyFree(key);
-    }
 }
 
 KeyState Input::GetKeyState(const UINT key) const
@@ -38,9 +34,14 @@ KeyState Input::GetKeyState(const UINT key) const
     return m_keyState[key];
 }
 
-HPoint Input::GetMousePos() const
+const HPoint& Input::GetMousePos() const
 {
     return m_mousePos;
+}
+
+const HPoint& Input::GetDeltaMousePos() const
+{
+    return m_mouseDeltaPos;
 }
 
 bool Input::IsKeyUp(const UINT key) const
@@ -93,14 +94,23 @@ void Input::Update()
     if (!m_window->IsActivate())  // 게임 윈도우가 켜져있으면 ( 활성화 될 때 )
         return;
 
-    POINT mousePos;
+    HPoint preMousePos = m_mousePos;
+    POINT  mousePos;
+
 
     for (UINT key = 0; key < KEY_COUNT; key++)
-    {
         UpdateKeyState(key);
-    }
+
 
     GetCursorPos(&mousePos);
     ScreenToClient(m_window->GetHandle(), &mousePos);
     m_mousePos = mousePos;
+
+    if (IsKeyDown(VK_LBUTTON))
+        m_isDrag = true;
+    else if (IsKeyUp(VK_LBUTTON))
+        m_isDrag = false;
+
+    if (m_isDrag)
+        m_mouseDeltaPos = m_mousePos - preMousePos;
 }
