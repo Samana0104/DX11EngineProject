@@ -83,8 +83,6 @@
     <ClInclude Include="DesignPattern\Singleton.h" />
     <ClInclude Include="DesignPattern\Subject.h" />
     <ClInclude Include="EventHandler.h" />
-    <ClInclude Include="FiniteStateM\FiniteStateM.h" />
-    <ClInclude Include="FiniteStateM\Transition.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Object\Actor.h" />
     <ClInclude Include="Object\Button.h" />

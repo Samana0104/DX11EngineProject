@@ -38,6 +38,5 @@ namespace HBSoft
 
         void Update();
         void Reset();
-        void Start();
     };
 }  // namespace HBSoft

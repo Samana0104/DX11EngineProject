@@ -61,14 +61,31 @@ void Camera::LookAtObject(Object3D& obj) {}
 
 void Camera::Update(const float deltaTime)
 {
+    if (HINPUT->IsKeyPressed(VK_LBUTTON))
+    {
+        HPoint ndc = HINPUT->GetNDCMousePos();
+
+        float yaw   = -ndc.y * glm::pi<float>();
+        float pitch = ndc.x * glm::two_pi<float>();
+
+        // m_transform.SetRotation({-ndc.y * glm::pi<float>(), ndc.x * glm::two_pi<float>(), 0.f});
+
+        // auto a = m_transform.GetWorldMat();
+        // m_side = a[0];
+        // m_up   = a[1];
+        // m_side = a[2];
+    }
 
     if (HINPUT->IsKeyPressed(87))  // W
         m_transform.AddLocation(m_look * 0.01f);
-    else if (HINPUT->IsKeyPressed(83))  // S
+
+    if (HINPUT->IsKeyPressed(83))  // S
         m_transform.AddLocation(m_look * -0.01f);
-    else if (HINPUT->IsKeyPressed(68))  // D
+
+    if (HINPUT->IsKeyPressed(68))  // D
         m_transform.AddLocation(m_side * 0.01f);
-    else if (HINPUT->IsKeyPressed(65))  // A
+
+    if (HINPUT->IsKeyPressed(65))  // A
         m_transform.AddLocation(m_side * -0.01f);
 }
 

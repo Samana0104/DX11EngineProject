@@ -35,13 +35,7 @@ date: 2024-11-12
 #include <atlconv.h>
 #include "glm/glm.hpp"
 #include "glm/ext.hpp"
-#include "glm/ext/matrix_transform.hpp"
-#include <glm/ext/quaternion_float.hpp>
-#include <glm/ext/quaternion_common.hpp>
-#include <glm/ext/quaternion_transform.hpp>
-#include <glm/ext/quaternion_geometric.hpp>
-#include <glm/ext/quaternion_trigonometric.hpp>
-#include <glm/ext/quaternion_exponential.hpp>
+#include <glm/gtx/quaternion.hpp>
 #include "fmod/fmod.hpp"
 #include "DirectXTK/WICTextureLoader.h"
 

@@ -3,8 +3,8 @@ author : 변한빛
 description : 싱글톤 패턴을 위한 클래스 파일
 모든 싱글톤 클래스는 이 파일을 상속한다
 
-version: 1.0.0
-date: 2024-11-04
+version: 1.0.5
+date: 2024-11-14
 */
 #pragma once
 
@@ -20,8 +20,7 @@ namespace HBSoft
     class Singleton
     {
     private:
-        inline static T*   m_singleton     = nullptr;
-        inline static bool m_isConstructed = false;  // template마다 생성되는 static이 다름
+        inline static T* m_singleton = nullptr;
 
     private:
         Singleton(const Singleton&)            = delete;
@@ -33,20 +32,23 @@ namespace HBSoft
         Singleton() = default;
 
     public:
+        ~Singleton()
+        {
+            if (m_singleton)
+                delete m_singleton;
+        }
+
         static T& GetInstance()
         {
-            if (!m_isConstructed)
-            {
-                m_singleton     = new T;
-                m_isConstructed = true;
-            }
+            if (!m_singleton)
+                m_singleton = new T;
 
             return *m_singleton;
         }
 
         static void Release()
         {
-            if (m_singleton != nullptr)
+            if (!m_singleton)
                 delete m_singleton;
         }
     };

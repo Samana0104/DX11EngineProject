@@ -16,7 +16,7 @@ Core::Core(HINSTANCE hInstance, HPoint windowSize)
     m_device = std::make_shared<D3Device>(m_window);
     m_input  = std::make_unique<Input>(m_window);
     m_assets = std::make_unique<AssetsMgr>(m_device);
-    m_timer.Start();
+    m_timer.Reset();
 
     assert(InitImGui());
 }
@@ -52,10 +52,12 @@ void Core::Update()
     ImGui::NewFrame();
 
     ImGui::Begin("HBSoft");
+
     m_timer.Update();
     m_input->Update();
     m_sceneMgr.Update(m_timer.GetDeltaTime());
     m_assets->Update();
+
     ImGui::End();
 }
 

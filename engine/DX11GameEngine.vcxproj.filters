@@ -19,9 +19,6 @@
     <Filter Include="Timer">
       <UniqueIdentifier>{21ddd6cd-dc53-4b4e-8c51-4e56a9f5e14f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FiniteStateM">
-      <UniqueIdentifier>{bf0ed2d4-fbc2-4126-b96f-36fb83bb8b25}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DesignPattern">
       <UniqueIdentifier>{65f1f11e-fd03-46be-80ed-895df7e42037}</UniqueIdentifier>
     </Filter>
@@ -193,12 +190,6 @@
     </ClInclude>
     <ClInclude Include="EventHandler.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="FiniteStateM\Transition.h">
-      <Filter>FiniteStateM</Filter>
-    </ClInclude>
-    <ClInclude Include="FiniteStateM\FiniteStateM.h">
-      <Filter>FiniteStateM</Filter>
     </ClInclude>
     <ClInclude Include="Object\Transform2D.h">
       <Filter>Object</Filter>

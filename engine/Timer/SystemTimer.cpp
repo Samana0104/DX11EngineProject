@@ -63,8 +63,3 @@ void SystemTimer::Reset()
     m_deltaTime     = duration<double>(0);
     m_fps           = 0;
 }
-
-void SystemTimer::Start()
-{
-    Reset();
-}

@@ -21,6 +21,8 @@ namespace HBSoft
         template <class T1, class T2>
         HPoint(const T1& a, const T2& b);
 
+        HPoint();
+
         HPoint operator=(const HPoint& ref);
         HPoint operator=(const D2D1_POINT_2F& ref);
         HPoint operator=(const D2D1_POINT_2L& ref);
@@ -55,6 +57,10 @@ namespace HBSoft
         operator const D2D1_POINT_2U();
         operator const glm::vec2();
     };
+
+    inline HPoint::HPoint()
+        : x(0.f), y(0.f)
+    {}
 
     inline HPoint HPoint::operator=(const HPoint& ref)
     {

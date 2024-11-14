@@ -23,7 +23,6 @@ namespace HBSoft
         bool Add(const K& key, std::shared_ptr<V> value);
         bool Delete(const K key);
         bool IsKeyContained(const K key) const;
-
         void Clear();
 
         /*

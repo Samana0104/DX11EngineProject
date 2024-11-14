@@ -12,6 +12,13 @@ using namespace HBSoft;
 
 void Object3D::Update(const float deltaTime)
 {
+    static float x, y, z;
+
+    ImGui::SliderFloat("x", &x, -3.14, 3.14);
+    ImGui::SliderFloat("y", &y, -3.14, 3.14);
+    ImGui::SliderFloat("z", &z, -3.14, 3.14);
+    m_transform.SetScale({1.f, 2.f, 2.f});
+    m_transform.SetRotation({x, y, z});
     m_cb.model = m_transform.GetWorldMat();
     HASSET->m_shaders[m_vsShaderKey]->SetConstantBuffer(HDEVICE, (void*)&m_cb, sizeof(m_cb), 0);
 }
@@ -20,13 +27,12 @@ void Object3D::Render()
 {
     std::shared_ptr<Mesh> mesh = HASSET->m_meshes[m_meshKey];
 
-    std::shared_ptr<Shader> vsShader = HASSET->m_shaders[m_vsShaderKey];
-    std::shared_ptr<Shader> psShader = HASSET->m_shaders[m_psShaderKey];
-
     UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
     UINT pOffsets = 0;               // 버퍼에 시작 인덱스
 
-    HDEVICE->m_context->IASetInputLayout(vsShader->GetIALayout().Get());
+    HASSET->m_shaders[m_vsShaderKey]->SetUpToContext(HDEVICE);
+    HASSET->m_shaders[m_psShaderKey]->SetUpToContext(HDEVICE);
+
     HDEVICE->m_context->IASetVertexBuffers(0,
                                            1,
                                            mesh->m_vertexBuffer.GetAddressOf(),
@@ -39,14 +45,8 @@ void Object3D::Render()
                                              1,
                                              HASSET->m_textures[m_textureKey]->GetSRV().GetAddressOf());
 
-    HDEVICE->m_context->VSSetConstantBuffers(
-    0,
-    1,
-    HASSET->m_shaders[m_vsShaderKey]->GetConstantBuffer(0).GetAddressOf());
 
     HDEVICE->m_context->PSSetSamplers(0, 1, HDEVICE->m_samplerState.GetAddressOf());
-    HDEVICE->m_context->VSSetShader(vsShader->GetVertexShader().Get(), nullptr, 0);
-    HDEVICE->m_context->PSSetShader(psShader->GetPixselShader().Get(), nullptr, 0);
     HDEVICE->m_context->RSSetViewports(1, &HDEVICE->m_viewPort);
     HDEVICE->m_context->RSSetState(HDEVICE->m_rsState.Get());
     HDEVICE->m_context->OMSetDepthStencilState(HDEVICE->m_dsState.Get(), 0);

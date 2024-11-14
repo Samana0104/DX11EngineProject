@@ -16,19 +16,12 @@ PixelShader::PixelShader(std::shared_ptr<D3Device>& device, const wstringV path,
     assert(CreateShader(device));
 }
 
-ComPtr<ID3D11PixelShader> PixelShader::GetPixselShader()
+void PixelShader::SetUpToContext(std::shared_ptr<D3Device>& device)
 {
-    return m_pixelShader;
-}
+    device->m_context->PSSetShader(m_pixelShader.Get(), nullptr, 0);
 
-ComPtr<ID3D11VertexShader> PixelShader::GetVertexShader()
-{
-    return nullptr;
-}
-
-ComPtr<ID3D11InputLayout> PixelShader::GetIALayout()
-{
-    return nullptr;
+    for (UINT i = 0; i < m_constantBuffers.size(); i++)
+        device->m_context->PSGetConstantBuffers(i, 1, m_constantBuffers[i].GetAddressOf());
 }
 
 bool PixelShader::CreateShader(std::shared_ptr<D3Device>& device)

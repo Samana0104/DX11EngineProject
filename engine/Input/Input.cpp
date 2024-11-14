@@ -39,9 +39,10 @@ const HPoint& Input::GetMousePos() const
     return m_mousePos;
 }
 
-const HPoint& Input::GetDeltaMousePos() const
+const HPoint& Input::GetNDCMousePos() const
 {
-    return m_mouseDeltaPos;
+    HPoint windowSize = m_window->GetSize();
+    return {2 * m_mousePos.x / windowSize.x - 1.f, -2 * m_mousePos.y / windowSize.y + 1.f};
 }
 
 bool Input::IsKeyUp(const UINT key) const
@@ -105,12 +106,4 @@ void Input::Update()
     GetCursorPos(&mousePos);
     ScreenToClient(m_window->GetHandle(), &mousePos);
     m_mousePos = mousePos;
-
-    if (IsKeyDown(VK_LBUTTON))
-        m_isDrag = true;
-    else if (IsKeyUp(VK_LBUTTON))
-        m_isDrag = false;
-
-    if (m_isDrag)
-        m_mouseDeltaPos = m_mousePos - preMousePos;
 }

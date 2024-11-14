@@ -15,18 +15,13 @@ Shader::Shader(const wstringV path, const ShaderType& type)
     : m_shaderType(type), m_path(path)
 {}
 
-ComPtr<ID3D11Buffer>& Shader::GetConstantBuffer(const UINT constantIdx)
-{
-    return m_constantBuffers[constantIdx];
-}
-
 size_t Shader::GetConstantCount() const
 {
     return m_constantBuffers.size();
 }
 
-void Shader::SetConstantBuffer(std::shared_ptr<D3Device> device, const void* data, const size_t dataSize,
-                               const UINT constantIdx)
+void Shader::SetConstantBuffer(std::shared_ptr<D3Device>& device, const void* data,
+                               const size_t dataSize, const UINT constantIdx)
 {
     if (m_constantBuffers.size() <= 0)
         return;

@@ -17,19 +17,13 @@ VertexShader::VertexShader(std::shared_ptr<D3Device>& device, const wstringV pat
     assert(CreateShader(device));
 }
 
-ComPtr<ID3D11PixelShader> VertexShader::GetPixselShader()
+void VertexShader::SetUpToContext(std::shared_ptr<D3Device>& device)
 {
-    return nullptr;
-}
+    device->m_context->IASetInputLayout(m_vertexLayout.Get());
+    device->m_context->VSSetShader(m_vertexShader.Get(), nullptr, 0);
 
-ComPtr<ID3D11VertexShader> VertexShader::GetVertexShader()
-{
-    return m_vertexShader;
-}
-
-ComPtr<ID3D11InputLayout> VertexShader::GetIALayout()
-{
-    return m_vertexLayout;
+    for (UINT i = 0; i < m_constantBuffers.size(); i++)
+        device->m_context->VSSetConstantBuffers(i, 1, m_constantBuffers[i].GetAddressOf());
 }
 
 bool VertexShader::CreateVertexShader(std::shared_ptr<D3Device>& device)

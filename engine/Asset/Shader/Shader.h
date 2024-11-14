@@ -33,34 +33,15 @@ namespace HBSoft
 
     public:
         /*
-            return : Pixelshader obj
-            description :
-                해당 쉐이더가 픽셀 쉐이더의 경우 픽셀 쉐이더 파일을 넘긴다.
-                단 버텍스 쉐이더의 경우 nullptr을 반환한다.
-        */
-        virtual ComPtr<ID3D11PixelShader> GetPixselShader() = 0;
+           description :
+               context에 쉐이더를 설정해준다. ( 상수, 쉐이더 코드 )
+               vertex 쉐이더의 경우 IA까지 자동으로 설정해줌
+       */
+        virtual void SetUpToContext(std::shared_ptr<D3Device>& device) = 0;
 
-        /*
-            return : Vertexshader obj
-            description :
-                해당 쉐이더가 버텍스 쉐이더의 경우 버텍스 쉐이더 파일을 넘긴다.
-                단 픽셀 쉐이더의 경우 nullptr을 반환한다.
-        */
-        virtual ComPtr<ID3D11VertexShader> GetVertexShader() = 0;
-
-        /*
-            return : IALayout obj
-            description :
-                해당 쉐이더가 버텍스 쉐이더의 경우 인풋 레이아웃을 넘긴다.
-                단 픽셀 쉐이더의 경우 nullptr을 반환한다.
-        */
-        virtual ComPtr<ID3D11InputLayout> GetIALayout() = 0;
-
-        ComPtr<ID3D11Buffer>& GetConstantBuffer(const UINT constantIdx);
-        size_t                GetConstantCount() const;
-
-        void SetConstantBuffer(std::shared_ptr<D3Device> device, const void* data, const size_t dataSize,
-                               const UINT constantIdx);
+        size_t GetConstantCount() const;
+        void   SetConstantBuffer(std::shared_ptr<D3Device>& device, const void* data,
+                                 const size_t dataSize, const UINT constantIdx);
 
         const ShaderType& GetShaderType() const;
     };
