@@ -17,9 +17,10 @@ Transform3D::Transform3D()
 
 void Transform3D::InitTransform()
 {
-    m_pos      = vec3(0.0f, 0.0f, 0.0f);
-    m_scale    = vec3(1.0f, 1.0f, 1.0f);
-    m_worldMat = mat4(1.0f);
+    m_pos      = vec3(0.f, 0.f, 0.f);
+    m_scale    = vec3(1.f, 1.f, 1.f);
+    m_rotator  = quat(1.f, 0.f, 0.f, 0.f);
+    m_worldMat = mat4(1.f);
 }
 
 Transform3D& Transform3D::SetLocation(const vec3 pos)
@@ -37,31 +38,51 @@ Transform3D& Transform3D::AddLocation(const vec3 pos)
 
 Transform3D& Transform3D::AddRotation(const vec3& axis, const float radian)
 {
-    m_worldMat = glm::rotate(m_worldMat, radian, axis);
+    m_rotator  = glm::rotate(m_rotator, radian, axis);
+    CalculateWorldMat();
+    return *this;
+}
+
+Transform3D& Transform3D::AddRotation(const vec3& eulerAngle)
+{
+    quat rotator2;
+
+	rotator2.x = sin(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f) -
+                cos(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
+    rotator2.y = cos(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f) +
+                sin(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
+    rotator2.z = cos(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f) -
+                sin(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f);
+    rotator2.w = cos(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f) +
+                sin(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
+
+    m_rotator *= rotator2;
+
+    CalculateWorldMat();
     return *this;
 }
 
 Transform3D& Transform3D::SetRotation(const vec3& axis, const float radian)
 {
-    m_worldMat = glm::rotate(glm::mat4(1.f), radian, axis);
+    m_rotator = glm::angleAxis(radian, axis);
+
+    CalculateWorldMat();
     return *this;
 }
 
 Transform3D& Transform3D::SetRotation(const vec3& eulerAngle)
 {
-    glm::quat rotator;
-    glm::mat4 rotateMat;
+    m_rotator.x = sin(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f) -
+                cos(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
+    m_rotator.y = cos(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f) +
+                sin(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
+    m_rotator.z = cos(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f) -
+                sin(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f);
+    m_rotator.w = cos(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f) +
+                sin(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
 
-    rotator.x = sin(eulerAngle.z * 0.5f) * cos(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) -
-                cos(eulerAngle.z * 0.5f) * sin(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f);
-    rotator.y = cos(eulerAngle.z * 0.5f) * sin(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) +
-                sin(eulerAngle.z * 0.5f) * cos(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f);
-    rotator.z = cos(eulerAngle.z * 0.5f) * cos(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) -
-                sin(eulerAngle.z * 0.5f) * sin(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f);
-    rotator.w = cos(eulerAngle.z * 0.5f) * cos(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) +
-                sin(eulerAngle.z * 0.5f) * sin(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f);
-
-    return SetRotation(glm::axis(rotator), 0.f);
+    CalculateWorldMat();
+    return *this;
 }
 
 Transform3D& Transform3D::SetScale(const vec3 scale)
@@ -74,6 +95,8 @@ Transform3D& Transform3D::SetScale(const vec3 scale)
 
 void Transform3D::CalculateWorldMat()
 {
+    m_worldMat = glm::transpose(glm::toMat3(m_rotator));
+
     m_worldMat[0][0] *= m_scale.x;
     m_worldMat[0][1] *= m_scale.x;
     m_worldMat[0][2] *= m_scale.x;

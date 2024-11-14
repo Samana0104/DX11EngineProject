@@ -33,9 +33,11 @@ date: 2024-11-12
 #include <dwrite.h>
 #include <tchar.h>
 #include <atlconv.h>
+
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/quaternion.hpp>
 #include "glm/glm.hpp"
 #include "glm/ext.hpp"
-#include <glm/gtx/quaternion.hpp>
 #include "fmod/fmod.hpp"
 #include "DirectXTK/WICTextureLoader.h"
 

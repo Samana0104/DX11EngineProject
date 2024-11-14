@@ -65,15 +65,18 @@ void Camera::Update(const float deltaTime)
     {
         HPoint ndc = HINPUT->GetNDCMousePos();
 
-        float yaw   = -ndc.y * glm::pi<float>();
+        float yaw   = ndc.y * glm::pi<float>();
         float pitch = ndc.x * glm::two_pi<float>();
 
-        // m_transform.SetRotation({-ndc.y * glm::pi<float>(), ndc.x * glm::two_pi<float>(), 0.f});
+        m_transform.SetRotation({0.f, 0.f, 1.f}, yaw);
+        
+        auto a = m_transform.GetWorldMat();
 
-        // auto a = m_transform.GetWorldMat();
-        // m_side = a[0];
-        // m_up   = a[1];
-        // m_side = a[2];
+        m_look = a[0];
+        m_side = glm::cross(m_up, m_look);
+
+        ImGui::Text("%f %f %f", m_side.x, m_side.y, m_side.z);
+        ImGui::Text("%f %f %f", m_up.x, m_up.y, m_up.z);
     }
 
     if (HINPUT->IsKeyPressed(87))  // W
