@@ -17,7 +17,8 @@ namespace HBSoft
     {
         BOX2D    = 1,
         CIRCLE2D = 2,
-        BOX3D    = 3
+        BOX3D    = 3,
+        LINE     = 4
     };
 
     struct Vertex
@@ -31,10 +32,10 @@ namespace HBSoft
     class Mesh
     {
     public:
-        std::wstring        m_textureName;   // 텍스쳐 담을 배열
-        std::vector<Vertex> m_vertices;      // 버텍스 버퍼용 배열
-        std::vector<UINT> m_indices;       // 인덱스  버퍼용 배열
-        std::vector<mat4>   m_animationMat;  // 애니메이션 저장용 행렬
+        std::vector<std::wstring> m_textureName;   // 텍스쳐 담을 배열
+        std::vector<Vertex>       m_vertices;      // 버텍스 버퍼용 배열
+        std::vector<UINT>         m_indices;       // 인덱스  버퍼용 배열
+        std::vector<mat4>         m_animationMat;  // 애니메이션 저장용 행렬
 
         std::shared_ptr<Mesh>              m_partentMesh;
         std::vector<std::shared_ptr<Mesh>> m_subMeshes;
@@ -49,6 +50,10 @@ namespace HBSoft
 
     public:
         Mesh(std::shared_ptr<D3Device>& device, const wstringV path);
+
+        void SetVertices(std::shared_ptr<D3Device>& device, const std::vector<Vertex>& vertices);
+
+        ~Mesh() = default;
     };
 
 }  // namespace HBSoft

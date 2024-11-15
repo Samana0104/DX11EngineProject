@@ -2,8 +2,8 @@
 author : 변한빛
 description : 다이렉트 디바이스 관련 정리한 소스파일
 
-version: 1.0.1
-date: 2024-11-05
+version: 1.0.5
+date: 2024-11-15
 */
 
 #include "pch.h"
@@ -14,6 +14,12 @@ D3Device::D3Device(const std::shared_ptr<Window>& window)
     : m_window(window)
 {
     assert(CreateDevice());
+    EventHandler::GetInstance().AddEvent(EventList::WINDOW_RESIZE, this);
+}
+
+D3Device::~D3Device()
+{
+    EventHandler::GetInstance().DeleteEvent(EventList::WINDOW_RESIZE, this);
 }
 
 glm::vec2 D3Device::GetViewportSize() const
@@ -61,39 +67,11 @@ bool D3Device::CreateDevice()
     if (!CreateRSState())
         return false;
 
-    if (!SetAlphaBlendingState())
+    if (!CreateBlendingState())
         return false;
 
     CreateViewport();
     return true;
-}
-
-void D3Device::OnWm_size(UINT width, UINT height)
-{
-    /* 해상도 자동 변경 이벤트 */
-    m_context->Flush();
-
-    m_context->Release();
-    m_rtv->Release();
-    m_alphaBlend->Release();
-    // m_d2dRT->Release();
-    // m_d2dFactory->Release();
-    m_samplerState->Release();
-
-    m_swapChainDesc.BufferDesc.Width  = width;
-    m_swapChainDesc.BufferDesc.Height = height;
-
-    HRESULT hr = m_swapChain->ResizeBuffers(m_swapChainDesc.BufferCount,
-                                            m_swapChainDesc.BufferDesc.Width,
-                                            m_swapChainDesc.BufferDesc.Height,
-                                            m_swapChainDesc.BufferDesc.Format,
-                                            m_swapChainDesc.Flags);
-
-    CreateRenderTargetView();
-    // CreateDirect2DRenderTarget();
-    CreateSamplerState();
-    SetAlphaBlendingState();
-    CreateViewport();
 }
 
 bool D3Device::CreateDeviceAndSwapChain()
@@ -169,76 +147,86 @@ bool D3Device::CreateSamplerState()
         return false;
 
     // 샘플러 상태를 파이프라인에 바인딩
-    //m_context->PSSetSamplers(0, 1, m_samplerState.GetAddressOf());
+    // m_context->PSSetSamplers(0, 1, m_samplerState.GetAddressOf());
     return true;
 }
 
 bool D3Device::CreateRSState()
 {
     HRESULT               hr;
-	D3D11_RASTERIZER_DESC rd;
+    D3D11_RASTERIZER_DESC rd;
 
-	ZeroMemory(&rd, sizeof(rd));
-	rd.FillMode= D3D11_FILL_SOLID;
-	rd.CullMode= D3D11_CULL_BACK; // backface culling
-	rd.DepthClipEnable = TRUE;
+    ZeroMemory(&rd, sizeof(rd));
+    rd.FillMode        = D3D11_FILL_SOLID;
+    rd.CullMode        = D3D11_CULL_BACK;  // backface culling
+    rd.DepthClipEnable = TRUE;
 
-	hr = m_d3dDevice->CreateRasterizerState(&rd, m_rsState.GetAddressOf());
+    hr = m_d3dDevice->CreateRasterizerState(&rd, m_rsState.GetAddressOf());
 
-	//rd.FillMode = D3D11_FILL_WIREFRAME;
-	//hr = TDevice::m_pd3dDevice->CreateRasterizerState(&rd, m_pRSWireFrame.GetAddressOf());
-	//if (FAILED(hr)) return hr;
+    ZeroMemory(&rd, sizeof(rd));
+    rd.FillMode        = D3D11_FILL_WIREFRAME;
+    rd.CullMode        = D3D11_CULL_NONE;  // backface culling
+    rd.DepthClipEnable = TRUE;
+
+    hr = m_d3dDevice->CreateRasterizerState(&rd, m_rsWireState.GetAddressOf());
+
+    m_context->RSSetState(m_rsState.Get());
+
+    // rd.FillMode = D3D11_FILL_WIREFRAME;
+    // hr = TDevice::m_pd3dDevice->CreateRasterizerState(&rd, m_pRSWireFrame.GetAddressOf());
+    // if (FAILED(hr)) return hr;
     return SUCCEEDED(hr);
 }
 
 bool D3Device::CreateDepthStencilState()
 {
     HRESULT                  hr;
-	D3D11_DEPTH_STENCIL_DESC dsDesc;
+    D3D11_DEPTH_STENCIL_DESC dsDesc;
 
-	ZeroMemory(&dsDesc, sizeof(dsDesc));
+    ZeroMemory(&dsDesc, sizeof(dsDesc));
     {
         dsDesc.DepthEnable    = TRUE;
         dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
         dsDesc.DepthFunc      = D3D11_COMPARISON_LESS_EQUAL;
     }
-	hr = m_d3dDevice->CreateDepthStencilState(&dsDesc, m_dsState.GetAddressOf());
+    hr = m_d3dDevice->CreateDepthStencilState(&dsDesc, m_dsState.GetAddressOf());
 
-	return SUCCEEDED(hr);
+    m_context->OMSetDepthStencilState(m_dsState.Get(), 0);
+    return SUCCEEDED(hr);
 }
 
 bool D3Device::CreateDepthStencilView()
 {
-	HRESULT hr;
-	ComPtr<ID3D11Texture2D> tex;
+    HRESULT                 hr;
+    ComPtr<ID3D11Texture2D> tex;
     D3D11_TEXTURE2D_DESC    td;
 
-	ZeroMemory(&td, sizeof(td));
+    ZeroMemory(&td, sizeof(td));
 
-	td.Width = m_swapChainDesc.BufferDesc.Width;
-	td.Height= m_swapChainDesc.BufferDesc.Height;
-	td.MipLevels =1;
-	td.ArraySize = 1;
-	td.Format = DXGI_FORMAT_R24G8_TYPELESS; // D,S
-	td.SampleDesc.Count = 1;
-	td.Usage = D3D11_USAGE_DEFAULT;
-	td.BindFlags = D3D11_BIND_DEPTH_STENCIL;	
+    td.Width            = m_swapChainDesc.BufferDesc.Width;
+    td.Height           = m_swapChainDesc.BufferDesc.Height;
+    td.MipLevels        = 1;
+    td.ArraySize        = 1;
+    td.Format           = DXGI_FORMAT_R24G8_TYPELESS;  // D,S
+    td.SampleDesc.Count = 1;
+    td.Usage            = D3D11_USAGE_DEFAULT;
+    td.BindFlags        = D3D11_BIND_DEPTH_STENCIL;
 
-	hr = m_d3dDevice->CreateTexture2D(&td, nullptr, tex.GetAddressOf());
+    hr = m_d3dDevice->CreateTexture2D(&td, nullptr, tex.GetAddressOf());
     if (FAILED(hr))
         return false;
 
-	D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc;
-	ZeroMemory(&dsvDesc, sizeof(dsvDesc));
-	dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	dsvDesc.ViewDimension= D3D11_DSV_DIMENSION_TEXTURE2D;
-	//dsvd.Texture2D.MipSlice  -> ShaderResourceView에서 사용됨.
+    D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc;
+    ZeroMemory(&dsvDesc, sizeof(dsvDesc));
+    dsvDesc.Format        = DXGI_FORMAT_D24_UNORM_S8_UINT;
+    dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+    // dsvd.Texture2D.MipSlice  -> ShaderResourceView에서 사용됨.
 
-	hr = m_d3dDevice->CreateDepthStencilView(tex.Get(), &dsvDesc, m_dsv.GetAddressOf());
+    hr = m_d3dDevice->CreateDepthStencilView(tex.Get(), &dsvDesc, m_dsv.GetAddressOf());
     return SUCCEEDED(hr);
 }
 
-bool D3Device::SetAlphaBlendingState()
+bool D3Device::CreateBlendingState()
 {
     HRESULT          hr;
     D3D11_BLEND_DESC bd = {};
@@ -277,6 +265,35 @@ bool D3Device::SetAlphaBlendingState()
     m_context->OMSetBlendState(m_alphaBlend.Get(), 0, -1);
 
     return SUCCEEDED(hr);
+}
+
+void D3Device::OnNotice(void* entity)
+{
+    HPoint windowSize = m_window->GetSize();
+
+    m_context->OMSetRenderTargets(0, nullptr, nullptr);
+    m_context->Flush();
+
+    m_rtv->Release();
+    m_dsv->Release();
+    m_context->RSSetViewports(1, &m_viewPort);
+
+    m_viewPort.Width  = windowSize.x;
+    m_viewPort.Height = windowSize.y;
+
+    m_swapChainDesc.BufferDesc.Width  = (UINT)windowSize.x;
+    m_swapChainDesc.BufferDesc.Height = (UINT)windowSize.y;
+
+    HRESULT hr = m_swapChain->ResizeBuffers(m_swapChainDesc.BufferCount,
+                                            m_swapChainDesc.BufferDesc.Width,
+                                            m_swapChainDesc.BufferDesc.Height,
+                                            m_swapChainDesc.BufferDesc.Format,
+                                            m_swapChainDesc.Flags);
+
+    CreateRenderTargetView();
+    CreateDepthStencilView();
+
+    EventHandler::GetInstance().Notify(EventList::DEVICE_CHANGE, this);
 }
 
 void D3Device::CreateViewport()

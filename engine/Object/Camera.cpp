@@ -49,12 +49,13 @@ void Camera::ZoomOut(const float scale) {}
 
 void Camera::LookAt(const vec3 eye, const vec3 target, const vec3 up)
 {
-    m_transform.SetLocation(eye);
     m_transform.m_worldMat = glm::lookAtLH(eye, target, up);
 
     m_side = m_transform.m_worldMat[0];
     m_up   = m_transform.m_worldMat[1];
     m_look = m_transform.m_worldMat[2];
+
+    m_transform.SetLocation(eye);
 }
 
 void Camera::LookAtObject(Object3D& obj) {}

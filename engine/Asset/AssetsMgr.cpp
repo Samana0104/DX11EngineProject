@@ -82,15 +82,31 @@ bool AssetsMgr::CreateTexture(const wstringV path)
     return false;
 }
 
+bool AssetsMgr::CreateMesh(const MESH_KEY key, const MeshShape shape)
+{
+    std::shared_ptr<Mesh> mesh;
+
+    switch (shape)
+    {
+    case MeshShape::BOX3D:
+        mesh = std::make_shared<Box3D>(m_device);
+        return m_meshes.Add(key, mesh);
+
+    case MeshShape::LINE:
+        mesh = std::make_shared<Line>(m_device);
+        return m_meshes.Add(key, mesh);
+    }
+    return false;
+}
+
 bool AssetsMgr::CreateMesh(const wstringV path)
 {
     auto [fileName, fileExt] = HBSoft::GetFileNameAndExt(path);
     // modern c++ 기능인데 구조적 바인딩이라고 pair 객체 바로 변수 값에다 쏴주는 기능임
 
     if (IsMeshFormat(fileExt))
-    {
         return true;
-    }
+
     return false;
 }
 
@@ -139,17 +155,6 @@ bool AssetsMgr::CreateSound(const wstringV path)
         return m_sounds.Add(key, std::move(sound));
     }
 
-    return false;
-}
-
-bool AssetsMgr::CreateMesh(const MESH_KEY key, const MeshShape shape)
-{
-    switch (shape)
-    {
-    case MeshShape::BOX3D:
-        std::shared_ptr<Mesh> mesh = std::make_shared<Box3D>(m_device);
-        return m_meshes.Add(key, mesh);
-    }
     return false;
 }
 

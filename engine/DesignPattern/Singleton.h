@@ -20,9 +20,6 @@ namespace HBSoft
     class Singleton
     {
     private:
-        inline static T* m_singleton = nullptr;
-
-    private:
         Singleton(const Singleton&)            = delete;
         Singleton(Singleton&&)                 = delete;
         Singleton& operator=(const Singleton&) = delete;
@@ -32,24 +29,12 @@ namespace HBSoft
         Singleton() = default;
 
     public:
-        ~Singleton()
-        {
-            if (m_singleton)
-                delete m_singleton;
-        }
-
         static T& GetInstance()
         {
-            if (!m_singleton)
-                m_singleton = new T;
-
-            return *m_singleton;
+            static T instance;
+            return instance;
         }
 
-        static void Release()
-        {
-            if (!m_singleton)
-                delete m_singleton;
-        }
+        ~Singleton() {}
     };
 }  // namespace HBSoft

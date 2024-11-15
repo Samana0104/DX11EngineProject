@@ -2,8 +2,8 @@
 author : 변한빛
 description : 3D공간에서의 회전 스케일 이동을 표현하기 위한 클래스 헤더 파일
 
-version: 1.0.5
-date: 2024-11-14
+version: 1.1
+date: 2024-11-15
 */
 
 #pragma once
@@ -41,6 +41,9 @@ namespace HBSoft
         Transform3D& SetRotation(const vec3& axis, const float radian);
         Transform3D& SetRotation(const vec3& eulerAngle);
 
+        Transform3D& AddScale(const vec3 scale);
+        Transform3D& AddScale(const float scale);
         Transform3D& SetScale(const vec3 scale);
+        Transform3D& SetScale(const float scale);
     };
 }  // namespace HBSoft

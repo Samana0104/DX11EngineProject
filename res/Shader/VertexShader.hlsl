@@ -5,6 +5,7 @@ cbuffer ModelViewProj : register(b0)
     Matrix modelMat;
     Matrix viewMat;
     Matrix projMat;
+    float4 externalColor; // 외부 지정 컬러
 };
 
 PSInput main(VSInput vsIn)
@@ -19,7 +20,7 @@ PSInput main(VSInput vsIn)
     
     psIn.p = projPos;
     psIn.n = float4(vsIn.n, 0);
-    psIn.c = vsIn.c;
+    psIn.c = vsIn.c * externalColor;
     psIn.t = vsIn.t;
 
     return psIn;

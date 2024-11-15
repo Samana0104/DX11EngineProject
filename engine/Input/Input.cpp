@@ -39,10 +39,10 @@ const HPoint& Input::GetMousePos() const
     return m_mousePos;
 }
 
-const HPoint& Input::GetNDCMousePos() const
+const HPoint Input::GetNDCMousePos() const
 {
     HPoint windowSize = m_window->GetSize();
-    return {2 * m_mousePos.x / windowSize.x - 1.f, -2 * m_mousePos.y / windowSize.y + 1.f};
+    return {2.f * m_mousePos.x / windowSize.x - 1.f, -2.f * m_mousePos.y / windowSize.y + 1.f};
 }
 
 bool Input::IsKeyUp(const UINT key) const

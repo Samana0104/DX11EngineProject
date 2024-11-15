@@ -17,4 +17,9 @@ struct PSInput
     float2 t : TEXCOORD0;
 };
 
+struct LinePsInput
+{
+    float4 p : SV_Position;
+    float4 c : COLOR0;
+};
 #endif

@@ -14,17 +14,27 @@ Font::Font(std::shared_ptr<D3Device>& device, const FontDesc& desc)
     : m_fontDesc(desc)
 {
     assert(CreateFontComponent(device));
+    EventHandler::GetInstance().AddEvent(EventList::DEVICE_CHANGE, this);
 }
 
-Font::~Font() {}
-
-void Font::OnWm_size(UINT weight, UINT height)
+Font::~Font()
 {
+    EventHandler::GetInstance().DeleteEvent(EventList::DEVICE_CHANGE, this);
+}
+
+void Font::OnNotice(void* entity)
+{
+    D3Device* device = reinterpret_cast<D3Device*>(entity);
+
+    std::shared_ptr<D3Device> sharedDevice(device);
+
     m_writeFactory->Release();
     m_textFormat->Release();
     m_brush->Release();
+    m_d2dRT->Release();
+    m_d2dFactory->Release();
 
-    // CreateFontComponent();
+    CreateFontComponent(sharedDevice);
 }
 
 bool Font::CreateFontComponent(std::shared_ptr<D3Device>& device)

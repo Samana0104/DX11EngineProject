@@ -9,6 +9,7 @@ date: 2024-11-04
 #pragma once
 #include "pch.h"
 #include "Camera.h"
+#include "LineObj.h"
 
 namespace HBSoft
 {
@@ -17,6 +18,9 @@ namespace HBSoft
     public:
         Object3D test;
         Camera   cameraTest;
+        LineObj  m_line;
+
+        bool isWire = false;
 
     public:
         SceneLobby();

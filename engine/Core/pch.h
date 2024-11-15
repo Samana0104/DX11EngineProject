@@ -86,3 +86,5 @@ using namespace glm;
 #include "Singleton.h"
 #include "Scene.h"
 #include "ConstantBuffers.h"
+#include "EventHandler.h"
+#include "Observer.h"

@@ -14,6 +14,7 @@ date: 2024-11-05
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include "Box3D.h"
+#include "Line.h"
 #include "HSound.h"
 
 namespace HBSoft

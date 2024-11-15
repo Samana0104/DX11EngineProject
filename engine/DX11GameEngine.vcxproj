@@ -19,11 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\res\Shader\LineVertex.hlsl">
+      <FileType>CppCode</FileType>
+    </FxCompile>
     <ClCompile Include="Asset\AssetsMgr.cpp" />
     <ClCompile Include="Asset\Font\Font.cpp" />
     <ClCompile Include="Asset\Mesh\Box2D.cpp" />
     <ClCompile Include="Asset\Mesh\Box3D.cpp" />
     <ClCompile Include="Asset\Mesh\Circle2D.cpp" />
+    <ClCompile Include="Asset\Mesh\Line.cpp" />
     <ClCompile Include="Asset\Mesh\Mesh.cpp" />
     <ClCompile Include="Asset\Mesh\MeshHandler.cpp" />
     <ClCompile Include="Asset\Mesh\Sphere2D.cpp" />
@@ -35,15 +39,16 @@
     <ClCompile Include="Asset\Texture\Texture.cpp" />
     <ClCompile Include="Core\D3Device.cpp" />
     <ClCompile Include="Core\Core.cpp" />
+    <ClCompile Include="Core\EventHandler.cpp" />
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="Core\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="DesignPattern\Observer.cpp" />
-    <ClCompile Include="DesignPattern\Subject.cpp" />
     <ClCompile Include="GameStart\Main.cpp" />
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Object\Actor.cpp" />
+    <ClCompile Include="Object\LineObj.cpp" />
     <ClCompile Include="Object\Button.cpp" />
     <ClCompile Include="Object\Camera.cpp" />
     <ClCompile Include="Object\Object2D.cpp" />
@@ -61,6 +66,7 @@
     <ClInclude Include="Asset\Mesh\Box2D.h" />
     <ClInclude Include="Asset\Mesh\Box3D.h" />
     <ClInclude Include="Asset\Mesh\Circle2D.h" />
+    <ClInclude Include="Asset\Mesh\Line.h" />
     <ClInclude Include="Asset\Mesh\Mesh.h" />
     <ClInclude Include="Asset\Mesh\MeshHandler.h" />
     <ClInclude Include="Asset\Mesh\Sphere2D.h" />
@@ -74,6 +80,7 @@
     <ClInclude Include="Core\D3Device.h" />
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Core\CoreAPI.h" />
+    <ClInclude Include="Core\EventHandler.h" />
     <ClInclude Include="Core\HPoint.h" />
     <ClInclude Include="Core\HRect.h" />
     <ClInclude Include="Core\Window.h" />
@@ -81,10 +88,9 @@
     <ClInclude Include="Core\MgrTemplate.h" />
     <ClInclude Include="DesignPattern\Observer.h" />
     <ClInclude Include="DesignPattern\Singleton.h" />
-    <ClInclude Include="DesignPattern\Subject.h" />
-    <ClInclude Include="EventHandler.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Object\Actor.h" />
+    <ClInclude Include="Object\LineObj.h" />
     <ClInclude Include="Object\Button.h" />
     <ClInclude Include="Object\Camera.h" />
     <ClInclude Include="Object\Object2D.h" />
@@ -102,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\res\Shader\HBStd.hlsli" />
+    <FxCompile Include="..\res\Shader\LinePixel.hlsl" />
     <FxCompile Include="..\res\Shader\PixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <DisableOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DisableOptimizations>

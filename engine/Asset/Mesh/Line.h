@@ -1,18 +1,17 @@
 #pragma once
 
-#include "pch.h"
-#include "Mesh\Mesh.h"
+#include "Mesh.h"
 
 namespace HBSoft
 {
-    class Box3D : public Mesh
+    class Line : public Mesh
     {
     private:
         bool CreateVertex(std::shared_ptr<D3Device>& device);
         bool CreateIndex(std::shared_ptr<D3Device>& device);
 
     public:
-        Box3D(std::shared_ptr<D3Device>& device);
-        ~Box3D() = default;
+        Line(std::shared_ptr<D3Device>& device);
+        ~Line() = default;
     };
 }  // namespace HBSoft

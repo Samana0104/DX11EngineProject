@@ -22,7 +22,7 @@ namespace HBSoft
         DWRITE_FONT_STRETCH m_fontStretch;
     };
 
-    class Font
+    class Font : public Observer
     {
     private:
         ComPtr<IDWriteFactory>       m_writeFactory;
@@ -31,8 +31,7 @@ namespace HBSoft
         ComPtr<ID2D1RenderTarget>    m_d2dRT;
         ComPtr<ID2D1Factory>         m_d2dFactory;
 
-        FontDesc          m_fontDesc;
-        D2D1_MATRIX_3X2_F m_tempMat;
+        FontDesc m_fontDesc;
 
     public:
         Transform2D m_transform;  // 혹시 회전할 일 있으면 추가하려함
@@ -44,11 +43,11 @@ namespace HBSoft
         bool CreateTextFormat();
         bool CreateBrush();
 
-        void OnWm_size(UINT weight, UINT height);
+        virtual void OnNotice(void* entity);
 
     public:
         Font(std::shared_ptr<D3Device>& device, const FontDesc& desc);
-        ~Font();
+        virtual ~Font();
 
         void DrawTexts(const wstringV msg, HRect rect, COLOR_F color);
 

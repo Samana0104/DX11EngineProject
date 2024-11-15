@@ -10,10 +10,11 @@ date: 2024-11-04
 
 #pragma once
 #include "Window.h"
+#include "Observer.h"
 
 namespace HBSoft
 {
-    class D3Device
+    class D3Device : public Observer
     {
     public:
         ComPtr<ID3D11Device>            m_d3dDevice;
@@ -23,6 +24,7 @@ namespace HBSoft
         ComPtr<ID3D11SamplerState>      m_samplerState;
         ComPtr<IDXGISwapChain>          m_swapChain;
         ComPtr<ID3D11RasterizerState>   m_rsState;
+        ComPtr<ID3D11RasterizerState>   m_rsWireState;
         ComPtr<ID3D11DepthStencilState> m_dsState;
         ComPtr<ID3D11DepthStencilView>  m_dsv;
 
@@ -31,8 +33,6 @@ namespace HBSoft
         std::shared_ptr<Window> m_window;
 
     private:
-        void OnWm_size(UINT width, UINT height);
-
         bool CreateDevice();
         bool CreateDeviceAndSwapChain();
         bool CreateRenderTargetView();
@@ -41,17 +41,18 @@ namespace HBSoft
         bool CreateDepthStencilState();
         bool CreateDepthStencilView();
         void CreateViewport();
-        bool SetAlphaBlendingState();
+        bool CreateBlendingState();
+
+        virtual void OnNotice(void* entity) override;
 
     public:
         D3Device(const std::shared_ptr<Window>& window);
-        ~D3Device() = default;
+        virtual ~D3Device();
 
         glm::vec2 GetViewportSize() const;
 
         template <class T>
         bool CreateVertexBuffer(std::vector<T>& vertices, ComPtr<ID3D11Buffer>& vertexBuffer);
-
         bool CreateIndexBuffer(std::vector<UINT>& indices, ComPtr<ID3D11Buffer>& idxBuffer);
     };
 

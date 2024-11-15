@@ -90,9 +90,6 @@
     <ClCompile Include="DesignPattern\Observer.cpp">
       <Filter>DesignPattern</Filter>
     </ClCompile>
-    <ClCompile Include="DesignPattern\Subject.cpp">
-      <Filter>DesignPattern</Filter>
-    </ClCompile>
     <ClCompile Include="Asset\AssetsMgr.cpp">
       <Filter>Asset</Filter>
     </ClCompile>
@@ -141,6 +138,15 @@
     <ClCompile Include="Object\Transform3D.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Asset\Mesh\Line.cpp">
+      <Filter>Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\LineObj.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\EventHandler.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -188,9 +194,6 @@
     <ClInclude Include="Object\Object2D.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="EventHandler.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Object\Transform2D.h">
       <Filter>Object</Filter>
     </ClInclude>
@@ -198,9 +201,6 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="DesignPattern\Observer.h">
-      <Filter>DesignPattern</Filter>
-    </ClInclude>
-    <ClInclude Include="DesignPattern\Subject.h">
       <Filter>DesignPattern</Filter>
     </ClInclude>
     <ClInclude Include="DesignPattern\Singleton.h">
@@ -266,6 +266,15 @@
     <ClInclude Include="Asset\Shader\ConstantBuffers.h">
       <Filter>Asset\Shader</Filter>
     </ClInclude>
+    <ClInclude Include="Asset\Mesh\Line.h">
+      <Filter>Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\LineObj.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\EventHandler.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.clang-format" />
@@ -278,6 +287,12 @@
       <Filter>hlsl</Filter>
     </FxCompile>
     <FxCompile Include="..\res\Shader\HBStd.hlsli">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\LinePixel.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\LineVertex.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>

@@ -12,17 +12,30 @@ using namespace HBSoft;
 
 SceneLobby::SceneLobby()
     : cameraTest(glm::radians(90.f), 0.1f, 10000.f)
-{}
+{
+    cameraTest.LookAt({0.f, 5.f, -10.f}, {0.f, 0.f, 0.f}, {0.f, 1.f, 0.f});
+}
 
 void SceneLobby::Update(float deltaTime)
 {
+    ImGui::Checkbox("wireframe : ", &isWire);
+
     cameraTest.Update(deltaTime);
     test.Update(deltaTime);
     test.SetMatrix(cameraTest.GetViewMat(), cameraTest.GetProjMat());
+    m_line.SetMatrix(cameraTest.GetViewMat(), cameraTest.GetProjMat());
 }
 
 void SceneLobby::Render()
 {
+    if (isWire)
+        HDEVICE->m_context->RSSetState(HDEVICE->m_rsWireState.Get());
+    else
+        HDEVICE->m_context->RSSetState(HDEVICE->m_rsState.Get());
+
+    m_line.Draw({0.f, 0.f, 0.f}, {1000.f, 0.f, 0.f}, {1.f, 0.f, 0.f, 1.f});
+    m_line.Draw({0.f, 0.f, 0.f}, {0.f, 1000.f, 0.f}, {0.f, 1.f, 0.f, 1.f});
+    m_line.Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
     test.Render();
 }
 

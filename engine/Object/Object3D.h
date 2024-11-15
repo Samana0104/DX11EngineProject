@@ -19,7 +19,7 @@ namespace HBSoft
     //     TEXTURE_KEY texKey;
     //     MESH_KEY    meshKey;
     //     SHADER_KEY  shaderKey;
-    // };
+    // }; 나중에 추상화 해볼예정?
 
     // 나중에 public : Composite
     class Object3D
@@ -46,17 +46,18 @@ namespace HBSoft
         void SetVSShaderKey(const SHADER_KEY key);
         void SetPSShaderKey(const SHADER_KEY key);
 
-        /*
-            param : viewMat -> 카메라 행렬 요소 1 | projMat -> 카메라 행렬 요소 2
-            description : 해당 오브젝트의 view, proj 행렬을 설정한다. ( 카메라 클래스 활용 추천 )
-        */
-        void SetMatrix(mat4 viewMat, mat4 projMat);
 
         const vec4&        GetColor() const;
         const MESH_KEY&    GetMeshKey() const;
         const TEXTURE_KEY& GetTextureKey() const;
         const SHADER_KEY&  GetVSShaderKey() const;
         const SHADER_KEY&  GetPSShaderKey() const;
+
+        /*
+            param : viewMat -> 카메라 행렬 요소 1 | projMat -> 카메라 행렬 요소 2
+            description : 해당 오브젝트의 view, proj 행렬을 설정한다. ( 카메라 클래스 활용 추천 )
+        */
+        virtual void SetMatrix(mat4 viewMat, mat4 projMat);
 
         virtual void Update(const float deltaTime);
         virtual void Render();

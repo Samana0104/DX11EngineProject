@@ -32,11 +32,11 @@ namespace HBSoft
     inline static const std::map<FONT_KEY, FontDesc> g_defaultFonts = {
         {L"DEBUG_FONT",
          {L"malgun",
-         L"ko-kr",
-         20.f,
-         DWRITE_FONT_WEIGHT_THIN,
-         DWRITE_FONT_STYLE_NORMAL,
-         DWRITE_FONT_STRETCH_NORMAL}},
+          L"ko-kr",
+          20.f,
+          DWRITE_FONT_WEIGHT_THIN,
+          DWRITE_FONT_STYLE_NORMAL,
+          DWRITE_FONT_STRETCH_NORMAL}},
     };
 
     /*
@@ -49,7 +49,8 @@ namespace HBSoft
 
     // 기본 메쉬
     inline static const std::map<MESH_KEY, MeshShape> g_defaultMeshes = {
-        {L"BOX3D", {MeshShape::BOX3D}}
+        {L"BOX3D", {MeshShape::BOX3D}},
+        { L"LINE",  {MeshShape::LINE}}
     };
 
     /*
@@ -62,6 +63,8 @@ namespace HBSoft
 
     inline static const std::map<SHADER_KEY, ShaderType> g_defaultShaders = {
         {L"VertexShader.hlsl", ShaderType::VERTEX},
-        { L"PixelShader.hlsl",  ShaderType::PIXEL}
+        { L"PixelShader.hlsl",  ShaderType::PIXEL},
+        {   L"LinePixel.hlsl",  ShaderType::PIXEL},
+        {  L"LineVertex.hlsl", ShaderType::VERTEX}
     };
 }  // namespace HBSoft

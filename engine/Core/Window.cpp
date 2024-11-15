@@ -56,7 +56,7 @@ bool Window::Create()
 
     m_hwnd = hwnd;
     GetClientRect(m_hwnd, &rt);
-    m_windowSize = HPoint {rt.right, rt.bottom};
+    m_windowSize = HPoint(rt.right, rt.bottom);
 
     ShowWindow(hwnd, SW_SHOW);
 
@@ -116,8 +116,8 @@ LRESULT Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     case WM_SIZE:
         RECT rc;
         GetClientRect(hwnd, &rc);
-
-        Window::m_windowSize = HPoint(static_cast<float>(rc.right), static_cast<float>(rc.bottom));
+        Window::m_windowSize = HPoint(rc.right, rc.bottom);
+        EventHandler::GetInstance().Notify(EventList::WINDOW_RESIZE);
         return 0;
     }
     return DefWindowProc(hwnd, uMsg, wParam, lParam);

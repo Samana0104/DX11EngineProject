@@ -12,15 +12,7 @@ using namespace HBSoft;
 
 void Object3D::Update(const float deltaTime)
 {
-    static float x, y, z;
-
-    ImGui::SliderFloat("x", &x, -3.14, 3.14);
-    ImGui::SliderFloat("y", &y, -3.14, 3.14);
-    ImGui::SliderFloat("z", &z, -3.14, 3.14);
-    m_transform.SetScale({2.f, 1.f, 2.f});
-    m_transform.SetRotation({x, y, z});
     m_cb.model = m_transform.m_worldMat;
-    HASSET->m_shaders[m_vsShaderKey]->SetConstantBuffer(HDEVICE, (void*)&m_cb, sizeof(m_cb), 0);
 }
 
 void Object3D::Render()
@@ -29,6 +21,8 @@ void Object3D::Render()
 
     UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
     UINT pOffsets = 0;               // 버퍼에 시작 인덱스
+
+    HASSET->m_shaders[m_vsShaderKey]->SetConstantBuffer(HDEVICE, (void*)&m_cb, sizeof(m_cb), 0);
 
     HASSET->m_shaders[m_vsShaderKey]->SetUpToContext(HDEVICE);
     HASSET->m_shaders[m_psShaderKey]->SetUpToContext(HDEVICE);
@@ -47,9 +41,6 @@ void Object3D::Render()
 
 
     HDEVICE->m_context->PSSetSamplers(0, 1, HDEVICE->m_samplerState.GetAddressOf());
-    HDEVICE->m_context->RSSetViewports(1, &HDEVICE->m_viewPort);
-    HDEVICE->m_context->RSSetState(HDEVICE->m_rsState.Get());
-    HDEVICE->m_context->OMSetDepthStencilState(HDEVICE->m_dsState.Get(), 0);
     HDEVICE->m_context->OMSetRenderTargets(1, HDEVICE->m_rtv.GetAddressOf(), HDEVICE->m_dsv.Get());
     // DXGI_FORMAT_R32_UINT는 인덱스 버퍼의 타입이 UINT라 그럼
     HDEVICE->m_context->DrawIndexed((UINT)mesh->m_indices.size(), 0, 0);
