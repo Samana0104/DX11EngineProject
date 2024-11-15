@@ -24,7 +24,7 @@ Camera::Camera(float fov, float projNear, float projFar)
 
 const mat4 Camera::GetViewMat() const
 {
-    return glm::inverse(m_transform.GetWorldMat());
+    return glm::inverse(m_transform.m_worldMat);
 }
 
 const mat4 Camera::GetProjMat() const
@@ -34,7 +34,7 @@ const mat4 Camera::GetProjMat() const
 
 const vec3 Camera::GetEyePos() const
 {
-    return m_transform.GetPos();
+    return m_transform.m_pos;
 }
 
 void Camera::ZoomIn(const float scale)
@@ -50,34 +50,17 @@ void Camera::ZoomOut(const float scale) {}
 void Camera::LookAt(const vec3 eye, const vec3 target, const vec3 up)
 {
     m_transform.SetLocation(eye);
-    mat3 rotMat = glm::lookAtLH(eye, target, up);
+    m_transform.m_worldMat = glm::lookAtLH(eye, target, up);
 
-    m_side = rotMat[0];
-    m_up   = rotMat[1];
-    m_side = rotMat[2];
+    m_side = m_transform.m_worldMat[0];
+    m_up   = m_transform.m_worldMat[1];
+    m_look = m_transform.m_worldMat[2];
 }
 
 void Camera::LookAtObject(Object3D& obj) {}
 
 void Camera::Update(const float deltaTime)
 {
-    if (HINPUT->IsKeyPressed(VK_LBUTTON))
-    {
-        HPoint ndc = HINPUT->GetNDCMousePos();
-
-        float yaw   = ndc.y * glm::pi<float>();
-        float pitch = ndc.x * glm::two_pi<float>();
-
-        m_transform.SetRotation({0.f, 0.f, 1.f}, yaw);
-        
-        auto a = m_transform.GetWorldMat();
-
-        m_look = a[0];
-        m_side = glm::cross(m_up, m_look);
-
-        ImGui::Text("%f %f %f", m_side.x, m_side.y, m_side.z);
-        ImGui::Text("%f %f %f", m_up.x, m_up.y, m_up.z);
-    }
 
     if (HINPUT->IsKeyPressed(87))  // W
         m_transform.AddLocation(m_look * 0.01f);
@@ -90,6 +73,17 @@ void Camera::Update(const float deltaTime)
 
     if (HINPUT->IsKeyPressed(65))  // A
         m_transform.AddLocation(m_side * -0.01f);
+
+    if (HINPUT->IsKeyPressed(VK_RBUTTON))
+    {
+        HPoint ndc = HINPUT->GetNDCMousePos();
+
+        m_transform.SetRotation({ndc.y * glm::pi<float>(), -ndc.x * glm::two_pi<float>(), 0.f});
+
+        m_side = m_transform.m_worldMat[0];
+        m_up   = m_transform.m_worldMat[1];
+        m_look = m_transform.m_worldMat[2];
+    }
 }
 
 void Camera::Render() {}

@@ -13,7 +13,9 @@ namespace HBSoft
 {
     class Transform3D
     {
-    private:
+        // 귀찮아서 퍼블릭으로 두는데 수학 자신 없으면 함수 쓰십쇼
+
+    public:
         vec3 m_pos;
         quat m_rotator;
         vec3 m_scale;
@@ -40,8 +42,5 @@ namespace HBSoft
         Transform3D& SetRotation(const vec3& eulerAngle);
 
         Transform3D& SetScale(const vec3 scale);
-
-        const mat4& GetWorldMat() const;
-        const vec3& GetPos() const;
     };
 }  // namespace HBSoft

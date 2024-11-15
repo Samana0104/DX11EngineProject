@@ -38,7 +38,7 @@ Transform3D& Transform3D::AddLocation(const vec3 pos)
 
 Transform3D& Transform3D::AddRotation(const vec3& axis, const float radian)
 {
-    m_rotator  = glm::rotate(m_rotator, radian, axis);
+    m_rotator = glm::rotate(m_rotator, radian, axis);
     CalculateWorldMat();
     return *this;
 }
@@ -47,14 +47,14 @@ Transform3D& Transform3D::AddRotation(const vec3& eulerAngle)
 {
     quat rotator2;
 
-	rotator2.x = sin(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f) -
-                cos(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
+    rotator2.x = sin(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f) -
+                 cos(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
     rotator2.y = cos(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f) +
-                sin(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
+                 sin(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
     rotator2.z = cos(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f) -
-                sin(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f);
+                 sin(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f);
     rotator2.w = cos(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f) +
-                sin(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
+                 sin(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
 
     m_rotator *= rotator2;
 
@@ -72,14 +72,20 @@ Transform3D& Transform3D::SetRotation(const vec3& axis, const float radian)
 
 Transform3D& Transform3D::SetRotation(const vec3& eulerAngle)
 {
-    m_rotator.x = sin(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f) -
-                cos(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
-    m_rotator.y = cos(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f) +
-                sin(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
-    m_rotator.z = cos(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f) -
-                sin(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f);
-    m_rotator.w = cos(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f) +
-                sin(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
+    quat axisX = quat(cos(0.5f * eulerAngle.x), sin(0.5f * eulerAngle.x) * vec3(1.f, 0.f, 0.f));
+    quat axisY = quat(cos(0.5f * eulerAngle.y), sin(0.5f * eulerAngle.y) * vec3(0.f, 1.f, 0.f));
+    quat axisZ = quat(cos(0.5f * eulerAngle.z), sin(0.5f * eulerAngle.z) * vec3(0.f, 0.f, 1.f));
+
+    // m_rotator.x = sin(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f) -
+    //               cos(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
+    // m_rotator.y = cos(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f) +
+    //               sin(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
+    // m_rotator.z = cos(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f) -
+    //               sin(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f);
+    // m_rotator.w = cos(eulerAngle.x * 0.5f) * cos(eulerAngle.y * 0.5f) * cos(eulerAngle.z * 0.5f) +
+    //               sin(eulerAngle.x * 0.5f) * sin(eulerAngle.y * 0.5f) * sin(eulerAngle.z * 0.5f);
+
+    m_rotator = axisX * axisZ * axisY;
 
     CalculateWorldMat();
     return *this;
@@ -112,14 +118,4 @@ void Transform3D::CalculateWorldMat()
     m_worldMat[3][0] = m_pos.x;
     m_worldMat[3][1] = m_pos.y;
     m_worldMat[3][2] = m_pos.z;
-}
-
-const mat4& Transform3D::GetWorldMat() const
-{
-    return m_worldMat;
-}
-
-const vec3& Transform3D::GetPos() const
-{
-    return m_pos;
 }

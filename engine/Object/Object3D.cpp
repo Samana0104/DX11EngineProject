@@ -19,7 +19,7 @@ void Object3D::Update(const float deltaTime)
     ImGui::SliderFloat("z", &z, -3.14, 3.14);
     m_transform.SetScale({2.f, 1.f, 2.f});
     m_transform.SetRotation({x, y, z});
-    m_cb.model = m_transform.GetWorldMat();
+    m_cb.model = m_transform.m_worldMat;
     HASSET->m_shaders[m_vsShaderKey]->SetConstantBuffer(HDEVICE, (void*)&m_cb, sizeof(m_cb), 0);
 }
 
