@@ -12,3 +12,8 @@
 /exe/debug/*.lib
 /x64/Debug/NetTest.pdb
 /exe/debug/network_d.idb
+/exe/debug/minizip.dll
+/exe/debug/poly2tri.dll
+/exe/debug/pugixml.dll
+/exe/debug/zlibd1.dll
+/res/Mesh/Slide Hip Hop Dance.fbx
