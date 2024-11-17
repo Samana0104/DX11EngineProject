@@ -1,4 +1,7 @@
 #pragma once
 
-class FontFactory
-{};
+namespace HBSoft
+{
+    class FontFactory
+    {};
+}  // namespace HBSoft

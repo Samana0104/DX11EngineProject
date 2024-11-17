@@ -9,5 +9,6 @@
 /exe/debug/*.pdb
 /exe/debug/*.cso
 /exe/debug/*.exe
+/exe/debug/*.lib
 /x64/Debug/NetTest.pdb
 /exe/debug/network_d.idb
