@@ -47,7 +47,6 @@ namespace HBSoft
         bool CreateFont(const FONT_KEY key, const FontDesc& desc);
         bool CreateShader(const wstringV path);
         bool CreateSound(const wstringV path);
-        bool CreateMesh(const MESH_KEY key, const MeshShape shape);
         // bool CreateMesh(const wstringV path); 나중에 assimploader에서 쓸 예정
 
         bool AddExternalFont(const wstringV path);
