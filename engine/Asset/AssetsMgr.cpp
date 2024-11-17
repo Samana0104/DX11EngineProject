@@ -33,7 +33,10 @@ void AssetsMgr::CreateAssetAsFormat(const wstringV path)
     AddExternalFont(path);
 
     CreateTexture(path);
-    CreateMesh(path);
+
+    if (MeshFactory::IsMeshFormat(path))
+        MeshFactory::Create(m_device, path);
+
     CreateShader(path);
     CreateSound(path);
 }
@@ -64,7 +67,7 @@ void AssetsMgr::CreateDefaultResource()
 
     // 작성한 메쉬 추가
     for (auto& meshDesc : g_defaultMeshes)
-        CreateMesh(meshDesc.first, meshDesc.second);
+        m_meshes.Add(meshDesc.first, MeshFactory::Create(m_device, meshDesc.second));
 }
 
 bool AssetsMgr::CreateTexture(const wstringV path)
@@ -78,34 +81,6 @@ bool AssetsMgr::CreateTexture(const wstringV path)
         auto        texture = std::make_shared<Texture>(m_device, path);
         return m_textures.Add(key, std::move(texture));
     }
-
-    return false;
-}
-
-bool AssetsMgr::CreateMesh(const MESH_KEY key, const MeshShape shape)
-{
-    std::shared_ptr<Mesh> mesh;
-
-    switch (shape)
-    {
-    case MeshShape::BOX3D:
-        mesh = std::make_shared<Box3D>(m_device);
-        return m_meshes.Add(key, mesh);
-
-    case MeshShape::LINE:
-        mesh = std::make_shared<Line>(m_device);
-        return m_meshes.Add(key, mesh);
-    }
-    return false;
-}
-
-bool AssetsMgr::CreateMesh(const wstringV path)
-{
-    auto [fileName, fileExt] = HBSoft::GetFileNameAndExt(path);
-    // modern c++ 기능인데 구조적 바인딩이라고 pair 객체 바로 변수 값에다 쏴주는 기능임
-
-    if (IsMeshFormat(fileExt))
-        return true;
 
     return false;
 }
@@ -184,12 +159,9 @@ bool AssetsMgr::IsTextureFormat(const wstringV ext) const
         return true;
     else if (ext.compare(L".bmp") == 0)
         return true;
+    else if (ext.compare(L".dds") == 0)
+        return true;
 
-    return false;
-}
-
-bool AssetsMgr::IsMeshFormat(const wstringV ext) const
-{
     return false;
 }
 

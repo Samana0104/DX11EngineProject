@@ -19,17 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\res\Shader\CubePixel.hlsl" />
+    <FxCompile Include="..\res\Shader\CubeVertex.hlsl" />
     <FxCompile Include="..\res\Shader\LineVertex.hlsl">
       <FileType>CppCode</FileType>
     </FxCompile>
     <ClCompile Include="Asset\AssetsMgr.cpp" />
     <ClCompile Include="Asset\Font\Font.cpp" />
+    <ClCompile Include="Asset\MeshFactory.cpp" />
     <ClCompile Include="Asset\Mesh\Box2D.cpp" />
     <ClCompile Include="Asset\Mesh\Box3D.cpp" />
     <ClCompile Include="Asset\Mesh\Circle2D.cpp" />
+    <ClCompile Include="Asset\Mesh\CubeMap.cpp" />
     <ClCompile Include="Asset\Mesh\Line.cpp" />
     <ClCompile Include="Asset\Mesh\Mesh.cpp" />
-    <ClCompile Include="Asset\Mesh\MeshHandler.cpp" />
     <ClCompile Include="Asset\Mesh\Sphere2D.cpp" />
     <ClCompile Include="Asset\Shader\PixelShader.cpp" />
     <ClCompile Include="Asset\Shader\Shader.cpp" />
@@ -45,9 +48,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="DesignPattern\Observer.cpp" />
+    <ClCompile Include="FontFactory.cpp" />
     <ClCompile Include="GameStart\Main.cpp" />
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Object\Actor.cpp" />
+    <ClCompile Include="Object\CubeMapObj.cpp" />
     <ClCompile Include="Object\LineObj.cpp" />
     <ClCompile Include="Object\Button.cpp" />
     <ClCompile Include="Object\Camera.cpp" />
@@ -63,12 +68,13 @@
     <ClInclude Include="Asset\AssetsMgr.h" />
     <ClInclude Include="Asset\DefaultResource.h" />
     <ClInclude Include="Asset\Font\Font.h" />
+    <ClInclude Include="Asset\MeshFactory.h" />
     <ClInclude Include="Asset\Mesh\Box2D.h" />
     <ClInclude Include="Asset\Mesh\Box3D.h" />
     <ClInclude Include="Asset\Mesh\Circle2D.h" />
+    <ClInclude Include="Asset\Mesh\CubeMap.h" />
     <ClInclude Include="Asset\Mesh\Line.h" />
     <ClInclude Include="Asset\Mesh\Mesh.h" />
-    <ClInclude Include="Asset\Mesh\MeshHandler.h" />
     <ClInclude Include="Asset\Mesh\Sphere2D.h" />
     <ClInclude Include="Asset\Shader\ConstantBuffers.h" />
     <ClInclude Include="Asset\Shader\PixelShader.h" />
@@ -88,8 +94,10 @@
     <ClInclude Include="Core\MgrTemplate.h" />
     <ClInclude Include="DesignPattern\Observer.h" />
     <ClInclude Include="DesignPattern\Singleton.h" />
+    <ClInclude Include="FontFactory.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Object\Actor.h" />
+    <ClInclude Include="Object\CubeMapObj.h" />
     <ClInclude Include="Object\LineObj.h" />
     <ClInclude Include="Object\Button.h" />
     <ClInclude Include="Object\Camera.h" />
@@ -230,7 +238,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)res\Shader;$(ProjectDir)Color\;$(ProjectDir)Core\;$(ProjectDir)DesignPattern\;$(ProjectDir)FSM\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Object\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\Font\;$(ProjectDir)Asset\Mesh\;$(ProjectDir)Asset\Shader\;$(ProjectDir)Asset\Sound\;$(ProjectDir)Asset\Texture\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)res\Shader;$(ProjectDir)Color\;$(ProjectDir)Core\;$(ProjectDir)DesignPattern\;$(ProjectDir)FSM\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Object\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

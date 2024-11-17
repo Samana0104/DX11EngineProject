@@ -20,6 +20,7 @@ namespace HBSoft
         ComPtr<ID3D11Device>            m_d3dDevice;
         ComPtr<ID3D11DeviceContext>     m_context;
         ComPtr<ID3D11RenderTargetView>  m_rtv;  // rtv = render target view
+        ComPtr<ID2D1RenderTarget>       m_2dRtv;
         ComPtr<ID3D11BlendState>        m_alphaBlend;
         ComPtr<ID3D11SamplerState>      m_samplerState;
         ComPtr<IDXGISwapChain>          m_swapChain;
@@ -35,7 +36,8 @@ namespace HBSoft
     private:
         bool CreateDevice();
         bool CreateDeviceAndSwapChain();
-        bool CreateRenderTargetView();
+        bool CreateRenderTarget();
+        bool Create2DRenderTarget();
         bool CreateSamplerState();
         bool CreateRSState();
         bool CreateDepthStencilState();
@@ -43,13 +45,13 @@ namespace HBSoft
         void CreateViewport();
         bool CreateBlendingState();
 
-        virtual void OnNotice(void* entity) override;
+        virtual void OnNotice(EventList event, void* entity) override;
 
     public:
         D3Device(const std::shared_ptr<Window>& window);
         virtual ~D3Device();
 
-        glm::vec2 GetViewportSize() const;
+        vec2 GetViewportSize() const;
 
         template <class T>
         bool CreateVertexBuffer(std::vector<T>& vertices, ComPtr<ID3D11Buffer>& vertexBuffer);

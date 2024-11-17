@@ -8,14 +8,13 @@ date: 2024-11-05
 
 #pragma once
 #include "DefaultResource.h"
-#include "Texture.h"
-#include "Mesh.h"
-#include "Font.h"
-#include "VertexShader.h"
-#include "PixelShader.h"
-#include "Box3D.h"
-#include "Line.h"
-#include "HSound.h"
+#include "Texture/Texture.h"
+#include "Mesh/Mesh.h"
+#include "Font/Font.h"
+#include "Shader/VertexShader.h"
+#include "Shader/PixelShader.h"
+#include "Sound/HSound.h"
+#include "MeshFactory.h"
 
 namespace HBSoft
 {
@@ -37,7 +36,6 @@ namespace HBSoft
         void CreateAssetAsFormat(const wstringV path);
 
         bool IsTextureFormat(const wstringV ext) const;
-        bool IsMeshFormat(const wstringV ext) const;
         bool IsFontFormat(const wstringV ext) const;
         bool IsShaderFormat(const wstringV ext) const;
         bool IsSoundFormat(const wstringV ext) const;
@@ -46,7 +44,6 @@ namespace HBSoft
         AssetsMgr(std::shared_ptr<D3Device>& device);
 
         bool CreateTexture(const wstringV path);
-        bool CreateMesh(const wstringV path);
         bool CreateFont(const FONT_KEY key, const FontDesc& desc);
         bool CreateShader(const wstringV path);
         bool CreateSound(const wstringV path);

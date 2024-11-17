@@ -14,6 +14,9 @@ SceneLobby::SceneLobby()
     : cameraTest(glm::radians(90.f), 0.1f, 10000.f)
 {
     cameraTest.LookAt({0.f, 5.f, -10.f}, {0.f, 0.f, 0.f}, {0.f, 1.f, 0.f});
+    test.SetCamera(&cameraTest);
+    m_line.SetCamera(&cameraTest);
+    cube.SetCamera(&cameraTest);
 }
 
 void SceneLobby::Update(float deltaTime)
@@ -21,9 +24,10 @@ void SceneLobby::Update(float deltaTime)
     ImGui::Checkbox("wireframe : ", &isWire);
 
     cameraTest.Update(deltaTime);
+
     test.Update(deltaTime);
-    test.SetMatrix(cameraTest.GetViewMat(), cameraTest.GetProjMat());
-    m_line.SetMatrix(cameraTest.GetViewMat(), cameraTest.GetProjMat());
+    m_line.Update(deltaTime);
+    cube.Update(deltaTime);
 }
 
 void SceneLobby::Render()
@@ -37,6 +41,7 @@ void SceneLobby::Render()
     m_line.Draw({0.f, 0.f, 0.f}, {0.f, 1000.f, 0.f}, {0.f, 1.f, 0.f, 1.f});
     m_line.Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
     test.Render();
+    cube.Render();
 }
 
 void SceneLobby::Release() {}

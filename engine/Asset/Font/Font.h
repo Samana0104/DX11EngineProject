@@ -28,8 +28,6 @@ namespace HBSoft
         ComPtr<IDWriteFactory>       m_writeFactory;
         ComPtr<IDWriteTextFormat>    m_textFormat;
         ComPtr<ID2D1SolidColorBrush> m_brush;
-        ComPtr<ID2D1RenderTarget>    m_d2dRT;
-        ComPtr<ID2D1Factory>         m_d2dFactory;
 
         FontDesc m_fontDesc;
 
@@ -37,24 +35,21 @@ namespace HBSoft
         Transform2D m_transform;  // 혹시 회전할 일 있으면 추가하려함
 
     private:
-        bool CreateFontComponent(std::shared_ptr<D3Device>& device);
-        bool Create2DRenderTarget(std::shared_ptr<D3Device>& device);
+        bool CreateComponent(const D3Device* device);  // 이벤트에서 디바이스 넘길려고 포인터로 바꿈
         bool CreateDWriteFactory();
         bool CreateTextFormat();
-        bool CreateBrush();
+        bool CreateBrush(const D3Device* device);
 
-        virtual void OnNotice(void* entity);
+        virtual void OnNotice(EventList event, void* entity);
 
     public:
         Font(std::shared_ptr<D3Device>& device, const FontDesc& desc);
         virtual ~Font();
 
-        void DrawTexts(const wstringV msg, HRect rect, COLOR_F color);
+        void DrawTexts(std::shared_ptr<D3Device>& device, const wstringV msg, HRect rect);
+        void SetColor(const COLOR_F& color);
+        void SetBold(bool bold);
 
-        const ComPtr<ID2D1SolidColorBrush>& GetBrush() const;
-
-        void  SetBold(bool bold);
-        float GetFontSize() const;
-        vec2  GetTextSize(const wstringV text) const;
+        const FontDesc& GetDesc() const;
     };
 }  // namespace HBSoft

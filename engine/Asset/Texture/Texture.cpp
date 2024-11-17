@@ -23,7 +23,14 @@ bool Texture::CreateTexture(std::shared_ptr<D3Device>& device)
                                                    m_texturePath.c_str(),
                                                    m_texture.GetAddressOf(),  //&m_pTexture
                                                    m_srv.GetAddressOf());
-
+    if (FAILED(hr))
+    {
+        hr = DirectX::CreateDDSTextureFromFile(device->m_d3dDevice.Get(),
+                                               m_texturePath.c_str(),
+                                               m_texture.GetAddressOf(),
+                                               m_srv.GetAddressOf(),
+                                               0);
+    }
     return SUCCEEDED(hr);
 }
 

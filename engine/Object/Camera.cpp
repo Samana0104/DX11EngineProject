@@ -20,6 +20,13 @@ Camera::Camera(float fov, float projNear, float projFar)
     m_side = vec3(1.f, 0.f, 0.f);
     m_up   = vec3(0.f, 1.f, 0.f);
     m_look = vec3(0.f, 0.f, 1.f);
+
+    EventHandler::GetInstance().AddEvent(EventList::DEVICE_CHANGE, this);
+}
+
+Camera::~Camera()
+{
+    EventHandler::GetInstance().DeleteEvent(EventList::DEVICE_CHANGE, this);
 }
 
 const mat4 Camera::GetViewMat() const
@@ -64,16 +71,24 @@ void Camera::Update(const float deltaTime)
 {
 
     if (HINPUT->IsKeyPressed(87))  // W
-        m_transform.AddLocation(m_look * 0.01f);
+        m_transform.AddLocation(m_look * m_speed * deltaTime);
 
     if (HINPUT->IsKeyPressed(83))  // S
-        m_transform.AddLocation(m_look * -0.01f);
+        m_transform.AddLocation(-m_look * m_speed * deltaTime);
 
     if (HINPUT->IsKeyPressed(68))  // D
-        m_transform.AddLocation(m_side * 0.01f);
+        m_transform.AddLocation(m_side * m_speed * deltaTime);
 
     if (HINPUT->IsKeyPressed(65))  // A
-        m_transform.AddLocation(m_side * -0.01f);
+        m_transform.AddLocation(-m_side * m_speed * deltaTime);
+
+    if (HINPUT->IsKeyDown(VK_SPACE))
+    {
+        m_speed += 100;
+
+        if (m_speed >= 500.f)
+            m_speed = 10.f;
+    }
 
     if (HINPUT->IsKeyPressed(VK_RBUTTON))
     {
@@ -88,3 +103,5 @@ void Camera::Update(const float deltaTime)
 }
 
 void Camera::Render() {}
+
+void Camera::OnNotice(EventList event, void* entity) {}

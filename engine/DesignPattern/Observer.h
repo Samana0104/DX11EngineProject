@@ -8,13 +8,22 @@ date: 2024-11-15
 
 #pragma once
 
-class Observer
+namespace HBSoft
 {
-protected:
-    Observer()  = default;
-    ~Observer() = default;
+    enum class EventList : uint16_t
+    {
+        WINDOW_RESIZE = 1,  // 윈도우 리사이즈 이벤트 entity로 nullptr넘어감
+        DEVICE_CHANGE = 2,  // 디바이스 관련된 건 여기다 추가할 것 entity로 디바이스 넘어감
+    };
 
-public:
-    virtual void OnNotice(void* entity) = 0;
-    // Update는 게임에서 많이 쓰이니 OnNotice로 변경
-};
+    class Observer
+    {
+    protected:
+        Observer()  = default;
+        ~Observer() = default;
+
+    public:
+        virtual void OnNotice(EventList event, void* entity) = 0;
+        // Update는 게임에서 많이 쓰이니 OnNotice로 변경
+    };
+}  // namespace HBSoft

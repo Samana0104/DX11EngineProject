@@ -2,8 +2,8 @@
 author : 변한빛
 description : Precompile header 기능을 사용하기 위해 만든 헤더파일
 
-version: 1.0.3
-date: 2024-11-12
+version: 1.0.5
+date: 2024-11-17
 */
 
 #pragma once
@@ -34,12 +34,45 @@ date: 2024-11-12
 #include <tchar.h>
 #include <atlconv.h>
 
+// ---------------------------------------
+//			      GLM
+// ---------------------------------------
+
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
 #include "glm/glm.hpp"
 #include "glm/ext.hpp"
+
+// ---------------------------------------
+//			      Assimp
+// ---------------------------------------
+
+#include <assimp\Importer.hpp>
+#include <assimp\postprocess.h>
+#include <assimp\scene.h>
+
+// ---------------------------------------
+//			      FMOD
+// ---------------------------------------
+
 #include "fmod/fmod.hpp"
 #include "DirectXTK/WICTextureLoader.h"
+#include "DirectXTK/DDSTextureLoader.h"
+
+// ---------------------------------------
+//			      ImGui
+// ---------------------------------------
+
+// imgui는 디버그용
+#ifdef _DEBUG
+    #include "imgui.h"
+    #include "imgui_impl_win32.h"
+    #include "imgui_impl_dx11.h"
+#endif
+
+// ---------------------------------------
+//			  Library load
+// ---------------------------------------
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d2d1.lib")
@@ -68,13 +101,6 @@ date: 2024-11-12
 using namespace Microsoft::WRL;
 using namespace glm;
 
-// imgui는 디버그용
-#ifdef _DEBUG
-    #include "imgui.h"
-    #include "imgui_impl_win32.h"
-    #include "imgui_impl_dx11.h"
-#endif
-
 #include "MgrTemplate.h"
 #include "SystemTimer.h"
 #include "HRect.h"
@@ -85,6 +111,6 @@ using namespace glm;
 #include "CoreAPI.h"
 #include "Singleton.h"
 #include "Scene.h"
-#include "ConstantBuffers.h"
+#include "Shader/ConstantBuffers.h"
 #include "EventHandler.h"
 #include "Observer.h"

@@ -10,15 +10,17 @@ date: 2024-11-04
 #include "pch.h"
 #include "Camera.h"
 #include "LineObj.h"
+#include "CubeMapObj.h"
 
 namespace HBSoft
 {
     class SceneLobby : public Scene
     {
     public:
-        Object3D test;
-        Camera   cameraTest;
-        LineObj  m_line;
+        Object3D   test;
+        CubeMapObj cube;
+        Camera     cameraTest;
+        LineObj    m_line;
 
         bool isWire = false;
 

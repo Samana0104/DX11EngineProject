@@ -10,56 +10,39 @@ date: 2024-11-12
 #include "Core.h"
 #include "Renderable.h"
 #include "Transform3D.h"
-#include "ConstantBuffers.h"
+#include "Shader/ConstantBuffers.h"
 
 namespace HBSoft
 {
-    // struct RenderDesc
-    //{
-    //     TEXTURE_KEY texKey;
-    //     MESH_KEY    meshKey;
-    //     SHADER_KEY  shaderKey;
-    // }; 나중에 추상화 해볼예정?
+    class Camera;
 
-    // 나중에 public : Composite
-    class Object3D
+    class Object3D : public Renderable
     {
+    private:
+        Camera* m_camera;
+
     protected:
-        TEXTURE_KEY m_textureKey  = L"1KGCABK.bmp";
-        MESH_KEY    m_meshKey     = L"BOX3D";
-        SHADER_KEY  m_vsShaderKey = L"VertexShader.hlsl";
-        SHADER_KEY  m_psShaderKey = L"PixelShader.hlsl";
-        vec4        m_color       = {1.f, 1.f, 1.f, 1.f};
+        std::shared_ptr<Mesh>    m_mesh;
+        std::shared_ptr<Texture> m_texture;
+        std::shared_ptr<Shader>  m_vsShader;
+        std::shared_ptr<Shader>  m_psShader;
 
-
-    public:
         Transform3D m_transform;
-        VSShaderCB  m_cb;
+        DefaultCB0  m_cb0;
 
     public:
-        Object3D()          = default;
+        Object3D();
         virtual ~Object3D() = default;
 
-        void SetColor(const vec4 color);
         void SetTextureKey(const TEXTURE_KEY key);
         void SetMeshKey(const MESH_KEY key);
         void SetVSShaderKey(const SHADER_KEY key);
         void SetPSShaderKey(const SHADER_KEY key);
+        void SetCamera(Camera* camera);
 
-
-        const vec4&        GetColor() const;
-        const MESH_KEY&    GetMeshKey() const;
-        const TEXTURE_KEY& GetTextureKey() const;
-        const SHADER_KEY&  GetVSShaderKey() const;
-        const SHADER_KEY&  GetPSShaderKey() const;
-
-        /*
-            param : viewMat -> 카메라 행렬 요소 1 | projMat -> 카메라 행렬 요소 2
-            description : 해당 오브젝트의 view, proj 행렬을 설정한다. ( 카메라 클래스 활용 추천 )
-        */
-        virtual void SetMatrix(mat4 viewMat, mat4 projMat);
-
-        virtual void Update(const float deltaTime);
-        virtual void Render();
+        virtual void Init() override;
+        virtual void Release() override;
+        virtual void Update(const float deltaTime) override;
+        virtual void Render() override;
     };
 }  // namespace HBSoft

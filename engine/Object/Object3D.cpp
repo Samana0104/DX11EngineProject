@@ -8,96 +8,91 @@ date: 2024-11-11
 
 #include "pch.h"
 #include "Object3D.h"
+#include "Camera.h"
 using namespace HBSoft;
+
+Object3D::Object3D()
+{
+    Init();
+}
+
+void Object3D::Init()
+{
+    m_camera = nullptr;
+
+    SetTextureKey(L"1KGCABK.bmp");
+    SetMeshKey(L"BOX3D");
+    SetVSShaderKey(L"VertexShader.hlsl");
+    SetPSShaderKey(L"PixelShader.hlsl");
+}
+
+void Object3D::Release() {}
 
 void Object3D::Update(const float deltaTime)
 {
-    m_cb.model = m_transform.m_worldMat;
+    if (m_camera != nullptr)
+    {
+        m_cb0.view = m_camera->GetViewMat();
+        m_cb0.proj = m_camera->GetProjMat();
+    }
+    else
+    {
+        m_cb0.view = mat4(1.0f);
+        m_cb0.proj = mat4(1.0f);
+    }
+    m_cb0.world    = m_transform.m_worldMat;
+    m_cb0.invWorld = glm::inverse(m_transform.m_worldMat);
+    m_vsShader->SetConstantBuffer(HDEVICE, (void*)&m_cb0, sizeof(m_cb0), 0);
 }
 
 void Object3D::Render()
 {
-    std::shared_ptr<Mesh> mesh = HASSET->m_meshes[m_meshKey];
-
     UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
     UINT pOffsets = 0;               // 버퍼에 시작 인덱스
 
-    HASSET->m_shaders[m_vsShaderKey]->SetConstantBuffer(HDEVICE, (void*)&m_cb, sizeof(m_cb), 0);
-
-    HASSET->m_shaders[m_vsShaderKey]->SetUpToContext(HDEVICE);
-    HASSET->m_shaders[m_psShaderKey]->SetUpToContext(HDEVICE);
+    m_vsShader->SetUpToContext(HDEVICE);
+    m_psShader->SetUpToContext(HDEVICE);
 
     HDEVICE->m_context->IASetVertexBuffers(0,
                                            1,
-                                           mesh->m_vertexBuffer.GetAddressOf(),
+                                           m_mesh->m_vertexBuffer.GetAddressOf(),
                                            &pStrides,
                                            &pOffsets);
-    HDEVICE->m_context->IASetIndexBuffer(mesh->m_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+
+    // DXGI_FORMAT_R32_UINT는 인덱스 버퍼의 타입이 UINT라 그럼
+    HDEVICE->m_context->IASetIndexBuffer(m_mesh->m_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
     HDEVICE->m_context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-    HDEVICE->m_context->PSSetShaderResources(0,
-                                             1,
-                                             HASSET->m_textures[m_textureKey]->GetSRV().GetAddressOf());
+    HDEVICE->m_context->PSSetShaderResources(0, 1, m_texture->GetSRV().GetAddressOf());
 
 
     HDEVICE->m_context->PSSetSamplers(0, 1, HDEVICE->m_samplerState.GetAddressOf());
     HDEVICE->m_context->OMSetRenderTargets(1, HDEVICE->m_rtv.GetAddressOf(), HDEVICE->m_dsv.Get());
-    // DXGI_FORMAT_R32_UINT는 인덱스 버퍼의 타입이 UINT라 그럼
-    HDEVICE->m_context->DrawIndexed((UINT)mesh->m_indices.size(), 0, 0);
-}
-
-void Object3D::SetColor(const vec4 color)
-{
-    m_color = color;
+    HDEVICE->m_context->DrawIndexed((UINT)m_mesh->m_indices.size(), 0, 0);
 }
 
 void Object3D::SetTextureKey(const TEXTURE_KEY key)
 {
-    m_textureKey = key;
+    m_texture = HASSET->m_textures[key];
 }
 
 void Object3D::SetMeshKey(const MESH_KEY key)
 {
-    m_meshKey = key;
+    m_mesh = HASSET->m_meshes[key];
 }
 
 void Object3D::SetVSShaderKey(const SHADER_KEY key)
 {
-    m_vsShaderKey = key;
+    m_vsShader = HASSET->m_shaders[key];
 }
 
 void Object3D::SetPSShaderKey(const SHADER_KEY key)
 {
-    m_psShaderKey = key;
+    m_psShader = HASSET->m_shaders[key];
 }
 
-void Object3D::SetMatrix(mat4 viewMat, mat4 projMat)
+void Object3D::SetCamera(Camera* camera)
 {
-    m_cb.view = viewMat;
-    m_cb.proj = projMat;
-}
-
-const vec4& Object3D::GetColor() const
-{
-    return m_color;
-}
-
-const MESH_KEY& Object3D::GetMeshKey() const
-{
-    return m_meshKey;
-}
-
-const TEXTURE_KEY& Object3D::GetTextureKey() const
-{
-    return m_textureKey;
-}
-
-const SHADER_KEY& Object3D::GetVSShaderKey() const
-{
-    return m_vsShaderKey;
-}
-
-const SHADER_KEY& Object3D::GetPSShaderKey() const
-{
-    return m_psShaderKey;
+    if (camera != nullptr)
+        m_camera = camera;
 }

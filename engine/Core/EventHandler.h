@@ -15,12 +15,6 @@ date: 2024-11-15
 
 namespace HBSoft
 {
-    enum class EventList : uint16_t
-    {
-        WINDOW_RESIZE = 1,  // 윈도우 리사이즈 이벤트
-        DEVICE_CHANGE = 2,  // 디바이스 관련된 건 여기다 추가할 것
-    };
-
     class EventHandler : public Singleton<EventHandler>
     {
     private:

@@ -19,7 +19,7 @@ void EventHandler::Notify(EventList event, void* entity)
     auto& observerList = m_observers[event];
 
     for (Observer* observer : observerList)
-        observer->OnNotice(entity);
+        observer->OnNotice(event, entity);
 }
 
 void EventHandler::AddEvent(EventList event, Observer* observer)

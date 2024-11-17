@@ -18,7 +18,8 @@ namespace HBSoft
         BOX2D    = 1,
         CIRCLE2D = 2,
         BOX3D    = 3,
-        LINE     = 4
+        LINE     = 4,
+        CUBEMAP  = 5
     };
 
     struct Vertex

@@ -111,9 +111,6 @@
     <ClCompile Include="Asset\Mesh\Mesh.cpp">
       <Filter>Asset\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="Asset\Mesh\MeshHandler.cpp">
-      <Filter>Asset\Mesh</Filter>
-    </ClCompile>
     <ClCompile Include="Asset\Shader\PixelShader.cpp">
       <Filter>Asset\Shader</Filter>
     </ClCompile>
@@ -147,6 +144,16 @@
     <ClCompile Include="Core\EventHandler.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Asset\Mesh\CubeMap.cpp">
+      <Filter>Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\CubeMapObj.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\MeshFactory.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="FontFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -239,9 +246,6 @@
     <ClInclude Include="Asset\Mesh\Mesh.h">
       <Filter>Asset\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="Asset\Mesh\MeshHandler.h">
-      <Filter>Asset\Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="Asset\Shader\PixelShader.h">
       <Filter>Asset\Shader</Filter>
     </ClInclude>
@@ -275,6 +279,16 @@
     <ClInclude Include="Core\EventHandler.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Asset\Mesh\CubeMap.h">
+      <Filter>Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\CubeMapObj.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\MeshFactory.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="FontFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.clang-format" />
@@ -293,6 +307,12 @@
       <Filter>hlsl</Filter>
     </FxCompile>
     <FxCompile Include="..\res\Shader\LineVertex.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\CubeVertex.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\CubePixel.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>

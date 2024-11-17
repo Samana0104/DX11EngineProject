@@ -8,10 +8,11 @@ date: 2024-11-04
 
 #pragma once
 #include "Object3D.h"
+#include "Observer.h"
 
 namespace HBSoft
 {
-    class Camera : public Object3D
+    class Camera : public Object3D, Observer
     {
     private:
         float m_fov;  // radian angle
@@ -22,9 +23,16 @@ namespace HBSoft
         vec3 m_up;    // y
         vec3 m_look;  // z
 
+        float m_speed = 10.f;
+        float m_accel = 10.f;
+
         mat4 m_projMat;
         // 설마 카메라에 스케일 값 주는 미친 사람 없겠지?
         // 줌인 줌아웃 따로 만들었으니 스케일 조정하지 마시오
+
+    private:
+        virtual void OnNotice(EventList event, void* entity);
+        // 윈도우 사이즈 변경시 원근행렬 조정 근데 뷰포트 기준으로 둬야함
 
     public:
         /*
@@ -32,6 +40,8 @@ namespace HBSoft
             description : fov값 라디안임 주의
         */
         Camera(float fov, float projNear, float projFar);
+        ~Camera();
+
         const mat4 GetViewMat() const;
         const mat4 GetProjMat() const;
         const vec3 GetEyePos() const;

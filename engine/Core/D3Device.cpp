@@ -22,7 +22,7 @@ D3Device::~D3Device()
     EventHandler::GetInstance().DeleteEvent(EventList::WINDOW_RESIZE, this);
 }
 
-glm::vec2 D3Device::GetViewportSize() const
+vec2 D3Device::GetViewportSize() const
 {
     return {m_viewPort.Width, m_viewPort.Height};
 }
@@ -52,7 +52,10 @@ bool D3Device::CreateDevice()
     if (!CreateDeviceAndSwapChain())
         return false;
 
-    if (!CreateRenderTargetView())
+    if (!CreateRenderTarget())
+        return false;
+    
+    if (!Create2DRenderTarget())
         return false;
 
     if (!CreateSamplerState())
@@ -81,9 +84,8 @@ bool D3Device::CreateDeviceAndSwapChain()
 
     CONST D3D_FEATURE_LEVEL pFeatureLevels = D3D_FEATURE_LEVEL_11_0;
 
-    m_swapChainDesc = {};
+    ZeroMemory(&m_swapChainDesc, sizeof(m_swapChainDesc));
     {
-        m_swapChainDesc.OutputWindow                       = m_window->GetHandle();
         m_swapChainDesc.BufferDesc.Width                   = (UINT)windowSize.x;
         m_swapChainDesc.BufferDesc.Height                  = (UINT)windowSize.y;
         m_swapChainDesc.BufferDesc.RefreshRate.Numerator   = 60;
@@ -91,6 +93,7 @@ bool D3Device::CreateDeviceAndSwapChain()
         m_swapChainDesc.BufferDesc.Format                  = DXGI_FORMAT_R8G8B8A8_UNORM;
         m_swapChainDesc.BufferUsage                        = DXGI_USAGE_RENDER_TARGET_OUTPUT;
         m_swapChainDesc.BufferCount                        = 1;
+        m_swapChainDesc.OutputWindow                       = m_window->GetHandle();
         m_swapChainDesc.Windowed                           = true;
         m_swapChainDesc.SampleDesc.Count                   = 1;
     }
@@ -111,7 +114,7 @@ bool D3Device::CreateDeviceAndSwapChain()
     return SUCCEEDED(hr);
 }
 
-bool D3Device::CreateRenderTargetView()
+bool D3Device::CreateRenderTarget()
 {
     HRESULT                 hr;
     ComPtr<ID3D11Texture2D> backBuffer;
@@ -126,6 +129,38 @@ bool D3Device::CreateRenderTargetView()
                                              m_rtv.GetAddressOf());
 
     m_context->OMSetRenderTargets(1, m_rtv.GetAddressOf(), nullptr);
+
+    return SUCCEEDED(hr);
+}
+
+bool D3Device::Create2DRenderTarget()
+{
+    HRESULT              hr;
+    ComPtr<IDXGISurface> dxgiSurface;
+	ComPtr<ID2D1Factory> m_d2dFactory;
+
+    hr = m_swapChain->GetBuffer(0, IID_PPV_ARGS(dxgiSurface.GetAddressOf()));
+
+    if (FAILED(hr))
+        return false;
+
+    hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, m_d2dFactory.GetAddressOf());
+
+    if (FAILED(hr))
+        return false;
+
+    D2D1_RENDER_TARGET_PROPERTIES rtp;
+    {
+        rtp.type                  = D2D1_RENDER_TARGET_TYPE_DEFAULT;
+        rtp.pixelFormat.format    = DXGI_FORMAT_UNKNOWN;
+        rtp.pixelFormat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
+        rtp.dpiX                  = 0;
+        rtp.dpiY                  = 0;
+        rtp.usage                 = D2D1_RENDER_TARGET_USAGE_NONE;
+        rtp.minLevel              = D2D1_FEATURE_LEVEL_DEFAULT;
+    }
+
+    hr = m_d2dFactory->CreateDxgiSurfaceRenderTarget(dxgiSurface.Get(), &rtp, m_2dRtv.GetAddressOf());
 
     return SUCCEEDED(hr);
 }
@@ -147,7 +182,7 @@ bool D3Device::CreateSamplerState()
         return false;
 
     // 샘플러 상태를 파이프라인에 바인딩
-    // m_context->PSSetSamplers(0, 1, m_samplerState.GetAddressOf());
+    m_context->PSSetSamplers(0, 1, m_samplerState.GetAddressOf());
     return true;
 }
 
@@ -172,9 +207,6 @@ bool D3Device::CreateRSState()
 
     m_context->RSSetState(m_rsState.Get());
 
-    // rd.FillMode = D3D11_FILL_WIREFRAME;
-    // hr = TDevice::m_pd3dDevice->CreateRasterizerState(&rd, m_pRSWireFrame.GetAddressOf());
-    // if (FAILED(hr)) return hr;
     return SUCCEEDED(hr);
 }
 
@@ -236,19 +268,6 @@ bool D3Device::CreateBlendingState()
         // D3D11_RENDER_TARGET_BLEND_DESC RenderTarget[8];
         //  백버퍼의 컬러값(DestBlend) 과  현재 출력 컬러(SrcBlend)값을 혼합연산한다.
         bd.RenderTarget[0].BlendEnable = TRUE;
-        // RGA 컬러값 연산( 기본 알파블랭딩 공식) 알파범위( 0 ~ 1 )
-        // 최종 컬러값 = 소스컬러*소스알파 	+  데스크컬러* (1.0 - 소스알파)
-        //  정점위치 = 목적지위치*S + 현재위치* (1- S); S=0, S=0.5, S = 1
-        //
-        // 만약 소스컬러 = 1,0,0,1(빨강)   배경컬러 = 0,0,1,1(파랑)
-        // 1)소스알파 = 1.0F ( 완전불투명)
-        // RGB = R*ALPHA, G = G*Alpha, B = B*Alpha
-        // 최종 컬러값 = 빨강*1.0F 	+  파랑* (1.0 - 1.0F)
-        // ->최종 컬러값(소스색) = [1,0,0] 	+  [0,0,0]
-        // 2)소스알파 = 0.0F ( 완전투명)
-        // RGB = R*ALPHA, G = G*Alpha, B = B*Alpha
-        // 최종 컬러값 = 빨강*0.0F 	+  파랑* (1.0 - 0.0F)
-        // ->최종 컬러값(배경색) = [0,0,0] +  [0,0,1]
         bd.RenderTarget[0].SrcBlend  = D3D11_BLEND_SRC_ALPHA;
         bd.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
         bd.RenderTarget[0].BlendOp   = D3D11_BLEND_OP_ADD;
@@ -267,30 +286,31 @@ bool D3Device::CreateBlendingState()
     return SUCCEEDED(hr);
 }
 
-void D3Device::OnNotice(void* entity)
+void D3Device::OnNotice(EventList event, void* entity)
 {
     HPoint windowSize = m_window->GetSize();
 
-    m_context->OMSetRenderTargets(0, nullptr, nullptr);
     m_context->Flush();
-
+    m_context->OMSetRenderTargets(0, nullptr, nullptr);
+    m_2dRtv->Release();
     m_rtv->Release();
-    m_dsv->Release();
-    m_context->RSSetViewports(1, &m_viewPort);
-
-    m_viewPort.Width  = windowSize.x;
-    m_viewPort.Height = windowSize.y;
+    //m_dsv->Release();
 
     m_swapChainDesc.BufferDesc.Width  = (UINT)windowSize.x;
     m_swapChainDesc.BufferDesc.Height = (UINT)windowSize.y;
-
+    
     HRESULT hr = m_swapChain->ResizeBuffers(m_swapChainDesc.BufferCount,
                                             m_swapChainDesc.BufferDesc.Width,
                                             m_swapChainDesc.BufferDesc.Height,
                                             m_swapChainDesc.BufferDesc.Format,
                                             m_swapChainDesc.Flags);
+    
+    //if (FAILED(hr))
+    //    return;
 
-    CreateRenderTargetView();
+    CreateViewport();
+    CreateRenderTarget();
+    Create2DRenderTarget();
     CreateDepthStencilView();
 
     EventHandler::GetInstance().Notify(EventList::DEVICE_CHANGE, this);
