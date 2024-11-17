@@ -10,3 +10,4 @@
 /exe/debug/*.cso
 /exe/debug/*.exe
 /x64/Debug/NetTest.pdb
+/exe/debug/network_d.idb
