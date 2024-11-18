@@ -4,7 +4,7 @@ using namespace HBSoft;
 
 CubeMapObj::CubeMapObj()
 {
-    SetTextureKey(L"MSPath_specularIBL.dds");
+    SetTextureKey(L"cubeTest.dds");
     SetMeshKey(L"CUBEMAP");
     SetVSShaderKey(L"CubeVertex.hlsl");
     SetPSShaderKey(L"CubePixel.hlsl");

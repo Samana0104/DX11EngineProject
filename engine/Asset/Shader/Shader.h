@@ -12,7 +12,7 @@ date: 2024-11-04
 
 namespace HBSoft
 {
-    enum class ShaderType
+    enum class ShaderType : uint8
     {
         VERTEX = 1,
         PIXEL,

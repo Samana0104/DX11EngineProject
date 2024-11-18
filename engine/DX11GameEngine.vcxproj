@@ -25,19 +25,23 @@
       <FileType>CppCode</FileType>
     </FxCompile>
     <ClCompile Include="Asset\AssetsMgr.cpp" />
+    <ClCompile Include="Asset\Factory\FontFactory.cpp" />
+    <ClCompile Include="Asset\Factory\MeshFactory.cpp" />
+    <ClCompile Include="Asset\Factory\ShaderFactory.cpp" />
+    <ClCompile Include="Asset\Factory\SoundFactory.cpp" />
+    <ClCompile Include="Asset\Factory\TextureFactory.cpp" />
     <ClCompile Include="Asset\Font\Font.cpp" />
-    <ClCompile Include="Asset\MeshFactory.cpp" />
     <ClCompile Include="Asset\Mesh\Box2D.cpp" />
     <ClCompile Include="Asset\Mesh\Box3D.cpp" />
     <ClCompile Include="Asset\Mesh\Circle2D.cpp" />
     <ClCompile Include="Asset\Mesh\CubeMap.cpp" />
+    <ClCompile Include="Asset\Mesh\GridMap.cpp" />
     <ClCompile Include="Asset\Mesh\Line.cpp" />
     <ClCompile Include="Asset\Mesh\Mesh.cpp" />
     <ClCompile Include="Asset\Mesh\Sphere2D.cpp" />
     <ClCompile Include="Asset\Shader\PixelShader.cpp" />
     <ClCompile Include="Asset\Shader\Shader.cpp" />
     <ClCompile Include="Asset\Shader\VertexShader.cpp" />
-    <ClCompile Include="Asset\Sound\FmodSystem.cpp" />
     <ClCompile Include="Asset\Sound\HSound.cpp" />
     <ClCompile Include="Asset\Texture\Texture.cpp" />
     <ClCompile Include="Core\D3Device.cpp" />
@@ -48,7 +52,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="DesignPattern\Observer.cpp" />
-    <ClCompile Include="FontFactory.cpp" />
     <ClCompile Include="GameStart\Main.cpp" />
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Object\Actor.cpp" />
@@ -67,12 +70,17 @@
   <ItemGroup>
     <ClInclude Include="Asset\AssetsMgr.h" />
     <ClInclude Include="Asset\DefaultResource.h" />
+    <ClInclude Include="Asset\Factory\FontFactory.h" />
+    <ClInclude Include="Asset\Factory\MeshFactory.h" />
+    <ClInclude Include="Asset\Factory\ShaderFactory.h" />
+    <ClInclude Include="Asset\Factory\SoundFactory.h" />
+    <ClInclude Include="Asset\Factory\TextureFactory.h" />
     <ClInclude Include="Asset\Font\Font.h" />
-    <ClInclude Include="Asset\MeshFactory.h" />
     <ClInclude Include="Asset\Mesh\Box2D.h" />
     <ClInclude Include="Asset\Mesh\Box3D.h" />
     <ClInclude Include="Asset\Mesh\Circle2D.h" />
     <ClInclude Include="Asset\Mesh\CubeMap.h" />
+    <ClInclude Include="Asset\Mesh\GridMap.h" />
     <ClInclude Include="Asset\Mesh\Line.h" />
     <ClInclude Include="Asset\Mesh\Mesh.h" />
     <ClInclude Include="Asset\Mesh\Sphere2D.h" />
@@ -80,7 +88,6 @@
     <ClInclude Include="Asset\Shader\PixelShader.h" />
     <ClInclude Include="Asset\Shader\Shader.h" />
     <ClInclude Include="Asset\Shader\VertexShader.h" />
-    <ClInclude Include="Asset\Sound\FmodSystem.h" />
     <ClInclude Include="Asset\Sound\HSound.h" />
     <ClInclude Include="Asset\Texture\Texture.h" />
     <ClInclude Include="Core\D3Device.h" />
@@ -94,7 +101,6 @@
     <ClInclude Include="Core\MgrTemplate.h" />
     <ClInclude Include="DesignPattern\Observer.h" />
     <ClInclude Include="DesignPattern\Singleton.h" />
-    <ClInclude Include="FontFactory.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Object\Actor.h" />
     <ClInclude Include="Object\CubeMapObj.h" />

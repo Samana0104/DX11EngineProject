@@ -43,6 +43,9 @@
     <Filter Include="hlsl">
       <UniqueIdentifier>{7bc20a05-7cf0-4ec4-bb42-315d2ffdc475}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Asset\Factory">
+      <UniqueIdentifier>{4d4122d4-9031-45e6-ad44-20eb665f1456}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\D3Device.cpp">
@@ -102,9 +105,6 @@
     <ClCompile Include="Asset\Font\Font.cpp">
       <Filter>Asset\Font</Filter>
     </ClCompile>
-    <ClCompile Include="Asset\Sound\FmodSystem.cpp">
-      <Filter>Asset\Sound</Filter>
-    </ClCompile>
     <ClCompile Include="Asset\Sound\HSound.cpp">
       <Filter>Asset\Sound</Filter>
     </ClCompile>
@@ -150,10 +150,24 @@
     <ClCompile Include="Object\CubeMapObj.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Asset\MeshFactory.cpp">
-      <Filter>Asset</Filter>
+    <ClCompile Include="Asset\Mesh\GridMap.cpp">
+      <Filter>Asset\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="FontFactory.cpp" />
+    <ClCompile Include="Asset\Factory\FontFactory.cpp">
+      <Filter>Asset\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Factory\MeshFactory.cpp">
+      <Filter>Asset\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Factory\ShaderFactory.cpp">
+      <Filter>Asset\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Factory\SoundFactory.cpp">
+      <Filter>Asset\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Factory\TextureFactory.cpp">
+      <Filter>Asset\Factory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -237,9 +251,6 @@
     <ClInclude Include="Asset\Font\Font.h">
       <Filter>Asset\Font</Filter>
     </ClInclude>
-    <ClInclude Include="Asset\Sound\FmodSystem.h">
-      <Filter>Asset\Sound</Filter>
-    </ClInclude>
     <ClInclude Include="Asset\Sound\HSound.h">
       <Filter>Asset\Sound</Filter>
     </ClInclude>
@@ -285,10 +296,24 @@
     <ClInclude Include="Object\CubeMapObj.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Asset\MeshFactory.h">
-      <Filter>Asset</Filter>
+    <ClInclude Include="Asset\Mesh\GridMap.h">
+      <Filter>Asset\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="FontFactory.h" />
+    <ClInclude Include="Asset\Factory\FontFactory.h">
+      <Filter>Asset\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Factory\MeshFactory.h">
+      <Filter>Asset\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Factory\ShaderFactory.h">
+      <Filter>Asset\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Factory\SoundFactory.h">
+      <Filter>Asset\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Factory\TextureFactory.h">
+      <Filter>Asset\Factory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.clang-format" />

@@ -2,23 +2,18 @@
 author : 변한빛
 description : 사운드의 정의를 하기 위해 만든 소스 파일
 
-version: 1.0.0
-date: 2024-11-04
+version: 1.0.1
+date: 2024-11-17
 */
 
 #include "pch.h"
 #include "HSound.h"
 using namespace HBSoft;
 
-HSound::HSound(const wstringV _filePath)
-    : m_soundPath(_filePath)
+HSound::HSound(FMOD_SYS* fmodSys, const wstringV filePath)
+    : m_fmodSys(fmodSys), m_soundPath(filePath)
 {
-#ifdef _DEBUG
-    _ASSERT(CreateSound(_filePath));
-#else
-    CreateSound(_filePath);
-#endif
-
+    assert(CreateSound(filePath));
     InitSound();
 }
 
@@ -33,10 +28,10 @@ HSound::~HSound()
     m_sound = nullptr;
 }
 
-bool HSound::CreateSound(const wstringV _filePath)
+bool HSound::CreateSound(const wstringV filePath)
 {
     FMOD_RESULT hr =
-    m_fmodSys->createSound(HBSoft::ToMultiByte(_filePath).c_str(), FMOD_DEFAULT, 0, &m_sound);
+    m_fmodSys->createSound(HBSoft::ToMultiByte(filePath).c_str(), FMOD_DEFAULT, 0, &m_sound);
 
     if (hr == FMOD_OK)
         return true;
@@ -49,9 +44,7 @@ void HSound::InitSound()
     Stop();
 
     m_soundChannel = nullptr;
-    // ZeroMemory(m_soundTimer, sizeof(wchar_t) * MAX_PATH);
-    // m_soundSizeInMS = 0;
-    m_soundVolume = 0.5f;
+    m_soundVolume  = 0.5f;
 }
 
 bool HSound::Play(bool loop)
