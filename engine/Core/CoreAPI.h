@@ -29,18 +29,16 @@ namespace HBSoft
     using SOUND_KEY   = std::wstring;
     using SPRITE_KEY  = std::wstring;
 
-    const float TOLERANCE = 1e-4f;
-
-    static std::wstring ToUnicode(const stringV _src)
+    static std::wstring ToUnicode(const stringV src)
     {
         USES_CONVERSION;
-        return std::wstring(A2W(_src.data()));
+        return std::wstring(A2W(src.data()));
     }
 
-    static std::string ToMultiByte(const wstringV _src)
+    static std::string ToMultiByte(const wstringV src)
     {
         USES_CONVERSION;
-        return std::string(W2A(_src.data()));
+        return std::string(W2A(src.data()));
     }
 
     static std::pair<std::wstring, std::wstring> GetFileNameAndExt(const wstringV filePath)

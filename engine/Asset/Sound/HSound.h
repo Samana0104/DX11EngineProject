@@ -8,14 +8,15 @@ date: 2024-11-04
 
 #pragma once
 #include "pch.h"
-#include "FmodSystem.h"
 
 namespace HBSoft
 {
+    using FMOD_SYS = FMOD::System;
+
     class HSound
     {
     private:
-        FmodSystem     m_fmodSys;
+        FMOD_SYS*      m_fmodSys;
         FMOD::Sound*   m_sound;
         FMOD::Channel* m_soundChannel;
 
@@ -29,7 +30,7 @@ namespace HBSoft
         bool CreateSound(const wstringV filePath);
 
     public:
-        HSound(const wstringV filePath);
+        HSound(FMOD_SYS* fmodSys, const wstringV filePath);
         ~HSound();
 
         bool IsPlaying() const;

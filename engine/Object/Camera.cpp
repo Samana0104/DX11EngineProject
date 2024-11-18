@@ -69,6 +69,7 @@ void Camera::LookAtObject(Object3D& obj) {}
 
 void Camera::Update(const float deltaTime)
 {
+    ImGui::SliderFloat("Camera speed", &m_speed, 0.f, 300.f);
 
     if (HINPUT->IsKeyPressed(87))  // W
         m_transform.AddLocation(m_look * m_speed * deltaTime);
@@ -82,13 +83,6 @@ void Camera::Update(const float deltaTime)
     if (HINPUT->IsKeyPressed(65))  // A
         m_transform.AddLocation(-m_side * m_speed * deltaTime);
 
-    if (HINPUT->IsKeyDown(VK_SPACE))
-    {
-        m_speed += 100;
-
-        if (m_speed >= 500.f)
-            m_speed = 10.f;
-    }
 
     if (HINPUT->IsKeyPressed(VK_RBUTTON))
     {

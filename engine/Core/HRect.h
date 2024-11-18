@@ -20,6 +20,11 @@ namespace HBSoft
         float right;
         float bottom;
 
+        template <class T1, class T2, class T3, class T4>
+        HRect(const T1& a, const T2& b, const T3& c, const T4& d);
+
+        HRect();
+
         HRect operator=(const HRect& ref);
         HRect operator+(const HRect& ref);
         HRect operator-(const HRect& ref);
@@ -32,6 +37,19 @@ namespace HBSoft
         operator const D2D1_RECT_L();
         operator const D2D1_RECT_U();
     };
+
+    inline HRect::HRect()
+        : left(0.f), top(0.f), right(0.f), bottom(0.f)
+    {}
+
+    template <class T1, class T2, class T3, class T4>
+    inline HRect::HRect(const T1& a, const T2& b, const T3& c, const T4& d)
+    {
+        left   = static_cast<float>(a);
+        top    = static_cast<float>(b);
+        right  = static_cast<float>(c);
+        bottom = static_cast<float>(d);
+    }
 
     inline HRect HRect::operator=(const HRect& ref)
     {

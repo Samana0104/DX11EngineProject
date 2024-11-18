@@ -50,8 +50,6 @@ namespace HBSoft
         Mesh(bool hasAnimation = false);
 
     public:
-        Mesh(std::shared_ptr<D3Device>& device, const wstringV path);
-
         void SetVertices(std::shared_ptr<D3Device>& device, const std::vector<Vertex>& vertices);
 
         ~Mesh() = default;
