@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\res\Shader\ColorPixelShader.hlsl" />
     <FxCompile Include="..\res\Shader\CubePixel.hlsl" />
     <FxCompile Include="..\res\Shader\CubeVertex.hlsl" />
     <FxCompile Include="..\res\Shader\LineVertex.hlsl">
@@ -61,6 +62,7 @@
     <ClCompile Include="Object\Camera.cpp" />
     <ClCompile Include="Object\Object2D.cpp" />
     <ClCompile Include="Object\Object3D.cpp" />
+    <ClCompile Include="Object\Test3DObj.cpp" />
     <ClCompile Include="Object\Transform2D.cpp" />
     <ClCompile Include="Object\Transform3D.cpp" />
     <ClCompile Include="Scene\SceneLobby.cpp" />
@@ -110,6 +112,7 @@
     <ClInclude Include="Object\Object2D.h" />
     <ClInclude Include="Object\Object3D.h" />
     <ClInclude Include="Object\Renderable.h" />
+    <ClInclude Include="Object\Test3DObj.h" />
     <ClInclude Include="Object\Transform2D.h" />
     <ClInclude Include="Object\Transform3D.h" />
     <ClInclude Include="Scene\Scene.h" />

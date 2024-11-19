@@ -2,111 +2,143 @@
 author : 변한빛
 description : 메쉬를 생성 하기 위한 소스 파일
 
-version: 1.0.7
-date: 2024-11-17
+version: 1.1.0
+date: 2024-11-19
 */
 
 #include "pch.h"
 #include "MeshFactory.h"
 using namespace HBSoft;
 
-void MeshFactory::ProcessNode(aiNode* node, const aiScene* scene)
+void MeshFactory::ProcessNode(aiNode* node, const aiScene* scene, std::shared_ptr<Mesh>& mesh)
 {
-
-    // std::cout << node->mName.C_Str() << " : " << node->mNumMeshes << " "
-    //           << node->mNumChildren << std::endl;
+    auto a = node->mTransformation;
 
     for (UINT i = 0; i < node->mNumMeshes; i++)
     {
-
-        aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-        ProcessMesh(mesh, scene);
-
-        // for (auto& v : newMesh.vertices)
-        //{
-        //     v.position = DirectX::SimpleMath::Vector3::Transform(v.position, m);
-        // }
-
-        // meshes.push_back(newMesh);
+        aiMesh* aiMesh = scene->mMeshes[node->mMeshes[i]];
+        ProcessMesh(aiMesh, scene, mesh);
     }
 
     for (UINT i = 0; i < node->mNumChildren; i++)
     {
-        ProcessNode(node->mChildren[i], scene);
+        ProcessNode(node->mChildren[i], scene, mesh);
     }
 }
 
-void MeshFactory::ProcessMesh(aiMesh* mesh, const aiScene* scene)
+void MeshFactory::ProcessMesh(aiMesh* aiMesh, const aiScene* scene, std::shared_ptr<Mesh>& mesh)
 {
-    //// Data to fill
-    // std::vector<Vertex>   vertices;
-    // std::vector<uint32_t> indices;
+    UINT meshIndicesNums = 0;
+    UINT i               = 0;
 
-    //// Walk through each of the mesh's vertices
-    // for (UINT i = 0; i < mesh->mNumVertices; i++)
-    //{
-    //     Vertex vertex;
+    std::shared_ptr<SubMesh> subMesh = std::make_shared<SubMesh>();
 
-    //    vertex.position.x = mesh->mVertices[i].x;
-    //    vertex.position.y = mesh->mVertices[i].y;
-    //    vertex.position.z = mesh->mVertices[i].z;
+    for (i = 0; i < aiMesh->mNumFaces; i++)
+    {
+        meshIndicesNums += aiMesh->mFaces[i].mNumIndices;
+    }
 
-    //    vertex.normal.x = mesh->mNormals[i].x;
-    //    vertex.normal.y = mesh->mNormals[i].y;
-    //    vertex.normal.z = mesh->mNormals[i].z;
-    //    vertex.normal.Normalize();
+    subMesh->indices.resize(meshIndicesNums);
 
-    //    if (mesh->mTextureCoords[0])
-    //    {
-    //        vertex.texcoord.x = (float)mesh->mTextureCoords[0][i].x;
-    //        vertex.texcoord.y = (float)mesh->mTextureCoords[0][i].y;
-    //    }
+    for (i = 0; i < aiMesh->mNumFaces; i++)
+    {
+        aiFace face = aiMesh->mFaces[i];
 
-    //    vertices.push_back(vertex);
-    //}
+        for (UINT j = 0; j < face.mNumIndices; j++)
+            subMesh->indices[face.mNumIndices * i + j] = face.mIndices[j] + m_vertexId;
+    }
 
-    // for (UINT i = 0; i < mesh->mNumFaces; i++)
-    //{
-    //     aiFace face = mesh->mFaces[i];
-    //     for (UINT j = 0; j < face.mNumIndices; j++)
-    //         indices.push_back(face.mIndices[j]);
-    // }
+    for (i = 0; i < aiMesh->mNumVertices; i++)
+    {
+        // 위치 정보
+        mesh->m_vertices[m_vertexId + i].p.x = aiMesh->mVertices[i].x;
+        mesh->m_vertices[m_vertexId + i].p.y = aiMesh->mVertices[i].y;
+        mesh->m_vertices[m_vertexId + i].p.z = aiMesh->mVertices[i].z;
 
-    // MeshData newMesh;
-    // newMesh.vertices = vertices;
-    // newMesh.indices  = indices;
+        // 노말 정보 (노말이 존재하는 경우)
+        if (aiMesh->HasNormals())
+        {
+            mesh->m_vertices[m_vertexId + i].n.x = aiMesh->mNormals[i].x;
+            mesh->m_vertices[m_vertexId + i].n.y = aiMesh->mNormals[i].y;
+            mesh->m_vertices[m_vertexId + i].n.z = aiMesh->mNormals[i].z;
+            mesh->m_vertices[m_vertexId + i].n   = glm::normalize(mesh->m_vertices[i].n);
+        }
 
-    //// http://assimp.sourceforge.net/lib_html/materials.html
-    // if (mesh->mMaterialIndex >= 0)
-    //{
-    //     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+        // 텍스처 좌표 (첫 번째 UV 채널이 있는 경우)
+        if (aiMesh->HasTextureCoords(0))
+        {
+            mesh->m_vertices[m_vertexId + i].t.x = aiMesh->mTextureCoords[0][i].x;
+            mesh->m_vertices[m_vertexId + i].t.y = aiMesh->mTextureCoords[0][i].y;
+        }
+        else
+        {
+            mesh->m_vertices[m_vertexId + i].t = vec2(0.0f);  // 텍스처 좌표가 없을 때 기본값
+        }
 
-    //    if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
-    //    {
-    //        aiString filepath;
-    //        material->GetTexture(aiTextureType_DIFFUSE, 0, &filepath);
+        if (aiMesh->HasVertexColors(0))
+        {
+            mesh->m_vertices[m_vertexId + i].c.r = aiMesh->mColors[0][i].r;
+            mesh->m_vertices[m_vertexId + i].c.g = aiMesh->mColors[0][i].g;
+            mesh->m_vertices[m_vertexId + i].c.b = aiMesh->mColors[0][i].b;
+            mesh->m_vertices[m_vertexId + i].c.a = aiMesh->mColors[0][i].a;
+        }
+        else
+        {
+            mesh->m_vertices[m_vertexId + i].c = vec4(1.f);
+        }
+    }
 
-    //        std::string fullPath =
-    //        this->basePath + std::string(std::filesystem::path(filepath.C_Str()).filename().string());
+    m_vertexId += i;
 
-    //        newMesh.textureFilename = fullPath;
-    //    }
-    //}
+    if (aiMesh->mMaterialIndex >= 0)
+    {
+        aiMaterial* material = scene->mMaterials[aiMesh->mMaterialIndex];
 
-    // return newMesh;
+        if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
+        {
+            aiString filePath;
+            material->GetTexture(aiTextureType_DIFFUSE, 0, &filePath);
+
+            auto [fileName, fileExt] = HBSoft::GetFileNameAndExt(HBSoft::ToUnicode(filePath.C_Str()));
+            subMesh->textureName     = fileName + fileExt;
+        }
+    }
+
+    mesh->m_subMeshes[m_subMeshId++] = subMesh;
 }
 
 std::shared_ptr<Mesh> MeshFactory::Create(std::shared_ptr<D3Device>& device, const wstringV path)
 {
     Assimp::Importer importer;
-    std::string      wPath = HBSoft::ToMultiByte(path);
+
+    std::string wPath = HBSoft::ToMultiByte(path);
 
     const aiScene* pScene =
     importer.ReadFile(wPath, aiProcess_Triangulate | aiProcess_ConvertToLeftHanded);
 
     if (pScene)
     {
-        ProcessNode(pScene->mRootNode, pScene);
+        std::shared_ptr<Mesh> mesh             = std::make_shared<Mesh>();
+        UINT                  meshVerticesNums = 0;
+        m_vertexId                             = 0;
+        m_subMeshId                            = 0;
+
+
+        // 버텍스 개수 구해서 하나의 버텍스 버퍼로 합침
+        for (UINT i = 0; i < pScene->mNumMeshes; i++)
+            meshVerticesNums += pScene->mMeshes[i]->mNumVertices;
+
+        mesh->m_subMeshes.resize(pScene->mNumMeshes);
+        mesh->m_vertices.resize(meshVerticesNums);
+
+        ProcessNode(pScene->mRootNode, pScene, mesh);
+
+        device->CreateVertexBuffer(mesh->m_vertices, mesh->m_vertexBuffer);
+
+        for (UINT i = 0; i < mesh->m_subMeshes.size(); i++)
+            device->CreateIndexBuffer(mesh->m_subMeshes[i]->indices, mesh->m_subMeshes[i]->indexBuffer);
+
+        return mesh;
     }
     else
     {
@@ -150,6 +182,8 @@ std::shared_ptr<Mesh> MeshFactory::CreateMap(std::shared_ptr<D3Device>& device, 
 bool MeshFactory::IsMeshFormat(const wstringV ext)
 {
     if (ext.compare(L".fbx") == 0)
+        return true;
+    else if (ext.compare(L".obj") == 0)
         return true;
 
     return false;

@@ -12,14 +12,13 @@ date: 2024-11-11
 using namespace HBSoft;
 
 Object3D::Object3D()
+    : m_camera(nullptr)
 {
     Init();
 }
 
 void Object3D::Init()
 {
-    m_camera = nullptr;
-
     SetTextureKey(L"1KGCABK.bmp");
     SetMeshKey(L"BOX3D");
     SetVSShaderKey(L"VertexShader.hlsl");

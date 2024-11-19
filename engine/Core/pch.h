@@ -34,6 +34,11 @@ date: 2024-11-17
 #include <tchar.h>
 #include <atlconv.h>
 
+#ifdef _DEBUG
+    #pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+    #include <iostream>
+#endif
+
 // ---------------------------------------
 //			      GLM
 // ---------------------------------------

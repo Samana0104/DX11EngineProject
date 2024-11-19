@@ -11,6 +11,7 @@ date: 2024-11-04
 #include "Camera.h"
 #include "LineObj.h"
 #include "CubeMapObj.h"
+#include "Test3DObj.h"
 
 namespace HBSoft
 {
@@ -21,6 +22,7 @@ namespace HBSoft
         CubeMapObj cube;
         Camera     cameraTest;
         LineObj    m_line;
+        Test3DObj  m_zelda;
 
         bool isWire = false;
 

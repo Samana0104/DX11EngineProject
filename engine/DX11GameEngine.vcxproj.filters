@@ -168,6 +168,9 @@
     <ClCompile Include="Asset\Factory\TextureFactory.cpp">
       <Filter>Asset\Factory</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Test3DObj.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -314,6 +317,9 @@
     <ClInclude Include="Asset\Factory\TextureFactory.h">
       <Filter>Asset\Factory</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Test3DObj.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.clang-format" />
@@ -338,6 +344,9 @@
       <Filter>hlsl</Filter>
     </FxCompile>
     <FxCompile Include="..\res\Shader\CubePixel.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\ColorPixelShader.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>

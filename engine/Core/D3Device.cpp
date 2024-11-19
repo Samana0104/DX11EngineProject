@@ -54,7 +54,7 @@ bool D3Device::CreateDevice()
 
     if (!CreateRenderTarget())
         return false;
-    
+
     if (!Create2DRenderTarget())
         return false;
 
@@ -137,7 +137,7 @@ bool D3Device::Create2DRenderTarget()
 {
     HRESULT              hr;
     ComPtr<IDXGISurface> dxgiSurface;
-	ComPtr<ID2D1Factory> m_d2dFactory;
+    ComPtr<ID2D1Factory> m_d2dFactory;
 
     hr = m_swapChain->GetBuffer(0, IID_PPV_ARGS(dxgiSurface.GetAddressOf()));
 
@@ -268,9 +268,9 @@ bool D3Device::CreateBlendingState()
         // D3D11_RENDER_TARGET_BLEND_DESC RenderTarget[8];
         //  백버퍼의 컬러값(DestBlend) 과  현재 출력 컬러(SrcBlend)값을 혼합연산한다.
         bd.RenderTarget[0].BlendEnable = TRUE;
-        bd.RenderTarget[0].SrcBlend  = D3D11_BLEND_SRC_ALPHA;
-        bd.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-        bd.RenderTarget[0].BlendOp   = D3D11_BLEND_OP_ADD;
+        bd.RenderTarget[0].SrcBlend    = D3D11_BLEND_SRC_ALPHA;
+        bd.RenderTarget[0].DestBlend   = D3D11_BLEND_INV_SRC_ALPHA;
+        bd.RenderTarget[0].BlendOp     = D3D11_BLEND_OP_ADD;
         // A 알파값 연산
         // A = SRC Alpha*1 + DestAlpha*0;
         bd.RenderTarget[0].SrcBlendAlpha  = D3D11_BLEND_ONE;
@@ -294,19 +294,19 @@ void D3Device::OnNotice(EventList event, void* entity)
     m_context->OMSetRenderTargets(0, nullptr, nullptr);
     m_2dRtv->Release();
     m_rtv->Release();
-    //m_dsv->Release();
+    m_dsv->Release();
 
     m_swapChainDesc.BufferDesc.Width  = (UINT)windowSize.x;
     m_swapChainDesc.BufferDesc.Height = (UINT)windowSize.y;
-    
+
     HRESULT hr = m_swapChain->ResizeBuffers(m_swapChainDesc.BufferCount,
                                             m_swapChainDesc.BufferDesc.Width,
                                             m_swapChainDesc.BufferDesc.Height,
                                             m_swapChainDesc.BufferDesc.Format,
                                             m_swapChainDesc.Flags);
-    
-    //if (FAILED(hr))
-    //    return;
+
+    // if (FAILED(hr))
+    //     return;
 
     CreateViewport();
     CreateRenderTarget();
