@@ -1,3 +1,10 @@
+/*
+author : 변한빛
+description : 사운드를 생성 및 FmodSystem를 관리하는 소스파일
+
+version: 1.0.0
+date: 2024-11-17
+*/
 #include "pch.h"
 #include "SoundFactory.h"
 using namespace HBSoft;

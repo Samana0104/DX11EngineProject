@@ -20,10 +20,14 @@ namespace HBSoft
     private:
         inline static UINT m_vertexId = 0;  // 건들지 마세요 외부 모델 불러올 때 최적화용으로 쓰임
         inline static UINT m_subMeshId = 0;  // 건들지 마세요 외부 모델 불러올 때 최적화용으로 쓰임
+        inline static UINT m_boneCount = 0;  // 건들지 마세요 외부 모델 불러올 때 최적화용으로 쓰임
 
     private:
-        static void ProcessNode(aiNode* node, const aiScene* scene, std::shared_ptr<Mesh>& mesh);
-        static void ProcessMesh(aiMesh* aiMesh, const aiScene* scene, std::shared_ptr<Mesh>& mesh);
+        static void InitMesh(const aiScene* aiScene, std::shared_ptr<Mesh>& mesh);
+        static void ProcessNode(aiNode* aiNode, const aiScene* aiScene, std::shared_ptr<Mesh>& mesh);
+        static void ProcessMesh(aiMesh* aiMesh, const aiScene* aiScene, std::shared_ptr<Mesh>& mesh);
+        static void UpdateBoneID(aiNode* node, std::shared_ptr<Mesh>& mesh);
+        static void FindDeformingBones(const aiScene* aiScene, std::shared_ptr<Mesh>& mesh);
 
     public:
         static std::shared_ptr<Mesh> Create(std::shared_ptr<D3Device>& device, const wstringV path);

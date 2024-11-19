@@ -10,36 +10,45 @@ date: 2024-11-19
 #include "MeshFactory.h"
 using namespace HBSoft;
 
-void MeshFactory::ProcessNode(aiNode* node, const aiScene* scene, std::shared_ptr<Mesh>& mesh)
+void MeshFactory::ProcessNode(aiNode* aiNode, const aiScene* aiScene, std::shared_ptr<Mesh>& mesh)
 {
-    auto a = node->mTransformation;
+    auto a = aiNode->mTransformation;
 
-    for (UINT i = 0; i < node->mNumMeshes; i++)
+    for (UINT i = 0; i < aiNode->mNumMeshes; i++)
     {
-        aiMesh* aiMesh = scene->mMeshes[node->mMeshes[i]];
-        ProcessMesh(aiMesh, scene, mesh);
+        aiMesh* aiMesh = aiScene->mMeshes[aiNode->mMeshes[i]];
+        ProcessMesh(aiMesh, aiScene, mesh);
     }
 
-    for (UINT i = 0; i < node->mNumChildren; i++)
+    for (UINT i = 0; i < aiNode->mNumChildren; i++)
     {
-        ProcessNode(node->mChildren[i], scene, mesh);
+        ProcessNode(aiNode->mChildren[i], aiScene, mesh);
     }
 }
 
-void MeshFactory::ProcessMesh(aiMesh* aiMesh, const aiScene* scene, std::shared_ptr<Mesh>& mesh)
+void MeshFactory::ProcessMesh(aiMesh* aiMesh, const aiScene* aiScene, std::shared_ptr<Mesh>& mesh)
 {
     UINT meshIndicesNums = 0;
     UINT i               = 0;
 
     std::shared_ptr<SubMesh> subMesh = std::make_shared<SubMesh>();
 
+    // 메쉬 이름 불러옴
+    subMesh->meshName = aiMesh->mName.C_Str();
+
+    // 인덱스 개수 불러옴
     for (i = 0; i < aiMesh->mNumFaces; i++)
     {
         meshIndicesNums += aiMesh->mFaces[i].mNumIndices;
     }
 
+    // 인덱스 개수만큼 리사이즈
     subMesh->indices.resize(meshIndicesNums);
 
+
+    // 인덱스 번호에 맞는 위치에 대입
+    // vertexId가 있는 이유는 하나의 버텍스 정점에 때려 박는데 서브 메쉬마다
+    // 인덱스 번호가 중복이 있기 때문에 버텍스 번호와 같이 더해줌
     for (i = 0; i < aiMesh->mNumFaces; i++)
     {
         aiFace face = aiMesh->mFaces[i];
@@ -48,6 +57,7 @@ void MeshFactory::ProcessMesh(aiMesh* aiMesh, const aiScene* scene, std::shared_
             subMesh->indices[face.mNumIndices * i + j] = face.mIndices[j] + m_vertexId;
     }
 
+    // 버텍스 번호에 맞는 위치에 대입
     for (i = 0; i < aiMesh->mNumVertices; i++)
     {
         // 위치 정보
@@ -75,6 +85,7 @@ void MeshFactory::ProcessMesh(aiMesh* aiMesh, const aiScene* scene, std::shared_
             mesh->m_vertices[m_vertexId + i].t = vec2(0.0f);  // 텍스처 좌표가 없을 때 기본값
         }
 
+        // 컬러 있으면 가져옴
         if (aiMesh->HasVertexColors(0))
         {
             mesh->m_vertices[m_vertexId + i].c.r = aiMesh->mColors[0][i].r;
@@ -88,11 +99,14 @@ void MeshFactory::ProcessMesh(aiMesh* aiMesh, const aiScene* scene, std::shared_
         }
     }
 
+    // 버텍스 아이디는 추가된 버텍스만큼 더해줘야 다음 서브메쉬때 갱신가능함
     m_vertexId += i;
 
+
+    // 머티리얼 있는지 확인
     if (aiMesh->mMaterialIndex >= 0)
     {
-        aiMaterial* material = scene->mMaterials[aiMesh->mMaterialIndex];
+        aiMaterial* material = aiScene->mMaterials[aiMesh->mMaterialIndex];
 
         if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
         {
@@ -101,10 +115,69 @@ void MeshFactory::ProcessMesh(aiMesh* aiMesh, const aiScene* scene, std::shared_
 
             auto [fileName, fileExt] = HBSoft::GetFileNameAndExt(HBSoft::ToUnicode(filePath.C_Str()));
             subMesh->textureName     = fileName + fileExt;
+            subMesh->hasTexture      = true;
+        }
+        else
+        {
+            subMesh->hasTexture = false;
         }
     }
 
     mesh->m_subMeshes[m_subMeshId++] = subMesh;
+}
+
+void MeshFactory::UpdateBoneID(aiNode* aiNode, std::shared_ptr<Mesh>& mesh)
+{
+    if (aiNode != nullptr)
+    {
+        if (mesh->m_boneToId.count(aiNode->mName.C_Str()))
+        {
+            mesh->m_boneToId[aiNode->mName.C_Str()] = m_boneCount++;
+        }
+        for (UINT i = 0; i < aiNode->mNumChildren; i++)
+        {
+            UpdateBoneID(aiNode->mChildren[i], mesh);
+        }
+    }
+}
+
+void MeshFactory::FindDeformingBones(const aiScene* aiScene, std::shared_ptr<Mesh>& mesh)
+{
+    for (UINT i = 0; i < aiScene->mNumMeshes; i++)
+    {
+        const auto* aiMesh = aiScene->mMeshes[i];
+        if (aiMesh->HasBones())
+        {
+            for (UINT i = 0; i < aiMesh->mNumBones; i++)
+            {
+                const aiBone* bone = aiMesh->mBones[i];
+
+                // bone과 대응되는 node의 이름은 동일
+                // 뒤에서 node 이름으로 부모를 찾을 수 있음
+                mesh->m_boneToId[bone->mName.C_Str()] = -1;
+
+                // 주의: 뼈의 순서가 업데이트 순서는 아님
+
+                // 기타: bone->mWeights == 0일 경우에도 포함시켰음
+                // 기타: bone->mNode = 0이라서 사용 불가
+            }
+        }
+    }
+}
+
+void MeshFactory::InitMesh(const aiScene* aiScene, std::shared_ptr<Mesh>& mesh)
+{
+    UINT meshVerticesNums = 0;
+    m_vertexId            = 0;
+    m_subMeshId           = 0;
+    m_boneCount           = 0;
+
+    // 버텍스 개수 구해서 하나의 버텍스 버퍼로 합치기 위해 버텍스 수 구함
+    for (UINT i = 0; i < aiScene->mNumMeshes; i++)
+        meshVerticesNums += aiScene->mMeshes[i]->mNumVertices;
+
+    mesh->m_subMeshes.resize(aiScene->mNumMeshes);
+    mesh->m_vertices.resize(meshVerticesNums);
 }
 
 std::shared_ptr<Mesh> MeshFactory::Create(std::shared_ptr<D3Device>& device, const wstringV path)
@@ -118,18 +191,16 @@ std::shared_ptr<Mesh> MeshFactory::Create(std::shared_ptr<D3Device>& device, con
 
     if (pScene)
     {
-        std::shared_ptr<Mesh> mesh             = std::make_shared<Mesh>();
-        UINT                  meshVerticesNums = 0;
-        m_vertexId                             = 0;
-        m_subMeshId                            = 0;
+        std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 
+        InitMesh(pScene, mesh);
+        FindDeformingBones(pScene, mesh);
+        UpdateBoneID(pScene->mRootNode, mesh);
 
-        // 버텍스 개수 구해서 하나의 버텍스 버퍼로 합침
-        for (UINT i = 0; i < pScene->mNumMeshes; i++)
-            meshVerticesNums += pScene->mMeshes[i]->mNumVertices;
-
-        mesh->m_subMeshes.resize(pScene->mNumMeshes);
-        mesh->m_vertices.resize(meshVerticesNums);
+        // 3. 업데이트 순서대로 뼈 이름 저장 (boneIdToName)
+        mesh->m_idToBone.resize(mesh->m_boneToId.size());
+        for (auto& boneIdx : mesh->m_boneToId)
+            mesh->m_idToBone[boneIdx.second] = boneIdx.first;
 
         ProcessNode(pScene->mRootNode, pScene, mesh);
 

@@ -5,9 +5,11 @@ using namespace HBSoft;
 
 Test3DObj::Test3DObj()
 {
-    SetMeshKey(L"cook.fbx");
+    SetMeshKey(L"Goose.fbx");
     SetVSShaderKey(L"VertexShader.hlsl");
-    SetPSShaderKey(L"ColorPixelShader.hlsl");
+
+    // SetPSShaderKey(L"PixelShader.hlsl"); //텍스쳐 있는 놈
+    SetPSShaderKey(L"ColorPixelShader.hlsl");  // 텍스쳐 없는 놈
 }
 
 void Test3DObj::Render()
@@ -33,10 +35,14 @@ void Test3DObj::Render()
 
     for (size_t i = 0; i < m_mesh->m_subMeshes.size(); i++)
     {
-        // HDEVICE->m_context->PSSetShaderResources(
-        // 0,
-        // 1,
-        // HASSET->m_textures[m_mesh->m_subMeshes[i]->textureName]->GetSRV().GetAddressOf());
+
+        if (m_mesh->m_subMeshes[i]->hasTexture)
+        {
+            HDEVICE->m_context->PSSetShaderResources(
+            0,
+            1,
+            HASSET->m_textures[m_mesh->m_subMeshes[i]->textureName]->GetSRV().GetAddressOf());
+        }
         HDEVICE->m_context->IASetIndexBuffer(m_mesh->m_subMeshes[i]->indexBuffer.Get(),
                                              DXGI_FORMAT_R32_UINT,
                                              0);

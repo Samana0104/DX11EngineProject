@@ -32,10 +32,12 @@ namespace HBSoft
 
     struct SubMesh
     {
-        std::wstring         textureName;
-        std::vector<UINT>    indices;
         ComPtr<ID3D11Buffer> indexBuffer;
+        std::vector<UINT>    indices;
         std::vector<mat4>    animationMat;
+        std::string          meshName;
+        std::wstring         textureName;
+        bool                 hasTexture;
     };
 
     class Mesh
@@ -46,6 +48,8 @@ namespace HBSoft
         std::vector<UINT>         m_indices;      // 인덱스  버퍼용 배열
 
         std::vector<std::shared_ptr<SubMesh>> m_subMeshes;
+        std::map<std::string, UINT>           m_boneToId;
+        std::vector<std::string>              m_idToBone;
 
         bool m_hasAnimation;
 

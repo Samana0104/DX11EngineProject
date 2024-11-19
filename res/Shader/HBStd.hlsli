@@ -31,7 +31,6 @@ struct CubePSInput
 
 cbuffer DefaultMat : register(b0)
 {
-
     Matrix worldMat;
     Matrix invWorldMat;
     Matrix viewMat;
