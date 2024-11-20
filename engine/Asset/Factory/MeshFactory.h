@@ -2,8 +2,8 @@
 author : 변한빛
 description : 메쉬를 생성 하기 위한 소스 파일
 
-version: 1.0.7
-date: 2024-11-17
+version: 1.1.0
+date: 2024-11-20
 */
 
 #pragma once
@@ -23,11 +23,14 @@ namespace HBSoft
         inline static UINT m_boneCount = 0;  // 건들지 마세요 외부 모델 불러올 때 최적화용으로 쓰임
 
     private:
-        static void InitMesh(const aiScene* aiScene, std::shared_ptr<Mesh>& mesh);
-        static void ProcessNode(aiNode* aiNode, const aiScene* aiScene, std::shared_ptr<Mesh>& mesh);
-        static void ProcessMesh(aiMesh* aiMesh, const aiScene* aiScene, std::shared_ptr<Mesh>& mesh);
-        static void UpdateBoneID(aiNode* node, std::shared_ptr<Mesh>& mesh);
-        static void FindDeformingBones(const aiScene* aiScene, std::shared_ptr<Mesh>& mesh);
+        // 나중에 3DLoadAndSave.h로 옮길 예정
+        static void InitMesh(const aiScene* aScene, std::shared_ptr<Mesh>& mesh);
+        static void ProcessNode(aiNode* aNode, const aiScene* aScene, std::shared_ptr<Mesh>& mesh);
+        static void ProcessMesh(aiMesh* aMesh, const aiScene* aScene, std::shared_ptr<Mesh>& mesh);
+        static void UpdateBoneID(aiNode* aNode, std::shared_ptr<Mesh>& mesh);
+        static void FindDeformingBones(const aiScene* aScene, std::shared_ptr<Mesh>& mesh);
+        static const aiNode* FindParent(const aiNode* aNode, std::shared_ptr<Mesh>& mesh);
+        static void          ReadAnimation(const aiScene* scene, std::shared_ptr<Mesh>& mesh);
 
     public:
         static std::shared_ptr<Mesh> Create(std::shared_ptr<D3Device>& device, const wstringV path);

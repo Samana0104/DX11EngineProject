@@ -30,14 +30,44 @@ namespace HBSoft
         vec2 t;
     };
 
+    struct skinning
+    {
+        float blendWeights[8];
+        UINT  boneIndices[8];
+    };
+
+
+struct AnimationClip {
+
+    struct Key {
+        vec3       pos;
+        vec3       scale;
+        quat       rot;
+
+        mat4 GetWorldMat() {
+            return glm::translate(pos) * glm::toMat4(rot) * glm::scale(scale);
+        }
+    };
+
+    std::string name;              // Name of this animation clip
+    std::vector<std::vector<Key>> keys; // m_key[boneIdx][frameIdx]
+    int numChannels;          // Number of bones
+    int numKeys;              // Number of frames of this animation clip
+    double duration;          // Duration of animation in ticks
+    double ticksPerSec;       // Frames per second
+};
+
     struct SubMesh
     {
-        ComPtr<ID3D11Buffer> indexBuffer;
-        std::vector<UINT>    indices;
-        std::vector<mat4>    animationMat;
-        std::string          meshName;
-        std::wstring         textureName;
-        bool                 hasTexture;
+        ComPtr<ID3D11Buffer>            indexBuffer;
+        std::vector<UINT>               indices;
+        std::string                     meshName;
+        std::wstring                    textureName;
+        std::vector<std::vector<float>> boneWeights;
+        std::vector<std::vector<UINT>>  boneIndices;
+        std::vector<mat4>               offsetMatrices;
+        std::vector<mat4>               boneTransforms;
+        bool                            hasTexture;
     };
 
     class Mesh
@@ -50,6 +80,8 @@ namespace HBSoft
         std::vector<std::shared_ptr<SubMesh>> m_subMeshes;
         std::map<std::string, UINT>           m_boneToId;
         std::vector<std::string>              m_idToBone;
+        std::vector<int>                      m_boneParentIdx;
+        std::vector<AnimationClip>            m_aniClip;
 
         bool m_hasAnimation;
 
