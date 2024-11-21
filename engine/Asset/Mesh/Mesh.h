@@ -24,16 +24,12 @@ namespace HBSoft
 
     struct Vertex
     {
-        vec3 p;  // position
-        vec3 n;  // normal
-        vec4 c;  // color
-        vec2 t;  // texture coordinate
-        UINT boneIdx[8] = {
-            0,
-        };
-        float boneWeight[8] = {
-            0.f,
-        };
+        vec3  p;  // position
+        vec3  n;  // normal
+        vec4  c;  // color
+        vec2  t;  // texture coordinate
+        UINT  boneIdx[8]    = {0, 0, 0, 0, 0, 0, 0, 0};
+        float boneWeight[8] = {0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f};
     };
 
     struct AnimationClip

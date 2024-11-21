@@ -59,9 +59,8 @@ void MeshFactory::ProcessNode(aiNode* aNode, const aiScene* aScene, std::shared_
 {
     if (mesh->m_boneToId.count(aNode->mName.C_Str()))
     {
-        const aiNode* parentNode        = FindParent(aNode->mParent, mesh);
-        const auto    boneId            = mesh->m_boneToId[aNode->mName.C_Str()];
-        mesh->m_globalTransform[boneId] = tr;
+        const aiNode* parentNode = FindParent(aNode->mParent, mesh);
+        const auto    boneId     = mesh->m_boneToId[aNode->mName.C_Str()];
 
         if (parentNode != nullptr)
         {
@@ -173,8 +172,7 @@ void MeshFactory::ProcessMesh(const aiMesh* aMesh, const aiScene* aScene, std::s
             const aiBone* bone   = aMesh->mBones[i];
             const UINT    boneId = mesh->m_boneToId[bone->mName.C_Str()];
 
-            mesh->m_bindPoseMat[boneId] =
-            mesh->m_globalTransform[boneId] * glm::transpose(glm::make_mat4x4(&bone->mOffsetMatrix.a1));
+            mesh->m_bindPoseMat[boneId] = glm::transpose(glm::make_mat4x4(&bone->mOffsetMatrix.a1));
 
             // 이 뼈가 영향을 주는 Vertex의 개수
             for (UINT j = 0; j < bone->mNumWeights; j++)

@@ -17,7 +17,7 @@ void Test3DObj::Render()
 {
     UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
     UINT pOffsets = 0;               // 버퍼에 시작 인덱스
-    // m_mesh->m_bindPoseMat *= m_mesh->m_aniClip[1].
+    // m_mesh->m_bindPoseMat *= m_mesh->m_aniClip[1].keys[1][0].
     m_vsShader->SetUpToContext(HDEVICE);
     m_psShader->SetUpToContext(HDEVICE);
     m_vsShader->SetConstantBuffer(HDEVICE,
