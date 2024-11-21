@@ -54,20 +54,21 @@ void MeshFactory::ReadAnimation(const aiScene* aScene, std::shared_ptr<Mesh>& me
     }
 }
 
-void MeshFactory::ProcessNode(aiNode* aNode, const aiScene* aScene, std::shared_ptr<Mesh>& mesh)
+void MeshFactory::ProcessNode(aiNode* aNode, const aiScene* aScene, std::shared_ptr<Mesh>& mesh,
+                              mat4& tr)
 {
-    auto a = aNode->mTransformation;
-
     if (mesh->m_boneToId.count(aNode->mName.C_Str()))
     {
-        const aiNode* parentNode = FindParent(aNode->mParent, mesh);
+        const aiNode* parentNode        = FindParent(aNode->mParent, mesh);
+        const auto    boneId            = mesh->m_boneToId[aNode->mName.C_Str()];
+        mesh->m_globalTransform[boneId] = tr;
 
         if (parentNode != nullptr)
         {
-            const auto boneId             = mesh->m_boneToId[aNode->mName.C_Str()];
             mesh->m_boneParentIdx[boneId] = mesh->m_boneToId[parentNode->mName.C_Str()];
         }
     }
+
 
     for (UINT i = 0; i < aNode->mNumMeshes; i++)
     {
@@ -77,11 +78,11 @@ void MeshFactory::ProcessNode(aiNode* aNode, const aiScene* aScene, std::shared_
 
     for (UINT i = 0; i < aNode->mNumChildren; i++)
     {
-        ProcessNode(aNode->mChildren[i], aScene, mesh);
+        ProcessNode(aNode->mChildren[i], aScene, mesh, tr);
     }
 }
 
-void MeshFactory::ProcessMesh(aiMesh* aMesh, const aiScene* aScene, std::shared_ptr<Mesh>& mesh)
+void MeshFactory::ProcessMesh(const aiMesh* aMesh, const aiScene* aScene, std::shared_ptr<Mesh>& mesh)
 {
     UINT meshIndicesNums = 0;
     UINT i               = 0;
@@ -140,7 +141,7 @@ void MeshFactory::ProcessMesh(aiMesh* aMesh, const aiScene* aScene, std::shared_
         }
         else
         {
-            mesh->m_vertices[m_vertexId + i].t = vec2(0.0f);  // 텍스처 좌표가 없을 때 기본값
+            mesh->m_vertices[m_vertexId + i].t = vec2(1.0f);  // 텍스처 좌표가 없을 때 기본값
         }
 
         // 컬러 있으면 가져옴
@@ -157,44 +158,46 @@ void MeshFactory::ProcessMesh(aiMesh* aMesh, const aiScene* aScene, std::shared_
         }
     }
 
-    // 버텍스 아이디는 추가된 버텍스만큼 더해줘야 다음 서브메쉬때 갱신가능함
-    m_vertexId += i;
-
     if (aMesh->HasBones())
     {
-        subMesh->boneWeights.resize(aMesh->mNumVertices);
-        subMesh->boneIndices.resize(aMesh->mNumVertices);
+        std::vector<std::vector<float>> boneWeights;
+        std::vector<std::vector<UINT>>  boneIndices;
 
-        subMesh->offsetMatrices.resize(mesh->m_boneToId.size());
-        subMesh->boneTransforms.resize(mesh->m_boneToId.size());
+        boneWeights.resize(aMesh->mNumVertices);
+        boneIndices.resize(aMesh->mNumVertices);
+        mesh->m_bindPoseMat.resize(mesh->m_boneToId.size());
 
         int count = 0;
         for (UINT i = 0; i < aMesh->mNumBones; i++)
         {
-            const aiBone* bone = aMesh->mBones[i];
+            const aiBone* bone   = aMesh->mBones[i];
+            const UINT    boneId = mesh->m_boneToId[bone->mName.C_Str()];
 
-            // 디버깅
-            // cout << "BoneMap " << count++ << " : " << bone->mName.C_Str()
-            //     << " NumBoneWeights = " << bone->mNumWeights << endl;
-
-            const UINT boneId = mesh->m_boneToId[bone->mName.C_Str()];
-
-            subMesh->offsetMatrices[i] = glm::transpose(glm::make_mat4(&bone->mOffsetMatrix.a1));
+            mesh->m_bindPoseMat[boneId] =
+            mesh->m_globalTransform[boneId] * glm::transpose(glm::make_mat4x4(&bone->mOffsetMatrix.a1));
 
             // 이 뼈가 영향을 주는 Vertex의 개수
             for (UINT j = 0; j < bone->mNumWeights; j++)
             {
                 aiVertexWeight weight = bone->mWeights[j];
-                assert(weight.mVertexId < subMesh->boneIndices.size());
-                subMesh->boneIndices[weight.mVertexId].push_back(boneId);
-                subMesh->boneWeights[weight.mVertexId].push_back(weight.mWeight);
+                assert(weight.mVertexId < boneIndices.size());
+                boneIndices[weight.mVertexId].push_back(boneId);
+                boneWeights[weight.mVertexId].push_back(weight.mWeight);
             }
         }
 
-        // 예전에는 Vertex 하나에 영향을 주는 Bone은 최대 4개
-        // 요즘은 더 많을 수도 있는데 모델링 소프트웨어에서 조정하거나
-        // 읽어들이면서 weight가 너무 작은 것들은 뺄 수도 있음
+        for (int i = 0; i < boneIndices.size(); i++)
+        {
+            for (int j = 0; j < boneIndices[i].size(); j++)
+            {
+                mesh->m_vertices[m_vertexId + i].boneIdx[j]    = boneIndices[i][j];
+                mesh->m_vertices[m_vertexId + i].boneWeight[j] = boneWeights[i][j];
+            }
+        }
     }
+
+    // 버텍스 아이디는 추가된 버텍스만큼 더해줘야 다음 서브메쉬때 갱신가능함
+    m_vertexId += i;
 
     // 머티리얼 있는지 확인
     if (aMesh->mMaterialIndex >= 0)
@@ -219,7 +222,7 @@ void MeshFactory::ProcessMesh(aiMesh* aMesh, const aiScene* aScene, std::shared_
     mesh->m_subMeshes[m_subMeshId++] = subMesh;
 }
 
-void MeshFactory::UpdateBoneID(aiNode* aNode, std::shared_ptr<Mesh>& mesh)
+void MeshFactory::UpdateBoneID(const aiNode* aNode, std::shared_ptr<Mesh>& mesh)
 {
     if (aNode != nullptr)
     {
@@ -245,16 +248,34 @@ void MeshFactory::FindDeformingBones(const aiScene* aScene, std::shared_ptr<Mesh
             {
                 const aiBone* aBone = aMesh->mBones[j];
 
-                // bone과 대응되는 node의 이름은 동일
-                // 뒤에서 node 이름으로 부모를 찾을 수 있음
                 mesh->m_boneToId[aBone->mName.C_Str()] = -1;
-
-                // 주의: 뼈의 순서가 업데이트 순서는 아님
-
-                // 기타: bone->mWeights == 0일 경우에도 포함시켰음
-                // 기타: bone->mNode = 0이라서 사용 불가
             }
         }
+    }
+}
+
+void MeshFactory::ComputeGlobalTransforms(const aiNode* node, const mat4& parentTransform,
+                                          std::shared_ptr<Mesh>& mesh)
+{
+    // Assimp의 변환 행렬은 Row-Major, Transpose를 통해 glm의 Column-Major로 변환
+    mat4 localTransform = glm::transpose(glm::make_mat4(&node->mTransformation.a1));
+
+    // 부모의 글로벌 트랜스폼과 현재 노드의 로컬 트랜스폼을 곱하여 글로벌 트랜스폼 계산
+    mat4 globalTransform = parentTransform * localTransform;
+
+    // 결과를 노드 이름을 키로 하여 저장
+
+    if (mesh->m_boneToId.count(node->mName.C_Str()))
+    {
+        const UINT boneId = mesh->m_boneToId[node->mName.C_Str()];
+
+        mesh->m_globalTransform[boneId] = globalTransform;
+    }
+
+    // 자식 노드들에 대해 재귀적으로 처리
+    for (unsigned int i = 0; i < node->mNumChildren; i++)
+    {
+        ComputeGlobalTransforms(node->mChildren[i], globalTransform, mesh);
     }
 }
 
@@ -296,8 +317,10 @@ std::shared_ptr<Mesh> MeshFactory::Create(std::shared_ptr<D3Device>& device, con
             mesh->m_idToBone[boneIdx.second] = boneIdx.first;
 
         mesh->m_boneParentIdx.resize(mesh->m_boneToId.size(), -1);
-
-        ProcessNode(aScene->mRootNode, aScene, mesh);
+        mesh->m_globalTransform.resize(mesh->m_boneToId.size());
+        mat4 tr(1.f);
+        ComputeGlobalTransforms(aScene->mRootNode, tr, mesh);
+        ProcessNode(aScene->mRootNode, aScene, mesh, tr);
 
         // 애니메이션 정보 읽기
         if (aScene->HasAnimations())

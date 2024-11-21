@@ -25,10 +25,13 @@ namespace HBSoft
     private:
         // 나중에 3DLoadAndSave.h로 옮길 예정
         static void InitMesh(const aiScene* aScene, std::shared_ptr<Mesh>& mesh);
-        static void ProcessNode(aiNode* aNode, const aiScene* aScene, std::shared_ptr<Mesh>& mesh);
-        static void ProcessMesh(aiMesh* aMesh, const aiScene* aScene, std::shared_ptr<Mesh>& mesh);
-        static void UpdateBoneID(aiNode* aNode, std::shared_ptr<Mesh>& mesh);
+        static void ProcessNode(aiNode* aNode, const aiScene* aScene, std::shared_ptr<Mesh>& mesh,
+                                mat4& tr);
+        static void ProcessMesh(const aiMesh* aMesh, const aiScene* aScene, std::shared_ptr<Mesh>& mesh);
+        static void UpdateBoneID(const aiNode* aNode, std::shared_ptr<Mesh>& mesh);
         static void FindDeformingBones(const aiScene* aScene, std::shared_ptr<Mesh>& mesh);
+        static void ComputeGlobalTransforms(const aiNode* node, const mat4& parentTransform,
+                                            std::shared_ptr<Mesh>& mesh);
         static const aiNode* FindParent(const aiNode* aNode, std::shared_ptr<Mesh>& mesh);
         static void          ReadAnimation(const aiScene* scene, std::shared_ptr<Mesh>& mesh);
 

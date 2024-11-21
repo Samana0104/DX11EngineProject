@@ -40,8 +40,15 @@ namespace HBSoft
         virtual void SetUpToContext(std::shared_ptr<D3Device>& device) = 0;
 
         size_t GetConstantCount() const;
-        void   SetConstantBuffer(std::shared_ptr<D3Device>& device, const void* data,
-                                 const size_t dataSize, const UINT constantIdx);
+
+        /*
+            param : data -> 상수 버퍼에 넣을 void형 포인터 | dataSize -> 상수 버퍼에 넣을 데이터의 크기
+                    constantIdx -> 상수 버퍼 레지스터 번호
+            description :
+               상수 버퍼를 갱신시켜준다.
+        */
+        void SetConstantBuffer(std::shared_ptr<D3Device>& device, const void* data,
+                               const size_t dataSize, const UINT constantIdx);
 
         const ShaderType& GetShaderType() const;
     };

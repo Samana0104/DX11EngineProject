@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\res\Shader\AnimationVertex.hlsl" />
     <FxCompile Include="..\res\Shader\ColorPixelShader.hlsl" />
     <FxCompile Include="..\res\Shader\CubePixel.hlsl" />
     <FxCompile Include="..\res\Shader\CubeVertex.hlsl" />

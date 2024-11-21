@@ -24,50 +24,45 @@ namespace HBSoft
 
     struct Vertex
     {
-        vec3 p;
-        vec3 n;
-        vec4 c;
-        vec2 t;
+        vec3 p;  // position
+        vec3 n;  // normal
+        vec4 c;  // color
+        vec2 t;  // texture coordinate
+        UINT boneIdx[8] = {
+            0,
+        };
+        float boneWeight[8] = {
+            0.f,
+        };
     };
 
-    struct skinning
+    struct AnimationClip
     {
-        float blendWeights[8];
-        UINT  boneIndices[8];
+
+        struct Key
+        {
+            vec3 pos;
+            vec3 scale;
+            quat rot;
+
+            mat4 GetWorldMat() { return glm::translate(pos) * glm::toMat4(rot) * glm::scale(scale); }
+        };
+
+        std::string                   name;         // Name of this animation clip
+        std::vector<std::vector<Key>> keys;         // m_key[boneIdx][frameIdx]
+        int                           numChannels;  // Number of bones
+        int                           numKeys;      // Number of frames of this animation clip
+        double                        duration;     // Duration of animation in ticks
+        double                        ticksPerSec;  // Frames per second
     };
-
-
-struct AnimationClip {
-
-    struct Key {
-        vec3       pos;
-        vec3       scale;
-        quat       rot;
-
-        mat4 GetWorldMat() {
-            return glm::translate(pos) * glm::toMat4(rot) * glm::scale(scale);
-        }
-    };
-
-    std::string name;              // Name of this animation clip
-    std::vector<std::vector<Key>> keys; // m_key[boneIdx][frameIdx]
-    int numChannels;          // Number of bones
-    int numKeys;              // Number of frames of this animation clip
-    double duration;          // Duration of animation in ticks
-    double ticksPerSec;       // Frames per second
-};
 
     struct SubMesh
     {
-        ComPtr<ID3D11Buffer>            indexBuffer;
-        std::vector<UINT>               indices;
-        std::string                     meshName;
-        std::wstring                    textureName;
-        std::vector<std::vector<float>> boneWeights;
-        std::vector<std::vector<UINT>>  boneIndices;
-        std::vector<mat4>               offsetMatrices;
-        std::vector<mat4>               boneTransforms;
-        bool                            hasTexture;
+        ComPtr<ID3D11Buffer> indexBuffer;
+        std::vector<UINT>    indices;
+        std::string          meshName;
+        std::wstring         textureName;
+        bool                 hasTexture;
     };
 
     class Mesh
@@ -81,6 +76,8 @@ struct AnimationClip {
         std::map<std::string, UINT>           m_boneToId;
         std::vector<std::string>              m_idToBone;
         std::vector<int>                      m_boneParentIdx;
+        std::vector<mat4>                     m_globalTransform;
+        std::vector<mat4>                     m_bindPoseMat;
         std::vector<AnimationClip>            m_aniClip;
 
         bool m_hasAnimation;
