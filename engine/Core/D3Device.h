@@ -48,14 +48,14 @@ namespace HBSoft
         virtual void OnNotice(EventList event, void* entity) override;
 
     public:
-        D3Device(const std::shared_ptr<Window>& window);
+        D3Device(const std::shared_ptr<Window> window);
         virtual ~D3Device();
 
         vec2 GetViewportSize() const;
 
         template <class T>
         bool CreateVertexBuffer(std::vector<T>& vertices, ComPtr<ID3D11Buffer>& vertexBuffer);
-        bool CreateIndexBuffer(std::vector<UINT>& indices, ComPtr<ID3D11Buffer>& idxBuffer);
+        bool CreateIndexBuffer(std::vector<UINT>& indices, ComPtr<ID3D11Buffer>& indexBuffer);
     };
 
     template <class T>

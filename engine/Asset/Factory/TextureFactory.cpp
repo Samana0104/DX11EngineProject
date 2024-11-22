@@ -12,7 +12,7 @@ date: 2024-11-22
 #include "Texture/HeightTexture.h"
 using namespace HBSoft;
 
-std::shared_ptr<Texture> TextureFactory::Create(std::shared_ptr<D3Device>& device, wstringV path)
+std::shared_ptr<Texture> TextureFactory::Create(std::shared_ptr<D3Device> device, wstringV path)
 {
     std::shared_ptr<Texture> texture;
 

@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 애니메이션 전용 버텍스 쉐이더 파일
+
+version: 1.0.0
+date: 2024-11-17
+*/
+
 #include "HBStd.hlsli"
 
 #define MAX_BONE_MAT 255

@@ -10,7 +10,7 @@ date: 2024-11-07
 #include "AssetsMgr.h"
 using namespace HBSoft;
 
-AssetsMgr::AssetsMgr(std::shared_ptr<D3Device>& device)
+AssetsMgr::AssetsMgr(std::shared_ptr<D3Device> device)
     : m_device(device)
 {
     CreateResFromPath();

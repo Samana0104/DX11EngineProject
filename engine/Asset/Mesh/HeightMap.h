@@ -14,22 +14,25 @@ date: 2024-11-22
 
 namespace HBSoft
 {
-    struct HeightDesc
+    struct MapDesc
     {
         UINT               numCols;
         UINT               numRows;
-        float              distanceWidth;
-        float              distanceHeight;
-        std::vector<float> heights;
+        UINT               numFaces;
+        float              scaleXPerCell;
+        float              scaleYPerCell;
+        float              scaleZPerCell;
+        std::vector<float> pixelHeight;
     };
 
     class HeightMap : public Mesh
     {
     private:
-        bool CreateHeightMap(std::shared_ptr<D3Device>& device, const HeightDesc& desc);
+        bool CreateVertices(std::shared_ptr<D3Device> device, const MapDesc& desc);
+        bool CreateIndices(std::shared_ptr<D3Device> device, const MapDesc& desc);
 
     public:
-        HeightMap(std::shared_ptr<D3Device>& device, const HeightDesc& desc);
+        HeightMap(std::shared_ptr<D3Device> device, const MapDesc& desc);
         ~HeightMap() = default;
     };
 }  // namespace HBSoft

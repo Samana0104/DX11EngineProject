@@ -14,9 +14,9 @@ namespace HBSoft
     class HeightTexture : public Texture
     {
     private:
-        bool CreateTexture(std::shared_ptr<D3Device>& device);
+        bool CreateTexture(std::shared_ptr<D3Device> device);
 
     public:
-        HeightTexture(std::shared_ptr<D3Device>& device, const wstringV filePath);
+        HeightTexture(std::shared_ptr<D3Device> device, const wstringV filePath);
     };
 }  // namespace HBSoft

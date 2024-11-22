@@ -7,7 +7,7 @@ date: 2024-11-04
 */
 
 #pragma once
-#include "Object3D.h"
+#include "3D/Object3D.h"
 #include "Observer.h"
 
 namespace HBSoft

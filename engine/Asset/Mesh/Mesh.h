@@ -58,8 +58,8 @@ namespace HBSoft
         Mesh(bool hasAnimation = false);
         ~Mesh() = default;
 
-        void SetVertices(std::shared_ptr<D3Device>& device, const std::vector<Vertex>& vertices);
-        void SetVertex(std::shared_ptr<D3Device>& device, const Vertex& vertex, const UINT idx);
+        void SetVertices(std::shared_ptr<D3Device> device, const std::vector<Vertex>& vertices);
+        void SetVertex(std::shared_ptr<D3Device> device, const Vertex& vertex, const UINT idx);
     };
 
 }  // namespace HBSoft

@@ -2,15 +2,15 @@
 author : 변한빛
 description : 메쉬를 생성 하기 위한 소스 파일
 
-version: 1.1.0
-date: 2024-11-20
+version: 1.1.1
+date: 2024-11-22
 */
 
 #include "pch.h"
 #include "MeshFactory.h"
 using namespace HBSoft;
 
-void MeshFactory::ProcessNode(aiNode* aNode, const aiScene* aScene, std::shared_ptr<Mesh>& mesh)
+void MeshFactory::ProcessNode(aiNode* aNode, const aiScene* aScene, std::shared_ptr<Mesh> mesh)
 {
     for (UINT i = 0; i < aNode->mNumMeshes; i++)
     {
@@ -24,7 +24,7 @@ void MeshFactory::ProcessNode(aiNode* aNode, const aiScene* aScene, std::shared_
     }
 }
 
-void MeshFactory::ProcessMesh(const aiMesh* aMesh, const aiScene* aScene, std::shared_ptr<Mesh>& mesh)
+void MeshFactory::ProcessMesh(const aiMesh* aMesh, const aiScene* aScene, std::shared_ptr<Mesh> mesh)
 {
     UINT meshIndicesNums = 0;
     UINT i               = 0;
@@ -126,7 +126,7 @@ void MeshFactory::ProcessMesh(const aiMesh* aMesh, const aiScene* aScene, std::s
     mesh->m_subMeshes[m_subMeshId++] = subMesh;
 }
 
-void MeshFactory::InitMesh(const aiScene* aScene, std::shared_ptr<Mesh>& mesh)
+void MeshFactory::InitMesh(const aiScene* aScene, std::shared_ptr<Mesh> mesh)
 {
     UINT meshVerticesNums = 0;
     m_vertexId            = 0;
@@ -140,7 +140,7 @@ void MeshFactory::InitMesh(const aiScene* aScene, std::shared_ptr<Mesh>& mesh)
     mesh->m_vertices.resize(meshVerticesNums);
 }
 
-std::shared_ptr<Mesh> MeshFactory::Create(std::shared_ptr<D3Device>& device, const wstringV path)
+std::shared_ptr<Mesh> MeshFactory::Create(std::shared_ptr<D3Device> device, const wstringV path)
 {
     Assimp::Importer importer;
 
@@ -171,7 +171,7 @@ std::shared_ptr<Mesh> MeshFactory::Create(std::shared_ptr<D3Device>& device, con
     return nullptr;
 }
 
-std::shared_ptr<Mesh> MeshFactory::Create(std::shared_ptr<D3Device>& device, const MeshShape shape)
+std::shared_ptr<Mesh> MeshFactory::Create(std::shared_ptr<D3Device> device, const MeshShape shape)
 {
     std::shared_ptr<Mesh> mesh;
 
@@ -196,10 +196,10 @@ std::shared_ptr<Mesh> MeshFactory::Create(std::shared_ptr<D3Device>& device, con
     return mesh;
 }
 
-std::shared_ptr<Mesh> MeshFactory::CreateHeightMap(std::shared_ptr<D3Device>& device, const UINT width,
-                                                   const UINT height)
+std::shared_ptr<Mesh> MeshFactory::CreateHeightMap(std::shared_ptr<D3Device> device, const MapDesc& desc)
 {
-    return std::shared_ptr<Mesh>();
+    std::shared_ptr<Mesh> mesh = std::make_shared<HeightMap>(device, desc);
+    return mesh;
 }
 
 bool MeshFactory::IsMeshFormat(const wstringV ext)

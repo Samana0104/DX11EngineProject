@@ -15,9 +15,9 @@ namespace HBSoft
     class GeneralTexture : public Texture
     {
     private:
-        bool CreateTexture(std::shared_ptr<D3Device>& device);
+        bool CreateTexture(std::shared_ptr<D3Device> device);
 
     public:
-        GeneralTexture(std::shared_ptr<D3Device>& device, const wstringV filePath);
+        GeneralTexture(std::shared_ptr<D3Device> device, const wstringV filePath);
     };
 }  // namespace HBSoft

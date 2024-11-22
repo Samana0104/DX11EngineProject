@@ -2,8 +2,8 @@
 author : 변한빛
 description : 텍스쳐 정의를 하기 위해 만든 헤더 파일
 
-version: 1.0.0
-date: 2024-11-04
+version: 1.0.5
+date: 2024-11-22
 */
 
 #pragma once
@@ -29,7 +29,8 @@ namespace HBSoft
     public:
         HPoint GetTextureSize() const;
 
-        ComPtr<ID3D11ShaderResourceView>& GetSRV();
-        ComPtr<ID3D11Resource>&           GetResource();
+        const D3D11_TEXTURE2D_DESC&      GetDesc() const;
+        ComPtr<ID3D11ShaderResourceView> GetSRV();
+        ComPtr<ID3D11Resource>           GetResource();
     };
 }  // namespace HBSoft

@@ -12,15 +12,5 @@
 /exe/debug/*.lib
 /x64/Debug/NetTest.pdb
 /exe/debug/network_d.idb
-/exe/debug/minizip.dll
-/exe/debug/poly2tri.dll
-/exe/debug/pugixml.dll
-/exe/debug/zlibd1.dll
-/res/Mesh/Slide Hip Hop Dance.fbx
-/res/Mesh/source
-/res/Mesh/Goose.fbx
-/res/Texture/1KGCABK.bmp
-/res/Texture/Default.jpg
-/res/Texture/height/Map512.png
-/res/Texture/height/Map512Color.png
-/res/Texture/height/Map512.hmp
+
+

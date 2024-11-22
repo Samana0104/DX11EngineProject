@@ -24,8 +24,7 @@ void FontFactory::ClearExternalAllFonts()
         RemoveFontResourceEx(font.data(), FR_PRIVATE, 0);
 }
 
-std::shared_ptr<Font> FontFactory::CreateFromDesc(std::shared_ptr<D3Device>& device,
-                                                  const FontDesc&            desc)
+std::shared_ptr<Font> FontFactory::CreateFromDesc(std::shared_ptr<D3Device> device, const FontDesc& desc)
 {
     auto font = std::make_shared<Font>(device, desc);
     return font;

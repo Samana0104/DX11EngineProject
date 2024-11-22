@@ -10,14 +10,13 @@ date: 2024-11-09
 #include "VertexShader.h"
 using namespace HBSoft;
 
-VertexShader::VertexShader(std::shared_ptr<D3Device>& device, const wstringV path,
-                           const ShaderType& type)
+VertexShader::VertexShader(std::shared_ptr<D3Device> device, const wstringV path, const ShaderType& type)
     : Shader(path, type)
 {
     assert(CreateShader(device));
 }
 
-void VertexShader::SetUpToContext(std::shared_ptr<D3Device>& device)
+void VertexShader::SetUpToContext(std::shared_ptr<D3Device> device)
 {
     device->m_context->IASetInputLayout(m_vertexLayout.Get());
     device->m_context->VSSetShader(m_vertexShader.Get(), nullptr, 0);
@@ -26,7 +25,7 @@ void VertexShader::SetUpToContext(std::shared_ptr<D3Device>& device)
         device->m_context->VSSetConstantBuffers(i, 1, m_constantBuffers[i].GetAddressOf());
 }
 
-bool VertexShader::CreateVertexShader(std::shared_ptr<D3Device>& device)
+bool VertexShader::CreateVertexShader(std::shared_ptr<D3Device> device)
 {
     HRESULT          hr;
     ComPtr<ID3DBlob> errorMsg;
@@ -60,7 +59,7 @@ bool VertexShader::CreateVertexShader(std::shared_ptr<D3Device>& device)
     return SUCCEEDED(hr);
 }
 
-bool VertexShader::CreateIALayoutAndConstantBuffer(std::shared_ptr<D3Device>& device)
+bool VertexShader::CreateIALayoutAndConstantBuffer(std::shared_ptr<D3Device> device)
 {
     HRESULT hr;
 
@@ -176,7 +175,7 @@ bool VertexShader::CreateIALayoutAndConstantBuffer(std::shared_ptr<D3Device>& de
     return true;
 }
 
-bool VertexShader::CreateShader(std::shared_ptr<D3Device>& device)
+bool VertexShader::CreateShader(std::shared_ptr<D3Device> device)
 {
     if (!CreateVertexShader(device))
         return false;

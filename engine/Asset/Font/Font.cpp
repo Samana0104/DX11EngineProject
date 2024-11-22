@@ -10,7 +10,7 @@ date: 2024-11-07
 #include "Font.h"
 using namespace HBSoft;
 
-Font::Font(std::shared_ptr<D3Device>& device, const FontDesc& desc)
+Font::Font(std::shared_ptr<D3Device> device, const FontDesc& desc)
     : m_fontDesc(desc)
 {
     assert(CreateComponent(device.get()));
@@ -77,7 +77,7 @@ bool Font::CreateBrush(const D3Device* device)
     return SUCCEEDED(hr);
 }
 
-void Font::DrawTexts(std::shared_ptr<D3Device>& device, const wstringV msg, HRect rect)
+void Font::DrawTexts(std::shared_ptr<D3Device> device, const wstringV msg, HRect rect)
 {
     device->m_2dRtv->BeginDraw();
     device->m_2dRtv->DrawText(msg.data(),

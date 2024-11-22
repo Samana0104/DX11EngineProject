@@ -9,7 +9,7 @@ date: 2024-11-17
 #include "ShaderFactory.h"
 using namespace HBSoft;
 
-std::shared_ptr<Shader> ShaderFactory::Create(std::shared_ptr<D3Device>& device, wstringV path,
+std::shared_ptr<Shader> ShaderFactory::Create(std::shared_ptr<D3Device> device, wstringV path,
                                               ShaderType type)
 {
     std::shared_ptr<Shader> shader;

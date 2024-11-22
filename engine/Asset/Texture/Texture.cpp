@@ -33,12 +33,17 @@ HPoint Texture::GetTextureSize() const
     return {static_cast<float>(m_textureDesc.Width), static_cast<float>(m_textureDesc.Height)};
 }
 
-ComPtr<ID3D11ShaderResourceView>& Texture::GetSRV()
+const D3D11_TEXTURE2D_DESC& Texture::GetDesc() const
+{
+    return m_textureDesc;
+}
+
+ComPtr<ID3D11ShaderResourceView> Texture::GetSRV()
 {
     return m_srv;
 }
 
-ComPtr<ID3D11Resource>& HBSoft::Texture::GetResource()
+ComPtr<ID3D11Resource> Texture::GetResource()
 {
     return m_texture;
 }

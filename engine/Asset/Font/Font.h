@@ -8,7 +8,7 @@ date: 2024-11-04
 
 #pragma once
 #include "pch.h"
-#include "Transform2D.h"
+#include "2D/Transform2D.h"
 
 namespace HBSoft
 {
@@ -43,10 +43,10 @@ namespace HBSoft
         virtual void OnNotice(EventList event, void* entity);
 
     public:
-        Font(std::shared_ptr<D3Device>& device, const FontDesc& desc);
+        Font(std::shared_ptr<D3Device> device, const FontDesc& desc);
         virtual ~Font();
 
-        void DrawTexts(std::shared_ptr<D3Device>& device, const wstringV msg, HRect rect);
+        void DrawTexts(std::shared_ptr<D3Device> device, const wstringV msg, HRect rect);
         void SetColor(const COLOR_F& color);
         void SetBold(bool bold);
 

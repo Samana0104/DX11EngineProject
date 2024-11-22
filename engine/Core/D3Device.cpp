@@ -10,7 +10,7 @@ date: 2024-11-15
 #include "D3Device.h"
 using namespace HBSoft;
 
-D3Device::D3Device(const std::shared_ptr<Window>& window)
+D3Device::D3Device(const std::shared_ptr<Window> window)
     : m_window(window)
 {
     assert(CreateDevice());
@@ -27,7 +27,7 @@ vec2 D3Device::GetViewportSize() const
     return {m_viewPort.Width, m_viewPort.Height};
 }
 
-bool D3Device::CreateIndexBuffer(std::vector<UINT>& indices, ComPtr<ID3D11Buffer>& idxBuffer)
+bool D3Device::CreateIndexBuffer(std::vector<UINT>& indices, ComPtr<ID3D11Buffer>& indexBuffer)
 {
     if (indices.size() <= 0)
         return true;
@@ -42,7 +42,7 @@ bool D3Device::CreateIndexBuffer(std::vector<UINT>& indices, ComPtr<ID3D11Buffer
     ZeroMemory(&sd, sizeof(D3D11_SUBRESOURCE_DATA));
     sd.pSysMem = &indices.at(0);
 
-    HRESULT hr = m_d3dDevice->CreateBuffer(&bd, &sd, idxBuffer.GetAddressOf());
+    HRESULT hr = m_d3dDevice->CreateBuffer(&bd, &sd, indexBuffer.GetAddressOf());
 
     return SUCCEEDED(hr);
 }

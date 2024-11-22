@@ -3,7 +3,7 @@ author : 변한빛
 description : 메쉬를 생성 하기 위한 소스 파일
 
 version: 1.1.0
-date: 2024-11-20
+date: 2024-11-22
 */
 
 #pragma once
@@ -12,6 +12,7 @@ date: 2024-11-20
 #include "Mesh/Box3D.h"
 #include "Mesh/Line.h"
 #include "Mesh/CubeMap.h"
+#include "Mesh/HeightMap.h"
 
 namespace HBSoft
 {
@@ -23,15 +24,15 @@ namespace HBSoft
 
     private:
         // 나중에 3DLoadAndSave.h로 옮길 예정
-        static void InitMesh(const aiScene* aScene, std::shared_ptr<Mesh>& mesh);
-        static void ProcessNode(aiNode* aNode, const aiScene* aScene, std::shared_ptr<Mesh>& mesh);
-        static void ProcessMesh(const aiMesh* aMesh, const aiScene* aScene, std::shared_ptr<Mesh>& mesh);
+        static void InitMesh(const aiScene* aScene, std::shared_ptr<Mesh> mesh);
+        static void ProcessNode(aiNode* aNode, const aiScene* aScene, std::shared_ptr<Mesh> mesh);
+        static void ProcessMesh(const aiMesh* aMesh, const aiScene* aScene, std::shared_ptr<Mesh> mesh);
 
     public:
-        static std::shared_ptr<Mesh> Create(std::shared_ptr<D3Device>& device, const wstringV path);
-        static std::shared_ptr<Mesh> Create(std::shared_ptr<D3Device>& device, const MeshShape shape);
-        static std::shared_ptr<Mesh> CreateHeightMap(std::shared_ptr<D3Device>& device, const UINT width,
-                                                     const UINT height);
+        static std::shared_ptr<Mesh> Create(std::shared_ptr<D3Device> device, const wstringV path);
+        static std::shared_ptr<Mesh> Create(std::shared_ptr<D3Device> device, const MeshShape shape);
+        static std::shared_ptr<Mesh> CreateHeightMap(std::shared_ptr<D3Device> device,
+                                                     const MapDesc&            desc);
 
         static bool IsMeshFormat(const wstringV ext);
     };

@@ -18,17 +18,17 @@ namespace HBSoft
         ComPtr<ID3D11InputLayout>  m_vertexLayout;
 
     private:
-        bool CreateShader(std::shared_ptr<D3Device>& device);
-        bool CreateVertexShader(std::shared_ptr<D3Device>& device);
-        bool CreateIALayoutAndConstantBuffer(std::shared_ptr<D3Device>& device);
+        bool CreateShader(std::shared_ptr<D3Device> device);
+        bool CreateVertexShader(std::shared_ptr<D3Device> device);
+        bool CreateIALayoutAndConstantBuffer(std::shared_ptr<D3Device> device);
 
     public:
-        VertexShader(std::shared_ptr<D3Device>& device, const wstringV path, const ShaderType& type);
+        VertexShader(std::shared_ptr<D3Device> device, const wstringV path, const ShaderType& type);
         /*
            description :
                context에 쉐이더를 설정해준다. ( 상수, 쉐이더 코드 )
                vertex 쉐이더의 경우 IA까지 자동으로 설정해줌
        */
-        virtual void SetUpToContext(std::shared_ptr<D3Device>& device) override;
+        virtual void SetUpToContext(std::shared_ptr<D3Device> device) override;
     };
 }  // namespace HBSoft

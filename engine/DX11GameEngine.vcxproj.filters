@@ -46,6 +46,12 @@
     <Filter Include="Asset\Factory">
       <UniqueIdentifier>{4d4122d4-9031-45e6-ad44-20eb665f1456}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\2D">
+      <UniqueIdentifier>{943e4793-3537-4c4c-a980-91a9d8ad5c6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\3D">
+      <UniqueIdentifier>{5dec847b-e29e-452f-ab31-d2ecea355be0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\D3Device.cpp">
@@ -82,12 +88,6 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Object\Camera.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Object2D.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Transform2D.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="DesignPattern\Observer.cpp">
@@ -129,26 +129,14 @@
     <ClCompile Include="Asset\Mesh\Box3D.cpp">
       <Filter>Asset\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Object3D.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Transform3D.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Asset\Mesh\Line.cpp">
       <Filter>Asset\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\LineObj.cpp">
-      <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Core\EventHandler.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Asset\Mesh\CubeMap.cpp">
       <Filter>Asset\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\CubeMapObj.cpp">
-      <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Asset\Mesh\HeightMap.cpp">
       <Filter>Asset\Mesh</Filter>
@@ -168,14 +156,35 @@
     <ClCompile Include="Asset\Factory\TextureFactory.cpp">
       <Filter>Asset\Factory</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Test3DObj.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Asset\Texture\GeneralTexture.cpp">
       <Filter>Asset\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Asset\Texture\HeightTexture.cpp">
       <Filter>Asset\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\CubeMapObj.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\HeightMapObj.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\LineObj.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\Object3D.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\Test3DObj.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\Transform3D.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\2D\Object2D.cpp">
+      <Filter>Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\2D\Transform2D.cpp">
+      <Filter>Object\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,15 +230,6 @@
     <ClInclude Include="Object\Camera.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Object2D.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Transform2D.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Transform3D.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="DesignPattern\Observer.h">
       <Filter>DesignPattern</Filter>
     </ClInclude>
@@ -241,9 +241,6 @@
     </ClInclude>
     <ClInclude Include="Core\HRect.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Renderable.h">
-      <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Asset\AssetsMgr.h">
       <Filter>Asset</Filter>
@@ -284,26 +281,17 @@
     <ClInclude Include="Asset\Mesh\Box3D.h">
       <Filter>Asset\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Object3D.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="Asset\Shader\ConstantBuffers.h">
       <Filter>Asset\Shader</Filter>
     </ClInclude>
     <ClInclude Include="Asset\Mesh\Line.h">
       <Filter>Asset\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="Object\LineObj.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="Core\EventHandler.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Asset\Mesh\CubeMap.h">
       <Filter>Asset\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\CubeMapObj.h">
-      <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Asset\Mesh\HeightMap.h">
       <Filter>Asset\Mesh</Filter>
@@ -323,14 +311,35 @@
     <ClInclude Include="Asset\Factory\TextureFactory.h">
       <Filter>Asset\Factory</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Test3DObj.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="Asset\Texture\GeneralTexture.h">
       <Filter>Asset\Texture</Filter>
     </ClInclude>
     <ClInclude Include="Asset\Texture\HeightTexture.h">
       <Filter>Asset\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\CubeMapObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\HeightMapObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\LineObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\Object3D.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\Test3DObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\Transform3D.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\2D\Object2D.h">
+      <Filter>Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\2D\Transform2D.h">
+      <Filter>Object\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

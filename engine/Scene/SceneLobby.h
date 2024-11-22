@@ -9,20 +9,22 @@ date: 2024-11-04
 #pragma once
 #include "pch.h"
 #include "Camera.h"
-#include "LineObj.h"
-#include "CubeMapObj.h"
-#include "Test3DObj.h"
+#include "3D/LineObj.h"
+#include "3D/CubeMapObj.h"
+#include "3D/Test3DObj.h"
+#include "3D/HeightMapObj.h"
 
 namespace HBSoft
 {
     class SceneLobby : public Scene
     {
     public:
-        Object3D   test;
-        CubeMapObj cube;
-        Camera     cameraTest;
-        LineObj    m_line;
-        Test3DObj  m_zelda;
+        Object3D     test;
+        CubeMapObj   cube;
+        Camera       cameraTest;
+        LineObj      m_line;
+        Test3DObj    m_zelda;
+        HeightMapObj m_map;
 
         bool isWire = false;
 

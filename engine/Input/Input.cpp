@@ -10,7 +10,7 @@ date: 2024-11-04
 #include "Input.h"
 using namespace HBSoft;
 
-Input::Input(std::shared_ptr<Window>& window)
+Input::Input(std::shared_ptr<Window> window)
     : m_window(window)
 {
     ZeroMemory(&m_keyState, sizeof(KeyState) * 256);

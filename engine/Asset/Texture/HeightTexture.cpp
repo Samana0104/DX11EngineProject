@@ -9,14 +9,14 @@ date: 2024-11-22
 #include "HeightTexture.h"
 using namespace HBSoft;
 
-HeightTexture::HeightTexture(std::shared_ptr<D3Device>& device, const wstringV filePath)
+HeightTexture::HeightTexture(std::shared_ptr<D3Device> device, const wstringV filePath)
     : Texture(filePath)
 {
     assert(CreateTexture(device));
     LoadTextureDesc();
 }
 
-bool HeightTexture::CreateTexture(std::shared_ptr<D3Device>& device)
+bool HeightTexture::CreateTexture(std::shared_ptr<D3Device> device)
 {
     HRESULT hr = DirectX::CreateWICTextureFromFileEx(device->m_d3dDevice.Get(),
                                                      m_texturePath.c_str(),

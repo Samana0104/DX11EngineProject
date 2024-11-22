@@ -10,14 +10,14 @@ date: 2024-11-22
 #include "GeneralTexture.h"
 using namespace HBSoft;
 
-GeneralTexture::GeneralTexture(std::shared_ptr<D3Device>& device, const wstringV filePath)
+GeneralTexture::GeneralTexture(std::shared_ptr<D3Device> device, const wstringV filePath)
     : Texture(filePath)
 {
     assert(CreateTexture(device));
     LoadTextureDesc();
 }
 
-bool GeneralTexture::CreateTexture(std::shared_ptr<D3Device>& device)
+bool GeneralTexture::CreateTexture(std::shared_ptr<D3Device> device)
 {
     /*
         일반 텍스쳐

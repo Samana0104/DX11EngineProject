@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 큐브텍스쳐 전용으로 사용하기 위한 버텍스 쉐이더 파일
+
+version: 1.0.0
+date: 2024-11-17
+*/
+
 #include "HBStd.hlsli"
 
 CubePSInput main(VSInput vsIn)
