@@ -10,29 +10,9 @@ date: 2024-11-04
 #include "Texture.h"
 using namespace HBSoft;
 
-Texture::Texture(std::shared_ptr<D3Device>& device, const wstringV filePath)
+Texture::Texture(const wstringV filePath)
     : m_texturePath(filePath)
-{
-    assert(CreateTexture(device));
-    LoadTextureDesc();
-}
-
-bool Texture::CreateTexture(std::shared_ptr<D3Device>& device)
-{
-    HRESULT hr = DirectX::CreateWICTextureFromFile(device->m_d3dDevice.Get(),
-                                                   m_texturePath.c_str(),
-                                                   m_texture.GetAddressOf(),  //&m_pTexture
-                                                   m_srv.GetAddressOf());
-    if (FAILED(hr))
-    {
-        hr = DirectX::CreateDDSTextureFromFile(device->m_d3dDevice.Get(),
-                                               m_texturePath.c_str(),
-                                               m_texture.GetAddressOf(),
-                                               m_srv.GetAddressOf(),
-                                               0);
-    }
-    return SUCCEEDED(hr);
-}
+{}
 
 void Texture::LoadTextureDesc()
 {

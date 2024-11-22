@@ -45,6 +45,8 @@
     <ClCompile Include="Asset\Shader\Shader.cpp" />
     <ClCompile Include="Asset\Shader\VertexShader.cpp" />
     <ClCompile Include="Asset\Sound\HSound.cpp" />
+    <ClCompile Include="Asset\Texture\GeneralTexture.cpp" />
+    <ClCompile Include="Asset\Texture\HeightTexture.cpp" />
     <ClCompile Include="Asset\Texture\Texture.cpp" />
     <ClCompile Include="Core\D3Device.cpp" />
     <ClCompile Include="Core\Core.cpp" />
@@ -92,6 +94,8 @@
     <ClInclude Include="Asset\Shader\Shader.h" />
     <ClInclude Include="Asset\Shader\VertexShader.h" />
     <ClInclude Include="Asset\Sound\HSound.h" />
+    <ClInclude Include="Asset\Texture\GeneralTexture.h" />
+    <ClInclude Include="Asset\Texture\HeightTexture.h" />
     <ClInclude Include="Asset\Texture\Texture.h" />
     <ClInclude Include="Core\D3Device.h" />
     <ClInclude Include="Core\Core.h" />

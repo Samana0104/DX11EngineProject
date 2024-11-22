@@ -4,7 +4,6 @@ using namespace HBSoft;
 
 LineObj::LineObj()
 {
-    SetTextureKey(L"");
     SetMeshKey(L"LINE");
     SetVSShaderKey(L"LineVertex.hlsl");
     SetPSShaderKey(L"LinePixel.hlsl");

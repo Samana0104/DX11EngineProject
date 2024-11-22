@@ -16,7 +16,12 @@ Mesh::Mesh(bool hasAnimation)
 
 void Mesh::SetVertices(std::shared_ptr<D3Device>& device, const std::vector<Vertex>& vertices)
 {
-    device->m_context->UpdateSubresource(m_vertexBuffer.Get(), 0, NULL, &vertices.at(0), 0, 0);
+    m_vertices = vertices;
+    device->m_context->UpdateSubresource(m_vertexBuffer.Get(), 0, NULL, &m_vertices.at(0), 0, 0);
 }
 
-void Mesh::SetVertex(std::shared_ptr<D3Device>& device, const Vertex& vertex, const UINT idx) {}
+void Mesh::SetVertex(std::shared_ptr<D3Device>& device, const Vertex& vertex, const UINT idx)
+{
+    m_vertices[idx] = vertex;
+    device->m_context->UpdateSubresource(m_vertexBuffer.Get(), 0, NULL, &m_vertices.at(0), 0, 0);
+}
