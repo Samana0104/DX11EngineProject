@@ -10,65 +10,8 @@ date: 2024-11-20
 #include "MeshFactory.h"
 using namespace HBSoft;
 
-const aiNode* MeshFactory::FindParent(const aiNode* aNode, std::shared_ptr<Mesh>& mesh)
+void MeshFactory::ProcessNode(aiNode* aNode, const aiScene* aScene, std::shared_ptr<Mesh>& mesh)
 {
-    if (aNode == nullptr)
-        return nullptr;
-    else if (mesh->m_boneToId.count(aNode->mName.C_Str()) > 0)
-        return aNode;
-
-    return FindParent(aNode->mParent, mesh);
-}
-
-void MeshFactory::ReadAnimation(const aiScene* aScene, std::shared_ptr<Mesh>& mesh)
-{
-    mesh->m_aniClip.resize(aScene->mNumAnimations);
-
-    for (UINT i = 0; i < aScene->mNumAnimations; i++)
-    {
-        const aiAnimation* ani         = aScene->mAnimations[i];
-        mesh->m_aniClip[i].duration    = ani->mDuration;
-        mesh->m_aniClip[i].ticksPerSec = ani->mDuration;
-        mesh->m_aniClip[i].numChannels = ani->mNumChannels;
-
-        mesh->m_aniClip[i].keys.resize(mesh->m_boneToId.size());
-
-        // 내 예상으로는 채널이 애니메이션 1프레임인거 같음
-        for (UINT c = 0; c < ani->mNumChannels; c++)
-        {
-            const aiNodeAnim* nodeAnim = ani->mChannels[c];
-            const int         boneId   = mesh->m_boneToId[nodeAnim->mNodeName.C_Str()];
-
-            mesh->m_aniClip[i].keys[boneId].resize(nodeAnim->mNumPositionKeys);
-
-            for (UINT k = 0; k < nodeAnim->mNumPositionKeys; k++)
-            {
-                const auto pos                           = nodeAnim->mPositionKeys[k].mValue;
-                const auto rot                           = nodeAnim->mRotationKeys[k].mValue;
-                const auto scale                         = nodeAnim->mScalingKeys[k].mValue;
-                mesh->m_aniClip[i].keys[boneId][k].pos   = vec3(pos.x, pos.y, pos.z);
-                mesh->m_aniClip[i].keys[boneId][k].scale = vec3(scale.x, scale.y, scale.z);
-                mesh->m_aniClip[i].keys[boneId][k].rot   = quat(rot.w, rot.x, rot.y, rot.z);
-            }
-        }
-    }
-}
-
-void MeshFactory::ProcessNode(aiNode* aNode, const aiScene* aScene, std::shared_ptr<Mesh>& mesh,
-                              mat4& tr)
-{
-    if (mesh->m_boneToId.count(aNode->mName.C_Str()))
-    {
-        const aiNode* parentNode = FindParent(aNode->mParent, mesh);
-        const auto    boneId     = mesh->m_boneToId[aNode->mName.C_Str()];
-
-        if (parentNode != nullptr)
-        {
-            mesh->m_boneParentIdx[boneId] = mesh->m_boneToId[parentNode->mName.C_Str()];
-        }
-    }
-
-
     for (UINT i = 0; i < aNode->mNumMeshes; i++)
     {
         aiMesh* aiMesh = aScene->mMeshes[aNode->mMeshes[i]];
@@ -77,7 +20,7 @@ void MeshFactory::ProcessNode(aiNode* aNode, const aiScene* aScene, std::shared_
 
     for (UINT i = 0; i < aNode->mNumChildren; i++)
     {
-        ProcessNode(aNode->mChildren[i], aScene, mesh, tr);
+        ProcessNode(aNode->mChildren[i], aScene, mesh);
     }
 }
 
@@ -157,43 +100,6 @@ void MeshFactory::ProcessMesh(const aiMesh* aMesh, const aiScene* aScene, std::s
         }
     }
 
-    if (aMesh->HasBones())
-    {
-        std::vector<std::vector<float>> boneWeights;
-        std::vector<std::vector<UINT>>  boneIndices;
-
-        boneWeights.resize(aMesh->mNumVertices);
-        boneIndices.resize(aMesh->mNumVertices);
-        mesh->m_bindPoseMat.resize(mesh->m_boneToId.size());
-
-        int count = 0;
-        for (UINT i = 0; i < aMesh->mNumBones; i++)
-        {
-            const aiBone* bone   = aMesh->mBones[i];
-            const UINT    boneId = mesh->m_boneToId[bone->mName.C_Str()];
-
-            mesh->m_bindPoseMat[boneId] = glm::transpose(glm::make_mat4x4(&bone->mOffsetMatrix.a1));
-
-            // 이 뼈가 영향을 주는 Vertex의 개수
-            for (UINT j = 0; j < bone->mNumWeights; j++)
-            {
-                aiVertexWeight weight = bone->mWeights[j];
-                assert(weight.mVertexId < boneIndices.size());
-                boneIndices[weight.mVertexId].push_back(boneId);
-                boneWeights[weight.mVertexId].push_back(weight.mWeight);
-            }
-        }
-
-        for (int i = 0; i < boneIndices.size(); i++)
-        {
-            for (int j = 0; j < boneIndices[i].size(); j++)
-            {
-                mesh->m_vertices[m_vertexId + i].boneIdx[j]    = boneIndices[i][j];
-                mesh->m_vertices[m_vertexId + i].boneWeight[j] = boneWeights[i][j];
-            }
-        }
-    }
-
     // 버텍스 아이디는 추가된 버텍스만큼 더해줘야 다음 서브메쉬때 갱신가능함
     m_vertexId += i;
 
@@ -220,69 +126,11 @@ void MeshFactory::ProcessMesh(const aiMesh* aMesh, const aiScene* aScene, std::s
     mesh->m_subMeshes[m_subMeshId++] = subMesh;
 }
 
-void MeshFactory::UpdateBoneID(const aiNode* aNode, std::shared_ptr<Mesh>& mesh)
-{
-    if (aNode != nullptr)
-    {
-        if (mesh->m_boneToId.count(aNode->mName.C_Str()))
-        {
-            mesh->m_boneToId[aNode->mName.C_Str()] = m_boneCount++;
-        }
-        for (UINT i = 0; i < aNode->mNumChildren; i++)
-        {
-            UpdateBoneID(aNode->mChildren[i], mesh);
-        }
-    }
-}
-
-void MeshFactory::FindDeformingBones(const aiScene* aScene, std::shared_ptr<Mesh>& mesh)
-{
-    for (UINT i = 0; i < aScene->mNumMeshes; i++)
-    {
-        const auto* aMesh = aScene->mMeshes[i];
-        if (aMesh->HasBones())
-        {
-            for (UINT j = 0; j < aMesh->mNumBones; j++)
-            {
-                const aiBone* aBone = aMesh->mBones[j];
-
-                mesh->m_boneToId[aBone->mName.C_Str()] = -1;
-            }
-        }
-    }
-}
-
-void MeshFactory::ComputeGlobalTransforms(const aiNode* node, const mat4& parentTransform,
-                                          std::shared_ptr<Mesh>& mesh)
-{
-    // Assimp의 변환 행렬은 Row-Major, Transpose를 통해 glm의 Column-Major로 변환
-    mat4 localTransform = glm::transpose(glm::make_mat4(&node->mTransformation.a1));
-
-    // 부모의 글로벌 트랜스폼과 현재 노드의 로컬 트랜스폼을 곱하여 글로벌 트랜스폼 계산
-    mat4 globalTransform = parentTransform * localTransform;
-
-    // 결과를 노드 이름을 키로 하여 저장
-
-    if (mesh->m_boneToId.count(node->mName.C_Str()))
-    {
-        const UINT boneId = mesh->m_boneToId[node->mName.C_Str()];
-
-        mesh->m_globalTransform[boneId] = globalTransform;
-    }
-
-    // 자식 노드들에 대해 재귀적으로 처리
-    for (unsigned int i = 0; i < node->mNumChildren; i++)
-    {
-        ComputeGlobalTransforms(node->mChildren[i], globalTransform, mesh);
-    }
-}
-
 void MeshFactory::InitMesh(const aiScene* aScene, std::shared_ptr<Mesh>& mesh)
 {
     UINT meshVerticesNums = 0;
     m_vertexId            = 0;
     m_subMeshId           = 0;
-    m_boneCount           = 0;
 
     // 버텍스 개수 구해서 하나의 버텍스 버퍼로 합치기 위해 버텍스 수 구함
     for (UINT i = 0; i < aScene->mNumMeshes; i++)
@@ -306,23 +154,7 @@ std::shared_ptr<Mesh> MeshFactory::Create(std::shared_ptr<D3Device>& device, con
         std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 
         InitMesh(aScene, mesh);
-        FindDeformingBones(aScene, mesh);
-        UpdateBoneID(aScene->mRootNode, mesh);
-
-        // 3. 업데이트 순서대로 뼈 이름 저장 (boneIdToName)
-        mesh->m_idToBone.resize(mesh->m_boneToId.size());
-        for (auto& boneIdx : mesh->m_boneToId)
-            mesh->m_idToBone[boneIdx.second] = boneIdx.first;
-
-        mesh->m_boneParentIdx.resize(mesh->m_boneToId.size(), -1);
-        mesh->m_globalTransform.resize(mesh->m_boneToId.size());
-        mat4 tr(1.f);
-        ComputeGlobalTransforms(aScene->mRootNode, tr, mesh);
-        ProcessNode(aScene->mRootNode, aScene, mesh, tr);
-
-        // 애니메이션 정보 읽기
-        if (aScene->HasAnimations())
-            ReadAnimation(aScene, mesh);
+        ProcessNode(aScene->mRootNode, aScene, mesh);
 
         device->CreateVertexBuffer(mesh->m_vertices, mesh->m_vertexBuffer);
 
@@ -364,8 +196,8 @@ std::shared_ptr<Mesh> MeshFactory::Create(std::shared_ptr<D3Device>& device, con
     return mesh;
 }
 
-std::shared_ptr<Mesh> MeshFactory::CreateMap(std::shared_ptr<D3Device>& device, const UINT width,
-                                             const UINT height)
+std::shared_ptr<Mesh> MeshFactory::CreateHeightMap(std::shared_ptr<D3Device>& device, const UINT width,
+                                                   const UINT height)
 {
     return std::shared_ptr<Mesh>();
 }

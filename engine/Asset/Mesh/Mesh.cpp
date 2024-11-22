@@ -18,3 +18,5 @@ void Mesh::SetVertices(std::shared_ptr<D3Device>& device, const std::vector<Vert
 {
     device->m_context->UpdateSubresource(m_vertexBuffer.Get(), 0, NULL, &vertices.at(0), 0, 0);
 }
+
+void Mesh::SetVertex(std::shared_ptr<D3Device>& device, const Vertex& vertex, const UINT idx) {}

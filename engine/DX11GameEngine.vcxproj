@@ -37,7 +37,7 @@
     <ClCompile Include="Asset\Mesh\Box3D.cpp" />
     <ClCompile Include="Asset\Mesh\Circle2D.cpp" />
     <ClCompile Include="Asset\Mesh\CubeMap.cpp" />
-    <ClCompile Include="Asset\Mesh\GridMap.cpp" />
+    <ClCompile Include="Asset\Mesh\HeightMap.cpp" />
     <ClCompile Include="Asset\Mesh\Line.cpp" />
     <ClCompile Include="Asset\Mesh\Mesh.cpp" />
     <ClCompile Include="Asset\Mesh\Sphere2D.cpp" />
@@ -83,7 +83,7 @@
     <ClInclude Include="Asset\Mesh\Box3D.h" />
     <ClInclude Include="Asset\Mesh\Circle2D.h" />
     <ClInclude Include="Asset\Mesh\CubeMap.h" />
-    <ClInclude Include="Asset\Mesh\GridMap.h" />
+    <ClInclude Include="Asset\Mesh\HeightMap.h" />
     <ClInclude Include="Asset\Mesh\Line.h" />
     <ClInclude Include="Asset\Mesh\Mesh.h" />
     <ClInclude Include="Asset\Mesh\Sphere2D.h" />

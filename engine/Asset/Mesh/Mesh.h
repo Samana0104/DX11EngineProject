@@ -24,32 +24,10 @@ namespace HBSoft
 
     struct Vertex
     {
-        vec3  p;  // position
-        vec3  n;  // normal
-        vec4  c;  // color
-        vec2  t;  // texture coordinate
-        UINT  boneIdx[8]    = {0, 0, 0, 0, 0, 0, 0, 0};
-        float boneWeight[8] = {0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f};
-    };
-
-    struct AnimationClip
-    {
-
-        struct Key
-        {
-            vec3 pos;
-            vec3 scale;
-            quat rot;
-
-            mat4 GetWorldMat() { return glm::translate(pos) * glm::toMat4(rot) * glm::scale(scale); }
-        };
-
-        std::string                   name;         // Name of this animation clip
-        std::vector<std::vector<Key>> keys;         // m_key[boneIdx][frameIdx]
-        int                           numChannels;  // Number of bones
-        int                           numKeys;      // Number of frames of this animation clip
-        double                        duration;     // Duration of animation in ticks
-        double                        ticksPerSec;  // Frames per second
+        vec3 p;  // position
+        vec3 n;  // normal
+        vec4 c;  // color
+        vec2 t;  // texture coordinate
     };
 
     struct SubMesh
@@ -69,12 +47,6 @@ namespace HBSoft
         std::vector<UINT>         m_indices;      // 인덱스  버퍼용 배열
 
         std::vector<std::shared_ptr<SubMesh>> m_subMeshes;
-        std::map<std::string, UINT>           m_boneToId;
-        std::vector<std::string>              m_idToBone;
-        std::vector<int>                      m_boneParentIdx;
-        std::vector<mat4>                     m_globalTransform;
-        std::vector<mat4>                     m_bindPoseMat;
-        std::vector<AnimationClip>            m_aniClip;
 
         bool m_hasAnimation;
 
@@ -87,6 +59,7 @@ namespace HBSoft
         ~Mesh() = default;
 
         void SetVertices(std::shared_ptr<D3Device>& device, const std::vector<Vertex>& vertices);
+        void SetVertex(std::shared_ptr<D3Device>& device, const Vertex& vertex, const UINT idx);
     };
 
 }  // namespace HBSoft

@@ -6,8 +6,8 @@ using namespace HBSoft;
 Test3DObj::Test3DObj()
 {
     SetMeshKey(L"Goose.fbx");
-    SetVSShaderKey(L"AnimationVertex.hlsl");
-    // SetVSShaderKey(L"VertexShader.hlsl");
+    // SetVSShaderKey(L"AnimationVertex.hlsl");
+    SetVSShaderKey(L"VertexShader.hlsl");
 
     // SetPSShaderKey(L"PixelShader.hlsl"); //텍스쳐 있는 놈
     SetPSShaderKey(L"ColorPixelShader.hlsl");  // 텍스쳐 없는 놈
@@ -20,10 +20,6 @@ void Test3DObj::Render()
     // m_mesh->m_bindPoseMat *= m_mesh->m_aniClip[1].keys[1][0].
     m_vsShader->SetUpToContext(HDEVICE);
     m_psShader->SetUpToContext(HDEVICE);
-    m_vsShader->SetConstantBuffer(HDEVICE,
-                                  (void*)&m_mesh->m_bindPoseMat.at(0),
-                                  sizeof(mat4) * m_mesh->m_bindPoseMat.size(),
-                                  1);
 
     HDEVICE->m_context->IASetVertexBuffers(0,
                                            1,

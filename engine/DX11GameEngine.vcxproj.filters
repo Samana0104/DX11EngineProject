@@ -150,7 +150,7 @@
     <ClCompile Include="Object\CubeMapObj.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Asset\Mesh\GridMap.cpp">
+    <ClCompile Include="Asset\Mesh\HeightMap.cpp">
       <Filter>Asset\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Asset\Factory\FontFactory.cpp">
@@ -299,7 +299,7 @@
     <ClInclude Include="Object\CubeMapObj.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Asset\Mesh\GridMap.h">
+    <ClInclude Include="Asset\Mesh\HeightMap.h">
       <Filter>Asset\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Asset\Factory\FontFactory.h">
