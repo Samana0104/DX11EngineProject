@@ -18,7 +18,7 @@ std::shared_ptr<Texture> TextureFactory::Create(std::shared_ptr<D3Device> device
 
     auto [fileName, fileExt] = HBSoft::GetFileNameAndExt(path);
 
-    if (fileExt.compare(L"hmp") == 0)
+    if (fileExt.compare(L".hmp") == 0)
         texture = std::make_shared<HeightTexture>(device, path);
     else
         texture = std::make_shared<GeneralTexture>(device, path);

@@ -12,8 +12,6 @@ using namespace HBSoft;
 
 HeightMap::HeightMap(std::shared_ptr<D3Device> device, const MapDesc& desc)
 {
-    // 짝수면 생성 안됨
-    assert(desc.numCols % 2 == 0 || desc.numRows % 2 == 0);
     assert(CreateVertices(device, desc));
     assert(CreateIndices(device, desc));
 }
@@ -21,8 +19,8 @@ HeightMap::HeightMap(std::shared_ptr<D3Device> device, const MapDesc& desc)
 bool HeightMap::CreateVertices(std::shared_ptr<D3Device> device, const MapDesc& desc)
 {
     UINT  idx;
-    float uvX = 1.f / desc.numCols;
-    float uvY = 1.f / desc.numRows;
+    float uvX = 1.f / (desc.numCols - 1.f);
+    float uvY = 1.f / (desc.numRows - 1.f);  // for문 생각하면 1.f 빼는게 맞음
 
     m_vertices.resize(desc.numCols * desc.numRows);
 
@@ -36,7 +34,7 @@ bool HeightMap::CreateVertices(std::shared_ptr<D3Device> device, const MapDesc& 
             m_vertices[idx].p.y = desc.pixelHeight[idx] * desc.scaleYPerCell;
             m_vertices[idx].p.z = -(row - (desc.numRows - 1) * 0.5f) * desc.scaleZPerCell;
 
-            m_vertices[idx].n = {0.f, 0.f, 1.f};
+            m_vertices[idx].n = {0.f, 1.f, 0.f};
 
             m_vertices[idx].c = {1.f, 1.f, 1.f, 1.f};
 
@@ -55,9 +53,9 @@ bool HeightMap::CreateIndices(std::shared_ptr<D3Device> device, const MapDesc& d
 
     m_indices.resize(desc.numFaces * 3);
 
-    for (UINT row = 0; row < desc.numRows; row++)
+    for (UINT row = 0; row < desc.numRows - 1; row++)
     {
-        for (UINT col = 0; col < desc.numCols; col++)
+        for (UINT col = 0; col < desc.numCols - 1; col++)
         {
             nextRow = row + 1;
             nextCol = col + 1;

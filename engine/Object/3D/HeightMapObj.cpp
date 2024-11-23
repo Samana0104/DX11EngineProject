@@ -13,28 +13,37 @@ using namespace HBSoft;
 HeightMapObj::HeightMapObj()
 {
     SetTextureKey(L"Map512Color.png");
-    LoadMapDesc(L"Map512.hmp");
+    LoadMapDesc(L"Map512.hmp", 4.f, 1.f, 4.f);
+    m_mesh = MeshFactory::CreateHeightMap(HDEVICE, m_mapDesc);
+    SetVSShaderKey(L"VertexShader.hlsl");
+    SetPSShaderKey(L"PixelShader.hlsl");
+
+    // m_transform.SetLocation({0.f, -100.f, 0.f});
 }
 
-void HeightMapObj::LoadMapDesc(const TEXTURE_KEY texKey)
+void HeightMapObj::LoadMapDesc(const TEXTURE_KEY texKey, float scaleXPerCell, float scaleYPerCell,
+                               float scaleZPerCell)
 {
     D3D11_TEXTURE2D_DESC     textureDesc;
     D3D11_MAPPED_SUBRESOURCE mapped;
     ComPtr<ID3D11Resource>   textureRes;
 
-    textureDesc = m_texture->GetDesc();
-    textureRes  = m_texture->GetResource();
-
     m_heightTexture = HASSET->m_textures[texKey];
+    textureRes      = m_heightTexture->GetResource();
+    textureDesc     = m_heightTexture->GetDesc();
 
     if (SUCCEEDED(HDEVICE->m_context
                   ->Map(textureRes.Get(), D3D11CalcSubresource(0, 0, 1), D3D11_MAP_READ, 0, &mapped)))
     {
+        UINT   rowStart;
         UCHAR* texels = (UCHAR*)mapped.pData;
-        // RGBA
+
+
+        m_mapDesc.pixelHeight.resize(textureDesc.Width * textureDesc.Height);
+
         for (UINT row = 0; row < textureDesc.Height; row++)
         {
-            UINT rowStart = row * mapped.RowPitch;
+            rowStart = row * mapped.RowPitch;
             for (UINT col = 0; col < textureDesc.Width; col++)
             {
                 // rgba이니까 4바이트인데 texel
@@ -48,5 +57,12 @@ void HeightMapObj::LoadMapDesc(const TEXTURE_KEY texKey)
             }
         }
         HDEVICE->m_context->Unmap(textureRes.Get(), D3D11CalcSubresource(0, 0, 1));
+
+        m_mapDesc.numRows       = textureDesc.Width;
+        m_mapDesc.numCols       = textureDesc.Height;
+        m_mapDesc.scaleXPerCell = scaleXPerCell;
+        m_mapDesc.scaleYPerCell = scaleYPerCell;
+        m_mapDesc.scaleZPerCell = scaleZPerCell;
+        m_mapDesc.numFaces      = textureDesc.Width * textureDesc.Height * 2;
     }
 }

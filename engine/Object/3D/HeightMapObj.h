@@ -46,7 +46,8 @@ namespace HBSoft
         std::vector<VertexInfo>  m_vertexInfo;
 
     private:
-        void LoadMapDesc(const TEXTURE_KEY texKey);
+        void LoadMapDesc(const TEXTURE_KEY texKey, float scaleXPerCell, float scaleYPerCell,
+                         float scaleZPerCell);
 
     public:
         HeightMapObj();

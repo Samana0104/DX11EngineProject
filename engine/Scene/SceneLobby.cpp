@@ -18,6 +18,7 @@ SceneLobby::SceneLobby()
     m_line.SetCamera(&cameraTest);
     cube.SetCamera(&cameraTest);
     m_zelda.SetCamera(&cameraTest);
+    m_map.SetCamera(&cameraTest);
 }
 
 void SceneLobby::Update(float deltaTime)
@@ -30,6 +31,7 @@ void SceneLobby::Update(float deltaTime)
     m_line.Update(deltaTime);
     cube.Update(deltaTime);
     m_zelda.Update(deltaTime);
+    m_map.Update(deltaTime);
 }
 
 void SceneLobby::Render()
@@ -45,6 +47,7 @@ void SceneLobby::Render()
     test.Render();
     cube.Render();
     m_zelda.Render();
+    m_map.Render();
 }
 
 void SceneLobby::Release() {}

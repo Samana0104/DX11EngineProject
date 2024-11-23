@@ -35,6 +35,7 @@ date: 2024-11-17
 #include <atlconv.h>
 
 #ifdef _DEBUG
+// 콘솔창 만들기 위해 설정해둔 커멘드
     #pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
     #include <iostream>
 #endif
@@ -76,6 +77,11 @@ date: 2024-11-17
 #endif
 
 // ---------------------------------------
+//			     fbx sdk
+// ---------------------------------------
+#include <fbxsdk/fbxsdk.h>
+
+// ---------------------------------------
 //			  Library load
 // ---------------------------------------
 
@@ -84,19 +90,27 @@ date: 2024-11-17
 #pragma comment(lib, "dwrite.lib")
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "d3d11.lib")
-#pragma comment(lib, "fmod/fmod_vc.lib")
 
 #ifdef _DEBUG
-    #pragma comment(lib, "DirectXTK/DirectXTK_d.lib")
-    #pragma comment(lib, "glm/glm_d.lib")
-    #pragma comment(lib, "imgui/imguid.lib")
-    #pragma comment(lib, "network/network_d.lib")
-    #pragma comment(lib, "assimp/assimp-vc143-mtd")
+    #pragma comment(lib, "debug/DirectXTK/DirectXTK_d.lib")
+    #pragma comment(lib, "debug/glm/glm_d.lib")
+    #pragma comment(lib, "debug/imgui/imguid.lib")
+    #pragma comment(lib, "debug/fmod/fmod_vc.lib")
+    #pragma comment(lib, "debug/network/network_d.lib")
+    #pragma comment(lib, "debug/assimp/assimp-vc143-mtd")
+    #pragma comment(lib, "debug/fbxsdk/libfbxsdk-md.lib")
+    #pragma comment(lib, "debug/fbxsdk/libxml2-md.lib")
+    #pragma comment(lib, "debug/fbxsdk/zlib-md.lib")
 #else
-    #pragma comment(lib, "DirectXTK/DirectXTK_r.lib")
-    #pragma comment(lib, "glm/glm.lib")
-    #pragma comment(lib, "imgui/imgui.lib")
-    #pragma comment(lib, "assimp/assimp-vc143-mt")
+    #pragma comment(lib, "release/DirectXTK/DirectXTK_r.lib")
+    #pragma comment(lib, "release/glm/glm.lib")
+    #pragma comment(lib, "release/fmod/fmod_vc.lib")
+    #pragma comment(lib, "release/imgui/imgui.lib")
+    #pragma comment(lib, "release/assimp/assimp-vc143-mt")
+    #pragma comment(lib, "release/fbxsdk/libfbxsdk-md.lib")
+    #pragma comment(lib, "release/fbxsdk/libxml2-md.lib")
+    #pragma comment(lib, "release/fbxsdk/zlib-md.lib")
+
 #endif
 
 // ---------------------------------------
