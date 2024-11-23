@@ -253,12 +253,12 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)res\Shader;$(ProjectDir)Color\;$(ProjectDir)Core\;$(ProjectDir)DesignPattern\;$(ProjectDir)FSM\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Object\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)res\Shader;$(ProjectDir)Color\;$(ProjectDir)Core\;$(ProjectDir)DesignPattern\;$(ProjectDir)FSM\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Object\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc;$(SolutionDir)extern\inc\fbxsdk\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)extern\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)extern\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>

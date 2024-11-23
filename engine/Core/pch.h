@@ -79,7 +79,8 @@ date: 2024-11-17
 // ---------------------------------------
 //			     fbx sdk
 // ---------------------------------------
-#include <fbxsdk/fbxsdk.h>
+
+#include <fbxsdk.h>
 
 // ---------------------------------------
 //			  Library load
@@ -110,7 +111,6 @@ date: 2024-11-17
     #pragma comment(lib, "release/fbxsdk/libfbxsdk-md.lib")
     #pragma comment(lib, "release/fbxsdk/libxml2-md.lib")
     #pragma comment(lib, "release/fbxsdk/zlib-md.lib")
-
 #endif
 
 // ---------------------------------------
