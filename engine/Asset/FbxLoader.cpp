@@ -313,25 +313,25 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, FbxNode* fNode, std::shared_ptr<Mesh
 
     // material
     int numMtrl = fNode->GetMaterialCount();
-    if (numMtrl > 1)
-    {
-        // pModel->m_vSubMeshVertexList.resize(iNumMtrl);
-        // pModel->m_vSubMeshIndexList.resize(iNumMtrl);
-    }
 
     for (int mtrlIdx = 0; mtrlIdx < numMtrl; mtrlIdx++)
     {
         FbxSurfaceMaterial* pSurfaceMtrl = fNode->GetMaterial(mtrlIdx);
         if (pSurfaceMtrl)
         {
-            std::string texPathName;
-            auto        Property = pSurfaceMtrl->FindProperty(FbxSurfaceMaterial::sDiffuse);
+            auto Property = pSurfaceMtrl->FindProperty(FbxSurfaceMaterial::sDiffuse);
             if (Property.IsValid())
             {
                 FbxFileTexture* tex = Property.GetSrcObject<FbxFileTexture>(0);
+
                 if (tex)
                 {
-                    texPathName = tex->GetFileName();
+                    subMesh->hasTexture  = true;
+                    subMesh->textureName = HBSoft::ToUnicode(tex->GetFileName());
+                }
+                else
+                {
+                    subMesh->hasTexture = false;
                 }
             }
         }
