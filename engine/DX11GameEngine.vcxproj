@@ -32,6 +32,7 @@
     <ClCompile Include="Asset\Factory\ShaderFactory.cpp" />
     <ClCompile Include="Asset\Factory\SoundFactory.cpp" />
     <ClCompile Include="Asset\Factory\TextureFactory.cpp" />
+    <ClCompile Include="Asset\FbxLoader.cpp" />
     <ClCompile Include="Asset\Font\Font.cpp" />
     <ClCompile Include="Asset\Mesh\Box2D.cpp" />
     <ClCompile Include="Asset\Mesh\Box3D.cpp" />
@@ -81,6 +82,7 @@
     <ClInclude Include="Asset\Factory\ShaderFactory.h" />
     <ClInclude Include="Asset\Factory\SoundFactory.h" />
     <ClInclude Include="Asset\Factory\TextureFactory.h" />
+    <ClInclude Include="Asset\FbxLoader.h" />
     <ClInclude Include="Asset\Font\Font.h" />
     <ClInclude Include="Asset\Mesh\Box2D.h" />
     <ClInclude Include="Asset\Mesh\Box3D.h" />

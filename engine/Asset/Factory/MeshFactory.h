@@ -13,21 +13,12 @@ date: 2024-11-22
 #include "Mesh/Line.h"
 #include "Mesh/CubeMap.h"
 #include "Mesh/HeightMap.h"
+#include "FbxLoader.h"
 
 namespace HBSoft
 {
     class MeshFactory
     {
-    private:
-        inline static UINT m_vertexId = 0;  // 건들지 마세요 외부 모델 불러올 때 최적화용으로 쓰임
-        inline static UINT m_subMeshId = 0;  // 건들지 마세요 외부 모델 불러올 때 최적화용으로 쓰임
-
-    private:
-        // 나중에 3DLoadAndSave.h로 옮길 예정
-        static void InitMesh(const aiScene* aScene, std::shared_ptr<Mesh> mesh);
-        static void ProcessNode(aiNode* aNode, const aiScene* aScene, std::shared_ptr<Mesh> mesh);
-        static void ProcessMesh(const aiMesh* aMesh, const aiScene* aScene, std::shared_ptr<Mesh> mesh);
-
     public:
         static std::shared_ptr<Mesh> Create(std::shared_ptr<D3Device> device, const wstringV path);
         static std::shared_ptr<Mesh> Create(std::shared_ptr<D3Device> device, const MeshShape shape);

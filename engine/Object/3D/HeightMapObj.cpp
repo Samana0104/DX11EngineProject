@@ -13,7 +13,7 @@ using namespace HBSoft;
 HeightMapObj::HeightMapObj()
 {
     SetTextureKey(L"Map512Color.png");
-    LoadMapDesc(L"Map512.hmp", 4.f, 1.f, 4.f);
+    CreateMapDesc(L"Map512.hmp", 4.f, 1.f, 4.f);
     m_mesh = MeshFactory::CreateHeightMap(HDEVICE, m_mapDesc);
     SetVSShaderKey(L"VertexShader.hlsl");
     SetPSShaderKey(L"PixelShader.hlsl");
@@ -21,8 +21,8 @@ HeightMapObj::HeightMapObj()
     // m_transform.SetLocation({0.f, -100.f, 0.f});
 }
 
-void HeightMapObj::LoadMapDesc(const TEXTURE_KEY texKey, float scaleXPerCell, float scaleYPerCell,
-                               float scaleZPerCell)
+void HeightMapObj::CreateMapDesc(const TEXTURE_KEY texKey, float scaleXPerCell, float scaleYPerCell,
+                                 float scaleZPerCell)
 {
     D3D11_TEXTURE2D_DESC     textureDesc;
     D3D11_MAPPED_SUBRESOURCE mapped;

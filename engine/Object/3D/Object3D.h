@@ -18,10 +18,9 @@ namespace HBSoft
 
     class Object3D : public Renderable
     {
-    private:
+    protected:
         Camera* m_camera;
 
-    protected:
         std::shared_ptr<Mesh>    m_mesh;
         std::shared_ptr<Texture> m_texture;
         std::shared_ptr<Shader>  m_vsShader;

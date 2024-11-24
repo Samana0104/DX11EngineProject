@@ -2,8 +2,8 @@
 author : 변한빛
 description : 높이 맵의 오브젝트 헤더 파일
 
-version: 1.0.7
-date: 2024-11-22
+version: 1.0.9
+date: 2024-11-25
 */
 
 #pragma once
@@ -46,8 +46,16 @@ namespace HBSoft
         std::vector<VertexInfo>  m_vertexInfo;
 
     private:
-        void LoadMapDesc(const TEXTURE_KEY texKey, float scaleXPerCell, float scaleYPerCell,
-                         float scaleZPerCell);
+        /*
+            param : texKey -> 높이맵 텍스쳐 키
+                    scaleXPerCell -> x축 기준 셀당 크기
+                    scaleYPerCell -> y축 기준 셀당 크기
+                    scaleZPerCell -> z축 기준 셀당 크기
+            description :
+               맵 디스크립터를 만들어준다.
+        */
+        void CreateMapDesc(const TEXTURE_KEY texKey, float scaleXPerCell, float scaleYPerCell,
+                           float scaleZPerCell);
 
     public:
         HeightMapObj();

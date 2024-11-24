@@ -186,6 +186,9 @@
     <ClCompile Include="Object\2D\Transform2D.cpp">
       <Filter>Object\2D</Filter>
     </ClCompile>
+    <ClCompile Include="Asset\FbxLoader.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -340,6 +343,9 @@
     </ClInclude>
     <ClInclude Include="Object\2D\Transform2D.h">
       <Filter>Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\FbxLoader.h">
+      <Filter>Asset</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
