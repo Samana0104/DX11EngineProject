@@ -24,10 +24,12 @@ namespace HBSoft
 
     struct Vertex
     {
-        vec3 p;  // position
-        vec3 n;  // normal
-        vec4 c;  // color
-        vec2 t;  // texture coordinate
+        vec3  p;  // position
+        vec3  n;  // normal
+        vec4  c;  // color
+        vec2  t;  // texture coordinate
+        UINT  i[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+        float w[8] = {0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f};
     };
 
     struct SubMesh
@@ -47,6 +49,12 @@ namespace HBSoft
         std::vector<UINT>         m_indices;      // 인덱스  버퍼용 배열
 
         std::vector<std::shared_ptr<SubMesh>> m_subMeshes;
+
+        std::vector<std::string>           m_idxToBone;
+        std::map<std::string, UINT>        m_boneToIdx;
+        std::map<std::string, std::string> m_bornParent;
+        std::vector<mat4>                  m_bindPoseMat;
+        std::vector<std::vector<mat4>>     m_animationMat;
 
         bool m_hasAnimation;
 

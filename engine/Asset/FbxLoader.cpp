@@ -14,6 +14,57 @@ FbxLoader::FbxLoader()
     : m_fbxManager(nullptr), m_fbxImporter(nullptr), m_fbxScene(nullptr)
 {}
 
+std::shared_ptr<Mesh> FbxLoader::Load(std::shared_ptr<D3Device> device, const wstringV filePath)
+{
+    FbxNode*              fbxRootNode = nullptr;
+    std::vector<FbxMesh*> meshSet;
+
+    std::shared_ptr<Mesh> mesh  = std::make_shared<Mesh>();
+    std::string           sPath = HBSoft::ToMultiByte(filePath);
+
+    InitFbxManager();
+
+    if (!m_fbxImporter->Initialize(sPath.c_str()))
+    {
+        MessageBoxA(NULL, m_fbxImporter->GetStatus().GetErrorString(), "import error", MB_OK);
+        return nullptr;
+    }
+
+    if (!m_fbxImporter->Import(m_fbxScene))
+    {
+        MessageBoxA(NULL, m_fbxImporter->GetStatus().GetErrorString(), "import error", MB_OK);
+        return nullptr;
+    }
+
+    FbxAxisSystem::DirectX.ConvertScene(m_fbxScene);
+    fbxRootNode = m_fbxScene->GetRootNode();
+    m_fbxSubMeshes.clear();
+    m_fbxSubMeshNodes.clear();
+    m_fbxBoneNodes.clear();
+    m_boneCounter = 0;
+
+    ProcessNode(fbxRootNode, mesh);
+    InitMesh(mesh);
+
+    // LoadNodeAnimation(mesh);
+
+    for (UINT i = 0; i < m_fbxSubMeshes.size(); i++)
+    {
+        ProcessBorn(m_fbxSubMeshes[i], mesh);
+        ProcessMesh(m_fbxSubMeshes[i], m_fbxSubMeshNodes[i], mesh);
+    }
+
+
+    ReleaseFbxManager();
+
+    device->CreateVertexBuffer(mesh->m_vertices, mesh->m_vertexBuffer);
+
+    for (UINT i = 0; i < mesh->m_subMeshes.size(); i++)
+        device->CreateIndexBuffer(mesh->m_subMeshes[i]->indices, mesh->m_subMeshes[i]->indexBuffer);
+
+    return mesh;
+}
+
 void FbxLoader::InitFbxManager()
 {
     if (m_fbxManager == nullptr)
@@ -47,66 +98,110 @@ void FbxLoader::ReleaseFbxManager()
     }
 }
 
-std::shared_ptr<Mesh> FbxLoader::Load(std::shared_ptr<D3Device> device, const wstringV filePath)
-{
-    FbxNode*              fbxRootNode = nullptr;
-    std::vector<FbxMesh*> meshSet;
-
-    std::shared_ptr<Mesh> mesh  = std::make_shared<Mesh>();
-    std::string           sPath = HBSoft::ToMultiByte(filePath);
-
-    InitFbxManager();
-
-    if (!m_fbxImporter->Initialize(sPath.c_str()))
-    {
-        MessageBoxA(NULL, m_fbxImporter->GetStatus().GetErrorString(), "import error", MB_OK);
-        return nullptr;
-    }
-
-    if (!m_fbxImporter->Import(m_fbxScene))
-    {
-        MessageBoxA(NULL, m_fbxImporter->GetStatus().GetErrorString(), "import error", MB_OK);
-        return nullptr;
-    }
-
-    FbxAxisSystem::MayaZUp.ConvertScene(m_fbxScene);
-    fbxRootNode = m_fbxScene->GetRootNode();
-    m_subMeshes.clear();
-    m_subNodes.clear();
-
-    ProcessNode(fbxRootNode);
-    InitMesh(mesh);
-
-    for (UINT i = 0; i < m_subMeshes.size(); i++)
-        ProcessMesh(m_subMeshes[i], m_subNodes[i], mesh);
-
-    ReleaseFbxManager();
-
-    device->CreateVertexBuffer(mesh->m_vertices, mesh->m_vertexBuffer);
-
-    for (UINT i = 0; i < mesh->m_subMeshes.size(); i++)
-        device->CreateIndexBuffer(mesh->m_subMeshes[i]->indices, mesh->m_subMeshes[i]->indexBuffer);
-
-    return mesh;
-}
-
-void FbxLoader::ProcessNode(FbxNode* fNode)
+void FbxLoader::ProcessNode(FbxNode* fNode, std::shared_ptr<Mesh> mesh)
 {
     if (fNode == nullptr)
         return;
 
     FbxMesh* fMesh = fNode->GetMesh();
 
+    if (fNode->GetSkeleton() != nullptr)
+    {
+        std::string boneName(fNode->GetName());
+        std::string parentBoneName;
+        FbxNode*    parentBoneNode;
+
+        mesh->m_boneToIdx[boneName] = m_boneCounter;
+        mesh->m_idxToBone.push_back(boneName);
+        m_boneCounter++;
+
+        m_fbxBoneNodes.push_back(fNode);
+        // parentBoneNode = FindParentBone(fNode->GetParent());
+
+        // if (parentBoneNode != nullptr)
+        //{
+        //     parentBoneName               = parentBoneNode->GetName();
+        //     mesh->m_bornParent[boneName] = parentBoneName;
+        // }
+    }
+
     if (fMesh != nullptr)
     {
-        m_subMeshes.push_back(fMesh);
-        m_subNodes.push_back(fNode);
+        m_fbxSubMeshes.push_back(fMesh);
+        m_fbxSubMeshNodes.push_back(fNode);
     }
 
     int numChild = fNode->GetChildCount();
 
     for (int childIdx = 0; childIdx < numChild; childIdx++)
-        ProcessNode(fNode->GetChild(childIdx));
+        ProcessNode(fNode->GetChild(childIdx), mesh);
+}
+
+FbxNode* FbxLoader::FindParentBone(FbxNode* fNode)
+{
+    if (fNode == nullptr)
+        return nullptr;
+
+    if (fNode->GetSkeleton() != nullptr)
+        return fNode;
+
+    return FindParentBone(fNode->GetParent());
+}
+
+void FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
+{
+    FbxCluster* fCluster;
+    FbxSkin*    fSkin;
+    FbxNode*    clusterNode;
+    FbxAMatrix  globalInitPosMat;
+    FbxAMatrix  bindPoseMat;
+
+    int     deformerCount;
+    int     clusterCount;
+    int     clusterSize;
+    int*    fbxNodeIdices;
+    double* weightList;
+    UINT    boneIdx;
+
+
+    mesh->m_bindPoseMat.resize(mesh->m_boneToIdx.size());
+
+    deformerCount = fMesh->GetDeformerCount(FbxDeformer::eSkin);
+    m_fbxWeightIndices.resize(fMesh->GetControlPointsCount());
+    m_fbxBoneIndices.resize(fMesh->GetControlPointsCount());
+
+    for (int deformerIdx = 0; deformerIdx < deformerCount; deformerIdx++)
+    {
+        fSkin = reinterpret_cast<FbxSkin*>(fMesh->GetDeformer(deformerIdx, FbxDeformer::eSkin));
+
+        clusterCount = fSkin->GetClusterCount();
+
+        for (int clusterIdx = 0; clusterIdx < clusterCount; clusterIdx++)
+        {
+            fCluster         = fSkin->GetCluster(clusterIdx);
+            clusterNode      = fCluster->GetLink();
+            std::string name = clusterNode->GetName();
+            boneIdx          = mesh->m_boneToIdx[std::string(clusterNode->GetName())];
+
+            fCluster->GetTransformLinkMatrix(bindPoseMat);
+            fCluster->GetTransformMatrix(globalInitPosMat);
+
+            mesh->m_bindPoseMat[boneIdx] = ConvertFbxMatToGlmMat(bindPoseMat);
+            // ConvertFbxMatToGlmMat(bindPoseMat.Inverse());
+
+            clusterSize   = fCluster->GetControlPointIndicesCount();
+            fbxNodeIdices = fCluster->GetControlPointIndices();
+            weightList    = fCluster->GetControlPointWeights();
+
+            for (int v = 0; v < clusterSize; v++)
+            {
+                int   vertexIdx = fbxNodeIdices[v];
+                float weight    = static_cast<float>(weightList[v]);
+                m_fbxWeightIndices[vertexIdx].push_back(weight);
+                m_fbxBoneIndices[vertexIdx].push_back(boneIdx);
+            }
+        }
+    }
 }
 
 int FbxLoader::GetSubMaterialPolygonIndex(int polyIdx, FbxLayerElementMaterial* fMaterial)
@@ -159,13 +254,9 @@ FbxVector2 FbxLoader::GetUV(FbxLayerElementUV* uvSet, int vertexPosIdx, int vert
     case FbxLayerElementUV::eByPolygonVertex:
         switch (uvSet->GetReferenceMode())
         {
-        case FbxLayerElementUV::eDirect:  // fbx 5이하
-            ret = uvSet->GetDirectArray().GetAt(vertexUVIdx);
-            break;
-
+        case FbxLayerElementUV::eDirect:
         case FbxLayerElementUV::eIndexToDirect:
-            int colorIdx = uvSet->GetIndexArray().GetAt(vertexUVIdx);
-            ret          = uvSet->GetDirectArray().GetAt(colorIdx);
+            ret = uvSet->GetDirectArray().GetAt(vertexUVIdx);
             break;
         }
         break;
@@ -251,6 +342,53 @@ FbxVector4 FbxLoader::GetNormal(FbxLayerElementNormal* vertexNormalSet, int vert
     return ret;
 }
 
+// void FbxLoader::LoadNodeAnimation(std::shared_ptr<Mesh> mesh)
+//{
+//     FbxTime::SetGlobalTimeMode(FbxTime::eFrames30);
+//     FbxAnimStack* stack = m_fbxScene->GetSrcObject<FbxAnimStack>(0);
+//     if (stack == nullptr)
+//         return;
+//     FbxString    TakeName = stack->GetName();
+//     FbxTakeInfo* TakeInfo = m_fbxScene->GetTakeInfo(TakeName);
+//     if (TakeInfo)
+//     {
+//         FbxTime start = TakeInfo->mLocalTimeSpan.GetStart();
+//         FbxTime end   = TakeInfo->mLocalTimeSpan.GetStop();
+//
+//         FbxTime::EMode timeMode = FbxTime::GetGlobalTimeMode();
+//         FbxLongLong    sFrame   = start.GetFrameCount(timeMode);
+//         FbxLongLong    eFrame   = end.GetFrameCount(timeMode);
+//
+//         int iNumAnimFrame = eFrame;  // model->m_Header.iLastFrame - model->m_Header.iStartFrame;
+//         // 71 * iNumAnimFrame;
+//         std::vector<FbxTime> s;
+//         s.resize(iNumAnimFrame);
+//         for (int iFrame = sFrame; iFrame < eFrame; iFrame++)
+//         {
+//             s[iFrame].SetFrame(iFrame, timeMode);
+//         }
+//
+//         mesh->m_bindPoseMat.resize(m_fbxBoneNodes.size());
+//         mesh->m_animationMat.resize(m_fbxBoneNodes.size());
+//         // biped + bone + dummy + mesh
+//         for (int fbxnode = 0; fbxnode < m_fbxBoneNodes.size(); fbxnode++)
+//         {
+//             std::string name    = m_fbxBoneNodes[fbxnode]->GetName();
+//             UINT        boneIdx = mesh->m_boneToIdx[name];
+//             // bone per frame
+//             mesh->m_animationMat[fbxnode].resize(iNumAnimFrame);
+//
+//             for (int iFrame = sFrame; iFrame < eFrame; iFrame++)
+//             {
+//                 FbxAMatrix matWorld = m_fbxBoneNodes[boneIdx]->EvaluateGlobalTransform(s[iFrame]);
+//                 mat4       matFrame = ConvertFbxMatToGlmMat(matWorld);
+//                 mesh->m_animationMat[fbxnode][iFrame] = matFrame;
+//             }
+//             mesh->m_bindPoseMat[fbxnode] = mesh->m_animationMat[fbxnode][sFrame];
+//         }
+//     }
+// }
+
 void FbxLoader::ProcessMesh(FbxMesh* fMesh, FbxNode* fNode, std::shared_ptr<Mesh> mesh)
 {
     FbxAMatrix geoMat;
@@ -260,6 +398,8 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, FbxNode* fNode, std::shared_ptr<Mesh
 
     std::shared_ptr<SubMesh> subMesh = std::make_shared<SubMesh>();
 
+    subMesh->meshName = fMesh->GetName();
+
     geoMat.SetT(trans);
     geoMat.SetR(rot);
     geoMat.SetS(scale);
@@ -268,15 +408,14 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, FbxNode* fNode, std::shared_ptr<Mesh
     normalMatrix            = normalMatrix.Inverse();
     normalMatrix            = normalMatrix.Transpose();
 
-    //// 월드 변환 행렬
-    FbxAMatrix matWorld = fNode->EvaluateGlobalTransform(0);
+    // ProcessBorn(fMesh, mesh);
 
     // Layer :  레이어 회수만큼 랜더링한다.
-    std::vector<FbxLayerElementUV*>          VertexUVLayer;
-    std::vector<FbxLayerElementVertexColor*> VertexColorLayer;
-    std::vector<FbxLayerElementNormal*>      VertexNormalLayer;
-    std::vector<FbxLayerElementTangent*>     VertexTangentLayer;
-    std::vector<FbxLayerElementMaterial*>    VertexMaterialLayer;
+    std::vector<FbxLayerElementUV*>          vertexUVLayer;
+    std::vector<FbxLayerElementVertexColor*> vertexColorLayer;
+    std::vector<FbxLayerElementNormal*>      vertexNormalLayer;
+    std::vector<FbxLayerElementTangent*>     vertexTangentLayer;
+    std::vector<FbxLayerElementMaterial*>    vertexMaterialLayer;
 
     int layerCount = fMesh->GetLayerCount();
 
@@ -285,23 +424,23 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, FbxNode* fNode, std::shared_ptr<Mesh
         FbxLayer* fbxLayer = fMesh->GetLayer(layer);
 
         if (fbxLayer->GetUVs())
-            VertexUVLayer.emplace_back(fbxLayer->GetUVs());
+            vertexUVLayer.emplace_back(fbxLayer->GetUVs());
 
         if (fbxLayer->GetVertexColors())
-            VertexColorLayer.emplace_back(fbxLayer->GetVertexColors());
+            vertexColorLayer.emplace_back(fbxLayer->GetVertexColors());
 
         if (fbxLayer->GetTangents())
-            VertexTangentLayer.emplace_back(fbxLayer->GetTangents());
+            vertexTangentLayer.emplace_back(fbxLayer->GetTangents());
 
         if (fbxLayer->GetNormals())
-            VertexNormalLayer.emplace_back(fbxLayer->GetNormals());
+            vertexNormalLayer.emplace_back(fbxLayer->GetNormals());
 
         if (fbxLayer->GetMaterials())
-            VertexMaterialLayer.emplace_back(fbxLayer->GetMaterials());
+            vertexMaterialLayer.emplace_back(fbxLayer->GetMaterials());
     }
 
     // 정점노말 (재)계산
-    if (VertexNormalLayer.size() > 0)
+    if (vertexNormalLayer.size() > 0)
     {
         fMesh->InitNormals();
 #if (FBXSDK_VERSION_MAJOR >= 2015)
@@ -326,8 +465,10 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, FbxNode* fNode, std::shared_ptr<Mesh
 
                 if (tex)
                 {
+                    auto [fileName, fileExt] = HBSoft::GetFileNameAndExt(ToUnicode(tex->GetFileName()));
+
                     subMesh->hasTexture  = true;
-                    subMesh->textureName = HBSoft::ToUnicode(tex->GetFileName());
+                    subMesh->textureName = fileName + fileExt;
                 }
                 else
                 {
@@ -343,22 +484,24 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, FbxNode* fNode, std::shared_ptr<Mesh
     // 정점의 위치가 저장된 배열의 시작주소를 반환.
     FbxVector4* vertexPosition = fMesh->GetControlPoints();
 
-    subMesh->indices.resize(fMesh->GetPolygonCount() * fMesh->GetPolygonSize(0));
+    int numIndices = 0;
+
+    for (int i = 0; i < fMesh->GetPolygonCount(); i++)
+        numIndices += (fMesh->GetPolygonSize(i) - 2) * 3;
+
+    subMesh->indices.resize(numIndices);
     // 이거 개선 필요할듯 버텍스 개수마냥 인덱스 돌아가네;;
 
     int basePolyIdx = 0;
-    int subMtrlIdx  = 0;
+    int baseIndex   = 0;
+
     for (int polyIdx = 0; polyIdx < numPolyCount; polyIdx++)
     {
         int polySize = fMesh->GetPolygonSize(polyIdx);
         int numFace  = polySize - 2;  // 3-2=1, 4-2=2
         for (int face = 0; face < numFace; face++)
         {
-            int iVertexIndex[3]               = {0, face + 2, face + 1};
-            subMesh->indices[2 + m_vertexIdx] = iVertexIndex[0] + m_vertexIdx;
-            subMesh->indices[1 + m_vertexIdx] = iVertexIndex[1] + m_vertexIdx;
-            subMesh->indices[0 + m_vertexIdx] = iVertexIndex[2] + m_vertexIdx;
-            // 왜 처음에 시계방향으로 되어있었냐...
+            int iVertexIndex[3] = {0, face + 2, face + 1};
 
             int iVertexPositionIndex[3];
             iVertexPositionIndex[0] = fMesh->GetPolygonVertex(polyIdx, iVertexIndex[0]);
@@ -382,17 +525,17 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, FbxNode* fNode, std::shared_ptr<Mesh
                 mesh->m_vertices[m_vertexIdx].p.y = static_cast<float>(fbxV.mData[2]);
                 mesh->m_vertices[m_vertexIdx].p.z = static_cast<float>(fbxV.mData[1]);
 
-                if (VertexUVLayer.size() > 0)
+                if (vertexUVLayer.size() > 0)
                 {
                     FbxVector2 uv =
-                    GetUV(VertexUVLayer[0], iVertexPositionIndex[vertexIdx], iVertexUVIndex[vertexIdx]);
+                    GetUV(vertexUVLayer[0], iVertexPositionIndex[vertexIdx], iVertexUVIndex[vertexIdx]);
                     mesh->m_vertices[m_vertexIdx].t.x = static_cast<float>(uv.mData[0]);
-                    mesh->m_vertices[m_vertexIdx].t.y = 1.0f - static_cast<float>(uv.mData[1]);
+                    mesh->m_vertices[m_vertexIdx].t.y = 1.f - static_cast<float>(uv.mData[1]);
                 }
 
-                if (VertexColorLayer.size())
+                if (vertexColorLayer.size())
                 {
-                    color = GetColor(VertexColorLayer[0],
+                    color = GetColor(vertexColorLayer[0],
                                      iVertexPositionIndex[vertexIdx],
                                      basePolyIdx + iVertexIndex[vertexIdx]);
                 }
@@ -402,9 +545,9 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, FbxNode* fNode, std::shared_ptr<Mesh
                 mesh->m_vertices[m_vertexIdx].c.b = static_cast<float>(color.mBlue);
                 mesh->m_vertices[m_vertexIdx].c.a = 1.f;
 
-                if (VertexNormalLayer.size())
+                if (vertexNormalLayer.size())
                 {
-                    vFbxNormal = GetNormal(VertexNormalLayer[0],
+                    vFbxNormal = GetNormal(vertexNormalLayer[0],
                                            iVertexPositionIndex[vertexIdx],
                                            basePolyIdx + iVertexIndex[vertexIdx]);
                     vFbxNormal = normalMatrix.MultT(vFbxNormal);
@@ -415,6 +558,21 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, FbxNode* fNode, std::shared_ptr<Mesh
                 mesh->m_vertices[m_vertexIdx].n.y = static_cast<float>(vFbxNormal.mData[2]);
                 mesh->m_vertices[m_vertexIdx].n.z = static_cast<float>(vFbxNormal.mData[1]);
 
+
+                size_t iwSize = m_fbxBoneIndices[iVertexPositionIndex[vertexIdx]].size();
+
+                for (size_t iwIdx = 0; iwIdx < iwSize; iwIdx++)
+                {
+                    mesh->m_vertices[m_vertexIdx].i[iwIdx] =
+                    m_fbxBoneIndices[iVertexPositionIndex[vertexIdx]][iwIdx];
+
+                    mesh->m_vertices[m_vertexIdx].w[iwIdx] =
+                    m_fbxWeightIndices[iVertexPositionIndex[vertexIdx]][iwIdx];
+                }
+
+                subMesh->indices[baseIndex] = m_vertexIdx;
+
+                baseIndex++;
                 m_vertexIdx++;
             }
         }
@@ -427,14 +585,37 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, FbxNode* fNode, std::shared_ptr<Mesh
 
 void FbxLoader::InitMesh(std::shared_ptr<Mesh> mesh)
 {
-    UINT meshVerticesNums = 0;
-    m_vertexIdx           = 0;
-    m_subMeshIdx          = 0;
+    int meshVerticesNums = 0;
+    int polyCount        = 0;
+
+    m_vertexIdx  = 0;
+    m_subMeshIdx = 0;
 
     // 버텍스 개수 구해서 하나의 버텍스 버퍼로 합치기 위해 버텍스 수 구함
-    for (UINT i = 0; i < m_subMeshes.size(); i++)
-        meshVerticesNums += m_subMeshes[i]->GetPolygonVertexCount();
+    for (int i = 0; i < m_fbxSubMeshes.size(); i++)
+    {
+        polyCount = m_fbxSubMeshes[i]->GetPolygonCount();
 
-    mesh->m_subMeshes.resize(m_subMeshes.size());
+        for (int j = 0; j < polyCount; j++)
+        {
+            meshVerticesNums += (m_fbxSubMeshes[i]->GetPolygonSize(j) - 2) * 3;
+        }
+    }
+
+    mesh->m_subMeshes.resize(m_fbxSubMeshes.size());
     mesh->m_vertices.resize(meshVerticesNums);
+}
+
+mat4 FbxLoader::ConvertFbxMatToGlmMat(const FbxMatrix& fMat)
+{
+    mat4 glmMat;
+
+    for (UINT i = 0; i < 4; i++)
+    {
+        for (UINT j = 0; j < 4; j++)
+        {
+            glmMat[i][j] = static_cast<float>(fMat[i][j]);
+        }
+    }
+    return glmMat;
 }

@@ -5,21 +5,28 @@ using namespace HBSoft;
 
 Test3DObj::Test3DObj()
 {
-    SetMeshKey(L"Goose.fbx");
+    SetMeshKey(L"Man.fbx");
     // SetVSShaderKey(L"AnimationVertex.hlsl");
     SetVSShaderKey(L"VertexShader.hlsl");
 
-    // SetPSShaderKey(L"PixelShader.hlsl"); //텍스쳐 있는 놈
-    SetPSShaderKey(L"ColorPixelShader.hlsl");  // 텍스쳐 없는 놈
+    SetPSShaderKey(L"PixelShader.hlsl");  // 텍스쳐 있는 놈
+    // SetPSShaderKey(L"ColorPixelShader.hlsl");  // 텍스쳐 없는 놈
+
+    m_transform.SetScale({0.1f, 0.1f, 0.1f});
 }
 
 void Test3DObj::Render()
 {
     UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
     UINT pOffsets = 0;               // 버퍼에 시작 인덱스
-    // m_mesh->m_bindPoseMat *= m_mesh->m_aniClip[1].keys[1][0].
+
     m_vsShader->SetUpToContext(HDEVICE);
     m_psShader->SetUpToContext(HDEVICE);
+
+    // m_vsShader->SetConstantBuffer(HDEVICE,
+    //                               (void*)&m_mesh->m_bindPoseMat.at(0),
+    //                               sizeof(mat4) * m_mesh->m_bindPoseMat.size(),
+    //                               1);
 
     HDEVICE->m_context->IASetVertexBuffers(0,
                                            1,
@@ -36,13 +43,12 @@ void Test3DObj::Render()
 
     for (size_t i = 0; i < m_mesh->m_subMeshes.size(); i++)
     {
-
         if (m_mesh->m_subMeshes[i]->hasTexture)
         {
-            // HDEVICE->m_context->PSSetShaderResources(
-            // 0,
-            // 1,
-            // HASSET->m_textures[m_mesh->m_subMeshes[i]->textureName]->GetSRV().GetAddressOf());
+            HDEVICE->m_context->PSSetShaderResources(
+            0,
+            1,
+            HASSET->m_textures[m_mesh->m_subMeshes[i]->textureName]->GetSRV().GetAddressOf());
         }
         HDEVICE->m_context->IASetIndexBuffer(m_mesh->m_subMeshes[i]->indexBuffer.Get(),
                                              DXGI_FORMAT_R32_UINT,

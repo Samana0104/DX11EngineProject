@@ -13,7 +13,7 @@ using namespace HBSoft;
 HeightMapObj::HeightMapObj()
 {
     SetTextureKey(L"Map512Color.png");
-    CreateMapDesc(L"Map512.hmp", 4.f, 1.f, 4.f);
+    CreateMapDesc(L"Map512.hmp", 4.f, 0.1f, 4.f);
     m_mesh = MeshFactory::CreateHeightMap(HDEVICE, m_mapDesc);
     SetVSShaderKey(L"VertexShader.hlsl");
     SetPSShaderKey(L"PixelShader.hlsl");
