@@ -1,18 +1,53 @@
 #include "pch.h"
 #include "Test3DObj.h"
+#include "Camera.h"
 
 using namespace HBSoft;
 
 Test3DObj::Test3DObj()
 {
     SetMeshKey(L"Man.fbx");
-    // SetVSShaderKey(L"AnimationVertex.hlsl");
-    SetVSShaderKey(L"VertexShader.hlsl");
+    SetVSShaderKey(L"AnimationVertex.hlsl");
+    // SetVSShaderKey(L"VertexShader.hlsl");
 
     SetPSShaderKey(L"PixelShader.hlsl");  // 텍스쳐 있는 놈
     // SetPSShaderKey(L"ColorPixelShader.hlsl");  // 텍스쳐 없는 놈
 
     m_transform.SetScale({0.1f, 0.1f, 0.1f});
+    anim.resize(m_mesh->m_bindPoseMat.size());
+}
+
+void Test3DObj::Update(const float deltaTime)
+{
+    static float startFrame = 0.f;
+
+    startFrame += deltaTime * 10.f;
+    int frame   = static_cast<int>(startFrame);
+
+    for (int i = 0; i < m_mesh->m_bindPoseMat.size(); i++)
+    {
+        anim[i] = m_mesh->m_animationMat[i][frame] * m_mesh->m_bindPoseMat[i];
+    }
+
+    if (startFrame > 300.f)
+    {
+        startFrame = 0.f;
+    }
+
+    if (m_camera != nullptr)
+    {
+        m_cb0.view = m_camera->GetViewMat();
+        m_cb0.proj = m_camera->GetProjMat();
+    }
+    else
+    {
+        m_cb0.view = mat4(1.0f);
+        m_cb0.proj = mat4(1.0f);
+    }
+    m_cb0.world    = m_transform.m_worldMat;
+    m_cb0.invWorld = glm::inverse(m_transform.m_worldMat);
+    m_vsShader->SetConstantBuffer(HDEVICE, (void*)&m_cb0, sizeof(m_cb0), 0);
+    m_vsShader->SetConstantBuffer(HDEVICE, (void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
 }
 
 void Test3DObj::Render()
@@ -23,10 +58,6 @@ void Test3DObj::Render()
     m_vsShader->SetUpToContext(HDEVICE);
     m_psShader->SetUpToContext(HDEVICE);
 
-    // m_vsShader->SetConstantBuffer(HDEVICE,
-    //                               (void*)&m_mesh->m_bindPoseMat.at(0),
-    //                               sizeof(mat4) * m_mesh->m_bindPoseMat.size(),
-    //                               1);
 
     HDEVICE->m_context->IASetVertexBuffers(0,
                                            1,

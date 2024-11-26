@@ -36,24 +36,21 @@ std::shared_ptr<Mesh> FbxLoader::Load(std::shared_ptr<D3Device> device, const ws
         return nullptr;
     }
 
-    FbxAxisSystem::DirectX.ConvertScene(m_fbxScene);
+    // FbxAxisSystem::DirectX.ConvertScene(m_fbxScene);
+    FbxAxisSystem::MayaZUp.ConvertScene(m_fbxScene);
     fbxRootNode = m_fbxScene->GetRootNode();
-    m_fbxSubMeshes.clear();
-    m_fbxSubMeshNodes.clear();
     m_fbxBoneNodes.clear();
     m_boneCounter = 0;
 
     ProcessNode(fbxRootNode, mesh);
     InitMesh(mesh);
 
-    // LoadNodeAnimation(mesh);
-
-    for (UINT i = 0; i < m_fbxSubMeshes.size(); i++)
+    for (size_t i = 0; i < m_fbxSubMeshes.size(); i++)
     {
         ProcessBorn(m_fbxSubMeshes[i], mesh);
-        ProcessMesh(m_fbxSubMeshes[i], m_fbxSubMeshNodes[i], mesh);
+        ProcessMesh(m_fbxSubMeshes[i], mesh);
     }
-
+    LoadNodeAnimation(mesh);
 
     ReleaseFbxManager();
 
@@ -116,19 +113,18 @@ void FbxLoader::ProcessNode(FbxNode* fNode, std::shared_ptr<Mesh> mesh)
         m_boneCounter++;
 
         m_fbxBoneNodes.push_back(fNode);
-        // parentBoneNode = FindParentBone(fNode->GetParent());
+        parentBoneNode = FindParentBone(fNode->GetParent());
 
-        // if (parentBoneNode != nullptr)
-        //{
-        //     parentBoneName               = parentBoneNode->GetName();
-        //     mesh->m_bornParent[boneName] = parentBoneName;
-        // }
+        if (parentBoneNode != nullptr)
+        {
+            parentBoneName               = parentBoneNode->GetName();
+            mesh->m_bornParent[boneName] = parentBoneName;
+        }
     }
 
     if (fMesh != nullptr)
     {
         m_fbxSubMeshes.push_back(fMesh);
-        m_fbxSubMeshNodes.push_back(fNode);
     }
 
     int numChild = fNode->GetChildCount();
@@ -186,8 +182,10 @@ void FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
             fCluster->GetTransformLinkMatrix(bindPoseMat);
             fCluster->GetTransformMatrix(globalInitPosMat);
 
-            mesh->m_bindPoseMat[boneIdx] = ConvertFbxMatToGlmMat(bindPoseMat);
-            // ConvertFbxMatToGlmMat(bindPoseMat.Inverse());
+            FbxAMatrix testMat = bindPoseMat * globalInitPosMat.Inverse();
+
+            mesh->m_bindPoseMat[boneIdx] = glm::inverse(ConvertFbxMatToGlmMat(bindPoseMat));
+
 
             clusterSize   = fCluster->GetControlPointIndicesCount();
             fbxNodeIdices = fCluster->GetControlPointIndices();
@@ -342,56 +340,58 @@ FbxVector4 FbxLoader::GetNormal(FbxLayerElementNormal* vertexNormalSet, int vert
     return ret;
 }
 
-// void FbxLoader::LoadNodeAnimation(std::shared_ptr<Mesh> mesh)
-//{
-//     FbxTime::SetGlobalTimeMode(FbxTime::eFrames30);
-//     FbxAnimStack* stack = m_fbxScene->GetSrcObject<FbxAnimStack>(0);
-//     if (stack == nullptr)
-//         return;
-//     FbxString    TakeName = stack->GetName();
-//     FbxTakeInfo* TakeInfo = m_fbxScene->GetTakeInfo(TakeName);
-//     if (TakeInfo)
-//     {
-//         FbxTime start = TakeInfo->mLocalTimeSpan.GetStart();
-//         FbxTime end   = TakeInfo->mLocalTimeSpan.GetStop();
-//
-//         FbxTime::EMode timeMode = FbxTime::GetGlobalTimeMode();
-//         FbxLongLong    sFrame   = start.GetFrameCount(timeMode);
-//         FbxLongLong    eFrame   = end.GetFrameCount(timeMode);
-//
-//         int iNumAnimFrame = eFrame;  // model->m_Header.iLastFrame - model->m_Header.iStartFrame;
-//         // 71 * iNumAnimFrame;
-//         std::vector<FbxTime> s;
-//         s.resize(iNumAnimFrame);
-//         for (int iFrame = sFrame; iFrame < eFrame; iFrame++)
-//         {
-//             s[iFrame].SetFrame(iFrame, timeMode);
-//         }
-//
-//         mesh->m_bindPoseMat.resize(m_fbxBoneNodes.size());
-//         mesh->m_animationMat.resize(m_fbxBoneNodes.size());
-//         // biped + bone + dummy + mesh
-//         for (int fbxnode = 0; fbxnode < m_fbxBoneNodes.size(); fbxnode++)
-//         {
-//             std::string name    = m_fbxBoneNodes[fbxnode]->GetName();
-//             UINT        boneIdx = mesh->m_boneToIdx[name];
-//             // bone per frame
-//             mesh->m_animationMat[fbxnode].resize(iNumAnimFrame);
-//
-//             for (int iFrame = sFrame; iFrame < eFrame; iFrame++)
-//             {
-//                 FbxAMatrix matWorld = m_fbxBoneNodes[boneIdx]->EvaluateGlobalTransform(s[iFrame]);
-//                 mat4       matFrame = ConvertFbxMatToGlmMat(matWorld);
-//                 mesh->m_animationMat[fbxnode][iFrame] = matFrame;
-//             }
-//             mesh->m_bindPoseMat[fbxnode] = mesh->m_animationMat[fbxnode][sFrame];
-//         }
-//     }
-// }
+void FbxLoader::LoadNodeAnimation(std::shared_ptr<Mesh> mesh)
+{
+    FbxTime::SetGlobalTimeMode(FbxTime::eFrames30);
+    FbxAnimStack* stack = m_fbxScene->GetSrcObject<FbxAnimStack>(0);
+    if (stack == nullptr)
+        return;
+    FbxString    TakeName = stack->GetName();
+    FbxTakeInfo* TakeInfo = m_fbxScene->GetTakeInfo(TakeName);
+    if (TakeInfo)
+    {
+        FbxTime start = TakeInfo->mLocalTimeSpan.GetStart();
+        FbxTime end   = TakeInfo->mLocalTimeSpan.GetStop();
 
-void FbxLoader::ProcessMesh(FbxMesh* fMesh, FbxNode* fNode, std::shared_ptr<Mesh> mesh)
+        FbxTime::EMode timeMode = FbxTime::GetGlobalTimeMode();
+        FbxLongLong    sFrame   = start.GetFrameCount(timeMode);
+        FbxLongLong    eFrame   = end.GetFrameCount(timeMode);
+
+        int iNumAnimFrame = eFrame;  // model->m_Header.iLastFrame - model->m_Header.iStartFrame;
+        // 71 * iNumAnimFrame;
+        std::vector<FbxTime> s;
+        s.resize(iNumAnimFrame);
+        for (int iFrame = sFrame; iFrame < eFrame; iFrame++)
+        {
+            s[iFrame].SetFrame(iFrame, timeMode);
+        }
+
+        mesh->m_bindPoseMat.resize(mesh->m_boneToIdx.size());
+        mesh->m_animationMat.resize(mesh->m_boneToIdx.size());
+        // biped + bone + dummy + mesh
+        for (int bone = 0; bone < mesh->m_boneToIdx.size(); bone++)
+        {
+            std::string name    = m_fbxBoneNodes[bone]->GetName();
+            UINT        boneIdx = mesh->m_boneToIdx[name];
+            // bone per frame
+            mesh->m_animationMat[bone].resize(iNumAnimFrame);
+
+            for (int iFrame = sFrame; iFrame < eFrame; iFrame++)
+            {
+                FbxAMatrix matWorld = m_fbxBoneNodes[boneIdx]->EvaluateGlobalTransform(s[iFrame]);
+                mat4       matFrame = ConvertFbxMatToGlmMat(matWorld);
+                mesh->m_animationMat[bone][iFrame] = matFrame;
+            }
+            // mesh->m_bindPoseMat[bone] = mesh->m_animationMat[fbxnode][sFrame];
+        }
+    }
+}
+
+void FbxLoader::ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
 {
     FbxAMatrix geoMat;
+
+    FbxNode*   fNode = fMesh->GetNode();
     FbxVector4 trans = fNode->GetGeometricTranslation(FbxNode::eSourcePivot);
     FbxVector4 rot   = fNode->GetGeometricRotation(FbxNode::eSourcePivot);
     FbxVector4 scale = fNode->GetGeometricScaling(FbxNode::eSourcePivot);
@@ -407,8 +407,6 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, FbxNode* fNode, std::shared_ptr<Mesh
     FbxAMatrix normalMatrix = geoMat;
     normalMatrix            = normalMatrix.Inverse();
     normalMatrix            = normalMatrix.Transpose();
-
-    // ProcessBorn(fMesh, mesh);
 
     // Layer :  레이어 회수만큼 랜더링한다.
     std::vector<FbxLayerElementUV*>          vertexUVLayer;
@@ -606,9 +604,12 @@ void FbxLoader::InitMesh(std::shared_ptr<Mesh> mesh)
     mesh->m_vertices.resize(meshVerticesNums);
 }
 
-mat4 FbxLoader::ConvertFbxMatToGlmMat(const FbxMatrix& fMat)
+mat4 FbxLoader::ConvertFbxMatToGlmMat(FbxAMatrix& fMat)
 {
     mat4 glmMat;
+    mat4 copyGlmMat;
+
+    double* a = reinterpret_cast<double*>(&fMat);
 
     for (UINT i = 0; i < 4; i++)
     {
@@ -617,5 +618,28 @@ mat4 FbxLoader::ConvertFbxMatToGlmMat(const FbxMatrix& fMat)
             glmMat[i][j] = static_cast<float>(fMat[i][j]);
         }
     }
-    return glmMat;
+
+    copyGlmMat = glm::transpose(glmMat);
+
+    glmMat[0][0] = copyGlmMat[0][0];
+    glmMat[0][1] = copyGlmMat[0][2];
+    glmMat[0][2] = copyGlmMat[0][1];
+    glmMat[0][3] = copyGlmMat[0][3];
+
+    glmMat[1][0] = copyGlmMat[2][0];
+    glmMat[1][1] = copyGlmMat[2][2];
+    glmMat[1][2] = copyGlmMat[2][1];
+    glmMat[1][3] = copyGlmMat[2][3];
+
+    glmMat[2][0] = copyGlmMat[1][0];
+    glmMat[2][1] = copyGlmMat[1][2];
+    glmMat[2][2] = copyGlmMat[1][1];
+    glmMat[2][3] = copyGlmMat[1][3];
+
+    glmMat[3][0] = copyGlmMat[3][0];
+    glmMat[3][1] = copyGlmMat[3][2];
+    glmMat[3][2] = copyGlmMat[3][1];
+    glmMat[3][3] = 1.f;
+
+    return glm::transpose(glmMat);
 }

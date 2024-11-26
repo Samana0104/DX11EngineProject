@@ -25,7 +25,6 @@ namespace HBSoft
         std::vector<std::vector<float>> m_fbxWeightIndices;
         std::vector<std::vector<UINT>>  m_fbxBoneIndices;
         std::vector<FbxMesh*>           m_fbxSubMeshes;
-        std::vector<FbxNode*>           m_fbxSubMeshNodes;
         std::vector<FbxNode*>           m_fbxBoneNodes;
 
     private:
@@ -36,7 +35,7 @@ namespace HBSoft
         void     ProcessNode(FbxNode* fNode, std::shared_ptr<Mesh> mesh);
         FbxNode* FindParentBone(FbxNode* fNode);
         void     ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh);
-        void     ProcessMesh(FbxMesh* fMesh, FbxNode* fNode, std::shared_ptr<Mesh> mesh);
+        void     ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh);
 
         int        GetSubMaterialPolygonIndex(int polyIdx, FbxLayerElementMaterial* fMaterial);
         FbxVector2 GetUV(FbxLayerElementUV* uvSet, int vertexPosIdx, int vertexUVIdx);
@@ -47,7 +46,7 @@ namespace HBSoft
 
         void LoadNodeAnimation(std::shared_ptr<Mesh> mesh);
 
-        mat4 ConvertFbxMatToGlmMat(const FbxMatrix& fMat);
+        mat4 ConvertFbxMatToGlmMat(FbxAMatrix& fMat);
 
     public:
         FbxLoader();
