@@ -6,14 +6,13 @@ using namespace HBSoft;
 
 Test3DObj::Test3DObj()
 {
-    SetMeshKey(L"Man.fbx");
+    SetMeshKey(L"gardener_model.fbx");
     SetVSShaderKey(L"AnimationVertex.hlsl");
     // SetVSShaderKey(L"VertexShader.hlsl");
 
-    SetPSShaderKey(L"PixelShader.hlsl");  // 텍스쳐 있는 놈
-    // SetPSShaderKey(L"ColorPixelShader.hlsl");  // 텍스쳐 없는 놈
+    // SetPSShaderKey(L"PixelShader.hlsl");  // 텍스쳐 있는 놈
+    SetPSShaderKey(L"ColorPixelShader.hlsl");  // 텍스쳐 없는 놈
 
-    m_transform.SetScale({0.1f, 0.1f, 0.1f});
     anim.resize(m_mesh->m_bindPoseMat.size());
 }
 
@@ -29,7 +28,7 @@ void Test3DObj::Update(const float deltaTime)
         anim[i] = m_mesh->m_animationMat[i][frame] * m_mesh->m_bindPoseMat[i];
     }
 
-    if (startFrame > 300.f)
+    if (startFrame > 20.f)
     {
         startFrame = 0.f;
     }
@@ -74,13 +73,13 @@ void Test3DObj::Render()
 
     for (size_t i = 0; i < m_mesh->m_subMeshes.size(); i++)
     {
-        if (m_mesh->m_subMeshes[i]->hasTexture)
-        {
-            HDEVICE->m_context->PSSetShaderResources(
-            0,
-            1,
-            HASSET->m_textures[m_mesh->m_subMeshes[i]->textureName]->GetSRV().GetAddressOf());
-        }
+        // if (m_mesh->m_subMeshes[i]->hasTexture)
+        //{
+        //     HDEVICE->m_context->PSSetShaderResources(
+        //     0,
+        //     1,
+        //     HASSET->m_textures[m_mesh->m_subMeshes[i]->textureName]->GetSRV().GetAddressOf());
+        // }
         HDEVICE->m_context->IASetIndexBuffer(m_mesh->m_subMeshes[i]->indexBuffer.Get(),
                                              DXGI_FORMAT_R32_UINT,
                                              0);

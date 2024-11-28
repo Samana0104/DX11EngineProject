@@ -61,7 +61,7 @@ date: 2024-11-17
 //			      FMOD
 // ---------------------------------------
 
-#include "fmod/fmod.hpp"
+#include "../extern/inc/fmod/fmod.hpp"
 #include "DirectXTK/WICTextureLoader.h"
 #include "DirectXTK/DDSTextureLoader.h"
 

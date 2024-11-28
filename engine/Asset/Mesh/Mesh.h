@@ -50,11 +50,10 @@ namespace HBSoft
 
         std::vector<std::shared_ptr<SubMesh>> m_subMeshes;
 
-        std::vector<std::string>           m_idxToBone;
-        std::map<std::string, UINT>        m_boneToIdx;
-        std::map<std::string, std::string> m_bornParent;
-        std::vector<mat4>                  m_bindPoseMat;
-        std::vector<std::vector<mat4>>     m_animationMat;
+        std::vector<std::string>       m_idxToBone;
+        std::map<std::string, UINT>    m_boneToIdx;
+        std::vector<mat4>              m_bindPoseMat;
+        std::vector<std::vector<mat4>> m_animationMat;
 
         bool m_hasAnimation;
 

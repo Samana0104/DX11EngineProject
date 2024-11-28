@@ -45,12 +45,12 @@ std::shared_ptr<Mesh> FbxLoader::Load(std::shared_ptr<D3Device> device, const ws
     ProcessNode(fbxRootNode, mesh);
     InitMesh(mesh);
 
+    LoadNodeAnimation(mesh);
     for (size_t i = 0; i < m_fbxSubMeshes.size(); i++)
     {
         ProcessBorn(m_fbxSubMeshes[i], mesh);
         ProcessMesh(m_fbxSubMeshes[i], mesh);
     }
-    LoadNodeAnimation(mesh);
 
     ReleaseFbxManager();
 
@@ -113,13 +113,6 @@ void FbxLoader::ProcessNode(FbxNode* fNode, std::shared_ptr<Mesh> mesh)
         m_boneCounter++;
 
         m_fbxBoneNodes.push_back(fNode);
-        parentBoneNode = FindParentBone(fNode->GetParent());
-
-        if (parentBoneNode != nullptr)
-        {
-            parentBoneName               = parentBoneNode->GetName();
-            mesh->m_bornParent[boneName] = parentBoneName;
-        }
     }
 
     if (fMesh != nullptr)
@@ -131,17 +124,6 @@ void FbxLoader::ProcessNode(FbxNode* fNode, std::shared_ptr<Mesh> mesh)
 
     for (int childIdx = 0; childIdx < numChild; childIdx++)
         ProcessNode(fNode->GetChild(childIdx), mesh);
-}
-
-FbxNode* FbxLoader::FindParentBone(FbxNode* fNode)
-{
-    if (fNode == nullptr)
-        return nullptr;
-
-    if (fNode->GetSkeleton() != nullptr)
-        return fNode;
-
-    return FindParentBone(fNode->GetParent());
 }
 
 void FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
@@ -160,9 +142,10 @@ void FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
     UINT    boneIdx;
 
 
-    mesh->m_bindPoseMat.resize(mesh->m_boneToIdx.size());
-
     deformerCount = fMesh->GetDeformerCount(FbxDeformer::eSkin);
+    m_fbxWeightIndices.clear();
+    m_fbxBoneIndices.clear();
+
     m_fbxWeightIndices.resize(fMesh->GetControlPointsCount());
     m_fbxBoneIndices.resize(fMesh->GetControlPointsCount());
 
@@ -182,9 +165,9 @@ void FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
             fCluster->GetTransformLinkMatrix(bindPoseMat);
             fCluster->GetTransformMatrix(globalInitPosMat);
 
-            FbxAMatrix testMat = bindPoseMat * globalInitPosMat.Inverse();
+            FbxAMatrix testMat = bindPoseMat.Inverse() * globalInitPosMat;
 
-            mesh->m_bindPoseMat[boneIdx] = glm::inverse(ConvertFbxMatToGlmMat(bindPoseMat));
+            mesh->m_bindPoseMat[boneIdx] = ConvertFbxMatToGlmMat(testMat);
 
 
             clusterSize   = fCluster->GetControlPointIndicesCount();
@@ -343,7 +326,7 @@ FbxVector4 FbxLoader::GetNormal(FbxLayerElementNormal* vertexNormalSet, int vert
 void FbxLoader::LoadNodeAnimation(std::shared_ptr<Mesh> mesh)
 {
     FbxTime::SetGlobalTimeMode(FbxTime::eFrames30);
-    FbxAnimStack* stack = m_fbxScene->GetSrcObject<FbxAnimStack>(0);
+    FbxAnimStack* stack = m_fbxScene->GetSrcObject<FbxAnimStack>(1);
     if (stack == nullptr)
         return;
     FbxString    TakeName = stack->GetName();
@@ -366,7 +349,7 @@ void FbxLoader::LoadNodeAnimation(std::shared_ptr<Mesh> mesh)
             s[iFrame].SetFrame(iFrame, timeMode);
         }
 
-        mesh->m_bindPoseMat.resize(mesh->m_boneToIdx.size());
+        mesh->m_bindPoseMat.resize(mesh->m_boneToIdx.size(), mat4(1.f));
         mesh->m_animationMat.resize(mesh->m_boneToIdx.size());
         // biped + bone + dummy + mesh
         for (int bone = 0; bone < mesh->m_boneToIdx.size(); bone++)
@@ -382,7 +365,7 @@ void FbxLoader::LoadNodeAnimation(std::shared_ptr<Mesh> mesh)
                 mat4       matFrame = ConvertFbxMatToGlmMat(matWorld);
                 mesh->m_animationMat[bone][iFrame] = matFrame;
             }
-            // mesh->m_bindPoseMat[bone] = mesh->m_animationMat[fbxnode][sFrame];
+            // mesh->m_bindPoseMat[bone] = mesh->m_animationMat[boneIdx][sFrame];
         }
     }
 }
@@ -541,7 +524,7 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
                 mesh->m_vertices[m_vertexIdx].c.r = static_cast<float>(color.mRed);
                 mesh->m_vertices[m_vertexIdx].c.g = static_cast<float>(color.mGreen);
                 mesh->m_vertices[m_vertexIdx].c.b = static_cast<float>(color.mBlue);
-                mesh->m_vertices[m_vertexIdx].c.a = 1.f;
+                mesh->m_vertices[m_vertexIdx].c.a = static_cast<float>(color.mAlpha);
 
                 if (vertexNormalLayer.size())
                 {
@@ -558,7 +541,6 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
 
 
                 size_t iwSize = m_fbxBoneIndices[iVertexPositionIndex[vertexIdx]].size();
-
                 for (size_t iwIdx = 0; iwIdx < iwSize; iwIdx++)
                 {
                     mesh->m_vertices[m_vertexIdx].i[iwIdx] =
@@ -615,11 +597,11 @@ mat4 FbxLoader::ConvertFbxMatToGlmMat(FbxAMatrix& fMat)
     {
         for (UINT j = 0; j < 4; j++)
         {
-            glmMat[i][j] = static_cast<float>(fMat[i][j]);
+            glmMat[j][i] = static_cast<float>(fMat.Get(i, j));
         }
     }
 
-    copyGlmMat = glm::transpose(glmMat);
+    copyGlmMat = glmMat;
 
     glmMat[0][0] = copyGlmMat[0][0];
     glmMat[0][1] = copyGlmMat[0][2];
