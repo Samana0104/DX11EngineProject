@@ -41,6 +41,13 @@ date: 2024-11-17
 #endif
 
 // ---------------------------------------
+//			    DirectXTK
+// ---------------------------------------
+
+#include "DirectXTK/WICTextureLoader.h"
+#include "DirectXTK/DDSTextureLoader.h"
+
+// ---------------------------------------
 //			      GLM
 // ---------------------------------------
 
@@ -61,9 +68,7 @@ date: 2024-11-17
 //			      FMOD
 // ---------------------------------------
 
-#include "../extern/inc/fmod/fmod.hpp"
-#include "DirectXTK/WICTextureLoader.h"
-#include "DirectXTK/DDSTextureLoader.h"
+#include "fmod\fmod.hpp"
 
 // ---------------------------------------
 //			      ImGui

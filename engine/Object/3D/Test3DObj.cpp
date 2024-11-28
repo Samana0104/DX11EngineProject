@@ -25,7 +25,7 @@ void Test3DObj::Update(const float deltaTime)
 
     for (int i = 0; i < m_mesh->m_bindPoseMat.size(); i++)
     {
-        anim[i] = m_mesh->m_animationMat[i][frame] * m_mesh->m_bindPoseMat[i];
+        // anim[i] = m_mesh->m_animationMat[i][frame] * m_mesh->m_bindPoseMat[i];
     }
 
     if (startFrame > 20.f)

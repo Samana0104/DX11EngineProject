@@ -81,9 +81,6 @@
     <ClCompile Include="Scene\SceneMgr.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Actor.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Object\Button.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -224,9 +221,6 @@
     </ClInclude>
     <ClInclude Include="Scene\SceneMgr.h">
       <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Actor.h">
-      <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Object\Button.h">
       <Filter>Object</Filter>

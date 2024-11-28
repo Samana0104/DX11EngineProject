@@ -341,7 +341,7 @@ void FbxLoader::LoadNodeAnimation(std::shared_ptr<Mesh> mesh)
         FbxLongLong    eFrame   = end.GetFrameCount(timeMode);
 
         int iNumAnimFrame = eFrame;  // model->m_Header.iLastFrame - model->m_Header.iStartFrame;
-        // 71 * iNumAnimFrame;
+
         std::vector<FbxTime> s;
         s.resize(iNumAnimFrame);
         for (int iFrame = sFrame; iFrame < eFrame; iFrame++)
