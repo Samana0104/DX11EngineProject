@@ -12,6 +12,12 @@ date: 2024-11-25
 
 namespace HBSoft
 {
+    struct SkinningData
+    {
+        std::vector<float> weights;
+        std::vector<int>   boneIdx;
+    };
+
     class FbxLoader
     {
     private:
@@ -19,23 +25,21 @@ namespace HBSoft
         FbxImporter* m_fbxImporter;
         FbxScene*    m_fbxScene;
 
-        UINT m_boneCounter;
-        UINT m_vertexIdx;   // 건들지 마세요 외부 모델 불러올 때 최적화용으로 쓰임
-        UINT m_subMeshIdx;  // 건들지 마세요 외부 모델 불러올 때 최적화용으로 쓰임
-        std::vector<std::vector<float>> m_fbxWeightIndices;
-        std::vector<std::vector<UINT>>  m_fbxBoneIndices;
-        std::vector<FbxMesh*>           m_fbxSubMeshes;
-        std::vector<FbxNode*>           m_fbxBoneNodes;
+        std::vector<SkinningData> m_skinningData;
+        std::vector<FbxMesh*>     m_fbxMeshes;
+        std::vector<FbxNode*>     m_fbxNodes;
+
+        int m_vertexIdx;
 
     private:
-        void InitFbxManager();
+        bool InitFbxLoader(const wstringV filePath);
         void ReleaseFbxManager();
 
-        void     InitMesh(std::shared_ptr<Mesh> mesh);
-        void     ProcessNode(FbxNode* fNode, std::shared_ptr<Mesh> mesh);
-        FbxNode* FindParentBone(FbxNode* fNode);
-        void     ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh);
-        void     ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh);
+
+        void InitMesh(std::shared_ptr<Mesh> mesh);
+        void ProcessNode(FbxNode* fNode, std::shared_ptr<Mesh> mesh);
+        bool ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh);
+        void ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh);
 
         int        GetSubMaterialPolygonIndex(int polyIdx, FbxLayerElementMaterial* fMaterial);
         FbxVector2 GetUV(FbxLayerElementUV* uvSet, int vertexPosIdx, int vertexUVIdx);
@@ -44,7 +48,7 @@ namespace HBSoft
         FbxVector4 GetNormal(FbxLayerElementNormal* vertexNormalSet, int vertexPosIdx,
                              int vertexNormalIdx);
 
-        void LoadNodeAnimation(std::shared_ptr<Mesh> mesh);
+        void LoadAnimation(std::shared_ptr<Mesh> mesh);
 
         mat4 ConvertFbxMatToGlmMat(FbxAMatrix& fMat);
 

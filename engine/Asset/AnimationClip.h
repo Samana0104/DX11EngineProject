@@ -8,9 +8,10 @@ namespace HBSoft
     {
     private:
         std::string m_aniName;
-        UINT        m_startFrame;
-        UINT        m_lastFrame;
+        int         m_startFrame;
+        int         m_lastFrame;
 
+    public:
         std::vector<std::vector<mat4>> m_aniMat;
 
     public:
@@ -19,11 +20,11 @@ namespace HBSoft
 
         std::vector<mat4>& GetAnimationMatrix(float frame);
 
-        void SetStartFrame(UINT start);
-        void SetLastFrame(UINT last);
+        void SetStartFrame(int start);
+        void SetLastFrame(int last);
 
-        const UINT GetStartFrame() const;
-        const UINT GetLastFrame() const;
+        const int GetStartFrame() const;
+        const int GetLastFrame() const;
     };
 
 }  // namespace HBSoft

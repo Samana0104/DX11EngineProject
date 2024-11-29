@@ -8,8 +8,8 @@ AnimationClip::AnimationClip()
 
 std::vector<mat4>& AnimationClip::GetAnimationMatrix(float frame)
 {
-    if (frame < 0)
-        assert(true);
+    if (frame < 0 || frame >= m_lastFrame)
+        assert(false);
 
     vec3 translation1, translation2, interpolatedT;
     vec3 scale1, scale2, interpolatedS;
@@ -44,22 +44,22 @@ std::vector<mat4>& AnimationClip::GetAnimationMatrix(float frame)
     return interpolatedMat;
 }
 
-void AnimationClip::SetStartFrame(UINT start)
+void AnimationClip::SetStartFrame(int start)
 {
     m_startFrame = start;
 }
 
-void AnimationClip::SetLastFrame(UINT last)
+void AnimationClip::SetLastFrame(int last)
 {
     m_lastFrame = last;
 }
 
-const UINT AnimationClip::GetStartFrame() const
+const int AnimationClip::GetStartFrame() const
 {
     return m_startFrame;
 }
 
-const UINT AnimationClip::GetLastFrame() const
+const int AnimationClip::GetLastFrame() const
 {
     return m_lastFrame;
 }

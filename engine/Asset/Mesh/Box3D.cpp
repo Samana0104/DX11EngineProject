@@ -11,7 +11,6 @@ date: 2024-11-22
 using namespace HBSoft;
 
 Box3D::Box3D(std::shared_ptr<D3Device> device)
-    : Mesh(false)
 {
     assert(CreateVertices(device));
     assert(CreateIndices(device));

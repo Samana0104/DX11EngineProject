@@ -26,7 +26,7 @@
     <FxCompile Include="..\res\Shader\LineVertex.hlsl">
       <FileType>CppCode</FileType>
     </FxCompile>
-    <ClCompile Include="AnimationClip.cpp" />
+    <ClCompile Include="Asset\AnimationClip.cpp" />
     <ClCompile Include="Asset\AssetsMgr.cpp" />
     <ClCompile Include="Asset\Factory\FontFactory.cpp" />
     <ClCompile Include="Asset\Factory\MeshFactory.cpp" />
@@ -75,7 +75,7 @@
     <ClCompile Include="Timer\SystemTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AnimationClip.h" />
+    <ClInclude Include="Asset\AnimationClip.h" />
     <ClInclude Include="Asset\AssetsMgr.h" />
     <ClInclude Include="Asset\DefaultResource.h" />
     <ClInclude Include="Asset\Factory\FontFactory.h" />

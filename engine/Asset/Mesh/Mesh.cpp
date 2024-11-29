@@ -10,8 +10,8 @@ date: 2024-11-08
 #include "Mesh.h"
 using namespace HBSoft;
 
-Mesh::Mesh(bool hasAnimation)
-    : m_hasAnimation(hasAnimation), m_vertexBuffer(nullptr), m_indexBuffer(nullptr)
+Mesh::Mesh()
+    : m_vertexBuffer(nullptr), m_indexBuffer(nullptr)
 {}
 
 void Mesh::SetVertices(std::shared_ptr<D3Device> device, const std::vector<Vertex>& vertices)

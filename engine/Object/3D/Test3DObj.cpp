@@ -12,26 +12,22 @@ Test3DObj::Test3DObj()
 
     // SetPSShaderKey(L"PixelShader.hlsl");  // 텍스쳐 있는 놈
     SetPSShaderKey(L"ColorPixelShader.hlsl");  // 텍스쳐 없는 놈
-
-    anim.resize(m_mesh->m_bindPoseMat.size());
 }
 
 void Test3DObj::Update(const float deltaTime)
 {
-    static float startFrame = 0.f;
+    static float currentFrame = 0.f;
+    static int   startFrame   = 0;
+    static int   lastFrame    = 0;
 
-    startFrame += deltaTime * 10.f;
-    int frame   = static_cast<int>(startFrame);
+    currentFrame += deltaTime * 10.f;
+    startFrame    = m_mesh->m_animations[0].GetStartFrame();
+    lastFrame     = m_mesh->m_animations[0].GetLastFrame();
 
-    for (int i = 0; i < m_mesh->m_bindPoseMat.size(); i++)
-    {
-        // anim[i] = m_mesh->m_animationMat[i][frame] * m_mesh->m_bindPoseMat[i];
-    }
+    if (currentFrame > lastFrame)
+        startFrame = startFrame;
 
-    if (startFrame > 20.f)
-    {
-        startFrame = 0.f;
-    }
+    anim = m_mesh->m_animations[0].GetAnimationMatrix(currentFrame);
 
     if (m_camera != nullptr)
     {
@@ -43,6 +39,7 @@ void Test3DObj::Update(const float deltaTime)
         m_cb0.view = mat4(1.0f);
         m_cb0.proj = mat4(1.0f);
     }
+
     m_cb0.world    = m_transform.m_worldMat;
     m_cb0.invWorld = glm::inverse(m_transform.m_worldMat);
     m_vsShader->SetConstantBuffer(HDEVICE, (void*)&m_cb0, sizeof(m_cb0), 0);

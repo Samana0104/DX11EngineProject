@@ -186,7 +186,9 @@
     <ClCompile Include="Asset\FbxLoader.cpp">
       <Filter>Asset</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationClip.cpp" />
+    <ClCompile Include="Asset\AnimationClip.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -342,7 +344,9 @@
     <ClInclude Include="Asset\FbxLoader.h">
       <Filter>Asset</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationClip.h" />
+    <ClInclude Include="Asset\AnimationClip.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.clang-format" />
