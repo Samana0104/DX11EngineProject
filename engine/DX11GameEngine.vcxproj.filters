@@ -189,6 +189,9 @@
     <ClCompile Include="Asset\AnimationClip.cpp">
       <Filter>Asset</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Object.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -346,6 +349,12 @@
     </ClInclude>
     <ClInclude Include="Asset\AnimationClip.h">
       <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Renderable.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Object.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -2,22 +2,24 @@
 author : 변한빛
 description : 카메라를 정의하기 위한 헤더 파일
 
-version: 1.0.0
-date: 2024-11-04
+version: 1.0.3
+date: 2024-11-29
 */
 
 #pragma once
-#include "3D/Object3D.h"
+
+#include "Core.h"
 #include "Observer.h"
+#include "3D\Transform3D.h"
 
 namespace HBSoft
 {
-    class Camera : public Object3D, Observer
+    class Camera : public Observer
     {
     private:
         float m_fov;  // radian angle
         float m_projNear;
-        float m_projFar;  // near에 왜 디파인 걸려있는거야
+        float m_projFar;
 
         vec3 m_side;  // x
         vec3 m_up;    // y
@@ -29,6 +31,9 @@ namespace HBSoft
         mat4 m_projMat;
         // 설마 카메라에 스케일 값 주는 미친 사람 없겠지?
         // 줌인 줌아웃 따로 만들었으니 스케일 조정하지 마시오
+
+    public:
+        Transform3D m_transform;
 
     private:
         virtual void OnNotice(EventList event, void* entity);
@@ -50,9 +55,6 @@ namespace HBSoft
         void ZoomOut(const float scale);
 
         void LookAt(const vec3 eye, const vec3 target, const vec3 up);
-        void LookAtObject(Object3D& obj);
-
-        virtual void Update(const float deltaTime) override;
-        virtual void Render() override;
+        void Update(const float deltaTime);
     };
 }  // namespace HBSoft

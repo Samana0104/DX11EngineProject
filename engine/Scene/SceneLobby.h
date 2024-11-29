@@ -19,12 +19,11 @@ namespace HBSoft
     class SceneLobby : public Scene
     {
     public:
-        Object3D     test;
-        CubeMapObj   cube;
-        Camera       cameraTest;
-        LineObj      m_line;
-        Test3DObj    m_zelda;
-        HeightMapObj m_map;
+        CubeMapObj              cube;
+        std::shared_ptr<Camera> cameraTest;
+        LineObj                 m_line;
+        Test3DObj               m_zelda;
+        HeightMapObj            m_map;
 
         bool isWire = false;
 

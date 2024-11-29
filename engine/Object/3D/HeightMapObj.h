@@ -41,7 +41,8 @@ namespace HBSoft
     {
     private:
         MapDesc                  m_mapDesc;
-        std::shared_ptr<Texture> m_heightTexture;
+        std::shared_ptr<Texture> m_mapTexture;
+        std::shared_ptr<Mesh>    m_mesh;
         std::vector<FaceInfo>    m_faceInfo;
         std::vector<VertexInfo>  m_vertexInfo;
 
@@ -52,7 +53,7 @@ namespace HBSoft
                     scaleYPerCell -> y축 기준 셀당 크기
                     scaleZPerCell -> z축 기준 셀당 크기
             description :
-               맵 디스크립터를 만들어준다.
+               높이 맵 텍스쳐를 가지고 맵 디스크립터를 만들어준다.
         */
         void CreateMapDesc(const TEXTURE_KEY texKey, float scaleXPerCell, float scaleYPerCell,
                            float scaleZPerCell);
@@ -60,5 +61,10 @@ namespace HBSoft
     public:
         HeightMapObj();
         ~HeightMapObj() = default;
+
+        virtual void Init() override;
+        virtual void Release() override;
+        virtual void Update(const float deltaTime) override;
+        virtual void Render() override;
     };
 }  // namespace HBSoft

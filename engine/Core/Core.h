@@ -3,7 +3,7 @@ author : 변한빛
 description : 메인 엔진 헤더파일 전역변수로 자유롭게 접근 가능하다
 
 version: 1.0.0
-date: 2024-11-04
+date: 2024-11-29
 */
 
 #pragma once
@@ -17,6 +17,7 @@ date: 2024-11-04
 #define HINPUT  HBSoft::Core::engine->m_input
 #define HASSET  HBSoft::Core::engine->m_assets
 #define HTIMER  HBSoft::Core::engine->m_timer
+#define HSCENE  HBSoft::Core::engine->m_sceneMgr;
 
 namespace HBSoft
 {

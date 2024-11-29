@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 애니메이션 관련 정보를 관리하는 클래스의 소스 파일
+
+version: 1.0.0
+date: 2024-11-29
+*/
+
 #include "pch.h"
 #include "AnimationClip.h"
 using namespace HBSoft;

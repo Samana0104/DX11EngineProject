@@ -6,12 +6,12 @@ using namespace HBSoft;
 
 Test3DObj::Test3DObj()
 {
-    SetMeshKey(L"Goose.fbx");
-    SetVSShaderKey(L"AnimationVertex.hlsl");
+    m_mesh     = HASSET->m_meshes[L"Goose.fbx"];
+    m_vsShader = HASSET->m_shaders[L"AnimationVertex.hlsl"];
     // SetVSShaderKey(L"VertexShader.hlsl");
 
     // SetPSShaderKey(L"PixelShader.hlsl");  // 텍스쳐 있는 놈
-    SetPSShaderKey(L"ColorPixelShader.hlsl");  // 텍스쳐 없는 놈
+    m_psShader = HASSET->m_shaders[L"ColorPixelShader.hlsl"];  // 텍스쳐 없는 놈
     anim.resize(m_mesh->m_born.bornIndex.size());
 }
 
@@ -20,24 +20,12 @@ void Test3DObj::Update(const float deltaTime)
     static float currentFrame = 0.f;
     static int   startFrame   = 0;
     static int   lastFrame    = 0;
+    static float speed        = 3.f;
     // static int   selectAnimation = 0;
 
-    // float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
-    // ImGui::PushItemFlag(ImGuiItemFlags_ButtonRepeat, true);
-    // if (ImGui::ArrowButton("##left", ImGuiDir_Left))
-    //{
-    //     selectAnimation--;
-    // }
-    // ImGui::SameLine(0.0f, spacing);
-    // if (ImGui::ArrowButton("##right", ImGuiDir_Right))
-    //{
-    //     selectAnimation++;
-    // }
-    // ImGui::PopItemFlag();
-    // ImGui::SameLine();
-    // ImGui::Text("%d", selectAnimation);
+    ImGui::SliderFloat("Speed", &speed, 0, 30.f);
 
-    currentFrame += deltaTime * 10.f;
+    currentFrame += deltaTime * speed;
     startFrame    = m_mesh->m_animations[0]->GetStartFrame();
     lastFrame     = m_mesh->m_animations[0]->GetLastFrame();
 
@@ -46,22 +34,8 @@ void Test3DObj::Update(const float deltaTime)
 
     anim = m_mesh->m_animations[0]->GetAnimationMatrix(currentFrame);
 
-
-    if (m_camera != nullptr)
-    {
-        m_cb0.view = m_camera->GetViewMat();
-        m_cb0.proj = m_camera->GetProjMat();
-    }
-    else
-    {
-        m_cb0.view = mat4(1.0f);
-        m_cb0.proj = mat4(1.0f);
-    }
-
-    m_cb0.world    = m_transform.m_worldMat;
-    m_cb0.invWorld = glm::inverse(m_transform.m_worldMat);
-    m_vsShader->SetConstantBuffer(HDEVICE, (void*)&m_cb0, sizeof(m_cb0), 0);
     m_vsShader->SetConstantBuffer(HDEVICE, (void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
+    UpdateDefaultCB();
 }
 
 void Test3DObj::Render()
@@ -88,16 +62,20 @@ void Test3DObj::Render()
 
     for (size_t i = 0; i < m_mesh->m_subMeshes.size(); i++)
     {
-        // if (m_mesh->m_subMeshes[i]->hasTexture)
-        //{
-        //     HDEVICE->m_context->PSSetShaderResources(
-        //     0,
-        //     1,
-        //     HASSET->m_textures[m_mesh->m_subMeshes[i]->textureName]->GetSRV().GetAddressOf());
-        // }
+        if (m_mesh->m_subMeshes[i]->hasTexture)
+        {
+            HDEVICE->m_context->PSSetShaderResources(
+            0,
+            1,
+            HASSET->m_textures[m_mesh->m_subMeshes[i]->textureName]->GetSRV().GetAddressOf());
+        }
         HDEVICE->m_context->IASetIndexBuffer(m_mesh->m_subMeshes[i]->indexBuffer.Get(),
                                              DXGI_FORMAT_R32_UINT,
                                              0);
         HDEVICE->m_context->DrawIndexed((UINT)m_mesh->m_subMeshes[i]->indices.size(), 0, 0);
     }
 }
+
+void Test3DObj::Init() {}
+
+void Test3DObj::Release() {}

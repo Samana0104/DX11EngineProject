@@ -2,8 +2,8 @@
 author : 변한빛
 description : 라인을 그리기 위한 클래스 소스 파일
 
-version: 1.0.7
-date: 2024-11-12
+version: 1.0.8
+date: 2024-11-29
 */
 
 #include "pch.h"
@@ -12,10 +12,21 @@ using namespace HBSoft;
 
 LineObj::LineObj()
 {
-    SetMeshKey(L"LINE");
-    SetVSShaderKey(L"LineVertex.hlsl");
-    SetPSShaderKey(L"LinePixel.hlsl");
+    m_mesh     = HASSET->m_meshes[L"LINE"];
+    m_vsShader = HASSET->m_shaders[L"LineVertex.hlsl"];
+    m_psShader = HASSET->m_shaders[L"LinePixel.hlsl"];
 }
+
+void LineObj::Render() {}
+
+void LineObj::Update(const float deltaTime)
+{
+    UpdateDefaultCB();
+}
+
+void LineObj::Init() {}
+
+void LineObj::Release() {}
 
 void LineObj::Draw(vec3 start, vec3 end, vec4 color)
 {

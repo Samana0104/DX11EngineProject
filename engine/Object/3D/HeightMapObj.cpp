@@ -12,25 +12,28 @@ using namespace HBSoft;
 
 HeightMapObj::HeightMapObj()
 {
-    SetTextureKey(L"Map512Color.png");
+    m_mapTexture = HASSET->m_textures[L"Map512Color.png"];
+
     CreateMapDesc(L"Map512.hmp", 2.f, 0.1f, 2.f);
     m_mesh = MeshFactory::CreateHeightMap(HDEVICE, m_mapDesc);
-    SetVSShaderKey(L"VertexShader.hlsl");
-    SetPSShaderKey(L"PixelShader.hlsl");
+
+    m_vsShader = HASSET->m_shaders[L"VertexShader.hlsl"];
+    m_psShader = HASSET->m_shaders[L"PixelShader.hlsl"];
 
     // m_transform.SetLocation({0.f, -100.f, 0.f});
 }
 
-void HeightMapObj::CreateMapDesc(const TEXTURE_KEY texKey, float scaleXPerCell, float scaleYPerCell,
-                                 float scaleZPerCell)
+void HeightMapObj::CreateMapDesc(const TEXTURE_KEY heightTexKey, float scaleXPerCell,
+                                 float scaleYPerCell, float scaleZPerCell)
 {
-    D3D11_TEXTURE2D_DESC     textureDesc;
     D3D11_MAPPED_SUBRESOURCE mapped;
+    D3D11_TEXTURE2D_DESC     textureDesc;
     ComPtr<ID3D11Resource>   textureRes;
 
-    m_heightTexture = HASSET->m_textures[texKey];
-    textureRes      = m_heightTexture->GetResource();
-    textureDesc     = m_heightTexture->GetDesc();
+    std::shared_ptr<Texture> heightTexture = HASSET->m_textures[heightTexKey];
+
+    textureRes  = heightTexture->GetResource();
+    textureDesc = heightTexture->GetDesc();
 
     if (SUCCEEDED(HDEVICE->m_context
                   ->Map(textureRes.Get(), D3D11CalcSubresource(0, 0, 1), D3D11_MAP_READ, 0, &mapped)))
@@ -65,4 +68,38 @@ void HeightMapObj::CreateMapDesc(const TEXTURE_KEY texKey, float scaleXPerCell, 
         m_mapDesc.scaleZPerCell = scaleZPerCell;
         m_mapDesc.numFaces      = textureDesc.Width * textureDesc.Height * 2;
     }
+}
+
+void HeightMapObj::Init() {}
+
+void HeightMapObj::Release() {}
+
+void HeightMapObj::Update(const float deltaTime)
+{
+    UpdateDefaultCB();
+}
+
+void HeightMapObj::Render()
+{
+    UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
+    UINT pOffsets = 0;               // 버퍼에 시작 인덱스
+
+    m_vsShader->SetUpToContext(HDEVICE);
+    m_psShader->SetUpToContext(HDEVICE);
+
+    HDEVICE->m_context->IASetVertexBuffers(0,
+                                           1,
+                                           m_mesh->m_vertexBuffer.GetAddressOf(),
+                                           &pStrides,
+                                           &pOffsets);
+
+    // DXGI_FORMAT_R32_UINT는 인덱스 버퍼의 타입이 UINT라 그럼
+    HDEVICE->m_context->IASetIndexBuffer(m_mesh->m_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+    HDEVICE->m_context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+    HDEVICE->m_context->PSSetShaderResources(0, 1, m_mapTexture->GetSRV().GetAddressOf());
+
+    HDEVICE->m_context->PSSetSamplers(0, 1, HDEVICE->m_samplerState.GetAddressOf());
+    HDEVICE->m_context->OMSetRenderTargets(1, HDEVICE->m_rtv.GetAddressOf(), HDEVICE->m_dsv.Get());
+    HDEVICE->m_context->DrawIndexed((UINT)m_mesh->m_indices.size(), 0, 0);
 }

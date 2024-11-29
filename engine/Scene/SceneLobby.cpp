@@ -11,23 +11,22 @@ date: 2024-11-04
 using namespace HBSoft;
 
 SceneLobby::SceneLobby()
-    : cameraTest(glm::radians(90.f), 0.1f, 10000.f)
 {
-    cameraTest.LookAt({0.f, 5.f, -10.f}, {0.f, 0.f, 0.f}, {0.f, 1.f, 0.f});
-    test.SetCamera(&cameraTest);
-    m_line.SetCamera(&cameraTest);
-    cube.SetCamera(&cameraTest);
-    m_zelda.SetCamera(&cameraTest);
-    m_map.SetCamera(&cameraTest);
+    cameraTest = std::make_shared<Camera>(glm::radians(90.f), 0.1f, 10000.f);
+
+    cameraTest->LookAt({0.f, 5.f, -10.f}, {0.f, 0.f, 0.f}, {0.f, 1.f, 0.f});
+    m_line.SetCamera(cameraTest);
+    cube.SetCamera(cameraTest);
+    m_zelda.SetCamera(cameraTest);
+    m_map.SetCamera(cameraTest);
 }
 
 void SceneLobby::Update(float deltaTime)
 {
     ImGui::Checkbox("wireframe : ", &isWire);
 
-    cameraTest.Update(deltaTime);
+    cameraTest->Update(deltaTime);
 
-    test.Update(deltaTime);
     m_line.Update(deltaTime);
     cube.Update(deltaTime);
     m_zelda.Update(deltaTime);
@@ -44,7 +43,6 @@ void SceneLobby::Render()
     m_line.Draw({0.f, 0.f, 0.f}, {1000.f, 0.f, 0.f}, {1.f, 0.f, 0.f, 1.f});
     m_line.Draw({0.f, 0.f, 0.f}, {0.f, 1000.f, 0.f}, {0.f, 1.f, 0.f, 1.f});
     m_line.Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
-    test.Render();
     cube.Render();
     m_zelda.Render();
     // m_map.Render();
