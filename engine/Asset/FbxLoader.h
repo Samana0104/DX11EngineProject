@@ -37,7 +37,7 @@ namespace HBSoft
 
 
         void InitMesh(std::shared_ptr<Mesh> mesh);
-        void ProcessNode(FbxNode* fNode, std::shared_ptr<Mesh> mesh);
+        void ProcessNode(FbxNode* fNode, std::shared_ptr<Mesh> mesh, int curIdx, int parentIdx);
         bool ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh);
         void ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh);
 

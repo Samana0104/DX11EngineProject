@@ -47,7 +47,7 @@ void SceneLobby::Render()
     test.Render();
     cube.Render();
     m_zelda.Render();
-    m_map.Render();
+    // m_map.Render();
 }
 
 void SceneLobby::Release() {}

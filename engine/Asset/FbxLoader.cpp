@@ -21,22 +21,34 @@ std::shared_ptr<Mesh> FbxLoader::Load(std::shared_ptr<D3Device> device, const ws
 
     std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 
-    if (InitFbxLoader(filePath))
+    if (!InitFbxLoader(filePath))
         return nullptr;
 
     FbxAxisSystem::MayaZUp.ConvertScene(m_fbxScene);
     fbxRootNode = m_fbxScene->GetRootNode();
 
-    ProcessNode(fbxRootNode, mesh);
+    ProcessNode(fbxRootNode, mesh, 0, 0);
     InitMesh(mesh);
 
     LoadAnimation(mesh);
     for (size_t i = 0; i < m_fbxMeshes.size(); i++)
-    {
         ProcessMesh(m_fbxMeshes[i], mesh);
-    }
 
     ReleaseFbxManager();
+
+    for (int i = 0; i < mesh->m_animations.size(); i++)
+    {
+        for (int j = 0; j < mesh->m_animations[i]->m_aniMat.size(); j++)
+        {
+            for (int k = mesh->m_animations[i]->GetStartFrame();
+                 k < mesh->m_animations[i]->GetLastFrame();
+                 k++)
+            {
+                mesh->m_animations[i]->m_aniMat[j][k] =
+                mesh->m_animations[i]->m_aniMat[j][k] * mesh->m_born.bindPoseMat[j];
+            }
+        }
+    }
 
     device->CreateVertexBuffer(mesh->m_vertices, mesh->m_vertexBuffer);
 
@@ -49,7 +61,11 @@ std::shared_ptr<Mesh> FbxLoader::Load(std::shared_ptr<D3Device> device, const ws
 bool FbxLoader::InitFbxLoader(const wstringV filePath)
 {
     if (m_fbxManager == nullptr)
-        m_fbxManager = FbxManager::Create();
+    {
+        m_fbxManager              = FbxManager::Create();
+        FbxIOSettings* ioSettings = FbxIOSettings::Create(m_fbxManager, IOSROOT);
+        m_fbxManager->SetIOSettings(ioSettings);
+    }
 
     if (m_fbxImporter == nullptr)
         m_fbxImporter = FbxImporter::Create(m_fbxManager, "");
@@ -98,20 +114,28 @@ void FbxLoader::ReleaseFbxManager()
     }
 }
 
-void FbxLoader::ProcessNode(FbxNode* fNode, std::shared_ptr<Mesh> mesh)
+void FbxLoader::ProcessNode(FbxNode* fNode, std::shared_ptr<Mesh> mesh, int curIdx, int parentIdx)
 {
     if (fNode == nullptr)
         return;
 
-    FbxMesh* fMesh = fNode->GetMesh();
+    FbxMesh*    fMesh    = fNode->GetMesh();
+    std::string nodeName = fNode->GetName();
 
     if (fMesh != nullptr)
         m_fbxMeshes.push_back(fMesh);
 
     int numChild = fNode->GetChildCount();
+    m_fbxNodes.push_back(fNode);
+
+    if (!mesh->m_born.bornIndex.contains(nodeName))
+    {
+        mesh->m_born.bornIndex[nodeName]       = curIdx;
+        mesh->m_born.bornParentIndex[nodeName] = parentIdx;
+    }
 
     for (int childIdx = 0; childIdx < numChild; childIdx++)
-        ProcessNode(fNode->GetChild(childIdx), mesh);
+        ProcessNode(fNode->GetChild(childIdx), mesh, mesh->m_born.bornIndex.size(), curIdx);
 }
 
 bool FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
@@ -138,6 +162,8 @@ bool FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
     m_skinningData.clear();
     m_skinningData.resize(fMesh->GetControlPointsCount());
 
+    mesh->m_born.bindPoseMat.resize(mesh->m_born.bornIndex.size());
+
     for (int deformerIdx = 0; deformerIdx < deformerCount; deformerIdx++)
     {
         fSkin = reinterpret_cast<FbxSkin*>(fMesh->GetDeformer(deformerIdx, FbxDeformer::eSkin));
@@ -149,14 +175,14 @@ bool FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
             fCluster         = fSkin->GetCluster(clusterIdx);
             clusterNode      = fCluster->GetLink();
             std::string name = clusterNode->GetName();
-            boneIdx          = mesh->m_boneToIdx[std::string(clusterNode->GetName())];
+            boneIdx          = mesh->m_born.bornIndex[name];
 
             fCluster->GetTransformLinkMatrix(bindPoseMat);
             fCluster->GetTransformMatrix(globalInitPosMat);
 
             FbxAMatrix testMat = bindPoseMat.Inverse() * globalInitPosMat;
 
-            mesh->m_bindPoseMat[boneIdx] = ConvertFbxMatToGlmMat(testMat);
+            mesh->m_born.bindPoseMat[boneIdx] = ConvertFbxMatToGlmMat(testMat);
 
 
             clusterSize   = fCluster->GetControlPointIndicesCount();
@@ -167,11 +193,13 @@ bool FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
             {
                 int   vertexIdx = fbxNodeIdices[v];
                 float weight    = static_cast<float>(weightList[v]);
-                m_fbxWeightIndices[vertexIdx].push_back(weight);
-                m_fbxBoneIndices[vertexIdx].push_back(boneIdx);
+                m_skinningData[vertexIdx].weights.push_back(weight);
+                m_skinningData[vertexIdx].boneIdx.push_back(boneIdx);
             }
         }
     }
+
+    return true;
 }
 
 int FbxLoader::GetSubMaterialPolygonIndex(int polyIdx, FbxLayerElementMaterial* fMaterial)
@@ -314,63 +342,72 @@ FbxVector4 FbxLoader::GetNormal(FbxLayerElementNormal* vertexNormalSet, int vert
 
 void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
 {
-    FbxAnimStack*        stack;
+    FbxAnimStack*        aniStack;
     FbxString            TakeName;
     FbxTakeInfo*         TakeInfo;
     FbxTime              startTime, endTime;
     FbxTime::EMode       timeMode;
-    FbxLongLong          startFrame, lastFrame;
-    std::vector<FbxTime> animationTimes;
+    int                  startFrame, lastFrame;
+    FbxArray<FbxString*> AnimStackNameArray;
+
+    std::vector<FbxTime>           animationTimes;
+    std::shared_ptr<AnimationClip> clip;
+
+    m_fbxScene->FillAnimStackNameArray(AnimStackNameArray);
+    int stackCount = AnimStackNameArray.GetCount();
 
     FbxTime::SetGlobalTimeMode(FbxTime::eFrames30);
 
-    int numAnimation = m_fbxScene->GetSrcObjectCount();
-
-    if (numAnimation <= 0)
+    if (stackCount <= 0)
         return;
 
-    mesh->m_animations.resize(numAnimation);
+    aniStack = m_fbxScene->GetSrcObject<FbxAnimStack>(0);
 
-    for (int i = 0; i < numAnimation; i++)
+    TakeName = aniStack->GetName();
+    TakeInfo = m_fbxScene->GetTakeInfo(TakeName);
+
+    clip      = std::make_shared<AnimationClip>();
+    startTime = TakeInfo->mLocalTimeSpan.GetStart();
+    endTime   = TakeInfo->mLocalTimeSpan.GetStop();
+
+
+    timeMode   = FbxTime::GetGlobalTimeMode();
+    startFrame = static_cast<int>(startTime.GetFrameCount(timeMode));
+    lastFrame  = static_cast<int>(endTime.GetFrameCount(timeMode));
+
+    animationTimes.resize(lastFrame);
+    mesh->m_born.bindPoseMat.resize(mesh->m_born.bornIndex.size());
+
+    clip->m_aniMat.resize(mesh->m_born.bornIndex.size());
+    clip->SetAnimationName(TakeName.Buffer());
+
+    for (int frame = startFrame; frame < lastFrame; frame++)
+        animationTimes[frame].SetFrame(frame, timeMode);
+
+    clip->SetStartFrame(startFrame);
+    clip->SetLastFrame(lastFrame);
+
+    for (int nodeIdx = 0; nodeIdx < m_fbxNodes.size(); nodeIdx++)
     {
-        stack = m_fbxScene->GetSrcObject<FbxAnimStack>(i);
+        std::string name    = m_fbxNodes[nodeIdx]->GetName();
+        UINT        boneIdx = mesh->m_born.bornIndex[name];
 
-        TakeName = stack->GetName();
-        TakeInfo = m_fbxScene->GetTakeInfo(TakeName);
-
-        startTime = TakeInfo->mLocalTimeSpan.GetStart();
-        endTime   = TakeInfo->mLocalTimeSpan.GetStop();
-
-        timeMode   = FbxTime::GetGlobalTimeMode();
-        startFrame = startTime.GetFrameCount(timeMode);
-        lastFrame  = endTime.GetFrameCount(timeMode);
-
-        animationTimes.resize(lastFrame);
-        mesh->m_animations[i].m_aniMat.resize(m_fbxNodes.size());
+        clip->m_aniMat[boneIdx].resize(lastFrame);
 
         for (int frame = startFrame; frame < lastFrame; frame++)
-            animationTimes[frame].SetFrame(frame, timeMode);
-
-        mesh->m_animations[i].SetStartFrame(startFrame);
-        mesh->m_animations[i].SetStartFrame(lastFrame);
-
-        for (int nodeIdx = 0; nodeIdx < m_fbxNodes.size(); nodeIdx++)
         {
-            std::string name    = m_fbxNodes[nodeIdx]->GetName();
-            UINT        boneIdx = mesh->m_born.bornIndex[name];
+            FbxAMatrix matWorld = m_fbxNodes[boneIdx]->EvaluateGlobalTransform(animationTimes[frame]);
 
-            mesh->m_animations[i].m_aniMat[boneIdx].resize(lastFrame);
+            mat4 matFrame = ConvertFbxMatToGlmMat(matWorld);
 
-            for (int frame = startFrame; frame < lastFrame; frame++)
-            {
-                FbxAMatrix matWorld =
-                m_fbxNodes[boneIdx]->EvaluateGlobalTransform(animationTimes[frame]);
-                mat4 matFrame = ConvertFbxMatToGlmMat(matWorld);
-
-                mesh->m_animations[i].m_aniMat[boneIdx][frame] = matFrame;
-            }
+            clip->m_aniMat[boneIdx][frame] = matFrame;
         }
+
+        // 여기는 오브젝트 애니메이션용
+        mesh->m_born.bindPoseMat[nodeIdx] = clip->m_aniMat[nodeIdx][startFrame];
     }
+
+    mesh->m_animations.push_back(clip);
 }
 
 void FbxLoader::ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
@@ -545,14 +582,22 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
                 mesh->m_vertices[m_vertexIdx].n.z = static_cast<float>(vFbxNormal.mData[1]);
 
 
-                size_t iwSize = m_skinningData[iVertexPositionIndex[vertexIdx]].boneIdx.size();
-                for (size_t iwIdx = 0; iwIdx < iwSize; iwIdx++)
+                if (isSkinned)
                 {
-                    mesh->m_vertices[m_vertexIdx].i[iwIdx] =
-                    m_skinningData[iVertexPositionIndex[vertexIdx]].boneIdx[iwIdx];
+                    size_t iwSize = m_skinningData[iVertexPositionIndex[vertexIdx]].boneIdx.size();
+                    for (size_t iwIdx = 0; iwIdx < iwSize; iwIdx++)
+                    {
+                        mesh->m_vertices[m_vertexIdx].i[iwIdx] =
+                        m_skinningData[iVertexPositionIndex[vertexIdx]].boneIdx[iwIdx];
 
-                    mesh->m_vertices[m_vertexIdx].w[iwIdx] =
-                    m_skinningData[iVertexPositionIndex[vertexIdx]].weights[iwIdx];
+                        mesh->m_vertices[m_vertexIdx].w[iwIdx] =
+                        m_skinningData[iVertexPositionIndex[vertexIdx]].weights[iwIdx];
+                    }
+                }
+                else
+                {
+                    mesh->m_vertices[m_vertexIdx].i[0] = mesh->m_born.bornIndex[fNode->GetName()];
+                    mesh->m_vertices[m_vertexIdx].w[0] = 1.f;
                 }
 
                 subMesh->indices[baseIndex] = m_vertexIdx;
@@ -582,6 +627,7 @@ void FbxLoader::InitMesh(std::shared_ptr<Mesh> mesh)
     }
 
     mesh->m_vertices.resize(meshVerticesNums);
+    m_vertexIdx = 0;
 }
 
 mat4 FbxLoader::ConvertFbxMatToGlmMat(FbxAMatrix& fMat)

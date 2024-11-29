@@ -18,10 +18,11 @@ namespace HBSoft
         AnimationClip();
         ~AnimationClip() = default;
 
-        std::vector<mat4>& GetAnimationMatrix(float frame);
+        std::vector<mat4> GetAnimationMatrix(float frame);
 
         void SetStartFrame(int start);
         void SetLastFrame(int last);
+        void SetAnimationName(const stringV aniName);
 
         const int GetStartFrame() const;
         const int GetLastFrame() const;

@@ -11,7 +11,6 @@ date: 2024-11-04
 using namespace HBSoft;
 
 Line::Line(std::shared_ptr<D3Device> device)
-    : Mesh(false)
 {
     assert(CreateVertices(device));
     assert(CreateIndices(device));

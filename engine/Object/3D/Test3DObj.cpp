@@ -6,12 +6,13 @@ using namespace HBSoft;
 
 Test3DObj::Test3DObj()
 {
-    SetMeshKey(L"gardener_model.fbx");
+    SetMeshKey(L"Goose.fbx");
     SetVSShaderKey(L"AnimationVertex.hlsl");
     // SetVSShaderKey(L"VertexShader.hlsl");
 
     // SetPSShaderKey(L"PixelShader.hlsl");  // 텍스쳐 있는 놈
     SetPSShaderKey(L"ColorPixelShader.hlsl");  // 텍스쳐 없는 놈
+    anim.resize(m_mesh->m_born.bornIndex.size());
 }
 
 void Test3DObj::Update(const float deltaTime)
@@ -19,15 +20,32 @@ void Test3DObj::Update(const float deltaTime)
     static float currentFrame = 0.f;
     static int   startFrame   = 0;
     static int   lastFrame    = 0;
+    // static int   selectAnimation = 0;
+
+    // float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
+    // ImGui::PushItemFlag(ImGuiItemFlags_ButtonRepeat, true);
+    // if (ImGui::ArrowButton("##left", ImGuiDir_Left))
+    //{
+    //     selectAnimation--;
+    // }
+    // ImGui::SameLine(0.0f, spacing);
+    // if (ImGui::ArrowButton("##right", ImGuiDir_Right))
+    //{
+    //     selectAnimation++;
+    // }
+    // ImGui::PopItemFlag();
+    // ImGui::SameLine();
+    // ImGui::Text("%d", selectAnimation);
 
     currentFrame += deltaTime * 10.f;
-    startFrame    = m_mesh->m_animations[0].GetStartFrame();
-    lastFrame     = m_mesh->m_animations[0].GetLastFrame();
+    startFrame    = m_mesh->m_animations[0]->GetStartFrame();
+    lastFrame     = m_mesh->m_animations[0]->GetLastFrame();
 
     if (currentFrame > lastFrame)
-        startFrame = startFrame;
+        currentFrame = startFrame;
 
-    anim = m_mesh->m_animations[0].GetAnimationMatrix(currentFrame);
+    anim = m_mesh->m_animations[0]->GetAnimationMatrix(currentFrame);
+
 
     if (m_camera != nullptr)
     {

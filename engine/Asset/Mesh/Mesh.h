@@ -53,9 +53,9 @@ namespace HBSoft
     struct Born
     {
         // 오브젝트 애니메이션도 지원하려고 노드 기준으로 구함
-        std::map<std::string, int>         bornIndex;
-        std::map<std::string, std::string> bornParent;
-        std::vector<mat4>                  bindPoseMat;
+        std::map<std::string, int> bornIndex;
+        std::map<std::string, int> bornParentIndex;
+        std::vector<mat4>          bindPoseMat;
     };
 
     struct SubMesh
@@ -75,9 +75,10 @@ namespace HBSoft
 
         std::vector<std::shared_ptr<SubMesh>> m_subMeshes;
 
-        // 이 두개는 건들지 마셈 로더에서 추가 할 일임
-        Born                       m_born;
-        std::vector<AnimationClip> m_animations;
+        // 이 두개는 건들지 마셈 로더에서 알아서 함
+        Born m_born;
+
+        std::vector<std::shared_ptr<AnimationClip>> m_animations;
 
         ComPtr<ID3D11Buffer> m_vertexBuffer;
         ComPtr<ID3D11Buffer> m_indexBuffer;
