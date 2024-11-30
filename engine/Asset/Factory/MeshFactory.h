@@ -10,6 +10,8 @@ date: 2024-11-22
 #include "pch.h"
 #include "Mesh/Mesh.h"
 #include "Mesh/Box3D.h"
+#include "Mesh/Box2D.h"
+#include "Mesh/Circle.h"
 #include "Mesh/Line.h"
 #include "Mesh/CubeMap.h"
 #include "Mesh/HeightMap.h"

@@ -109,4 +109,5 @@ void Transform3D::CalculateWorldMat()
     m_worldMat[3][0] = m_pos.x;
     m_worldMat[3][1] = m_pos.y;
     m_worldMat[3][2] = m_pos.z;
+    m_worldMat[3][3] = 1.f;
 }

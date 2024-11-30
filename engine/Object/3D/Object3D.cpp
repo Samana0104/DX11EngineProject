@@ -23,7 +23,7 @@ void Object3D::UpdateDefaultCB()
         m_cb0.view = mat4(1.0f);
         m_cb0.proj = mat4(1.0f);
     }
-    m_cb0.world    = m_transform.m_worldMat;
-    m_cb0.invWorld = glm::inverse(m_transform.m_worldMat);
+    m_cb0.world       = m_transform.m_worldMat;
+    m_cb0.normalWorld = glm::transpose(glm::inverse(m_transform.m_worldMat));
     m_vsShader->SetConstantBuffer(HDEVICE, (void*)&m_cb0, sizeof(m_cb0), 0);
 }

@@ -9,6 +9,7 @@ date: 2024-11-04
 #include "pch.h"
 #include "Core.h"
 #include "SceneLobby.h"
+#include "SceneGame.h"
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
@@ -22,10 +23,16 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
         Scene begin
         씬 등록은 이 이후로 작성할 것
     */
+
     auto lobbyScene = std::make_shared<HBSoft::SceneLobby>();
+    auto gameScene  = std::make_shared<HBSoft::SceneGame>();
+
     HENGINE->m_sceneMgr.Add(L"Lobby", lobbyScene);
-    HENGINE->m_sceneMgr.SetCurrentScene(L"Lobby");
+    HENGINE->m_sceneMgr.Add(L"Game", gameScene);
+    HENGINE->m_sceneMgr.SetCurrentScene(L"Game");
     HENGINE->Run();
+
+
     /*
         Scene end
         여기 안에 작성할 것
