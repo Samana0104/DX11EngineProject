@@ -72,6 +72,7 @@ namespace HBSoft
         {      L"CubeVertex.hlsl", ShaderType::VERTEX},
         {       L"CubePixel.hlsl",  ShaderType::PIXEL},
         {L"ColorPixelShader.hlsl",  ShaderType::PIXEL},
-        { L"AnimationVertex.hlsl", ShaderType::VERTEX}
+        { L"AnimationVertex.hlsl", ShaderType::VERTEX},
+        {        L"2DVertex.hlsl", ShaderType::VERTEX}
     };
 }  // namespace HBSoft

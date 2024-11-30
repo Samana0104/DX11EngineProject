@@ -20,7 +20,7 @@ void Transform2D::InitTransform()
     m_pos      = vec2(0.f, 0.f);
     m_scale    = vec2(1.f, 1.f);
     m_angle    = 0.f;
-    m_worldMat = mat3(1.f);
+    m_worldMat = mat4(1.f);
 }
 
 Transform2D& Transform2D::AddLocation(const vec2 pos)
@@ -76,7 +76,10 @@ void Transform2D::CalculateWorldMat()
     m_worldMat[0] *= m_scale.x;
     m_worldMat[1] *= m_scale.y;
 
-    m_worldMat[2][0] = m_pos.x;
-    m_worldMat[2][1] = m_pos.y;
     m_worldMat[2][2] = 1.f;
+
+    m_worldMat[3][0] = m_pos.x;
+    m_worldMat[3][1] = m_pos.y;
+    m_worldMat[3][2] = 0.f;
+    m_worldMat[3][3] = 1.f;
 }

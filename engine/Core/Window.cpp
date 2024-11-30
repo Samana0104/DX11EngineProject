@@ -119,6 +119,10 @@ LRESULT Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         Window::m_windowSize = HPoint(rc.right, rc.bottom);
         EventHandler::GetInstance().Notify(EventList::WINDOW_RESIZE);
         return 0;
+
+    case WM_MOUSEMOVE:
+        EventHandler::GetInstance().Notify(EventList::MOUSE_MOVE);
+        return 0;
     }
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }

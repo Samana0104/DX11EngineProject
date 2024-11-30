@@ -90,7 +90,7 @@ bool D3Device::CreateDeviceAndSwapChain()
         m_swapChainDesc.BufferDesc.Height                  = (UINT)windowSize.y;
         m_swapChainDesc.BufferDesc.RefreshRate.Numerator   = 60;
         m_swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
-        m_swapChainDesc.BufferDesc.Format                  = DXGI_FORMAT_R8G8B8A8_UNORM;
+        m_swapChainDesc.BufferDesc.Format                  = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
         m_swapChainDesc.BufferUsage                        = DXGI_USAGE_RENDER_TARGET_OUTPUT;
         m_swapChainDesc.BufferCount                        = 1;
         m_swapChainDesc.OutputWindow                       = m_window->GetHandle();
@@ -173,8 +173,8 @@ bool D3Device::CreateSamplerState()
     samplerDesc.AddressV           = D3D11_TEXTURE_ADDRESS_WRAP;
     samplerDesc.AddressW           = D3D11_TEXTURE_ADDRESS_WRAP;
     samplerDesc.ComparisonFunc     = D3D11_COMPARISON_NEVER;
-    samplerDesc.MinLOD             = 0;
-    samplerDesc.MaxLOD             = D3D11_FLOAT32_MAX;
+    samplerDesc.MaxLOD             = FLT_MAX;
+    samplerDesc.MinLOD             = FLT_MIN;
 
     // 基敲矾 惑怕 按眉 积己
     HRESULT hr = m_d3dDevice->CreateSamplerState(&samplerDesc, m_samplerState.GetAddressOf());

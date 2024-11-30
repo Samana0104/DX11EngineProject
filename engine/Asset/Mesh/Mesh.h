@@ -70,9 +70,7 @@ namespace HBSoft
     class Mesh
     {
     public:
-        std::vector<Vertex> m_vertices;  // 버텍스 버퍼용 배열
-        std::vector<UINT>   m_indices;   // 인덱스  버퍼용 배열
-
+        std::vector<Vertex>                   m_vertices;  // 버텍스 버퍼용 배열
         std::vector<std::shared_ptr<SubMesh>> m_subMeshes;
 
         // 이 두개는 건들지 마셈 로더에서 알아서 함
@@ -81,8 +79,6 @@ namespace HBSoft
         std::vector<std::shared_ptr<AnimationClip>> m_animations;
 
         ComPtr<ID3D11Buffer> m_vertexBuffer;
-        ComPtr<ID3D11Buffer> m_indexBuffer;
-
 
     public:
         Mesh();

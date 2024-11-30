@@ -50,7 +50,9 @@ void LineObj::Draw(vec3 start, vec3 end, vec4 color)
                                            m_mesh->m_vertexBuffer.GetAddressOf(),
                                            &pStrides,
                                            &pOffsets);
-    HDEVICE->m_context->IASetIndexBuffer(m_mesh->m_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+    HDEVICE->m_context->IASetIndexBuffer(m_mesh->m_subMeshes[0]->indexBuffer.Get(),
+                                         DXGI_FORMAT_R32_UINT,
+                                         0);
     HDEVICE->m_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
-    HDEVICE->m_context->DrawIndexed((UINT)m_mesh->m_indices.size(), 0, 0);
+    HDEVICE->m_context->DrawIndexed((UINT)m_mesh->m_subMeshes[0]->indices.size(), 0, 0);
 }

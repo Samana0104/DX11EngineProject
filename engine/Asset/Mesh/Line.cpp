@@ -34,10 +34,16 @@ bool Line::CreateVertices(std::shared_ptr<D3Device> device)
 
 bool Line::CreateIndices(std::shared_ptr<D3Device> device)
 {
-    m_indices.resize(2);
-    int iIndex = 0;
+    std::shared_ptr<SubMesh> subMesh = std::make_shared<SubMesh>();
 
-    m_indices[iIndex++] = 0;
-    m_indices[iIndex++] = 1;
-    return device->CreateIndexBuffer(m_indices, m_indexBuffer);
+    subMesh->meshName = "Line";
+    subMesh->indices.resize(2);
+
+    subMesh->indices.push_back(0);
+    subMesh->indices.push_back(1);
+
+    assert(device->CreateIndexBuffer(subMesh->indices, subMesh->indexBuffer));
+    m_subMeshes.push_back(subMesh);
+
+    return true;
 }
