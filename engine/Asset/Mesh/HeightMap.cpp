@@ -48,10 +48,14 @@ bool HeightMap::CreateVertices(std::shared_ptr<D3Device> device, const MapDesc& 
 
 bool HeightMap::CreateIndices(std::shared_ptr<D3Device> device, const MapDesc& desc)
 {
+    std::shared_ptr<SubMesh> subMesh = std::make_shared<SubMesh>();
+
     UINT curIdx = 0;
     UINT nextRow, nextCol;
 
-    m_indices.resize(desc.numFaces * 3);
+    subMesh->meshName = "HeightMap";
+
+    subMesh->indices.resize(desc.numFaces * 3);
 
     for (UINT row = 0; row < desc.numRows - 1; row++)
     {
@@ -63,17 +67,20 @@ bool HeightMap::CreateIndices(std::shared_ptr<D3Device> device, const MapDesc& d
             /*
                 노션 메쉬 생성 기준 123 / 134 형식으로 만듬
             */
-            m_indices[curIdx]     = row * desc.numCols + col;
-            m_indices[curIdx + 1] = row * desc.numCols + nextCol;
-            m_indices[curIdx + 2] = nextRow * desc.numCols + nextCol;
+            subMesh->indices[curIdx]     = row * desc.numCols + col;
+            subMesh->indices[curIdx + 1] = row * desc.numCols + nextCol;
+            subMesh->indices[curIdx + 2] = nextRow * desc.numCols + nextCol;
 
-            m_indices[curIdx + 3] = m_indices[curIdx];
-            m_indices[curIdx + 4] = m_indices[curIdx + 2];
-            m_indices[curIdx + 5] = nextRow * desc.numCols + col;
+            subMesh->indices[curIdx + 3] = subMesh->indices[curIdx];
+            subMesh->indices[curIdx + 4] = subMesh->indices[curIdx + 2];
+            subMesh->indices[curIdx + 5] = nextRow * desc.numCols + col;
 
             curIdx += 6;
         }
     }
 
-    return device->CreateIndexBuffer(m_indices, m_indexBuffer);
+    assert(device->CreateIndexBuffer(subMesh->indices, subMesh->indexBuffer));
+    m_subMeshes.push_back(subMesh);
+
+    return true;
 }

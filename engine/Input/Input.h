@@ -8,18 +8,11 @@ date: 2024-11-04
 
 #pragma once
 #include "pch.h"
+#include "Observer.h"
+#include "EventHandler.h"
 
 namespace HBSoft
 {
-    // enum class MouseState
-    //{
-    //	DEFAULT = 0,  // 커서가 위에 없을 때(T_FOCUS상태에서 다른 곳을 T_ACTIVE하면 전환된다.)
-    //	HOVER = 1,	// 커서가 위에 있을 때
-    //	FOCUS = 2,	// T_ACTIVE상태에서 왼쪽 버튼을 다른 곳에서 놓았을 때(취소)
-    //	ACTIVE = 3,	// 마우스 왼쪽 버튼 누르고 있을 때
-    //	SELECTED = 4, // T_ACTIVE 상태에서 왼쪽버튼 놓았을 때
-    // };
-
     enum class KeyState
     {
         KEY_FREE = 0,
@@ -28,7 +21,7 @@ namespace HBSoft
         KEY_HOLD
     };
 
-    class Input
+    class Input : public Observer
     {
     private:
         inline static const UINT  KEY_COUNT   = 256;
@@ -52,6 +45,7 @@ namespace HBSoft
 
     public:
         Input(std::shared_ptr<Window> window);
+        ~Input();
 
         KeyState      GetKeyState(const UINT key) const;
         const HPoint& GetMousePos() const;
@@ -64,5 +58,7 @@ namespace HBSoft
         bool IsKeyPressed(const SHORT key) const;
 
         void Update();
+
+        virtual void OnNotice(EventList event, void* entity) override;
     };
 }  // namespace HBSoft

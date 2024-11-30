@@ -11,7 +11,7 @@ date: 2024-11-08
 using namespace HBSoft;
 
 Mesh::Mesh()
-    : m_vertexBuffer(nullptr), m_indexBuffer(nullptr)
+    : m_vertexBuffer(nullptr)
 {}
 
 void Mesh::SetVertices(std::shared_ptr<D3Device> device, const std::vector<Vertex>& vertices)

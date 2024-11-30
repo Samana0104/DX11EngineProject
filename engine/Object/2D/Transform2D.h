@@ -17,7 +17,7 @@ namespace HBSoft
         vec2  m_pos;
         vec2  m_scale;
         float m_angle;  // radian
-        mat3  m_worldMat;
+        mat4  m_worldMat;
 
     private:
         void CalculateWorldMat();

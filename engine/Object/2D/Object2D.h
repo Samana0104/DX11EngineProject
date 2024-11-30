@@ -28,9 +28,9 @@ namespace HBSoft
     public:
         virtual void UpdateDefaultCB() override;
 
-        virtual void Init()                        = 0;
         virtual void Update(const float deltaTime) = 0;
         virtual void Render()                      = 0;
+        virtual void Init()                        = 0;
         virtual void Release()                     = 0;
     };
 }  // namespace HBSoft

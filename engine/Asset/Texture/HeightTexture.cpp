@@ -25,7 +25,7 @@ bool HeightTexture::CreateTexture(std::shared_ptr<D3Device> device)
                                                      0,
                                                      D3D11_CPU_ACCESS_WRITE | D3D11_CPU_ACCESS_READ,
                                                      0,
-                                                     DirectX::DX11::WIC_LOADER_DEFAULT,
+                                                     DirectX::WIC_LOADER_DEFAULT,
                                                      m_texture.GetAddressOf(),
                                                      nullptr);
     return SUCCEEDED(hr);

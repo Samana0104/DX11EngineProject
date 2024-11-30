@@ -3,7 +3,7 @@ author : 변한빛
 description : 인풋 처리를 위한 소스 파일
 
 version: 1.0.0
-date: 2024-11-04
+date: 2024-11-30
 */
 
 #include "pch.h"
@@ -13,7 +13,13 @@ using namespace HBSoft;
 Input::Input(std::shared_ptr<Window> window)
     : m_window(window)
 {
+    EventHandler::GetInstance().AddEvent(EventList::MOUSE_MOVE, this);
     ZeroMemory(&m_keyState, sizeof(KeyState) * 256);
+}
+
+Input::~Input()
+{
+    EventHandler::GetInstance().DeleteEvent(EventList::MOUSE_MOVE, this);
 }
 
 void Input::UpdateKeyState(const UINT key)
@@ -95,14 +101,13 @@ void Input::Update()
     if (!m_window->IsActivate())  // 게임 윈도우가 켜져있으면 ( 활성화 될 때 )
         return;
 
-    HPoint preMousePos = m_mousePos;
-    POINT  mousePos;
-
-
     for (UINT key = 0; key < KEY_COUNT; key++)
         UpdateKeyState(key);
+}
 
-
+void Input::OnNotice(EventList event, void* entity)
+{
+    POINT mousePos;
     GetCursorPos(&mousePos);
     ScreenToClient(m_window->GetHandle(), &mousePos);
     m_mousePos = mousePos;

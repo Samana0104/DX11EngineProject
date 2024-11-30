@@ -103,45 +103,55 @@ bool Box3D::CreateVertices(std::shared_ptr<D3Device> device)
 
 bool Box3D::CreateIndices(std::shared_ptr<D3Device> device)
 {
-    m_indices.resize(36);
     int iIndex = 0;
 
-    m_indices[iIndex++] = 0;
-    m_indices[iIndex++] = 1;
-    m_indices[iIndex++] = 2;
-    m_indices[iIndex++] = 0;
-    m_indices[iIndex++] = 2;
-    m_indices[iIndex++] = 3;
-    m_indices[iIndex++] = 4;
-    m_indices[iIndex++] = 5;
-    m_indices[iIndex++] = 6;
-    m_indices[iIndex++] = 4;
-    m_indices[iIndex++] = 6;
-    m_indices[iIndex++] = 7;
-    m_indices[iIndex++] = 8;
-    m_indices[iIndex++] = 9;
-    m_indices[iIndex++] = 10;
-    m_indices[iIndex++] = 8;
-    m_indices[iIndex++] = 10;
-    m_indices[iIndex++] = 11;
-    m_indices[iIndex++] = 12;
-    m_indices[iIndex++] = 13;
-    m_indices[iIndex++] = 14;
-    m_indices[iIndex++] = 12;
-    m_indices[iIndex++] = 14;
-    m_indices[iIndex++] = 15;
-    m_indices[iIndex++] = 16;
-    m_indices[iIndex++] = 17;
-    m_indices[iIndex++] = 18;
-    m_indices[iIndex++] = 16;
-    m_indices[iIndex++] = 18;
-    m_indices[iIndex++] = 19;
-    m_indices[iIndex++] = 20;
-    m_indices[iIndex++] = 21;
-    m_indices[iIndex++] = 22;
-    m_indices[iIndex++] = 20;
-    m_indices[iIndex++] = 22;
-    m_indices[iIndex++] = 23;
+    std::shared_ptr<SubMesh> subMesh = std::make_shared<SubMesh>();
 
-    return device->CreateIndexBuffer(m_indices, m_indexBuffer);
+    subMesh->meshName = "Box3D";
+
+    subMesh->indices.resize(36);
+
+    subMesh->indices[iIndex++] = 0;
+    subMesh->indices[iIndex++] = 1;
+    subMesh->indices[iIndex++] = 2;
+    subMesh->indices[iIndex++] = 0;
+    subMesh->indices[iIndex++] = 2;
+    subMesh->indices[iIndex++] = 3;
+    subMesh->indices[iIndex++] = 4;
+    subMesh->indices[iIndex++] = 5;
+    subMesh->indices[iIndex++] = 6;
+    subMesh->indices[iIndex++] = 4;
+    subMesh->indices[iIndex++] = 6;
+    subMesh->indices[iIndex++] = 7;
+    subMesh->indices[iIndex++] = 8;
+    subMesh->indices[iIndex++] = 9;
+    subMesh->indices[iIndex++] = 10;
+    subMesh->indices[iIndex++] = 8;
+    subMesh->indices[iIndex++] = 10;
+    subMesh->indices[iIndex++] = 11;
+    subMesh->indices[iIndex++] = 12;
+    subMesh->indices[iIndex++] = 13;
+    subMesh->indices[iIndex++] = 14;
+    subMesh->indices[iIndex++] = 12;
+    subMesh->indices[iIndex++] = 14;
+    subMesh->indices[iIndex++] = 15;
+    subMesh->indices[iIndex++] = 16;
+    subMesh->indices[iIndex++] = 17;
+    subMesh->indices[iIndex++] = 18;
+    subMesh->indices[iIndex++] = 16;
+    subMesh->indices[iIndex++] = 18;
+    subMesh->indices[iIndex++] = 19;
+    subMesh->indices[iIndex++] = 20;
+    subMesh->indices[iIndex++] = 21;
+    subMesh->indices[iIndex++] = 22;
+    subMesh->indices[iIndex++] = 20;
+    subMesh->indices[iIndex++] = 22;
+    subMesh->indices[iIndex++] = 23;
+
+    subMesh->hasTexture = false;
+
+    assert(device->CreateIndexBuffer(subMesh->indices, subMesh->indexBuffer));
+    m_subMeshes.push_back(subMesh);
+
+    return true;
 }

@@ -30,7 +30,7 @@ void Test3DObj::Update(const float deltaTime)
     lastFrame     = m_mesh->m_animations[0]->GetLastFrame();
 
     if (currentFrame > lastFrame)
-        currentFrame = startFrame;
+        currentFrame = (float)startFrame;
 
     anim = m_mesh->m_animations[0]->GetAnimationMatrix(currentFrame);
 

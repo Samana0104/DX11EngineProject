@@ -18,11 +18,17 @@ VertexShader::VertexShader(std::shared_ptr<D3Device> device, const wstringV path
 
 void VertexShader::SetUpToContext(std::shared_ptr<D3Device> device)
 {
+    std::vector<ID3D11Buffer*> buffer;
+
     device->m_context->IASetInputLayout(m_vertexLayout.Get());
     device->m_context->VSSetShader(m_vertexShader.Get(), nullptr, 0);
 
+
     for (UINT i = 0; i < m_constantBuffers.size(); i++)
-        device->m_context->VSSetConstantBuffers(i, 1, m_constantBuffers[i].GetAddressOf());
+        buffer.push_back(m_constantBuffers[i].Get());
+
+    if (buffer.size() > 0)
+        device->m_context->VSSetConstantBuffers(0, (UINT)buffer.size(), &buffer.at(0));
 }
 
 bool VertexShader::CreateVertexShader(std::shared_ptr<D3Device> device)

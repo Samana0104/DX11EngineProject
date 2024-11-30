@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\res\Shader\2DVertex.hlsl" />
     <FxCompile Include="..\res\Shader\AnimationVertex.hlsl" />
     <FxCompile Include="..\res\Shader\ColorPixelShader.hlsl" />
     <FxCompile Include="..\res\Shader\CubePixel.hlsl" />
@@ -59,6 +60,7 @@
     <ClCompile Include="DesignPattern\Observer.cpp" />
     <ClCompile Include="GameStart\Main.cpp" />
     <ClCompile Include="Input\Input.cpp" />
+    <ClCompile Include="Object\2D\MainTitle.cpp" />
     <ClCompile Include="Object\2D\Object2D.cpp" />
     <ClCompile Include="Object\2D\Transform2D.cpp" />
     <ClCompile Include="Object\3D\CubeMapObj.cpp" />
@@ -71,8 +73,8 @@
     <ClCompile Include="Object\Button.cpp" />
     <ClCompile Include="Object\Camera.cpp" />
     <ClCompile Include="Object\Object.cpp" />
-    <ClCompile Include="Scene\SceneGame.cpp" />
     <ClCompile Include="Scene\SceneLobby.cpp" />
+    <ClCompile Include="Scene\SceneGame.cpp" />
     <ClCompile Include="Scene\SceneMgr.cpp" />
     <ClCompile Include="Timer\SystemTimer.cpp" />
   </ItemGroup>
@@ -114,6 +116,7 @@
     <ClInclude Include="DesignPattern\Observer.h" />
     <ClInclude Include="DesignPattern\Singleton.h" />
     <ClInclude Include="Input\Input.h" />
+    <ClInclude Include="Object\2D\MainTitle.h" />
     <ClInclude Include="Object\2D\Object2D.h" />
     <ClInclude Include="Object\2D\Transform2D.h" />
     <ClInclude Include="Object\3D\CubeMapObj.h" />
@@ -128,8 +131,8 @@
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\Renderable.h" />
     <ClInclude Include="Scene\Scene.h" />
-    <ClInclude Include="Scene\SceneGame.h" />
     <ClInclude Include="Scene\SceneLobby.h" />
+    <ClInclude Include="Scene\SceneGame.h" />
     <ClInclude Include="Scene\SceneMgr.h" />
     <ClInclude Include="Timer\SystemTimer.h" />
   </ItemGroup>
