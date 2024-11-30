@@ -55,8 +55,8 @@ void Core::Update()
 
     m_timer.Update();
     m_input->Update();
-    m_sceneMgr.Update(m_timer.GetDeltaTime());
     m_assets->Update();
+    m_sceneMgr.Update(m_timer.GetDeltaTime());
 
     ImGui::End();
 }
@@ -72,7 +72,9 @@ void Core::Render()
 
 
     m_sceneMgr.Render();
-    m_assets->m_fonts[L"DEBUG_FONT"]->DrawTexts(m_device, m_timer.m_csBuffer, {10.f, 10.f, 1000.f, 1000.f});
+    m_assets->m_fonts[L"DEBUG_FONT"]->DrawTexts(m_device,
+                                                m_timer.m_csBuffer,
+                                                {10.f, 10.f, 1000.f, 1000.f});
 
     ImGui::Render();
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());

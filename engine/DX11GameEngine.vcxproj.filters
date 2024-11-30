@@ -96,7 +96,7 @@
     <ClCompile Include="Asset\Mesh\Box2D.cpp">
       <Filter>Asset\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="Asset\Mesh\Circle2D.cpp">
+    <ClCompile Include="Asset\Mesh\Circle.cpp">
       <Filter>Asset\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Asset\Font\Font.cpp">
@@ -119,9 +119,6 @@
     </ClCompile>
     <ClCompile Include="Asset\Texture\Texture.cpp">
       <Filter>Asset\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="Asset\Mesh\Sphere2D.cpp">
-      <Filter>Asset\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Asset\Mesh\Box3D.cpp">
       <Filter>Asset\Mesh</Filter>
@@ -192,6 +189,12 @@
     <ClCompile Include="Object\Object.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\SceneGame.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\Goose.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -254,7 +257,7 @@
     <ClInclude Include="Asset\Mesh\Box2D.h">
       <Filter>Asset\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="Asset\Mesh\Circle2D.h">
+    <ClInclude Include="Asset\Mesh\Circle.h">
       <Filter>Asset\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Asset\Font\Font.h">
@@ -277,9 +280,6 @@
     </ClInclude>
     <ClInclude Include="Asset\Texture\Texture.h">
       <Filter>Asset\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Asset\Mesh\Sphere2D.h">
-      <Filter>Asset\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Asset\Mesh\Box3D.h">
       <Filter>Asset\Mesh</Filter>
@@ -355,6 +355,12 @@
     </ClInclude>
     <ClInclude Include="Object\Object.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneGame.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\Goose.h">
+      <Filter>Object\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

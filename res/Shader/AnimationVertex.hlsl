@@ -60,7 +60,7 @@ PSInput main(AnimationInput vsIn)
     float4 viewPos = mul(viewMat, worldPos);
     float4 projPos = mul(projMat, viewPos);
 
-    float4 normal = mul(invWorldMat, float4(vsIn.n.xyz, 0));
+    float4 normal = mul(normalMat, float4(vsIn.n.xyz, 0));
     
     psIn.p = projPos;
     psIn.n = normal;

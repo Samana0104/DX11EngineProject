@@ -22,8 +22,10 @@ namespace HBSoft
         Transform3D m_transform;
         DefaultCB0  m_cb0;
 
+    protected:
+        Object3D() = default;
+
     public:
-        Object3D()  = default;
         ~Object3D() = default;
 
         virtual void UpdateDefaultCB() override;

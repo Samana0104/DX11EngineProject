@@ -16,11 +16,11 @@ namespace HBSoft
     // 메쉬 클래스 상속하고 에셋 매니저에 따로 작성하고 디폴트 메쉬에 추가할 것
     enum class MeshShape
     {
-        BOX2D    = 1,
-        CIRCLE2D = 2,
-        BOX3D    = 3,
-        LINE     = 4,
-        CUBEMAP  = 5
+        BOX2D   = 1,
+        BOX3D   = 2,
+        CIRCLE  = 3,
+        LINE    = 4,
+        CUBEMAP = 5
     };
 
     struct Vertex

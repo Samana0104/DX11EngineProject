@@ -1,9 +1,9 @@
 /*
-author : 변한빛
+author : 정찬빈
 description : 박스2D를 만드는 헤더 파일
 
 version: 1.0.0
-date: 2024-11-04
+date: 2024-11-27
 */
 
 #pragma once
@@ -14,9 +14,11 @@ namespace HBSoft
     class Box2D : public Mesh
     {
     private:
-        void CreateBox2DVertex();
+        bool CreateVertices(std::shared_ptr<D3Device>& device);
+        bool CreateIndices(std::shared_ptr<D3Device>& device);
 
     public:
-        Box2D();
+        Box2D(std::shared_ptr<D3Device> device);
+        ~Box2D() = default;
     };
 }  // namespace HBSoft

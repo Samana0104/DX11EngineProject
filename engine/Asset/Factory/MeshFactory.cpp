@@ -28,8 +28,16 @@ std::shared_ptr<Mesh> MeshFactory::Create(std::shared_ptr<D3Device> device, cons
 
     switch (shape)
     {
+    case MeshShape::BOX2D:
+        mesh = std::make_shared<Box2D>(device);
+        break;
+
     case MeshShape::BOX3D:
         mesh = std::make_shared<Box3D>(device);
+        break;
+
+    case MeshShape::CIRCLE:
+        mesh = std::make_shared<Circle>(device);
         break;
 
     case MeshShape::LINE:

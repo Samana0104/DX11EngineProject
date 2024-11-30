@@ -37,12 +37,11 @@
     <ClCompile Include="Asset\Font\Font.cpp" />
     <ClCompile Include="Asset\Mesh\Box2D.cpp" />
     <ClCompile Include="Asset\Mesh\Box3D.cpp" />
-    <ClCompile Include="Asset\Mesh\Circle2D.cpp" />
+    <ClCompile Include="Asset\Mesh\Circle.cpp" />
     <ClCompile Include="Asset\Mesh\CubeMap.cpp" />
     <ClCompile Include="Asset\Mesh\HeightMap.cpp" />
     <ClCompile Include="Asset\Mesh\Line.cpp" />
     <ClCompile Include="Asset\Mesh\Mesh.cpp" />
-    <ClCompile Include="Asset\Mesh\Sphere2D.cpp" />
     <ClCompile Include="Asset\Shader\PixelShader.cpp" />
     <ClCompile Include="Asset\Shader\Shader.cpp" />
     <ClCompile Include="Asset\Shader\VertexShader.cpp" />
@@ -63,6 +62,7 @@
     <ClCompile Include="Object\2D\Object2D.cpp" />
     <ClCompile Include="Object\2D\Transform2D.cpp" />
     <ClCompile Include="Object\3D\CubeMapObj.cpp" />
+    <ClCompile Include="Object\3D\Goose.cpp" />
     <ClCompile Include="Object\3D\HeightMapObj.cpp" />
     <ClCompile Include="Object\3D\LineObj.cpp" />
     <ClCompile Include="Object\3D\Object3D.cpp" />
@@ -71,6 +71,7 @@
     <ClCompile Include="Object\Button.cpp" />
     <ClCompile Include="Object\Camera.cpp" />
     <ClCompile Include="Object\Object.cpp" />
+    <ClCompile Include="Scene\SceneGame.cpp" />
     <ClCompile Include="Scene\SceneLobby.cpp" />
     <ClCompile Include="Scene\SceneMgr.cpp" />
     <ClCompile Include="Timer\SystemTimer.cpp" />
@@ -88,12 +89,11 @@
     <ClInclude Include="Asset\Font\Font.h" />
     <ClInclude Include="Asset\Mesh\Box2D.h" />
     <ClInclude Include="Asset\Mesh\Box3D.h" />
-    <ClInclude Include="Asset\Mesh\Circle2D.h" />
+    <ClInclude Include="Asset\Mesh\Circle.h" />
     <ClInclude Include="Asset\Mesh\CubeMap.h" />
     <ClInclude Include="Asset\Mesh\HeightMap.h" />
     <ClInclude Include="Asset\Mesh\Line.h" />
     <ClInclude Include="Asset\Mesh\Mesh.h" />
-    <ClInclude Include="Asset\Mesh\Sphere2D.h" />
     <ClInclude Include="Asset\Shader\ConstantBuffers.h" />
     <ClInclude Include="Asset\Shader\PixelShader.h" />
     <ClInclude Include="Asset\Shader\Shader.h" />
@@ -117,6 +117,7 @@
     <ClInclude Include="Object\2D\Object2D.h" />
     <ClInclude Include="Object\2D\Transform2D.h" />
     <ClInclude Include="Object\3D\CubeMapObj.h" />
+    <ClInclude Include="Object\3D\Goose.h" />
     <ClInclude Include="Object\3D\HeightMapObj.h" />
     <ClInclude Include="Object\3D\LineObj.h" />
     <ClInclude Include="Object\3D\Object3D.h" />
@@ -127,6 +128,7 @@
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\Renderable.h" />
     <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneGame.h" />
     <ClInclude Include="Scene\SceneLobby.h" />
     <ClInclude Include="Scene\SceneMgr.h" />
     <ClInclude Include="Timer\SystemTimer.h" />
@@ -258,7 +260,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)res\Shader;$(ProjectDir)Color\;$(ProjectDir)Core\;$(ProjectDir)DesignPattern\;$(ProjectDir)FSM\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Object\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc;$(SolutionDir)extern\inc\fbxsdk\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Color\;$(ProjectDir)Core\;$(ProjectDir)DesignPattern\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Object\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc\;$(SolutionDir)extern\inc\fbxsdk\;$(SolutionDir)res\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
