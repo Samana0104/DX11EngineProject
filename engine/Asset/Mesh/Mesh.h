@@ -8,6 +8,7 @@ date: 2024-11-08
 
 #pragma once
 #include "pch.h"
+#include "AnimationClip.h"
 
 namespace HBSoft
 {
@@ -24,35 +25,71 @@ namespace HBSoft
 
     struct Vertex
     {
-        vec3 p;
-        vec3 n;
-        vec4 c;
-        vec2 t;
+        vec3  p;  // position
+        vec3  n;  // normal
+        vec4  c;  // color
+        vec2  t;  // texture coordinate
+        UINT  i[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+        float w[8] = {0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f};
+
+        bool operator==(const Vertex& ref)
+        {
+            if (p != ref.p)
+                return false;
+
+            if (n != ref.n)
+                return false;
+
+            if (c != ref.c)
+                return false;
+
+            if (t != ref.t)
+                return false;
+
+            return true;
+        }
+    };
+
+    struct Born
+    {
+        // 오브젝트 애니메이션도 지원하려고 노드 기준으로 구함
+        std::map<std::string, int> bornIndex;
+        std::map<std::string, int> bornParentIndex;
+        std::vector<mat4>          bindPoseMat;
+    };
+
+    struct SubMesh
+    {
+        ComPtr<ID3D11Buffer> indexBuffer;
+        std::vector<UINT>    indices;
+        std::string          meshName;
+        std::wstring         textureName;
+        bool                 hasTexture;
     };
 
     class Mesh
     {
     public:
-        std::vector<std::wstring> m_textureName;   // 텍스쳐 담을 배열
-        std::vector<Vertex>       m_vertices;      // 버텍스 버퍼용 배열
-        std::vector<UINT>         m_indices;       // 인덱스  버퍼용 배열
-        std::vector<mat4>         m_animationMat;  // 애니메이션 저장용 행렬
+        std::vector<Vertex> m_vertices;  // 버텍스 버퍼용 배열
+        std::vector<UINT>   m_indices;   // 인덱스  버퍼용 배열
 
-        std::shared_ptr<Mesh>              m_partentMesh;
-        std::vector<std::shared_ptr<Mesh>> m_subMeshes;
+        std::vector<std::shared_ptr<SubMesh>> m_subMeshes;
 
-        bool m_hasAnimation;
+        // 이 두개는 건들지 마셈 로더에서 알아서 함
+        Born m_born;
+
+        std::vector<std::shared_ptr<AnimationClip>> m_animations;
 
         ComPtr<ID3D11Buffer> m_vertexBuffer;
         ComPtr<ID3D11Buffer> m_indexBuffer;
 
-    protected:
-        Mesh(bool hasAnimation = false);
 
     public:
-        void SetVertices(std::shared_ptr<D3Device>& device, const std::vector<Vertex>& vertices);
-
+        Mesh();
         ~Mesh() = default;
+
+        void SetVertices(std::shared_ptr<D3Device> device, const std::vector<Vertex>& vertices);
+        void SetVertex(std::shared_ptr<D3Device> device, const Vertex& vertex, const UINT idx);
     };
 
 }  // namespace HBSoft

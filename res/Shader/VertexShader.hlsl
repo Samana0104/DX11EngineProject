@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 기본적인 버텍스 쉐이더 파일 기본적인 변환만 수행한다.
+
+version: 1.0.0
+date: 2024-11-17
+*/
+
 #include "HBStd.hlsli"
 
 PSInput main(VSInput vsIn)

@@ -37,11 +37,18 @@ namespace HBSoft
                context에 쉐이더를 설정해준다. ( 상수, 쉐이더 코드 )
                vertex 쉐이더의 경우 IA까지 자동으로 설정해줌
        */
-        virtual void SetUpToContext(std::shared_ptr<D3Device>& device) = 0;
+        virtual void SetUpToContext(std::shared_ptr<D3Device> device) = 0;
 
         size_t GetConstantCount() const;
-        void   SetConstantBuffer(std::shared_ptr<D3Device>& device, const void* data,
-                                 const size_t dataSize, const UINT constantIdx);
+
+        /*
+            param : data -> 상수 버퍼에 넣을 void형 포인터 | dataSize -> 상수 버퍼에 넣을 데이터의 크기
+                    constantIdx -> 상수 버퍼 레지스터 번호
+            description :
+               상수 버퍼를 갱신시켜준다.
+        */
+        void SetConstantBuffer(std::shared_ptr<D3Device> device, const void* data, const size_t dataSize,
+                               const UINT constantIdx);
 
         const ShaderType& GetShaderType() const;
     };

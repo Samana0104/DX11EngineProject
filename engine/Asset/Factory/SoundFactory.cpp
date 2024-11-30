@@ -1,3 +1,10 @@
+/*
+author : 변한빛
+description : 사운드를 생성 및 FmodSystem를 관리하는 소스파일
+
+version: 1.0.0
+date: 2024-11-17
+*/
 #include "pch.h"
 #include "SoundFactory.h"
 using namespace HBSoft;
@@ -23,6 +30,7 @@ std::shared_ptr<HSound> SoundFactory::Create(wstringV path)
     if (m_fmodSys == nullptr)
         InitFmodSystem();
 
+    // modern c++ 기능인데 구조적 바인딩이라고 pair 객체 바로 변수 값에다 쏴주는 기능임
     auto sound = std::make_shared<HSound>(m_fmodSys, path);
     return sound;
 }

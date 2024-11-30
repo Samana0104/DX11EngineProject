@@ -1,15 +1,22 @@
+/*
+author : 변한빛
+description : 3d 박스 모델을 만드는 박스 3d 소스 파일
+
+version: 1.0.4
+date: 2024-11-22
+*/
+
 #include "pch.h"
 #include "Box3D.h"
 using namespace HBSoft;
 
-Box3D::Box3D(std::shared_ptr<D3Device>& device)
-    : Mesh(false)
+Box3D::Box3D(std::shared_ptr<D3Device> device)
 {
-    assert(CreateVertex(device));
-    assert(CreateIndex(device));
+    assert(CreateVertices(device));
+    assert(CreateIndices(device));
 }
 
-bool Box3D::CreateVertex(std::shared_ptr<D3Device>& device)
+bool Box3D::CreateVertices(std::shared_ptr<D3Device> device)
 {
     m_vertices.resize(24);
 
@@ -94,7 +101,7 @@ bool Box3D::CreateVertex(std::shared_ptr<D3Device>& device)
     return device->CreateVertexBuffer(m_vertices, m_vertexBuffer);
 }
 
-bool Box3D::CreateIndex(std::shared_ptr<D3Device>& device)
+bool Box3D::CreateIndices(std::shared_ptr<D3Device> device)
 {
     m_indices.resize(36);
     int iIndex = 0;

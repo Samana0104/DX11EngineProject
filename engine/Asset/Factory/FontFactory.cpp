@@ -1,3 +1,10 @@
+/*
+author : 변한빛
+description : 외부 폰트 관리 및 폰트를 생성하는 소스파일
+
+version: 1.0.0
+date: 2024-11-17
+*/
 #include "pch.h"
 #include "FontFactory.h"
 using namespace HBSoft;
@@ -17,8 +24,7 @@ void FontFactory::ClearExternalAllFonts()
         RemoveFontResourceEx(font.data(), FR_PRIVATE, 0);
 }
 
-std::shared_ptr<Font> FontFactory::CreateFromDesc(std::shared_ptr<D3Device>& device,
-                                                  const FontDesc&            desc)
+std::shared_ptr<Font> FontFactory::CreateFromDesc(std::shared_ptr<D3Device> device, const FontDesc& desc)
 {
     auto font = std::make_shared<Font>(device, desc);
     return font;

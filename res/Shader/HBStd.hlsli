@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 모든 인풋 아웃풋을 정의하기 위한 쉐이더 인클루드 파일
+
+version: 1.0.0
+date: 2024-11-17
+*/
+
 #ifndef __HBSTD_HLSLI__
 #define __HBSTD_HLSLI__
 
@@ -31,7 +39,6 @@ struct CubePSInput
 
 cbuffer DefaultMat : register(b0)
 {
-
     Matrix worldMat;
     Matrix invWorldMat;
     Matrix viewMat;

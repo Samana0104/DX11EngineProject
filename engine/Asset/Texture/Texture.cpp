@@ -10,29 +10,9 @@ date: 2024-11-04
 #include "Texture.h"
 using namespace HBSoft;
 
-Texture::Texture(std::shared_ptr<D3Device>& device, const wstringV filePath)
+Texture::Texture(const wstringV filePath)
     : m_texturePath(filePath)
-{
-    assert(CreateTexture(device));
-    LoadTextureDesc();
-}
-
-bool Texture::CreateTexture(std::shared_ptr<D3Device>& device)
-{
-    HRESULT hr = DirectX::CreateWICTextureFromFile(device->m_d3dDevice.Get(),
-                                                   m_texturePath.c_str(),
-                                                   m_texture.GetAddressOf(),  //&m_pTexture
-                                                   m_srv.GetAddressOf());
-    if (FAILED(hr))
-    {
-        hr = DirectX::CreateDDSTextureFromFile(device->m_d3dDevice.Get(),
-                                               m_texturePath.c_str(),
-                                               m_texture.GetAddressOf(),
-                                               m_srv.GetAddressOf(),
-                                               0);
-    }
-    return SUCCEEDED(hr);
-}
+{}
 
 void Texture::LoadTextureDesc()
 {
@@ -53,12 +33,17 @@ HPoint Texture::GetTextureSize() const
     return {static_cast<float>(m_textureDesc.Width), static_cast<float>(m_textureDesc.Height)};
 }
 
-ComPtr<ID3D11ShaderResourceView>& Texture::GetSRV()
+const D3D11_TEXTURE2D_DESC& Texture::GetDesc() const
+{
+    return m_textureDesc;
+}
+
+ComPtr<ID3D11ShaderResourceView> Texture::GetSRV()
 {
     return m_srv;
 }
 
-ComPtr<ID3D11Resource>& HBSoft::Texture::GetResource()
+ComPtr<ID3D11Resource> Texture::GetResource()
 {
     return m_texture;
 }

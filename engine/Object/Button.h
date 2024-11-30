@@ -7,7 +7,7 @@ date: 2024-11-04
 */
 
 #pragma once
-#include "Object2D.h"
+#include "2D/Object2D.h"
 
 namespace HBSoft
 {

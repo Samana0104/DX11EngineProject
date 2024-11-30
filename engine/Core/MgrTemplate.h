@@ -21,8 +21,8 @@ namespace HBSoft
 
     public:
         bool Add(const K& key, std::shared_ptr<V> value);
-        bool Delete(const K key);
-        bool IsKeyContained(const K key) const;
+        bool Delete(const K& key);
+        bool IsKeyContained(const K& key) const;
         void Clear();
 
         /*
@@ -30,8 +30,8 @@ namespace HBSoft
         */
         typename Alloc& GetAll();
 
-        const std::shared_ptr<V>& Get(const K key);
-        const std::shared_ptr<V>& operator[](const K key);
+        std::shared_ptr<V> Get(const K& key);
+        std::shared_ptr<V> operator[](const K& key);
     };
 
     /*
@@ -45,7 +45,7 @@ namespace HBSoft
     }
 
     TEMPLATE_VKA
-    bool MgrTemplate<V, K, A>::Delete(const K key)
+    bool MgrTemplate<V, K, A>::Delete(const K& key)
     {
         if (!IsKeyContained(key))
             return false;
@@ -55,7 +55,7 @@ namespace HBSoft
     }
 
     TEMPLATE_VKA
-    bool MgrTemplate<V, K, A>::IsKeyContained(const K key) const
+    bool MgrTemplate<V, K, A>::IsKeyContained(const K& key) const
     {
         return m_resourceDatas.contains(key);
     }
@@ -67,7 +67,7 @@ namespace HBSoft
     }
 
     TEMPLATE_VKA
-    const std::shared_ptr<V>& MgrTemplate<V, K, A>::Get(const K key)
+    std::shared_ptr<V> MgrTemplate<V, K, A>::Get(const K& key)
     {
         return m_resourceDatas.at(key);
     }
@@ -79,8 +79,9 @@ namespace HBSoft
     }
 
     TEMPLATE_VKA
-    const std::shared_ptr<V>& MgrTemplate<V, K, A>::operator[](const K key)
+    std::shared_ptr<V> MgrTemplate<V, K, A>::operator[](const K& key)
     {
+        assert(IsKeyContained(key));
         return m_resourceDatas[key];
     }
 }  // namespace HBSoft

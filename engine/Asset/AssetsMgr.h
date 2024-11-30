@@ -35,7 +35,7 @@ namespace HBSoft
         void CreateAsset(const wstringV path);
 
     public:
-        AssetsMgr(std::shared_ptr<D3Device>& device);
+        AssetsMgr(std::shared_ptr<D3Device> device);
 
         void Update();
 

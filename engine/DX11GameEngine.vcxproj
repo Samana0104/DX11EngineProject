@@ -19,23 +19,27 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\res\Shader\AnimationVertex.hlsl" />
+    <FxCompile Include="..\res\Shader\ColorPixelShader.hlsl" />
     <FxCompile Include="..\res\Shader\CubePixel.hlsl" />
     <FxCompile Include="..\res\Shader\CubeVertex.hlsl" />
     <FxCompile Include="..\res\Shader\LineVertex.hlsl">
       <FileType>CppCode</FileType>
     </FxCompile>
+    <ClCompile Include="Asset\AnimationClip.cpp" />
     <ClCompile Include="Asset\AssetsMgr.cpp" />
     <ClCompile Include="Asset\Factory\FontFactory.cpp" />
     <ClCompile Include="Asset\Factory\MeshFactory.cpp" />
     <ClCompile Include="Asset\Factory\ShaderFactory.cpp" />
     <ClCompile Include="Asset\Factory\SoundFactory.cpp" />
     <ClCompile Include="Asset\Factory\TextureFactory.cpp" />
+    <ClCompile Include="Asset\FbxLoader.cpp" />
     <ClCompile Include="Asset\Font\Font.cpp" />
     <ClCompile Include="Asset\Mesh\Box2D.cpp" />
     <ClCompile Include="Asset\Mesh\Box3D.cpp" />
     <ClCompile Include="Asset\Mesh\Circle2D.cpp" />
     <ClCompile Include="Asset\Mesh\CubeMap.cpp" />
-    <ClCompile Include="Asset\Mesh\GridMap.cpp" />
+    <ClCompile Include="Asset\Mesh\HeightMap.cpp" />
     <ClCompile Include="Asset\Mesh\Line.cpp" />
     <ClCompile Include="Asset\Mesh\Mesh.cpp" />
     <ClCompile Include="Asset\Mesh\Sphere2D.cpp" />
@@ -43,6 +47,8 @@
     <ClCompile Include="Asset\Shader\Shader.cpp" />
     <ClCompile Include="Asset\Shader\VertexShader.cpp" />
     <ClCompile Include="Asset\Sound\HSound.cpp" />
+    <ClCompile Include="Asset\Texture\GeneralTexture.cpp" />
+    <ClCompile Include="Asset\Texture\HeightTexture.cpp" />
     <ClCompile Include="Asset\Texture\Texture.cpp" />
     <ClCompile Include="Core\D3Device.cpp" />
     <ClCompile Include="Core\Core.cpp" />
@@ -54,20 +60,23 @@
     <ClCompile Include="DesignPattern\Observer.cpp" />
     <ClCompile Include="GameStart\Main.cpp" />
     <ClCompile Include="Input\Input.cpp" />
-    <ClCompile Include="Object\Actor.cpp" />
-    <ClCompile Include="Object\CubeMapObj.cpp" />
-    <ClCompile Include="Object\LineObj.cpp" />
+    <ClCompile Include="Object\2D\Object2D.cpp" />
+    <ClCompile Include="Object\2D\Transform2D.cpp" />
+    <ClCompile Include="Object\3D\CubeMapObj.cpp" />
+    <ClCompile Include="Object\3D\HeightMapObj.cpp" />
+    <ClCompile Include="Object\3D\LineObj.cpp" />
+    <ClCompile Include="Object\3D\Object3D.cpp" />
+    <ClCompile Include="Object\3D\Test3DObj.cpp" />
+    <ClCompile Include="Object\3D\Transform3D.cpp" />
     <ClCompile Include="Object\Button.cpp" />
     <ClCompile Include="Object\Camera.cpp" />
-    <ClCompile Include="Object\Object2D.cpp" />
-    <ClCompile Include="Object\Object3D.cpp" />
-    <ClCompile Include="Object\Transform2D.cpp" />
-    <ClCompile Include="Object\Transform3D.cpp" />
+    <ClCompile Include="Object\Object.cpp" />
     <ClCompile Include="Scene\SceneLobby.cpp" />
     <ClCompile Include="Scene\SceneMgr.cpp" />
     <ClCompile Include="Timer\SystemTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Asset\AnimationClip.h" />
     <ClInclude Include="Asset\AssetsMgr.h" />
     <ClInclude Include="Asset\DefaultResource.h" />
     <ClInclude Include="Asset\Factory\FontFactory.h" />
@@ -75,12 +84,13 @@
     <ClInclude Include="Asset\Factory\ShaderFactory.h" />
     <ClInclude Include="Asset\Factory\SoundFactory.h" />
     <ClInclude Include="Asset\Factory\TextureFactory.h" />
+    <ClInclude Include="Asset\FbxLoader.h" />
     <ClInclude Include="Asset\Font\Font.h" />
     <ClInclude Include="Asset\Mesh\Box2D.h" />
     <ClInclude Include="Asset\Mesh\Box3D.h" />
     <ClInclude Include="Asset\Mesh\Circle2D.h" />
     <ClInclude Include="Asset\Mesh\CubeMap.h" />
-    <ClInclude Include="Asset\Mesh\GridMap.h" />
+    <ClInclude Include="Asset\Mesh\HeightMap.h" />
     <ClInclude Include="Asset\Mesh\Line.h" />
     <ClInclude Include="Asset\Mesh\Mesh.h" />
     <ClInclude Include="Asset\Mesh\Sphere2D.h" />
@@ -89,6 +99,8 @@
     <ClInclude Include="Asset\Shader\Shader.h" />
     <ClInclude Include="Asset\Shader\VertexShader.h" />
     <ClInclude Include="Asset\Sound\HSound.h" />
+    <ClInclude Include="Asset\Texture\GeneralTexture.h" />
+    <ClInclude Include="Asset\Texture\HeightTexture.h" />
     <ClInclude Include="Asset\Texture\Texture.h" />
     <ClInclude Include="Core\D3Device.h" />
     <ClInclude Include="Core\Core.h" />
@@ -102,16 +114,18 @@
     <ClInclude Include="DesignPattern\Observer.h" />
     <ClInclude Include="DesignPattern\Singleton.h" />
     <ClInclude Include="Input\Input.h" />
-    <ClInclude Include="Object\Actor.h" />
-    <ClInclude Include="Object\CubeMapObj.h" />
-    <ClInclude Include="Object\LineObj.h" />
+    <ClInclude Include="Object\2D\Object2D.h" />
+    <ClInclude Include="Object\2D\Transform2D.h" />
+    <ClInclude Include="Object\3D\CubeMapObj.h" />
+    <ClInclude Include="Object\3D\HeightMapObj.h" />
+    <ClInclude Include="Object\3D\LineObj.h" />
+    <ClInclude Include="Object\3D\Object3D.h" />
+    <ClInclude Include="Object\3D\Test3DObj.h" />
+    <ClInclude Include="Object\3D\Transform3D.h" />
     <ClInclude Include="Object\Button.h" />
     <ClInclude Include="Object\Camera.h" />
-    <ClInclude Include="Object\Object2D.h" />
-    <ClInclude Include="Object\Object3D.h" />
+    <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\Renderable.h" />
-    <ClInclude Include="Object\Transform2D.h" />
-    <ClInclude Include="Object\Transform3D.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneLobby.h" />
     <ClInclude Include="Scene\SceneMgr.h" />
@@ -244,12 +258,12 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)res\Shader;$(ProjectDir)Color\;$(ProjectDir)Core\;$(ProjectDir)DesignPattern\;$(ProjectDir)FSM\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Object\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)res\Shader;$(ProjectDir)Color\;$(ProjectDir)Core\;$(ProjectDir)DesignPattern\;$(ProjectDir)FSM\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Object\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc;$(SolutionDir)extern\inc\fbxsdk\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)extern\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)extern\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>

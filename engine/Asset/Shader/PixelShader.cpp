@@ -10,13 +10,13 @@ date: 2024-11-09
 #include "PixelShader.h"
 using namespace HBSoft;
 
-PixelShader::PixelShader(std::shared_ptr<D3Device>& device, const wstringV path, const ShaderType& type)
+PixelShader::PixelShader(std::shared_ptr<D3Device> device, const wstringV path, const ShaderType& type)
     : Shader(path, type)
 {
     assert(CreateShader(device));
 }
 
-void PixelShader::SetUpToContext(std::shared_ptr<D3Device>& device)
+void PixelShader::SetUpToContext(std::shared_ptr<D3Device> device)
 {
     device->m_context->PSSetShader(m_pixelShader.Get(), nullptr, 0);
 
@@ -24,7 +24,7 @@ void PixelShader::SetUpToContext(std::shared_ptr<D3Device>& device)
         device->m_context->PSGetConstantBuffers(i, 1, m_constantBuffers[i].GetAddressOf());
 }
 
-bool PixelShader::CreateShader(std::shared_ptr<D3Device>& device)
+bool PixelShader::CreateShader(std::shared_ptr<D3Device> device)
 {
     if (!CreatePixelShader(device))
         return false;
@@ -35,7 +35,7 @@ bool PixelShader::CreateShader(std::shared_ptr<D3Device>& device)
     return true;
 }
 
-bool PixelShader::CreateConstantBuffer(std::shared_ptr<D3Device>& device)
+bool PixelShader::CreateConstantBuffer(std::shared_ptr<D3Device> device)
 {
     HRESULT hr;
 
@@ -79,7 +79,7 @@ bool PixelShader::CreateConstantBuffer(std::shared_ptr<D3Device>& device)
     return true;
 }
 
-bool PixelShader::CreatePixelShader(std::shared_ptr<D3Device>& device)
+bool PixelShader::CreatePixelShader(std::shared_ptr<D3Device> device)
 {
     HRESULT          hr;
     ComPtr<ID3DBlob> errorMsg;

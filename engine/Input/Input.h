@@ -51,7 +51,7 @@ namespace HBSoft
         void SetKeyHold(const UINT key);
 
     public:
-        Input(std::shared_ptr<Window>& window);
+        Input(std::shared_ptr<Window> window);
 
         KeyState      GetKeyState(const UINT key) const;
         const HPoint& GetMousePos() const;

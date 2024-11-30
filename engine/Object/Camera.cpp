@@ -2,8 +2,8 @@
 author : 변한빛
 description : 카메라를 정의하기 위한 소스 파일
 
-version: 1.0.0
-date: 2024-11-04
+version: 1.0.3
+date: 2024-11-29
 */
 
 #include "pch.h"
@@ -65,8 +65,6 @@ void Camera::LookAt(const vec3 eye, const vec3 target, const vec3 up)
     m_transform.SetLocation(eye);
 }
 
-void Camera::LookAtObject(Object3D& obj) {}
-
 void Camera::Update(const float deltaTime)
 {
     ImGui::SliderFloat("Camera speed", &m_speed, 0.f, 300.f);
@@ -95,7 +93,5 @@ void Camera::Update(const float deltaTime)
         m_look = m_transform.m_worldMat[2];
     }
 }
-
-void Camera::Render() {}
 
 void Camera::OnNotice(EventList event, void* entity) {}

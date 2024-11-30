@@ -10,7 +10,7 @@ date: 2024-11-07
 #include "AssetsMgr.h"
 using namespace HBSoft;
 
-AssetsMgr::AssetsMgr(std::shared_ptr<D3Device>& device)
+AssetsMgr::AssetsMgr(std::shared_ptr<D3Device> device)
     : m_device(device)
 {
     CreateResFromPath();
@@ -54,7 +54,6 @@ void AssetsMgr::CreateAsset(const wstringV path)
 {
     auto [fileName, fileExt] = HBSoft::GetFileNameAndExt(path);
     // modern c++ 기능인데 구조적 바인딩이라고 pair 객체 바로 변수 값에다 쏴주는 기능임
-
     if (TextureFactory::IsTextureFormat(fileExt))
     {
         TEXTURE_KEY key = fileName + fileExt;
