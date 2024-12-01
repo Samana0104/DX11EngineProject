@@ -8,7 +8,6 @@ date: 2024-11-04
 
 #pragma once
 #include "pch.h"
-#include "Observer.h"
 #include "EventHandler.h"
 
 namespace HBSoft
@@ -21,7 +20,7 @@ namespace HBSoft
         KEY_HOLD
     };
 
-    class Input : public Observer
+    class Input
     {
     private:
         inline static const UINT  KEY_COUNT   = 256;
@@ -48,8 +47,9 @@ namespace HBSoft
         ~Input();
 
         KeyState      GetKeyState(const UINT key) const;
-        const HPoint& GetMousePos() const;
-        const HPoint  GetNDCMousePos() const;
+        const HPoint& GetScreenMousePos() const;
+        const HPoint& GetNDCMousePos() const;
+        const HPoint& GetCartesianMousePos() const;
 
         bool IsKeyUp(const UINT key) const;
         bool IsKeyDown(const UINT key) const;
@@ -58,7 +58,5 @@ namespace HBSoft
         bool IsKeyPressed(const SHORT key) const;
 
         void Update();
-
-        virtual void OnNotice(EventList event, void* entity) override;
     };
 }  // namespace HBSoft

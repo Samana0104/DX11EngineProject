@@ -135,7 +135,7 @@ void FbxLoader::ProcessNode(FbxNode* fNode, std::shared_ptr<Mesh> mesh, int curI
     }
 
     for (int childIdx = 0; childIdx < numChild; childIdx++)
-        ProcessNode(fNode->GetChild(childIdx), mesh, mesh->m_born.bornIndex.size(), curIdx);
+        ProcessNode(fNode->GetChild(childIdx), mesh, (int)mesh->m_born.bornIndex.size(), curIdx);
 }
 
 bool FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)

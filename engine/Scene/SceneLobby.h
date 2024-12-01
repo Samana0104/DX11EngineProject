@@ -11,16 +11,18 @@ date: 2024-11-30
 
 #include "Scene.h"
 #include "Camera.h"
-#include "Button.h"
+#include "MainButton.h"
 #include "2D/MainTitle.h"
+#include "MainButton.h"
 
 namespace HBSoft
 {
     class SceneLobby : public Scene
     {
     public:
-        MainTitle m_title;
-        bool      isWire = false;
+        MainTitle  m_title;
+        MainButton m_button;
+        bool       isWire = false;
 
     public:
         SceneLobby();

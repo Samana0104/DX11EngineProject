@@ -31,9 +31,6 @@ namespace HBSoft
 
         FontDesc m_fontDesc;
 
-    public:
-        Transform2D m_transform;  // 혹시 회전할 일 있으면 추가하려함
-
     private:
         bool CreateComponent(const D3Device* device);  // 이벤트에서 디바이스 넘길려고 포인터로 바꿈
         bool CreateDWriteFactory();
@@ -46,7 +43,9 @@ namespace HBSoft
         Font(std::shared_ptr<D3Device> device, const FontDesc& desc);
         virtual ~Font();
 
-        void DrawTexts(std::shared_ptr<D3Device> device, const wstringV msg, HRect rect);
+        void DrawGeneralText(std::shared_ptr<D3Device> device, const wstringV msg, HRect rect,
+                             DWRITE_TEXT_ALIGNMENT align);
+        void DrawUnderlineText(std::shared_ptr<D3Device> device, const wstringV msg, HRect rect);
         void SetColor(const COLOR_F& color);
         void SetBold(bool bold);
 

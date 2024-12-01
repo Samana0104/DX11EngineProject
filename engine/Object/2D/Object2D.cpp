@@ -10,6 +10,8 @@ date: 2024-11-30
 #include "Object2D.h"
 using namespace HBSoft;
 
+Object2D::Object2D() {}
+
 void Object2D::UpdateDefaultCB()
 {
     if (m_camera != nullptr)

@@ -80,7 +80,7 @@ bool D3Device::CreateDevice()
 bool D3Device::CreateDeviceAndSwapChain()
 {
     HRESULT hr;
-    HPoint  windowSize = m_window->GetSize();
+    HPoint  windowSize = m_window->GetWindowSize();
 
     CONST D3D_FEATURE_LEVEL pFeatureLevels = D3D_FEATURE_LEVEL_11_0;
 
@@ -288,7 +288,7 @@ bool D3Device::CreateBlendingState()
 
 void D3Device::OnNotice(EventList event, void* entity)
 {
-    HPoint windowSize = m_window->GetSize();
+    HPoint windowSize = m_window->GetWindowSize();
 
     m_context->Flush();
     m_context->OMSetRenderTargets(0, nullptr, nullptr);
@@ -318,7 +318,7 @@ void D3Device::OnNotice(EventList event, void* entity)
 
 void D3Device::CreateViewport()
 {
-    HPoint windowSize = m_window->GetSize();
+    HPoint windowSize = m_window->GetWindowSize();
 
     m_viewPort.TopLeftX = 0;
     m_viewPort.TopLeftY = 0;

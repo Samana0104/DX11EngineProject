@@ -29,6 +29,7 @@ namespace HBSoft
     public:
         SceneGame();
 
+
         virtual void Update(float deltaTime) override;
         virtual void Render() override;
         virtual void Release() override;

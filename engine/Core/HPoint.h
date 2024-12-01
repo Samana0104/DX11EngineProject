@@ -3,8 +3,8 @@ author : 변한빛
 description : 한빛 소프트의 포인트 단위를 정의하기 위한 헤더 파일
 하도 D2D1이니 Rect이니 양식맞추기 짜증나서 서식에 자동 변환되도록 만듬
 
-version: 1.0.0
-date: 2024-11-05
+version: 1.0.8
+date: 2024-12-01
 */
 
 #pragma once
@@ -47,15 +47,19 @@ namespace HBSoft
         HPoint operator*(const D2D1_POINT_2U& ref);
         HPoint operator*(const glm::vec2& ref);
 
-        operator D2D1_POINT_2F();
-        operator D2D1_POINT_2L();
-        operator D2D1_POINT_2U();
-        operator glm::vec2();
+        template <class T>
+        HPoint operator*(const T num);
 
-        operator const D2D1_POINT_2F();
-        operator const D2D1_POINT_2L();
-        operator const D2D1_POINT_2U();
-        operator const glm::vec2();
+
+        operator D2D1_POINT_2F() const;
+        operator D2D1_POINT_2L() const;
+        operator D2D1_POINT_2U() const;
+        operator glm::vec2() const;
+
+        operator const D2D1_POINT_2F() const;
+        operator const D2D1_POINT_2L() const;
+        operator const D2D1_POINT_2U() const;
+        operator const glm::vec2() const;
     };
 
     inline HPoint::HPoint()
@@ -172,42 +176,42 @@ namespace HBSoft
         return {static_cast<float>(x * ref.x), static_cast<float>(y * ref.y)};
     }
 
-    inline HPoint::operator D2D1_POINT_2F()
+    inline HPoint::operator D2D1_POINT_2F() const
     {
         return {static_cast<FLOAT>(x), static_cast<FLOAT>(y)};
     }
 
-    inline HPoint::operator D2D1_POINT_2L()
+    inline HPoint::operator D2D1_POINT_2L() const
     {
         return {static_cast<LONG>(x), static_cast<LONG>(y)};
     }
 
-    inline HPoint::operator D2D1_POINT_2U()
+    inline HPoint::operator D2D1_POINT_2U() const
     {
         return {static_cast<UINT32>(x), static_cast<UINT32>(y)};
     }
 
-    inline HPoint::operator glm::vec2()
+    inline HPoint::operator glm::vec2() const
     {
         return glm::vec2(x, y);
     }
 
-    inline HPoint::operator const D2D1_POINT_2F()
+    inline HPoint::operator const D2D1_POINT_2F() const
     {
         return static_cast<D2D1_POINT_2F>(*this);
     }
 
-    inline HPoint::operator const D2D1_POINT_2L()
+    inline HPoint::operator const D2D1_POINT_2L() const
     {
         return static_cast<D2D1_POINT_2L>(*this);
     }
 
-    inline HPoint::operator const D2D1_POINT_2U()
+    inline HPoint::operator const D2D1_POINT_2U() const
     {
         return static_cast<D2D1_POINT_2U>(*this);
     }
 
-    inline HPoint::operator const glm::vec2()
+    inline HPoint::operator const glm::vec2() const
     {
         return glm::vec2(x, y);
     }
@@ -217,5 +221,11 @@ namespace HBSoft
     {
         x = static_cast<float>(a);
         y = static_cast<float>(b);
+    }
+
+    template <class T>
+    inline HPoint HPoint::operator*(const T num)
+    {
+        return {static_cast<float>(num) * x, static_cast<float>(num) * y};
     }
 }  // namespace HBSoft

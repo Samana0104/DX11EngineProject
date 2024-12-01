@@ -22,7 +22,7 @@ namespace HBSoft
 
 
     protected:
-        Object2D()  = default;
+        Object2D();
         ~Object2D() = default;
 
     public:

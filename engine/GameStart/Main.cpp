@@ -27,9 +27,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     auto gameScene  = std::make_shared<HBSoft::SceneGame>();
     auto lobbyScene = std::make_shared<HBSoft::SceneLobby>();
 
-    HENGINE->m_sceneMgr.Add(L"Game", gameScene);
-    HENGINE->m_sceneMgr.Add(L"Lobby", lobbyScene);
-    HENGINE->m_sceneMgr.SetCurrentScene(L"Lobby");
+    HSCENE.Add(L"Game", gameScene);
+    HSCENE.Add(L"Lobby", lobbyScene);
+    HSCENE.SetCurrentScene(L"Lobby");
     HENGINE->Run();
 
 

@@ -21,6 +21,7 @@ void Transform2D::InitTransform()
     m_scale    = vec2(1.f, 1.f);
     m_angle    = 0.f;
     m_worldMat = mat4(1.f);
+    CalculateWorldMat();
 }
 
 Transform2D& Transform2D::AddLocation(const vec2 pos)
@@ -35,9 +36,14 @@ Transform2D& Transform2D::SetLocation(const vec2 pos)
     return *this;
 }
 
-Transform2D& Transform2D::SetRotation(const float radian)
+Transform2D& Transform2D::AddRotation(const float angle)
 {
-    m_angle = radian;
+    return SetRotation(m_angle + angle);
+}
+
+Transform2D& Transform2D::SetRotation(const float angle)
+{
+    m_angle = angle;
     CalculateWorldMat();
     return *this;
 }
@@ -64,6 +70,11 @@ Transform2D& Transform2D::SetScale(const float scale)
     m_scale = vec2(scale, scale);
     CalculateWorldMat();
     return *this;
+}
+
+HPoint Transform2D::ConvertScreenToNDC(const HPoint& windowSize, const HPoint& pos)
+{
+    return {2.f * pos.x / windowSize.x - 1.f, -2.f * pos.y / windowSize.y + 1.f};
 }
 
 void Transform2D::CalculateWorldMat()
