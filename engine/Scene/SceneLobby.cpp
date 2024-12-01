@@ -11,7 +11,13 @@ date: 2024-11-30
 
 using namespace HBSoft;
 
-SceneLobby::SceneLobby() {}
+SceneLobby::SceneLobby()
+{
+    m_button.SetArea({300.f, 100.f, 400.f, 300});
+    m_button.SetText(L"TestMsg");
+    m_button.SetImage(L"title.png");
+    m_button.SetOnClickCallback([](void) { HSCENE.SetCurrentScene(L"Game"); });
+}
 
 void SceneLobby::Update(float deltaTime)
 {
@@ -23,6 +29,8 @@ void SceneLobby::Update(float deltaTime)
     {
         Core::engine->m_sceneMgr.SetCurrentScene(L"Game");
     }
+
+    m_button.Update(deltaTime);
 }
 
 void SceneLobby::Render()
@@ -33,6 +41,7 @@ void SceneLobby::Render()
         HDEVICE->m_context->RSSetState(HDEVICE->m_rsState.Get());
 
     m_title.Render();
+    m_button.Render();
 }
 
 void SceneLobby::Release() {}

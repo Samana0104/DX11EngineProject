@@ -24,7 +24,7 @@ Core::Core(HINSTANCE hInstance, HPoint windowSize)
 bool Core::InitImGui()
 {
     // 환경설정
-    HPoint windowSize = m_window->GetSize();
+    HPoint windowSize = m_window->GetWindowSize();
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -72,9 +72,10 @@ void Core::Render()
 
 
     m_sceneMgr.Render();
-    m_assets->m_fonts[L"DEBUG_FONT"]->DrawTexts(m_device,
-                                                m_timer.m_csBuffer,
-                                                {10.f, 10.f, 1000.f, 1000.f});
+    m_assets->m_fonts[L"DEBUG_FONT"]->DrawGeneralText(m_device,
+                                                      m_timer.m_csBuffer,
+                                                      {10.f, 10.f, 1000.f, 1000.f},
+                                                      DWRITE_TEXT_ALIGNMENT_LEADING);
 
     ImGui::Render();
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());

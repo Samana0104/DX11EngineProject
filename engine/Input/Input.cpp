@@ -13,14 +13,10 @@ using namespace HBSoft;
 Input::Input(std::shared_ptr<Window> window)
     : m_window(window)
 {
-    EventHandler::GetInstance().AddEvent(EventList::MOUSE_MOVE, this);
     ZeroMemory(&m_keyState, sizeof(KeyState) * 256);
 }
 
-Input::~Input()
-{
-    EventHandler::GetInstance().DeleteEvent(EventList::MOUSE_MOVE, this);
-}
+Input::~Input() {}
 
 void Input::UpdateKeyState(const UINT key)
 {
@@ -40,15 +36,21 @@ KeyState Input::GetKeyState(const UINT key) const
     return m_keyState[key];
 }
 
-const HPoint& Input::GetMousePos() const
+const HPoint& Input::GetScreenMousePos() const
 {
     return m_mousePos;
 }
 
-const HPoint Input::GetNDCMousePos() const
+const HPoint& Input::GetNDCMousePos() const
 {
-    HPoint windowSize = m_window->GetSize();
+    HPoint windowSize = m_window->GetWindowSize();
     return {2.f * m_mousePos.x / windowSize.x - 1.f, -2.f * m_mousePos.y / windowSize.y + 1.f};
+}
+
+const HPoint& Input::GetCartesianMousePos() const
+{
+    HPoint windowSize = m_window->GetWindowSize();
+    return {m_mousePos.x - windowSize.x * 0.5f, -m_mousePos.y + windowSize.y * 0.5f};
 }
 
 bool Input::IsKeyUp(const UINT key) const
@@ -98,16 +100,14 @@ void Input::SetKeyHold(const UINT key)
 
 void Input::Update()
 {
+    POINT mousePos;
+
     if (!m_window->IsActivate())  // 게임 윈도우가 켜져있으면 ( 활성화 될 때 )
         return;
 
     for (UINT key = 0; key < KEY_COUNT; key++)
         UpdateKeyState(key);
-}
 
-void Input::OnNotice(EventList event, void* entity)
-{
-    POINT mousePos;
     GetCursorPos(&mousePos);
     ScreenToClient(m_window->GetHandle(), &mousePos);
     m_mousePos = mousePos;

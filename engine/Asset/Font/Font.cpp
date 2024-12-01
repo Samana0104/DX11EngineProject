@@ -77,14 +77,39 @@ bool Font::CreateBrush(const D3Device* device)
     return SUCCEEDED(hr);
 }
 
-void Font::DrawTexts(std::shared_ptr<D3Device> device, const wstringV msg, HRect rect)
+void Font::DrawGeneralText(std::shared_ptr<D3Device> device, const wstringV msg, HRect rect,
+                           DWRITE_TEXT_ALIGNMENT align)
 {
+    m_textFormat->SetTextAlignment(align);
     device->m_2dRtv->BeginDraw();
     device->m_2dRtv->DrawText(msg.data(),
                               static_cast<UINT32>(msg.size()),
                               m_textFormat.Get(),
                               static_cast<const D2D1_RECT_F>(rect),
                               m_brush.Get());
+    device->m_2dRtv->EndDraw();
+}
+
+void Font::DrawUnderlineText(std::shared_ptr<D3Device> device, const wstringV msg, HRect rect)
+{
+    ComPtr<IDWriteTextLayout> textLayout;
+
+    device->m_2dRtv->BeginDraw();
+    HRESULT hr = m_writeFactory->CreateTextLayout(msg.data(),              // 텍스트
+                                                  (UINT32)msg.size(),      // 텍스트 길이
+                                                  m_textFormat.Get(),      // 텍스트 포맷
+                                                  rect.right - rect.left,  // 너비
+                                                  rect.bottom - rect.top,  // 높이
+                                                  &textLayout              // 출력 레이아웃
+    );
+
+    if (FAILED(hr))
+        return;
+
+    DWRITE_TEXT_RANGE textRange = {0, (UINT32)msg.size()};  // 전체 텍스트 범위
+    textLayout->SetUnderline(TRUE, textRange);
+
+    device->m_2dRtv->DrawTextLayout({rect.left, rect.top}, textLayout.Get(), m_brush.Get());
     device->m_2dRtv->EndDraw();
 }
 

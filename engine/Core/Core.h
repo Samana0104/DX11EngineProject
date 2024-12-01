@@ -17,7 +17,7 @@ date: 2024-11-29
 #define HINPUT  HBSoft::Core::engine->m_input
 #define HASSET  HBSoft::Core::engine->m_assets
 #define HTIMER  HBSoft::Core::engine->m_timer
-#define HSCENE  HBSoft::Core::engine->m_sceneMgr;
+#define HSCENE  HBSoft::Core::engine->m_sceneMgr
 
 namespace HBSoft
 {
