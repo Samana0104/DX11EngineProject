@@ -13,9 +13,14 @@ using namespace HBSoft;
 
 SceneLobby::SceneLobby()
 {
-    m_button.SetArea({300.f, 100.f, 400.f, 300});
-    m_button.SetText(L"TestMsg");
-    m_button.SetImage(L"title.png");
+    HPoint windowSize = HWINDOW->GetWindowSize();
+
+    m_button.SetArea({windowSize.x * 0.5f - 50.f,
+                      windowSize.y * 0.5f - 30.f,
+                      windowSize.x * 0.5f + 50.f,
+                      windowSize.y * 0.5f + 30.f});
+    m_button.SetText(L"시작", {0.f, 0.f, 0.f, 1.f});
+    m_button.SetImage(L"투명.png");
     m_button.SetOnClickCallback([](void) { HSCENE.SetCurrentScene(L"Game"); });
 }
 

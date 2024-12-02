@@ -41,13 +41,13 @@ const HPoint& Input::GetScreenMousePos() const
     return m_mousePos;
 }
 
-const HPoint& Input::GetNDCMousePos() const
+const HPoint Input::GetNDCMousePos() const
 {
     HPoint windowSize = m_window->GetWindowSize();
     return {2.f * m_mousePos.x / windowSize.x - 1.f, -2.f * m_mousePos.y / windowSize.y + 1.f};
 }
 
-const HPoint& Input::GetCartesianMousePos() const
+const HPoint Input::GetCartesianMousePos() const
 {
     HPoint windowSize = m_window->GetWindowSize();
     return {m_mousePos.x - windowSize.x * 0.5f, -m_mousePos.y + windowSize.y * 0.5f};

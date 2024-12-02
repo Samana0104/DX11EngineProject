@@ -36,6 +36,7 @@
     <ClCompile Include="Asset\Factory\TextureFactory.cpp" />
     <ClCompile Include="Asset\FbxLoader.cpp" />
     <ClCompile Include="Asset\Font\Font.cpp" />
+    <ClCompile Include="Asset\Font\LayoutFont.cpp" />
     <ClCompile Include="Asset\Mesh\Box2D.cpp" />
     <ClCompile Include="Asset\Mesh\Box3D.cpp" />
     <ClCompile Include="Asset\Mesh\Circle.cpp" />
@@ -70,7 +71,7 @@
     <ClCompile Include="Object\3D\Object3D.cpp" />
     <ClCompile Include="Object\3D\Test3DObj.cpp" />
     <ClCompile Include="Object\3D\Transform3D.cpp" />
-    <ClCompile Include="Object\MainButton.cpp" />
+    <ClCompile Include="Object\Button.cpp" />
     <ClCompile Include="Object\Camera.cpp" />
     <ClCompile Include="Object\Object.cpp" />
     <ClCompile Include="Scene\SceneLobby.cpp" />
@@ -89,6 +90,7 @@
     <ClInclude Include="Asset\Factory\TextureFactory.h" />
     <ClInclude Include="Asset\FbxLoader.h" />
     <ClInclude Include="Asset\Font\Font.h" />
+    <ClInclude Include="Asset\Font\LayoutFont.h" />
     <ClInclude Include="Asset\Mesh\Box2D.h" />
     <ClInclude Include="Asset\Mesh\Box3D.h" />
     <ClInclude Include="Asset\Mesh\Circle.h" />
@@ -126,7 +128,7 @@
     <ClInclude Include="Object\3D\Object3D.h" />
     <ClInclude Include="Object\3D\Test3DObj.h" />
     <ClInclude Include="Object\3D\Transform3D.h" />
-    <ClInclude Include="Object\MainButton.h" />
+    <ClInclude Include="Object\Button.h" />
     <ClInclude Include="Object\Camera.h" />
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\Renderable.h" />
@@ -220,6 +222,12 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)exe\release\</OutDir>
     <IntDir>$(SolutionDir)exe\release\bin\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>true</VcpkgEnabled>
+    <VcpkgManifestInstall>true</VcpkgManifestInstall>
+    <VcpkgAutoLink>true</VcpkgAutoLink>
+    <VcpkgApplocalDeps>false</VcpkgApplocalDeps>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

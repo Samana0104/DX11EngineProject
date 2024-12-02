@@ -48,8 +48,8 @@ namespace HBSoft
 
         KeyState      GetKeyState(const UINT key) const;
         const HPoint& GetScreenMousePos() const;
-        const HPoint& GetNDCMousePos() const;
-        const HPoint& GetCartesianMousePos() const;
+        const HPoint  GetNDCMousePos() const;
+        const HPoint  GetCartesianMousePos() const;
 
         bool IsKeyUp(const UINT key) const;
         bool IsKeyDown(const UINT key) const;

@@ -96,6 +96,11 @@ HWND Window::GetHandle() const
     return m_hwnd;
 }
 
+HINSTANCE Window::GetInstance() const
+{
+    return m_hinstance;
+}
+
 LRESULT Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     ImGui_ImplWin32_WndProcHandler(hwnd, uMsg, wParam, lParam);
