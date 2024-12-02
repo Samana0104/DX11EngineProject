@@ -81,7 +81,7 @@
     <ClCompile Include="Scene\SceneMgr.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Object\MainButton.cpp">
+    <ClCompile Include="Object\Button.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Object\Camera.cpp">
@@ -198,6 +198,9 @@
     <ClCompile Include="Object\2D\MainTitle.cpp">
       <Filter>Object\2D</Filter>
     </ClCompile>
+    <ClCompile Include="Asset\Font\LayoutFont.cpp">
+      <Filter>Asset\Font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -233,7 +236,7 @@
     <ClInclude Include="Scene\SceneMgr.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Object\MainButton.h">
+    <ClInclude Include="Object\Button.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Object\Camera.h">
@@ -367,6 +370,9 @@
     </ClInclude>
     <ClInclude Include="Object\2D\MainTitle.h">
       <Filter>Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Font\LayoutFont.h">
+      <Filter>Asset\Font</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

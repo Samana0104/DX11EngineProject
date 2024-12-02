@@ -72,10 +72,9 @@ void Core::Render()
 
 
     m_sceneMgr.Render();
-    m_assets->m_fonts[L"DEBUG_FONT"]->DrawGeneralText(m_device,
-                                                      m_timer.m_csBuffer,
-                                                      {10.f, 10.f, 1000.f, 1000.f},
-                                                      DWRITE_TEXT_ALIGNMENT_LEADING);
+    m_assets->m_fonts[L"DEBUG_FONT"]->DrawMsg(m_device,
+                                              m_timer.m_csBuffer,
+                                              {10.f, 10.f, 1000.f, 1000.f});
 
     ImGui::Render();
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());

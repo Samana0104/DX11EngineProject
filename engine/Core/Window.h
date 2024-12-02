@@ -36,8 +36,9 @@ namespace HBSoft
         bool Run() const;
         bool IsActivate() const;
 
-        HPoint GetWindowSize() const;
-        HWND   GetHandle() const;
+        HPoint    GetWindowSize() const;
+        HWND      GetHandle() const;
+        HINSTANCE GetInstance() const;
 
         static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
     };

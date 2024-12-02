@@ -72,9 +72,32 @@ Transform2D& Transform2D::SetScale(const float scale)
     return *this;
 }
 
-HPoint Transform2D::ConvertScreenToNDC(const HPoint& windowSize, const HPoint& pos)
+const HPoint Transform2D::ConvertScreenToNDC(const HPoint& windowSize, const HPoint& pos)
 {
     return {2.f * pos.x / windowSize.x - 1.f, -2.f * pos.y / windowSize.y + 1.f};
+}
+
+const HRect Transform2D::ConvertScreenToNDC(const HPoint& windowSize, const HRect& rect)
+{
+    HPoint p1, p2;
+    p1 = HPoint(rect.left, rect.top);
+    p2 = HPoint(rect.right, rect.bottom);
+
+    return {ConvertScreenToNDC(windowSize, p1), ConvertScreenToNDC(windowSize, p2)};
+}
+
+const HPoint Transform2D::ConvertNDCToScreen(const HPoint& windowSize, const HPoint& pos)
+{
+    return {(pos.x + 1.f) * 0.5f * windowSize.x, (pos.y - 1.f) * -0.5f * windowSize.y};
+}
+
+const HRect Transform2D::ConvertNDCToScreen(const HPoint& windowSize, const HRect& rect)
+{
+    HPoint p1, p2;
+    p1 = HPoint(rect.left, rect.top);
+    p2 = HPoint(rect.right, rect.bottom);
+
+    return {ConvertNDCToScreen(windowSize, p1), ConvertNDCToScreen(windowSize, p2)};
 }
 
 void Transform2D::CalculateWorldMat()

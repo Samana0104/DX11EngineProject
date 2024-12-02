@@ -11,9 +11,9 @@ date: 2024-11-30
 
 #include "Scene.h"
 #include "Camera.h"
-#include "MainButton.h"
+#include "Button.h"
 #include "2D/MainTitle.h"
-#include "MainButton.h"
+#include "Button.h"
 
 namespace HBSoft
 {
@@ -21,7 +21,7 @@ namespace HBSoft
     {
     public:
         MainTitle  m_title;
-        MainButton m_button;
+        Button m_button;
         bool       isWire = false;
 
     public:
