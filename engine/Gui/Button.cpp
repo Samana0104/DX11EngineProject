@@ -16,10 +16,10 @@ Button::Button()
     {
         desc.m_fontName       = L"NotoSansCJKkr-Bold";
         desc.m_fontLocaleName = L"ko-kr";
-        desc.m_fontSize       = 30.f;
+        desc.m_fontSize       = 35.f;
         desc.m_fontStretch    = DWRITE_FONT_STRETCH_NORMAL;
         desc.m_fontStyle      = DWRITE_FONT_STYLE_NORMAL;
-        desc.m_fontWeight     = DWRITE_FONT_WEIGHT_BOLD;
+        desc.m_fontWeight     = DWRITE_FONT_WEIGHT_EXTRA_BOLD;
     }
     m_font = FontFactory::CreateLayoutFont(HDEVICE, desc);
     m_font->SetHorizontalAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);

@@ -11,18 +11,7 @@ date: 2024-11-30
 
 using namespace HBSoft;
 
-SceneLobby::SceneLobby()
-{
-    HPoint windowSize = HWINDOW->GetWindowSize();
-
-    m_button.SetArea({windowSize.x * 0.5f - 50.f,
-                      windowSize.y * 0.5f - 30.f,
-                      windowSize.x * 0.5f + 50.f,
-                      windowSize.y * 0.5f + 30.f});
-    m_button.SetText(L"시작", {0.f, 0.f, 0.f, 1.f});
-    m_button.SetImage(L"투명.png");
-    m_button.SetOnClickCallback([](void) { HSCENE.SetCurrentScene(L"Game"); });
-}
+SceneLobby::SceneLobby() {}
 
 void SceneLobby::Update(float deltaTime)
 {
@@ -35,7 +24,7 @@ void SceneLobby::Update(float deltaTime)
         Core::engine->m_sceneMgr.SetCurrentScene(L"Game");
     }
 
-    m_button.Update(deltaTime);
+    m_lobbyBtn.Update(deltaTime);
 }
 
 void SceneLobby::Render()
@@ -46,7 +35,7 @@ void SceneLobby::Render()
         HDEVICE->m_context->RSSetState(HDEVICE->m_rsState.Get());
 
     m_title.Render();
-    m_button.Render();
+    m_lobbyBtn.Render();
 }
 
 void SceneLobby::Release() {}

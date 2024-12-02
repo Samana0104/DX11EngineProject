@@ -37,7 +37,6 @@ namespace HBSoft
         void SetRect(const HRect& rect);
         void SetUnderline(bool isUnderline);
 
-        void ResetLayout();
         void DrawMsg(std::shared_ptr<D3Device> device);
 
         virtual void SetHorizontalAlignment(DWRITE_PARAGRAPH_ALIGNMENT horizontalAlign) override;

@@ -13,16 +13,16 @@ date: 2024-11-30
 #include "Camera.h"
 #include "Button.h"
 #include "2D/MainTitle.h"
-#include "Button.h"
+#include "LobbyButton.h"
 
 namespace HBSoft
 {
     class SceneLobby : public Scene
     {
     public:
-        MainTitle  m_title;
-        Button m_button;
-        bool       isWire = false;
+        MainTitle   m_title;
+        LobbyButton m_lobbyBtn;
+        bool        isWire = false;
 
     public:
         SceneLobby();

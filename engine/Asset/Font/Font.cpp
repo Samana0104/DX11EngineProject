@@ -68,8 +68,8 @@ bool Font::CreateTextFormat()
     if (FAILED(hr))
         return false;
 
-    // m_textFormat->SetParagraphAlignment(m_horizontalAlign);
-    // m_textFormat->SetTextAlignment(m_verticalAlign);
+    m_textFormat->SetParagraphAlignment(m_horizontalAlign);
+    m_textFormat->SetTextAlignment(m_verticalAlign);
     return true;
 }
 
