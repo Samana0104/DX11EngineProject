@@ -25,11 +25,17 @@ LayoutFont::LayoutFont(std::shared_ptr<D3Device> device, const FontDesc& desc)
 void LayoutFont::OnNotice(EventList event, void* entity)
 {
     Font::OnNotice(event, entity);
-    ResetLayout();
+    CreateLayout();
 }
 
 bool LayoutFont::CreateLayout()
 {
+    if (m_layout)
+        m_layout->Release();
+
+    m_textFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+    m_textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+
     HRESULT hr = m_writeFactory->CreateTextLayout(m_text.data(),          // 텍스트
                                                   (UINT32)m_text.size(),  // 텍스트 길이
                                                   m_textFormat.Get(),     // 텍스트 포맷
@@ -49,7 +55,7 @@ bool LayoutFont::CreateLayout()
 void LayoutFont::SetText(const wstringV text)
 {
     m_text = text;
-    ResetLayout();
+    CreateLayout();
 }
 
 void LayoutFont::SetRect(const HRect& rect)
@@ -66,14 +72,6 @@ void LayoutFont::SetUnderline(bool isUnderline)
 
     DWRITE_TEXT_RANGE textRange = {0, (UINT32)m_text.size()};
     m_layout->SetUnderline(m_isUnderline, textRange);
-}
-
-void LayoutFont::ResetLayout()
-{
-    if (m_layout)
-        m_layout->Release();
-
-    assert(CreateLayout());
 }
 
 void LayoutFont::SetHorizontalAlignment(DWRITE_PARAGRAPH_ALIGNMENT horizontalAlign)
