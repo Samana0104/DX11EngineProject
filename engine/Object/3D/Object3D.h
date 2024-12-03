@@ -25,10 +25,10 @@ namespace HBSoft
     protected:
         Object3D() = default;
 
+        virtual void UpdateDefaultCB() override;
+
     public:
         ~Object3D() = default;
-
-        virtual void UpdateDefaultCB() override;
 
         virtual void Init()                        = 0;
         virtual void Release()                     = 0;

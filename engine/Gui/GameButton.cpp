@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 게임 내부의 버튼을 정의하기 위한 소스파일
+
+version: 1.0.0
+date: 2024-12-03
+*/
+
 #include "pch.h"
 #include "GameButton.h"
 using namespace HBSoft;

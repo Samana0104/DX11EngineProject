@@ -36,19 +36,19 @@ std::shared_ptr<Mesh> FbxLoader::Load(std::shared_ptr<D3Device> device, const ws
 
     ReleaseFbxManager();
 
-    for (int i = 0; i < mesh->m_animations.size(); i++)
-    {
-        for (int j = 0; j < mesh->m_animations[i]->m_aniMat.size(); j++)
-        {
-            for (int k = mesh->m_animations[i]->GetStartFrame();
-                 k < mesh->m_animations[i]->GetLastFrame();
-                 k++)
-            {
-                mesh->m_animations[i]->m_aniMat[j][k] =
-                mesh->m_animations[i]->m_aniMat[j][k] * mesh->m_born.bindPoseMat[j];
-            }
-        }
-    }
+    // for (int i = 0; i < mesh->m_animations.size(); i++)
+    //{
+    //     for (int j = 0; j < mesh->m_animations[i]->m_aniMat.size(); j++)
+    //     {
+    //         for (int k = mesh->m_animations[i]->GetStartFrame();
+    //              k < mesh->m_animations[i]->GetLastFrame();
+    //              k++)
+    //         {
+    //             mesh->m_animations[i]->m_aniMat[j][k] =
+    //             mesh->m_animations[i]->m_aniMat[j][k] * mesh->m_born.bindPoseMat[j];
+    //         }
+    //     }
+    // }
 
     device->CreateVertexBuffer(mesh->m_vertices, mesh->m_vertexBuffer);
 
@@ -361,10 +361,15 @@ void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
     if (stackCount <= 0)
         return;
 
-    aniStack = m_fbxScene->GetSrcObject<FbxAnimStack>(10);
+    aniStack = m_fbxScene->GetSrcObject<FbxAnimStack>(0);
 
     TakeName = aniStack->GetName();
     TakeInfo = m_fbxScene->GetTakeInfo(TakeName);
+
+    if (TakeInfo == nullptr)
+        return;
+
+    // 속성에 대해 애니메이션 연결 확인
 
     clip      = std::make_shared<AnimationClip>();
     startTime = TakeInfo->mLocalTimeSpan.GetStart();
@@ -393,6 +398,23 @@ void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
         UINT        boneIdx = mesh->m_born.bornIndex[name];
 
         clip->m_aniMat[boneIdx].resize(lastFrame);
+
+        int numLayers = aniStack->GetMemberCount<FbxAnimLayer>();
+        for (int i = 0; i < numLayers; i++)
+        {
+            FbxAnimLayer* layer = aniStack->GetMember<FbxAnimLayer>(i);
+            FbxAnimCurve* curve = m_fbxNodes[boneIdx]->LclTranslation.GetCurve(layer);
+            if (curve)
+            {
+                for (int i = 0; i < curve->KeyGetCount(); i++)
+                {
+                    FbxTime keyTime = curve->KeyGetTime(i);
+                    float   value   = curve->KeyGetValue(i);
+                    std::cout << "Key " << i << ": Time = " << keyTime.GetSecondDouble()
+                              << ", Value = " << value << std::endl;
+                }
+            }
+        }
 
         for (int frame = startFrame; frame < lastFrame; frame++)
         {
