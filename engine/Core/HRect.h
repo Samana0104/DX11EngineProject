@@ -10,6 +10,7 @@ date: 2024-11-05
 #pragma once
 #include <Windows.h>
 #include "glm/glm.hpp"
+#include "HPoint.h"
 
 namespace HBSoft
 {
@@ -24,6 +25,7 @@ namespace HBSoft
         HRect(const T1& a, const T2& b, const T3& c, const T4& d);
 
         HRect();
+        HRect(const HPoint& ref1, const HPoint& ref2);
 
         HRect operator=(const HRect& ref);
         HRect operator+(const HRect& ref);
@@ -41,6 +43,14 @@ namespace HBSoft
     inline HRect::HRect()
         : left(0.f), top(0.f), right(0.f), bottom(0.f)
     {}
+
+    inline HRect::HRect(const HPoint& ref1, const HPoint& ref2)
+    {
+        left   = ref1.x;
+        top    = ref1.y;
+        right  = ref2.x;
+        bottom = ref2.y;
+    }
 
     template <class T1, class T2, class T3, class T4>
     inline HRect::HRect(const T1& a, const T2& b, const T3& c, const T4& d)

@@ -18,7 +18,7 @@ CubePSInput main(VSInput vsIn)
     float4 viewPos = mul(viewMat, worldPos);
     float4 projPos = mul(projMat, viewPos);
     
-    psIn.worldPos = worldPos;
+    psIn.worldPos = worldPos.xyz;
     psIn.projPos = projPos;
 
     return psIn;

@@ -13,7 +13,7 @@ using namespace HBSoft;
 Camera::Camera(float fov, float projNear, float projFar)
     : m_fov(fov), m_projNear(projNear), m_projFar(projFar)
 {
-    HPoint windowSize = HWINDOW->GetSize();
+    HPoint windowSize = HWINDOW->GetWindowSize();
     // z 0 ~ 1 원근 행렬을 만들어주는 함수
     m_projMat = glm::perspectiveFovLH_ZO(fov, windowSize.x, windowSize.y, projNear, projFar);
 
@@ -46,7 +46,7 @@ const vec3 Camera::GetEyePos() const
 
 void Camera::ZoomIn(const float scale)
 {
-    HPoint windowSize = HWINDOW->GetSize();
+    HPoint windowSize = HWINDOW->GetWindowSize();
     m_fov             = glm::radians(scale);
 
     m_projMat = glm::perspectiveFovLH_ZO(m_fov, windowSize.x, windowSize.y, m_projNear, m_projFar);

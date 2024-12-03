@@ -86,7 +86,7 @@ bool Window::IsActivate() const
     return m_isActivate;
 }
 
-HPoint Window::GetSize() const
+HPoint Window::GetWindowSize() const
 {
     return m_windowSize;
 }
@@ -94,6 +94,11 @@ HPoint Window::GetSize() const
 HWND Window::GetHandle() const
 {
     return m_hwnd;
+}
+
+HINSTANCE Window::GetInstance() const
+{
+    return m_hinstance;
 }
 
 LRESULT Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)

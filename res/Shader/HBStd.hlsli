@@ -50,6 +50,4 @@ cbuffer DefaultMat3D : register(b0)
     Matrix projMat;
 };
 
-
-
 #endif

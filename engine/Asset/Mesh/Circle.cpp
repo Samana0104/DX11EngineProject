@@ -41,12 +41,21 @@ bool Circle::CreateVertices(std::shared_ptr<D3Device> device)
 
 bool Circle::CreateIndices(std::shared_ptr<D3Device> device)
 {
+    std::shared_ptr<SubMesh> subMesh = std::make_shared<SubMesh>();
+
+    subMesh->meshName = "Circle";
+
     for (int i = 1; i <= m_triangles; i++)
     {
-        m_indices.push_back(0);
-        m_indices.push_back(i + 1);
-        m_indices.push_back(i);
+        subMesh->indices.push_back(0);
+        subMesh->indices.push_back(i + 1);
+        subMesh->indices.push_back(i);
     }
 
-    return device->CreateIndexBuffer(m_indices, m_indexBuffer);
+    subMesh->hasTexture = false;
+
+    assert(device->CreateIndexBuffer(subMesh->indices, subMesh->indexBuffer));
+    m_subMeshes.push_back(subMesh);
+
+    return true;
 }

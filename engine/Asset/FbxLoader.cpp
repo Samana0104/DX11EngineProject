@@ -135,7 +135,7 @@ void FbxLoader::ProcessNode(FbxNode* fNode, std::shared_ptr<Mesh> mesh, int curI
     }
 
     for (int childIdx = 0; childIdx < numChild; childIdx++)
-        ProcessNode(fNode->GetChild(childIdx), mesh, mesh->m_born.bornIndex.size(), curIdx);
+        ProcessNode(fNode->GetChild(childIdx), mesh, (int)mesh->m_born.bornIndex.size(), curIdx);
 }
 
 bool FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
@@ -361,7 +361,7 @@ void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
     if (stackCount <= 0)
         return;
 
-    aniStack = m_fbxScene->GetSrcObject<FbxAnimStack>(0);
+    aniStack = m_fbxScene->GetSrcObject<FbxAnimStack>(10);
 
     TakeName = aniStack->GetName();
     TakeInfo = m_fbxScene->GetTakeInfo(TakeName);

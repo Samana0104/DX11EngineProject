@@ -76,7 +76,7 @@ void AssetsMgr::CreateAsset(const wstringV path)
     }
     else if (FontFactory::IsFontFormat(fileExt))
     {
-        FontFactory::RegisterExternalFont(fileExt);
+        FontFactory::RegisterExternalFont(path);
     }
 }
 
@@ -84,7 +84,7 @@ void AssetsMgr::CreateResFromDefault()
 {
     // 작성한 폰트 규격 추가
     for (auto& fontDesc : g_defaultFonts)
-        m_fonts.Add(fontDesc.first, FontFactory::CreateFromDesc(m_device, fontDesc.second));
+        m_fonts.Add(fontDesc.first, FontFactory::CreateFontFromDesc(m_device, fontDesc.second));
 
     // 작성한 메쉬 추가
     for (auto& meshDesc : g_defaultMeshes)

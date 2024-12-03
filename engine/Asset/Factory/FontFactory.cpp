@@ -24,15 +24,25 @@ void FontFactory::ClearExternalAllFonts()
         RemoveFontResourceEx(font.data(), FR_PRIVATE, 0);
 }
 
-std::shared_ptr<Font> FontFactory::CreateFromDesc(std::shared_ptr<D3Device> device, const FontDesc& desc)
+std::shared_ptr<Font> FontFactory::CreateFontFromDesc(std::shared_ptr<D3Device> device,
+                                                      const FontDesc&           desc)
 {
     auto font = std::make_shared<Font>(device, desc);
     return font;
 }
 
+std::shared_ptr<LayoutFont> FontFactory::CreateLayoutFont(std::shared_ptr<D3Device> device,
+                                                          const FontDesc&           desc)
+{
+    auto layoutFont = std::make_shared<LayoutFont>(device, desc);
+    return layoutFont;
+}
+
 bool FontFactory::IsFontFormat(const wstringV ext)
 {
     if (ext.compare(L".ttf") == 0)
+        return true;
+    if (ext.compare(L".otf") == 0)
         return true;
 
     return false;

@@ -22,20 +22,32 @@ bool GeneralTexture::CreateTexture(std::shared_ptr<D3Device> device)
     /*
         일반 텍스쳐
     */
-    HRESULT hr = DirectX::CreateWICTextureFromFile(device->m_d3dDevice.Get(),
-                                                   m_texturePath.c_str(),
-                                                   m_texture.GetAddressOf(),
-                                                   m_srv.GetAddressOf());
+    HRESULT hr = DirectX::CreateWICTextureFromFileEx(device->m_d3dDevice.Get(),
+                                                     m_texturePath.c_str(),
+                                                     0,
+                                                     D3D11_USAGE_DEFAULT,
+                                                     D3D11_BIND_SHADER_RESOURCE,
+                                                     0,
+                                                     0,
+                                                     DirectX::WIC_LOADER_FORCE_SRGB,
+                                                     m_texture.GetAddressOf(),
+                                                     m_srv.GetAddressOf());
     /*
         dds 텍스쳐
     */
     if (FAILED(hr))
     {
-        hr = DirectX::CreateDDSTextureFromFile(device->m_d3dDevice.Get(),
-                                               m_texturePath.c_str(),
-                                               m_texture.GetAddressOf(),
-                                               m_srv.GetAddressOf(),
-                                               0);
+        hr = DirectX::CreateDDSTextureFromFileEx(device->m_d3dDevice.Get(),
+                                                 m_texturePath.c_str(),
+                                                 0,
+                                                 D3D11_USAGE_DEFAULT,
+                                                 D3D11_BIND_SHADER_RESOURCE,
+                                                 0,
+                                                 0,
+                                                 DirectX::DDS_LOADER_FORCE_SRGB,
+                                                 m_texture.GetAddressOf(),
+                                                 m_srv.GetAddressOf(),
+                                                 0);
     }
 
     return SUCCEEDED(hr);

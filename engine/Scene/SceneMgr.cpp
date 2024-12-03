@@ -44,6 +44,4 @@ void SceneMgr::Release()
     for (auto& scene : scenes)
         scene.second->Release();
     // 전체 신 Release 호출 후 제거
-
-    Clear();
 }

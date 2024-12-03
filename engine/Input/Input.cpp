@@ -3,7 +3,7 @@ author : 변한빛
 description : 인풋 처리를 위한 소스 파일
 
 version: 1.0.0
-date: 2024-11-04
+date: 2024-11-30
 */
 
 #include "pch.h"
@@ -15,6 +15,8 @@ Input::Input(std::shared_ptr<Window> window)
 {
     ZeroMemory(&m_keyState, sizeof(KeyState) * 256);
 }
+
+Input::~Input() {}
 
 void Input::UpdateKeyState(const UINT key)
 {
@@ -34,15 +36,21 @@ KeyState Input::GetKeyState(const UINT key) const
     return m_keyState[key];
 }
 
-const HPoint& Input::GetMousePos() const
+const HPoint& Input::GetScreenMousePos() const
 {
     return m_mousePos;
 }
 
 const HPoint Input::GetNDCMousePos() const
 {
-    HPoint windowSize = m_window->GetSize();
+    HPoint windowSize = m_window->GetWindowSize();
     return {2.f * m_mousePos.x / windowSize.x - 1.f, -2.f * m_mousePos.y / windowSize.y + 1.f};
+}
+
+const HPoint Input::GetCartesianMousePos() const
+{
+    HPoint windowSize = m_window->GetWindowSize();
+    return {m_mousePos.x - windowSize.x * 0.5f, -m_mousePos.y + windowSize.y * 0.5f};
 }
 
 bool Input::IsKeyUp(const UINT key) const
@@ -92,16 +100,13 @@ void Input::SetKeyHold(const UINT key)
 
 void Input::Update()
 {
+    POINT mousePos;
+
     if (!m_window->IsActivate())  // 게임 윈도우가 켜져있으면 ( 활성화 될 때 )
         return;
 
-    HPoint preMousePos = m_mousePos;
-    POINT  mousePos;
-
-
     for (UINT key = 0; key < KEY_COUNT; key++)
         UpdateKeyState(key);
-
 
     GetCursorPos(&mousePos);
     ScreenToClient(m_window->GetHandle(), &mousePos);
