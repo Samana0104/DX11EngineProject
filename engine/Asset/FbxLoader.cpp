@@ -361,7 +361,7 @@ void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
     if (stackCount <= 0)
         return;
 
-    aniStack = m_fbxScene->GetSrcObject<FbxAnimStack>(0);
+    aniStack = m_fbxScene->GetSrcObject<FbxAnimStack>(10);
 
     TakeName = aniStack->GetName();
     TakeInfo = m_fbxScene->GetTakeInfo(TakeName);

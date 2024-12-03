@@ -6,7 +6,7 @@ LobbyButton::LobbyButton()
 {
     SetStartBtn();
     SetEndBtn();
-    SetSettingBtn();
+    SetOptionBtn();
 }
 
 void LobbyButton::SetStartBtn()
@@ -35,17 +35,17 @@ void LobbyButton::SetEndBtn()
     m_endBtn.SetOnClickCallback([](void) {});
 }
 
-void LobbyButton::SetSettingBtn()
+void LobbyButton::SetOptionBtn()
 {
     HPoint windowSize = HWINDOW->GetWindowSize();
 
-    m_settingBtn.SetArea({windowSize.x * 0.5f - 90.f,
-                          windowSize.y * 0.5f + 180.f,
-                          windowSize.x * 0.5f + 90.f,
-                          windowSize.y * 0.5f + 240.f});
-    m_settingBtn.SetText(L"종료", {1.f, 1.f, 1.f, 1.f});
-    m_settingBtn.SetImage(L"투명.png");
-    m_settingBtn.SetOnClickCallback([](void) { PostQuitMessage(0); });
+    m_optionBtn.SetArea({windowSize.x * 0.5f - 90.f,
+                         windowSize.y * 0.5f + 180.f,
+                         windowSize.x * 0.5f + 90.f,
+                         windowSize.y * 0.5f + 240.f});
+    m_optionBtn.SetText(L"종료", {1.f, 1.f, 1.f, 1.f});
+    m_optionBtn.SetImage(L"투명.png");
+    m_optionBtn.SetOnClickCallback([](void) { PostQuitMessage(0); });
 }
 
 void LobbyButton::Init() {}
@@ -55,13 +55,13 @@ void LobbyButton::Release() {}
 void LobbyButton::Update(const float deltaTime)
 {
     m_startBtn.Update(deltaTime);
-    m_settingBtn.Update(deltaTime);
+    m_optionBtn.Update(deltaTime);
     m_endBtn.Update(deltaTime);
 }
 
 void LobbyButton::Render()
 {
     m_startBtn.Render();
-    m_settingBtn.Render();
+    m_optionBtn.Render();
     m_endBtn.Render();
 }

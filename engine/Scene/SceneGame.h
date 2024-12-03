@@ -3,7 +3,7 @@ author : 변한빛
 description : 게임 내부 씬을 정의하는 헤더 파일
 
 version: 1.1.0
-date: 2024-11-30
+date: 2024-12-03
 */
 
 #pragma once
@@ -11,14 +11,15 @@ date: 2024-11-30
 #include "Camera.h"
 #include "3D/LineObj.h"
 #include "3D/CubeMapObj.h"
-#include "3D/Test3DObj.h"
 #include "3D/HeightMapObj.h"
+#include "GameButton.h"
 
 namespace HBSoft
 {
     class SceneGame : public Scene
     {
     public:
+        GameButton              m_escButton;
         CubeMapObj              cube;
         std::shared_ptr<Camera> cameraTest;
         LineObj                 m_line;

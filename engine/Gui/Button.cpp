@@ -99,8 +99,8 @@ bool Button::IsCursorInRect()
 
 void Button::Update(const float deltaTime)
 {
-
     m_state = ButtonState::DEFAULT;
+
 
     if (IsCursorInRect())
     {
@@ -121,8 +121,6 @@ void Button::Update(const float deltaTime)
     {
         m_font->SetUnderline(false);
     }
-
-    UpdateDefaultCB();
 }
 
 void Button::Render()
@@ -130,6 +128,7 @@ void Button::Render()
     UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
     UINT pOffsets = 0;               // 버퍼에 시작 인덱스
 
+    UpdateDefaultCB();
     m_vsShader->SetUpToContext(HDEVICE);
     m_psShader->SetUpToContext(HDEVICE);
 
@@ -160,7 +159,9 @@ void Button::Init() {}
 void Button::OnNotice(EventList event, void* entity)
 {
     HPoint windowSize = HWINDOW->GetWindowSize();
-    HRect  textRect   = Transform2D::ConvertNDCToScreen(windowSize, m_collisionArea);
+    HRect  textRect;
+
+    textRect = Transform2D::ConvertNDCToScreen(windowSize, m_collisionArea);
 
     m_font->SetRect(textRect);
 }

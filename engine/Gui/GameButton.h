@@ -1,24 +1,27 @@
 #pragma once
 
 #include "Button.h"
-#include "Renderable.h"
 
 namespace HBSoft
 {
-    class LobbyButton : public Renderable
+    class GameButton
     {
     private:
-        Button m_startBtn;
-        Button m_endBtn;
+        Button m_resumeBtn;
+        Button m_resetBtn;
         Button m_optionBtn;
+        Button m_quitBtn;
+
+        bool m_isRender;
 
     private:
-        void SetStartBtn();
-        void SetEndBtn();
+        void SetResumeBtn();
+        void SetResetBtn();
         void SetOptionBtn();
+        void SetQuitBtn();
 
     public:
-        LobbyButton();
+        GameButton();
 
         virtual void Init();
         virtual void Release();

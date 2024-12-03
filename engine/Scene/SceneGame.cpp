@@ -22,6 +22,7 @@ SceneGame::SceneGame()
 
 void SceneGame::Update(float deltaTime)
 {
+
     ImGui::Checkbox("wireframe : ", &isWire);
 
     cameraTest->Update(deltaTime);
@@ -29,6 +30,7 @@ void SceneGame::Update(float deltaTime)
     m_line.Update(deltaTime);
     cube.Update(deltaTime);
     m_map.Update(deltaTime);
+    m_escButton.Update(deltaTime);
 }
 
 void SceneGame::Render()
@@ -42,7 +44,8 @@ void SceneGame::Render()
     m_line.Draw({0.f, 0.f, 0.f}, {0.f, 1000.f, 0.f}, {0.f, 1.f, 0.f, 1.f});
     m_line.Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
     cube.Render();
-    // m_map.Render();
+    m_map.Render();
+    m_escButton.Render();
 }
 
 void SceneGame::Release() {}
