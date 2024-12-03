@@ -10,16 +10,14 @@ MainTitle::MainTitle()
     m_psShader     = HASSET->m_shaders[L"PixelShader.hlsl"];
 }
 
-void MainTitle::Update(const float deltaTime)
-{
-    UpdateDefaultCB();
-}
+void MainTitle::Update(const float deltaTime) {}
 
 void MainTitle::Render()
 {
     UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
     UINT pOffsets = 0;               // 버퍼에 시작 인덱스
 
+    UpdateDefaultCB();
     m_vsShader->SetUpToContext(HDEVICE);
     m_psShader->SetUpToContext(HDEVICE);
 

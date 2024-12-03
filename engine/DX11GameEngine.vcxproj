@@ -61,6 +61,7 @@
     <ClCompile Include="DesignPattern\Observer.cpp" />
     <ClCompile Include="GameStart\Main.cpp" />
     <ClCompile Include="Gui\Button.cpp" />
+    <ClCompile Include="Gui\GameButton.cpp" />
     <ClCompile Include="Gui\LobbyButton.cpp" />
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Object\2D\MainTitle.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="DesignPattern\Observer.h" />
     <ClInclude Include="DesignPattern\Singleton.h" />
     <ClInclude Include="Gui\Button.h" />
+    <ClInclude Include="Gui\GameButton.h" />
     <ClInclude Include="Gui\LobbyButton.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Object\2D\MainTitle.h" />

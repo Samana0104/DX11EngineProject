@@ -207,6 +207,9 @@
     <ClCompile Include="Gui\LobbyButton.cpp">
       <Filter>Gui</Filter>
     </ClCompile>
+    <ClCompile Include="Gui\GameButton.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -381,6 +384,9 @@
       <Filter>Gui</Filter>
     </ClInclude>
     <ClInclude Include="Gui\LobbyButton.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\GameButton.h">
       <Filter>Gui</Filter>
     </ClInclude>
   </ItemGroup>

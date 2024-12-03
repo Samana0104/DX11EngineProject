@@ -15,14 +15,17 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 
 namespace HBSoft
 {
-#define WINDOW_NAME       L"Untitled Goose"
+#define WINDOW_NAME       L"HBSoft"
 #define WINDOW_CLASS_NAME L"HBSOFT_WINDOW"
 
     class Window
     {
     private:
-        inline static bool   m_isActivate = false;
+        inline static bool m_isActivate = false;
+
         inline static HPoint m_windowSize;
+
+        HPoint m_previousSize;  // 현재 윈도우와 전 윈도우와의 사이즈 비교로
 
         HINSTANCE m_hinstance;
         HWND      m_hwnd;
