@@ -228,7 +228,7 @@
     <IntDir>$(SolutionDir)exe\release\bin\</IntDir>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
-    <VcpkgEnabled>true</VcpkgEnabled>
+    <VcpkgEnabled>false</VcpkgEnabled>
     <VcpkgManifestInstall>true</VcpkgManifestInstall>
     <VcpkgAutoLink>true</VcpkgAutoLink>
     <VcpkgApplocalDeps>false</VcpkgApplocalDeps>
