@@ -18,6 +18,7 @@ SceneGame::SceneGame()
     m_line.SetCamera(cameraTest);
     cube.SetCamera(cameraTest);
     m_map.SetCamera(cameraTest);
+    m_water.SetCamera(cameraTest);
 }
 
 void SceneGame::Update(float deltaTime)
@@ -31,6 +32,7 @@ void SceneGame::Update(float deltaTime)
     cube.Update(deltaTime);
     m_map.Update(deltaTime);
     m_escButton.Update(deltaTime);
+    m_water.Update(deltaTime);
 }
 
 void SceneGame::Render()
@@ -46,6 +48,7 @@ void SceneGame::Render()
     cube.Render();
     m_map.Render();
     m_escButton.Render();
+    m_water.Render();
 }
 
 void SceneGame::Release() {}

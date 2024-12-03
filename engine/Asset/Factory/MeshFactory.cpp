@@ -65,7 +65,7 @@ bool MeshFactory::IsMeshFormat(const wstringV ext)
 {
     if (ext.compare(L".fbx") == 0)
         return true;
-    else if (ext.compare(L".obj") == 0)
+    else if (ext.compare(L".hbs") == 0)
         return true;
 
     return false;

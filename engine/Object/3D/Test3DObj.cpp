@@ -6,35 +6,15 @@ using namespace HBSoft;
 
 Test3DObj::Test3DObj()
 {
-    m_mesh     = HASSET->m_meshes[L"Goose.fbx"];
-    m_vsShader = HASSET->m_shaders[L"AnimationVertex.hlsl"];
-    // SetVSShaderKey(L"VertexShader.hlsl");
+    m_mesh     = HASSET->m_meshes[L"20241203result(merged).fbx"];
+    m_vsShader = HASSET->m_shaders[L"VertexShader.hlsl"];
 
     // SetPSShaderKey(L"PixelShader.hlsl");  // 텍스쳐 있는 놈
     m_psShader = HASSET->m_shaders[L"ColorPixelShader.hlsl"];  // 텍스쳐 없는 놈
-    anim.resize(m_mesh->m_born.bornIndex.size());
 }
 
 void Test3DObj::Update(const float deltaTime)
 {
-    static float currentFrame = 0.f;
-    static int   startFrame   = 0;
-    static int   lastFrame    = 0;
-    static float speed        = 3.f;
-    // static int   selectAnimation = 0;
-
-    ImGui::SliderFloat("Speed", &speed, 0, 30.f);
-
-    currentFrame += deltaTime * speed;
-    startFrame    = m_mesh->m_animations[0]->GetStartFrame();
-    lastFrame     = m_mesh->m_animations[0]->GetLastFrame();
-
-    if (currentFrame > lastFrame)
-        currentFrame = (float)startFrame;
-
-    anim = m_mesh->m_animations[0]->GetAnimationMatrix(currentFrame);
-
-    m_vsShader->SetConstantBuffer(HDEVICE, (void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
     UpdateDefaultCB();
 }
 

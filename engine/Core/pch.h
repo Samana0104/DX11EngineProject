@@ -69,9 +69,9 @@ date: 2024-11-17
 
 // imgui는 디버그용
 #ifdef _DEBUG
-    #include "imgui.h"
-    #include "imgui_impl_win32.h"
-    #include "imgui_impl_dx11.h"
+    #include "imgui/imgui_impl_win32.h"
+    #include "imgui/imgui_impl_dx11.h"
+    #include "imgui/imgui.h"
 #endif
 
 // ---------------------------------------
@@ -98,6 +98,7 @@ date: 2024-11-17
     #pragma comment(lib, "debug/fbxsdk/libfbxsdk-md.lib")
     #pragma comment(lib, "debug/fbxsdk/libxml2-md.lib")
     #pragma comment(lib, "debug/fbxsdk/zlib-md.lib")
+    #pragma comment(lib, "debug/imgui/imguid.lib")
 #else
     #pragma comment(lib, "release/DirectXTK/DirectXTK_r.lib")
     #pragma comment(lib, "release/glm/glm.lib")
@@ -105,6 +106,7 @@ date: 2024-11-17
     #pragma comment(lib, "release/fbxsdk/libfbxsdk-md.lib")
     #pragma comment(lib, "release/fbxsdk/libxml2-md.lib")
     #pragma comment(lib, "release/fbxsdk/zlib-md.lib")
+    #pragma comment(lib, "debug/imgui/imgui.lib")
 #endif
 
 // ---------------------------------------
