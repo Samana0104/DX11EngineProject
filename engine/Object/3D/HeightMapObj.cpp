@@ -70,6 +70,43 @@ void HeightMapObj::CreateMapDesc(const TEXTURE_KEY heightTexKey, float scaleXPer
     }
 }
 
+float HBSoft::HeightMapObj::GetHeight(float x, float z)
+{
+    float fCellX = (float)(m_numCellCols - 1 * m_cellDistance / 2.0f + x);
+    float fCellZ = (float)(m_numCellRows - 1 * m_cellDistance / 2.0f + z);
+
+    fCellX /= (float)m_cellDistance;
+    fCellZ /= (float)m_cellDistance;
+
+    float fVertexCol = std::floorf(fCellX);
+    float fVertexRow = std::floorf(fCellZ);
+
+    if (fVertexCol < 0.0f)
+        fVertexCol = 0.0f;
+    if (fVertexRow < 0.0f)
+        fVertexRow = 0.0f;
+
+    if ((float)(m_mapDesc.numCols - 2) < fVertexCol)
+        fVertexCol = (float)(m_mapDesc.numCols - 2);
+    if ((float)(m_mapDesc.numRows - 2) < fVertexRow)
+        fVertexRow = (float)(m_mapDesc.numRows - 2);
+
+
+    /// float A =
+
+
+    float fDeltaX = fCellX - fVertexCol;
+    float fDeltaZ = fCellZ - fVertexRow;
+
+    float fHeight = 0.0f;
+
+    if (fDeltaZ < (1.0f - fDeltaX))
+    {
+        float uy 
+
+    }
+}
+
 void HeightMapObj::Init() {}
 
 void HeightMapObj::Release() {}

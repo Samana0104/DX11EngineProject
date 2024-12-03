@@ -66,5 +66,10 @@ PSInput main(AnimationInput vsIn)
     psIn.n = normal;
     psIn.c = vsIn.c;
     psIn.t = vsIn.t;
-    return psIn;
-}
+    return psIn;    
+} 
+//본(Bone)은 캐릭터의 뼈와 같고, 정점(Vertex)은 피부라고 생각하세요.
+/***행렬(Matrix)**은 각 본이 "어떻게 움직였는지"에 대한 정보.
+**가중치(Weight)**는 "이 본이 얼마나 영향을 미치는지"를 나타냅니다.
+이 코드의 역할은 "뼈가 움직였을 때, 피부가 어떻게 변해야 할지 계산"하는 것입니다. ??
+*/

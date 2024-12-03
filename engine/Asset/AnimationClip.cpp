@@ -28,8 +28,8 @@ std::vector<mat4> AnimationClip::GetAnimationMatrix(float frame)
 
     std::vector<mat4> interpolatedMat;
 
-    int infimumFrame  = static_cast<int>(glm::floor(frame));
-    int supremumFrame = static_cast<int>(glm::ceil(frame));
+    int infimumFrame  = static_cast<int>(glm::floor(frame));  /// 현재 프레임
+    int supremumFrame = static_cast<int>(glm::ceil(frame));   /// 다음 프레임
 
     if (supremumFrame == m_lastFrame)
         supremumFrame = m_startFrame;

@@ -13,6 +13,8 @@ date: 2024-11-04
 #include "3D/CubeMapObj.h"
 #include "3D/Test3DObj.h"
 #include "3D/HeightMapObj.h"
+#include "../Gardener.h"
+#include "AABBCollider.h"
 
 namespace HBSoft
 {
@@ -24,6 +26,8 @@ namespace HBSoft
         LineObj                 m_line;
         Test3DObj               m_zelda;
         HeightMapObj            m_map;
+        Gardener                m_gardener;
+        AABBCollider            m_aabbcollider;
 
         bool isWire = false;
 

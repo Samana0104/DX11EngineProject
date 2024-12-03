@@ -19,6 +19,7 @@ SceneLobby::SceneLobby()
     cube.SetCamera(cameraTest);
     m_zelda.SetCamera(cameraTest);
     m_map.SetCamera(cameraTest);
+    m_gardener.SetCamera(cameraTest);
 }
 
 void SceneLobby::Update(float deltaTime)
@@ -31,6 +32,10 @@ void SceneLobby::Update(float deltaTime)
     cube.Update(deltaTime);
     m_zelda.Update(deltaTime);
     m_map.Update(deltaTime);
+    m_gardener.Update(deltaTime);
+
+    if (m_aabbcollider.CheckAABBCollision(m_gardener.GetaabbCollider(), m_zelda.GetaabbCollider()))
+        std::cout << "1";
 }
 
 void SceneLobby::Render()
@@ -45,6 +50,7 @@ void SceneLobby::Render()
     m_line.Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
     cube.Render();
     m_zelda.Render();
+    m_gardener.Render();
     // m_map.Render();
 }
 

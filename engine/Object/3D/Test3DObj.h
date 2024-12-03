@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Object3D.h"
+#include "Transform3D.h"
 
 namespace HBSoft
 {
@@ -11,6 +12,10 @@ namespace HBSoft
 
         std::vector<mat4> anim;
 
+        float m_speed1 = 1.0f;
+
+        AABB aabb_goose;
+
     public:
         Test3DObj();
 
@@ -18,5 +23,6 @@ namespace HBSoft
         virtual void Render() override;
         virtual void Init();
         virtual void Release();
+        AABB         GetaabbCollider();
     };
 }  // namespace HBSoft

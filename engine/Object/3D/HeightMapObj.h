@@ -11,6 +11,7 @@ date: 2024-11-25
 #include "Object3D.h"
 #include "Factory/MeshFactory.h"
 #include "Texture/Texture.h"
+#include "Mesh\Mesh.h"
 
 namespace HBSoft
 {
@@ -21,6 +22,7 @@ namespace HBSoft
 
     struct VertexInfo
     {
+
         std::vector<UINT> faceIndices;
     };
 
@@ -46,6 +48,7 @@ namespace HBSoft
         std::vector<FaceInfo>    m_faceInfo;
         std::vector<VertexInfo>  m_vertexInfo;
 
+        std::vector<
     private:
         /*
             param : texKey -> 높이맵 텍스쳐 키
@@ -55,13 +58,24 @@ namespace HBSoft
             description :
                높이 맵 텍스쳐를 가지고 맵 디스크립터를 만들어준다.
         */
-        void CreateMapDesc(const TEXTURE_KEY texKey, float scaleXPerCell, float scaleYPerCell,
-                           float scaleZPerCell);
+        int                     m_numCellCols;
+        int                     m_numCellRows;
+        float                   m_cellDistance;
+        std::vector<VertexInfo> m_VertexInfoList;
+
+        float   fcellX;
+        float   fcellz;
+        void    CreateMapDesc(const TEXTURE_KEY texKey, float scaleXPerCell, float scaleYPerCell,
+                              float scaleZPerCell);
+        MapDesc m_mapDesc;
+
 
     public:
         HeightMapObj();
         ~HeightMapObj() = default;
 
+
+        float        GetHeight(float x, float z);
         virtual void Init() override;
         virtual void Release() override;
         virtual void Update(const float deltaTime) override;

@@ -102,6 +102,7 @@ void Transform3D::CalculateWorldMat()
 {
     m_worldMat = glm::transpose(glm::toMat3(m_rotator));
 
+
     m_worldMat[0] *= m_scale.x;
     m_worldMat[1] *= m_scale.y;
     m_worldMat[2] *= m_scale.z;
