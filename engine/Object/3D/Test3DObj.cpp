@@ -6,7 +6,7 @@ using namespace HBSoft;
 
 Test3DObj::Test3DObj()
 {
-    m_mesh     = HASSET->m_meshes[L"20241203result(merged).fbx"];
+    m_mesh     = HASSET->m_meshes[L"202412031822testFBXBlender.fbx"];
     m_vsShader = HASSET->m_shaders[L"VertexShader.hlsl"];
 
     // SetPSShaderKey(L"PixelShader.hlsl");  // 텍스쳐 있는 놈
@@ -15,13 +15,16 @@ Test3DObj::Test3DObj()
 
 void Test3DObj::Update(const float deltaTime)
 {
-    UpdateDefaultCB();
+    m_transform.SetRotation(glm::vec3(1.57, 0, 0));
+    m_transform.SetLocation(glm::vec3(-7, 0, -17));
 }
 
 void Test3DObj::Render()
 {
     UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
     UINT pOffsets = 0;               // 버퍼에 시작 인덱스
+
+    UpdateDefaultCB();
 
     m_vsShader->SetUpToContext(HDEVICE);
     m_psShader->SetUpToContext(HDEVICE);
