@@ -12,7 +12,10 @@ namespace HBSoft
     class Goose : public Object3D
     {
     private:
-        float m_speed1 = 5.0f;
+        std::shared_ptr<Mesh> m_mesh;
+        float                 m_speed1 = 1.0f;
+        std::vector<mat4>     anim;
+        AABB                  aabb_goose;
 
     public:
         Goose();
@@ -21,6 +24,10 @@ namespace HBSoft
         virtual void Render() override;
         virtual void Release() override;
         virtual void Init() override;
+
+        float GetLocationX();
+        float GetLocationZ();
+        AABB  GetaabbCollider();
     };
 
 

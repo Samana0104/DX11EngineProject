@@ -48,7 +48,6 @@ namespace HBSoft
         std::vector<FaceInfo>    m_faceInfo;
         std::vector<VertexInfo>  m_vertexInfo;
 
-        std::vector<
     private:
         /*
             param : texKey -> 높이맵 텍스쳐 키
@@ -58,25 +57,23 @@ namespace HBSoft
             description :
                높이 맵 텍스쳐를 가지고 맵 디스크립터를 만들어준다.
         */
-        int                     m_numCellCols;
-        int                     m_numCellRows;
-        float                   m_cellDistance;
-        std::vector<VertexInfo> m_VertexInfoList;
+        int                 m_numCellCols;
+        int                 m_numCellRows;
+        float               m_cellDistance;
+        std::vector<Vertex> m_VertexList;
 
-        float   fcellX;
-        float   fcellz;
-        void    CreateMapDesc(const TEXTURE_KEY texKey, float scaleXPerCell, float scaleYPerCell,
-                              float scaleZPerCell);
-        MapDesc m_mapDesc;
+        float fcellX;
+        float fcellz;
+        void  CreateMapDesc(const TEXTURE_KEY texKey, float scaleXPerCell, float scaleYPerCell,
+                            float scaleZPerCell);
 
 
     public:
         HeightMapObj();
         ~HeightMapObj() = default;
 
-        float        GetHeight(float x, float z);
+        float GetHeight(float x, float z);
 
-        float        GetHeight(float x, float z);
         virtual void Init() override;
 
         virtual void Release() override;

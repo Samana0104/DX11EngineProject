@@ -1,7 +1,10 @@
 #pragma once
 
+#include "Core.h"
 #include "3D/Object3D.h"
 #include "3D/Transform3D.h"
+#include "Shader/ConstantBuffers.h"
+#include "3D/LineObj.h"
 
 namespace HBSoft
 {
@@ -10,8 +13,11 @@ namespace HBSoft
     {
     private:
         std::shared_ptr<Mesh> m_mesh;
+        std::shared_ptr<Mesh> m_mesh1;
 
         std::vector<mat4> anim;
+
+        LineObj m_line;
 
         float m_speed2 = 1.0f;
         AABB  aabb_gardener;

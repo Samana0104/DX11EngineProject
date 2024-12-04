@@ -16,9 +16,11 @@ SceneGame::SceneGame()
 
     cameraTest->LookAt({0.f, 5.f, -10.f}, {0.f, 0.f, 0.f}, {0.f, 1.f, 0.f});
     m_line.SetCamera(cameraTest);
+    m_line1.SetCamera(cameraTest);
     cube.SetCamera(cameraTest);
     m_map.SetCamera(cameraTest);
-    m_water.SetCamera(cameraTest);
+    m_goose.SetCamera(cameraTest);
+    m_gardener.SetCamera(cameraTest);
 }
 
 void SceneGame::Update(float deltaTime)
@@ -29,10 +31,12 @@ void SceneGame::Update(float deltaTime)
     cameraTest->Update(deltaTime);
 
     m_line.Update(deltaTime);
+    m_line1.Update(deltaTime);
     cube.Update(deltaTime);
     m_map.Update(deltaTime);
     m_escButton.Update(deltaTime);
-    m_water.Update(deltaTime);
+    m_goose.Update(deltaTime);
+    m_gardener.Update(deltaTime);
 }
 
 void SceneGame::Render()
@@ -45,10 +49,100 @@ void SceneGame::Render()
     m_line.Draw({0.f, 0.f, 0.f}, {1000.f, 0.f, 0.f}, {1.f, 0.f, 0.f, 1.f});
     m_line.Draw({0.f, 0.f, 0.f}, {0.f, 1000.f, 0.f}, {0.f, 1.f, 0.f, 1.f});
     m_line.Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
+
+
+    m_line.Draw(m_gardener.GetaabbCollider().min,
+                m_gardener.GetaabbCollider().min + vec3(1.5f, 0.f, 0.f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_gardener.GetaabbCollider().min + vec3(1.5f, 0.f, 0.f),
+                m_gardener.GetaabbCollider().min + vec3(1.5f, 0.f, 1.5f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_gardener.GetaabbCollider().min + vec3(1.5f, 0.f, 1.5f),
+                m_gardener.GetaabbCollider().min + vec3(0.f, 0.f, 1.5f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_gardener.GetaabbCollider().min + vec3(0.f, 0.f, 1.5f),
+                m_gardener.GetaabbCollider().min,
+                {1.f, 1.f, 1.f, 1.f});
+
+
+    m_line.Draw(m_gardener.GetaabbCollider().min,
+                m_gardener.GetaabbCollider().min + vec3(0.f, 1.5f, 0.f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_gardener.GetaabbCollider().min + vec3(1.5f, 0.f, 0.f),
+                m_gardener.GetaabbCollider().min + vec3(1.5f, 1.5f, 0.f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_gardener.GetaabbCollider().min + vec3(1.5f, 0.f, 1.5f),
+                m_gardener.GetaabbCollider().min + vec3(1.5f, 1.5f, 1.5f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_gardener.GetaabbCollider().min + vec3(0.f, 0.f, 1.5f),
+                m_gardener.GetaabbCollider().min + vec3(0.f, 1.5f, 1.5f),
+                {1.f, 1.f, 1.f, 1.f});
+
+
+    m_line.Draw(m_gardener.GetaabbCollider().max,
+                m_gardener.GetaabbCollider().max - vec3(0.f, 0.f, 1.5f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_gardener.GetaabbCollider().max - vec3(0.f, 0.f, 1.5f),
+                m_gardener.GetaabbCollider().max - vec3(1.5f, 0.f, 1.5f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_gardener.GetaabbCollider().max - vec3(1.5f, 0.f, 1.5f),
+                m_gardener.GetaabbCollider().max - vec3(1.5f, 0.f, 0.f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_gardener.GetaabbCollider().max - vec3(1.5f, 0.f, 0.f),
+                m_gardener.GetaabbCollider().max,
+                {1.f, 1.f, 1.f, 1.f});
+
+    m_line.Draw(m_goose.GetaabbCollider().min,
+                m_goose.GetaabbCollider().min + vec3(1.f, 0.f, 0.f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_goose.GetaabbCollider().min + vec3(1.f, 0.f, 0.f),
+                m_goose.GetaabbCollider().min + vec3(1.f, 0.f, 1.f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_goose.GetaabbCollider().min + vec3(1.f, 0.f, 1.f),
+                m_goose.GetaabbCollider().min + vec3(0.f, 0.f, 1.f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_goose.GetaabbCollider().min + vec3(0.f, 0.f, 1.f),
+                m_goose.GetaabbCollider().min,
+                {1.f, 1.f, 1.f, 1.f});
+
+
+    m_line.Draw(m_goose.GetaabbCollider().min,
+                m_goose.GetaabbCollider().min + vec3(0.f, 1.f, 0.f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_goose.GetaabbCollider().min + vec3(1.f, 0.f, 0.f),
+                m_goose.GetaabbCollider().min + vec3(1.f, 1.f, 0.f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_goose.GetaabbCollider().min + vec3(1.f, 0.f, 1.f),
+                m_goose.GetaabbCollider().min + vec3(1.f, 1.f, 1.f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_goose.GetaabbCollider().min + vec3(0.f, 0.f, 1.f),
+                m_goose.GetaabbCollider().min + vec3(0.f, 1.f, 1.f),
+                {1.f, 1.f, 1.f, 1.f});
+
+
+    m_line.Draw(m_goose.GetaabbCollider().max,
+                m_goose.GetaabbCollider().max - vec3(0.f, 0.f, 1.f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_goose.GetaabbCollider().max - vec3(0.f, 0.f, 1.f),
+                m_goose.GetaabbCollider().max - vec3(1.f, 0.f, 1.f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_goose.GetaabbCollider().max - vec3(1.f, 0.f, 1.f),
+                m_goose.GetaabbCollider().max - vec3(1.f, 0.f, 0.f),
+                {1.f, 1.f, 1.f, 1.f});
+    m_line.Draw(m_goose.GetaabbCollider().max - vec3(1.f, 0.f, 0.f),
+                m_goose.GetaabbCollider().max,
+                {1.f, 1.f, 1.f, 1.f});
+
     cube.Render();
     m_map.Render();
     m_escButton.Render();
-    m_water.Render();
+    m_goose.Render();
+    m_gardener.Render();
+
+
+    if (m_aabbCollider.CheckAABBCollision(m_goose.GetaabbCollider(), m_gardener.GetaabbCollider()))
+        std::cout << "1";
+    /* std::cout << m_map.GetHeight(m_goose.GetLocationX(), m_goose.GetLocationZ());*/
 }
 
 void SceneGame::Release() {}

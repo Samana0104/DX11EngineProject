@@ -98,6 +98,16 @@ Transform3D& Transform3D::SetScale(const float scale)
     return *this;
 }
 
+float Transform3D::GetLocationX()
+{
+    return m_worldMat[3][0];
+}
+
+float Transform3D::GetLocationZ()
+{
+    return m_worldMat[3][2];
+}
+
 void Transform3D::CalculateWorldMat()
 {
     m_worldMat = glm::transpose(glm::toMat3(m_rotator));

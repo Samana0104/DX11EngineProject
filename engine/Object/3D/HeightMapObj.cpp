@@ -92,8 +92,17 @@ float HBSoft::HeightMapObj::GetHeight(float x, float z)
         fVertexRow = (float)(m_mapDesc.numRows - 2);
 
 
-    /// float A =
-
+    float A =
+    m_VertexList[static_cast<int>(fVertexRow) * m_mapDesc.numRows + static_cast<int>(fVertexCol)].p.y;
+    float B =
+    m_VertexList[static_cast<int>(fVertexRow) * m_mapDesc.numRows + (static_cast<int>(fVertexCol) + 1)]
+    .p.y;
+    float C =
+    m_VertexList[(static_cast<int>(fVertexRow) + 1) * m_mapDesc.numRows + static_cast<int>(fVertexCol)]
+    .p.y;
+    float D = m_VertexList[(static_cast<int>(fVertexRow) + 1) * m_mapDesc.numRows +
+                           (static_cast<int>(fVertexCol) + 1)]
+              .p.y;
 
     float fDeltaX = fCellX - fVertexCol;
     float fDeltaZ = fCellZ - fVertexRow;
@@ -102,9 +111,21 @@ float HBSoft::HeightMapObj::GetHeight(float x, float z)
 
     if (fDeltaZ < (1.0f - fDeltaX))
     {
-        float uy 
+        float uy = B - A;
+        float vy = C - A;
 
+        fHeight = A + std::lerp(0.0f, uy, fDeltaX) + std::lerp(0.0f, vy, fDeltaZ);
     }
+
+    else
+    {
+        float uy = C - D;
+        float vy = B - D;
+
+        fHeight = D + std::lerp(0.0f, uy, 1.0f - fDeltaX) + std::lerp(0.0f, vy, 1.0f - fDeltaZ);
+    }
+
+    return fHeight;
 }
 
 void HeightMapObj::Init() {}
@@ -131,12 +152,14 @@ void HeightMapObj::Render()
                                            &pOffsets);
 
     // DXGI_FORMAT_R32_UINT는 인덱스 버퍼의 타입이 UINT라 그럼
-    HDEVICE->m_context->IASetIndexBuffer(m_mesh->m_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+    HDEVICE->m_context->IASetIndexBuffer(m_mesh->m_subMeshes[0]->indexBuffer.Get(),
+                                         DXGI_FORMAT_R32_UINT,
+                                         0);
     HDEVICE->m_context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     HDEVICE->m_context->PSSetShaderResources(0, 1, m_mapTexture->GetSRV().GetAddressOf());
 
     HDEVICE->m_context->PSSetSamplers(0, 1, HDEVICE->m_samplerState.GetAddressOf());
     HDEVICE->m_context->OMSetRenderTargets(1, HDEVICE->m_rtv.GetAddressOf(), HDEVICE->m_dsv.Get());
-    HDEVICE->m_context->DrawIndexed((UINT)m_mesh->m_indices.size(), 0, 0);
+    HDEVICE->m_context->DrawIndexed((UINT)m_mesh->m_subMeshes[0]->indices.size(), 0, 0);
 }

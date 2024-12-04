@@ -1,8 +1,9 @@
 #pragma once
-#pragma once
 
+#include "Core.h"
 #include "3D/Object3D.h"
 #include "3D/Transform3D.h"
+#include "Shader/ConstantBuffers.h"
 
 namespace HBSoft
 {
@@ -14,9 +15,7 @@ namespace HBSoft
 
     class AABBCollider
     {
-    public:
-        vec3 m_center;
-        vec3 m_size;
+
 
     public:
         AABB CalculateAABB(AABB aabb, vec3 center, vec3 size);

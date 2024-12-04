@@ -11,7 +11,7 @@ Gardener::Gardener()
 {
 
     aabb_gardener =
-    m_aabbcollider->CalculateAABB(aabb_gardener, vec3(0.0f, 0.0f, 0.0f), vec3(1.0f, 1.0f, 1.0f));
+    m_aabbcollider->CalculateAABB(aabb_gardener, vec3(0.f, 0.75f, 0.f), vec3(1.5f, 1.5f, 1.5f));
 
     m_mesh     = HASSET->m_meshes[L"Walking.fbx"];
     m_vsShader = HASSET->m_shaders[L"AnimationVertex.hlsl"];
@@ -31,7 +31,6 @@ void Gardener::Update(const float deltaTime)
     static float speed        = 30.f;
     // static int   selectAnimation = 0;
 
-    m_aabbcollider->UpdateAABB(aabb_gardener, m_transform.m_pos, vec3(1.0f, 1.0f, 1.0f));
 
     ImGui::SliderFloat("Speed", &speed, 0, 30.f);
 
@@ -44,9 +43,10 @@ void Gardener::Update(const float deltaTime)
 
     anim = m_mesh->m_animations[0]->GetAnimationMatrix(currentFrame);
 
-    m_vsShader->SetConstantBuffer(HDEVICE, (void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
 
     ImGui::SliderFloat("Gardener speed", &m_speed2, 0.f, 50.f);
+
+    m_aabbcollider->UpdateAABB(aabb_gardener, m_transform.m_pos, vec3(1.5f, 1.5f, 1.5f));
 
     static bool isDownPressed  = false;  // VK_DOWN 상태 추적
     static bool isUpPressed    = false;  // VK_UP 상태 추적
@@ -197,7 +197,6 @@ void Gardener::Update(const float deltaTime)
     {
         isUpPressed = false;
     }
-    UpdateDefaultCB();
 }
 
 void Gardener::Render()
@@ -207,7 +206,7 @@ void Gardener::Render()
 
     m_vsShader->SetUpToContext(HDEVICE);
     m_psShader->SetUpToContext(HDEVICE);
-
+    m_vsShader->SetConstantBuffer(HDEVICE, (void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
 
     HDEVICE->m_context->IASetVertexBuffers(0,
                                            1,
@@ -221,6 +220,9 @@ void Gardener::Render()
 
     HDEVICE->m_context->PSSetSamplers(0, 1, HDEVICE->m_samplerState.GetAddressOf());
     HDEVICE->m_context->OMSetRenderTargets(1, HDEVICE->m_rtv.GetAddressOf(), HDEVICE->m_dsv.Get());
+
+
+    UpdateDefaultCB();
 
     for (size_t i = 0; i < m_mesh->m_subMeshes.size(); i++)
     {

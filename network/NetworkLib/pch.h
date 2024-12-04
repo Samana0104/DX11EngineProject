@@ -10,7 +10,7 @@
 #include <memory>
 #include <cassert>
 #include <array>
-#include <atlconv.h> // A2W
+#include <atlconv.h>  // A2W
 
 // -----------------------------------
 //			Containers
@@ -30,8 +30,7 @@
 // -----------------------------------
 //			Libraries
 // -----------------------------------
-#pragma comment(lib,"ws2_32.lib")
-
+#pragma comment(lib, "ws2_32.lib")
 
 // -----------------------------------
 //			Define
@@ -39,10 +38,8 @@
 
 namespace HBSoft
 {
-	using stringV = std::string_view;
-	using PORT	  = short;
-	using PACKET  = unsigned char;
-	using ConditionV = std::condition_variable;
-}
-
-
+    using stringV    = std::string_view;
+    using PORT       = short;
+    using PACKET     = unsigned char;
+    using ConditionV = std::condition_variable;
+}  // namespace HBSoft

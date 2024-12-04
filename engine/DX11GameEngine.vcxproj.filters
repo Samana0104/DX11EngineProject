@@ -210,6 +210,15 @@
     <ClCompile Include="Gui\GameButton.cpp">
       <Filter>Gui</Filter>
     </ClCompile>
+    <ClCompile Include="Object\AABBCollider.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Gardener.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Line1.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -388,6 +397,15 @@
     </ClInclude>
     <ClInclude Include="Gui\GameButton.h">
       <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gardener.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AABBCollider.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Line1.h">
+      <Filter>Object\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

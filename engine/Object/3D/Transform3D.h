@@ -45,5 +45,8 @@ namespace HBSoft
         Transform3D& AddScale(const float scale);
         Transform3D& SetScale(const vec3 scale);
         Transform3D& SetScale(const float scale);
+
+        float GetLocationX();
+        float GetLocationZ();
     };
 }  // namespace HBSoft

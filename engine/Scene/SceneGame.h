@@ -13,7 +13,12 @@ date: 2024-12-03
 #include "3D/CubeMapObj.h"
 #include "3D/HeightMapObj.h"
 #include "3D/Test3DObj.h"
+#include "3D/Goose.h"
 #include "GameButton.h"
+#include "3D/Gardener.h"
+#include "AABBCollider.h"
+#include "3D/Line1.h"
+#include "../Line1.h"
 
 namespace HBSoft
 {
@@ -25,7 +30,10 @@ namespace HBSoft
         std::shared_ptr<Camera> cameraTest;
         LineObj                 m_line;
         HeightMapObj            m_map;
-        Test3DObj               m_water;
+        Goose                   m_goose;
+        Gardener                m_gardener;
+        AABBCollider            m_aabbCollider;
+        LineObj                 m_line1;
 
         bool isWire = false;
 
