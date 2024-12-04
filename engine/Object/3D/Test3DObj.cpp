@@ -32,7 +32,8 @@ void Test3DObj::Update(const float deltaTime)
     if (currentFrame > lastFrame)
         currentFrame = (float)startFrame;
 
-    anim = m_mesh->m_animations[0]->m_aniMat[0];  // ->GetAnimationMatrix(currentFrame);
+    anim = m_mesh->m_animations[1]->GetAnimationMatrix(
+    currentFrame);  // m_mesh->m_animations[0]->m_aniMat[0];  // ->GetAnimationMatrix(currentFrame);
 
     m_vsShader->SetConstantBuffer(HDEVICE, (void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
     UpdateDefaultCB();

@@ -356,80 +356,106 @@ void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
     m_fbxScene->FillAnimStackNameArray(AnimStackNameArray);
     int stackCount = AnimStackNameArray.GetCount();
 
-    FbxTime::SetGlobalTimeMode(FbxTime::eFrames30);
-
     if (stackCount <= 0)
         return;
 
-    aniStack = m_fbxScene->GetSrcObject<FbxAnimStack>(0);
-
-    TakeName = aniStack->GetName();
-    TakeInfo = m_fbxScene->GetTakeInfo(TakeName);
-
-    if (TakeInfo == nullptr)
-        return;
-
-    // 속성에 대해 애니메이션 연결 확인
-
-    clip      = std::make_shared<AnimationClip>();
-    startTime = TakeInfo->mLocalTimeSpan.GetStart();
-    endTime   = TakeInfo->mLocalTimeSpan.GetStop();
-
-
-    timeMode   = FbxTime::GetGlobalTimeMode();
-    startFrame = static_cast<int>(startTime.GetFrameCount(timeMode));
-    lastFrame  = static_cast<int>(endTime.GetFrameCount(timeMode));
-
-    animationTimes.resize(lastFrame);
-    mesh->m_born.bindPoseMat.resize(mesh->m_born.bornIndex.size());
-
-    clip->m_aniMat.resize(mesh->m_born.bornIndex.size());
-    clip->SetAnimationName(TakeName.Buffer());
-
-    for (int frame = startFrame; frame < lastFrame; frame++)
-        animationTimes[frame].SetFrame(frame, timeMode);
-
-    clip->SetStartFrame(startFrame);
-    clip->SetLastFrame(lastFrame);
-
-    for (int nodeIdx = 0; nodeIdx < m_fbxNodes.size(); nodeIdx++)
+    for (int i = 0; i < stackCount; i++)
     {
-        std::string name    = m_fbxNodes[nodeIdx]->GetName();
-        UINT        boneIdx = mesh->m_born.bornIndex[name];
+        aniStack = m_fbxScene->GetSrcObject<FbxAnimStack>(i);
 
-        clip->m_aniMat[boneIdx].resize(lastFrame);
+        if (aniStack == nullptr)
+            break;
+
+        TakeName = aniStack->GetName();
+        TakeInfo = m_fbxScene->GetTakeInfo(TakeName);
+
+        if (TakeInfo == nullptr)
+            continue;
+
+        clip            = std::make_shared<AnimationClip>();
+        clip->m_aniName = TakeName.Buffer();
 
         int numLayers = aniStack->GetMemberCount<FbxAnimLayer>();
+
+        if (numLayers >= 2)
+            std::cout << "layer가 두개다!" << std::endl;
+
         for (int i = 0; i < numLayers; i++)
         {
             FbxAnimLayer* layer = aniStack->GetMember<FbxAnimLayer>(i);
-            FbxAnimCurve* curve = m_fbxNodes[boneIdx]->LclTranslation.GetCurve(layer);
-            if (curve)
+
+            if (layer == nullptr)
+                break;
+
+
+            for (int nodeIdx = 0; nodeIdx < m_fbxNodes.size(); nodeIdx++)
             {
-                for (int i = 0; i < curve->KeyGetCount(); i++)
+                std::string name    = m_fbxNodes[nodeIdx]->GetName();
+                UINT        boneIdx = mesh->m_born.bornIndex[name];
+
+                FbxAnimCurve* curveXTrans =
+                m_fbxNodes[boneIdx]->LclTranslation.GetCurve(layer, FBXSDK_CURVENODE_COMPONENT_X);
+                FbxAnimCurve* curveYTrans =
+                m_fbxNodes[boneIdx]->LclTranslation.GetCurve(layer, FBXSDK_CURVENODE_COMPONENT_Y);
+                FbxAnimCurve* curveZTrans =
+                m_fbxNodes[boneIdx]->LclTranslation.GetCurve(layer, FBXSDK_CURVENODE_COMPONENT_Z);
+
+                if (curveXTrans)
                 {
-                    FbxTime keyTime = curve->KeyGetTime(i);
-                    float   value   = curve->KeyGetValue(i);
-                    std::cout << "Key " << i << ": Time = " << keyTime.GetSecondDouble()
-                              << ", Value = " << value << std::endl;
+                    clip->m_keyFrame.resize(curveXTrans->KeyGetCount());
+
+                    for (int i = 0; i < curveXTrans->KeyGetCount(); i++)
+                    {
+                        FbxTime keyTime = curveXTrans->KeyGetTime(i);
+                        float   value   = curveXTrans->KeyGetValue(i);
+
+                        clip->m_keyFrame[i].time = static_cast<float>(keyTime.GetSecondDouble());
+                        clip->m_keyFrame[i].pos  = {curveXTrans->KeyGetValue(i),
+                                                    curveYTrans->KeyGetValue(i),
+                                                    curveZTrans->KeyGetValue(i)};
+                    }
                 }
+                // clip->m_aniMat[boneIdx].resize(lastFrame);
+
+                // for (int frame = startFrame; frame < lastFrame; frame++)
+                //{
+                //     FbxAMatrix matWorld =
+                //     m_fbxNodes[boneIdx]->EvaluateGlobalTransform(animationTimes[frame]);
+
+                //    mat4 matFrame = ConvertFbxMatToGlmMat(matWorld);
+
+                //    clip->m_aniMat[boneIdx][frame] = matFrame;
+                //}
+
+                // 여기는 오브젝트 애니메이션용
+                // mesh->m_born.bindPoseMat[nodeIdx] = clip->m_aniMat[nodeIdx][startFrame];
             }
         }
 
-        for (int frame = startFrame; frame < lastFrame; frame++)
-        {
-            FbxAMatrix matWorld = m_fbxNodes[boneIdx]->EvaluateGlobalTransform(animationTimes[frame]);
+        mesh->m_animations.push_back(clip);
+        // 속성에 대해 애니메이션 연결 확인
 
-            mat4 matFrame = ConvertFbxMatToGlmMat(matWorld);
+        // startTime = TakeInfo->mLocalTimeSpan.GetStart();
+        // endTime   = TakeInfo->mLocalTimeSpan.GetStop();
 
-            clip->m_aniMat[boneIdx][frame] = matFrame;
-        }
+        // FbxTime::SetGlobalTimeMode(FbxTime::eFrames30);
 
-        // 여기는 오브젝트 애니메이션용
-        mesh->m_born.bindPoseMat[nodeIdx] = clip->m_aniMat[nodeIdx][startFrame];
+        // timeMode   = FbxTime::GetGlobalTimeMode();
+        // startFrame = static_cast<int>(startTime.GetFrameCount(timeMode));
+        // lastFrame  = static_cast<int>(endTime.GetFrameCount(timeMode));
+
+        // animationTimes.resize(lastFrame);
+        // mesh->m_born.bindPoseMat.resize(mesh->m_born.bornIndex.size());
+
+        // clip->m_aniMat.resize(mesh->m_born.bornIndex.size());
+        // clip->SetAnimationName(TakeName.Buffer());
+
+        // for (int frame = startFrame; frame < lastFrame; frame++)
+        //     animationTimes[frame].SetFrame(frame, timeMode);
+
+        // clip->SetStartFrame(startFrame);
+        // clip->SetLastFrame(lastFrame);
     }
-
-    mesh->m_animations.push_back(clip);
 }
 
 void FbxLoader::ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
