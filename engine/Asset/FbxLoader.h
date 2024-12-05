@@ -25,10 +25,12 @@ namespace HBSoft
         FbxImporter* m_fbxImporter;
         FbxScene*    m_fbxScene;
 
-        std::vector<SkinningData> m_skinningData;
-        std::vector<FbxMesh*>     m_fbxMeshes;
-        std::vector<FbxNode*>     m_fbxNodes;
-        std::vector<FbxNode*>     m_fbxBornNodes;
+        std::vector<SkinningData>                   m_skinningData;
+        std::vector<FbxMesh*>                       m_fbxMeshes;
+        std::vector<FbxNode*>                       m_fbxNodes;
+        std::vector<FbxNode*>                       m_fbxBornNodes;
+        std::vector<std::vector<std::vector<mat4>>> m_fbxAniMat;
+        // 애니메이션 수 / 본 개수 / 프레임 개수
 
         int m_vertexIdx;
 

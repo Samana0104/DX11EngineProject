@@ -27,7 +27,6 @@ namespace HBSoft
         int         m_lastFrame;
 
         std::vector<std::vector<KeyFrame>> m_keyFrame;
-        std::vector<std::vector<mat4>>     m_aniMat;
 
     public:
         AnimationClip();

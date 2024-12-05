@@ -18,7 +18,7 @@ namespace HBSoft
         /*
             Born
         */
-        int
+        // int
 
         /*
             Animation Track
@@ -26,11 +26,6 @@ namespace HBSoft
         int startFrame  = 0;
         int lastFrame   = 0;
         int numKeyFrame = 0;
-
-        std::vector < std::vector int iSubVertexBufferCounter   = 0;
-        int                           iSubIndexBufferCounter    = 0;
-        int                           iSubIWVertexBufferCounter = 0;
-        T::TMatrix                    matWorld;
     };
 
     class HBSLoader

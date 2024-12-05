@@ -37,27 +37,21 @@ std::shared_ptr<Mesh> FbxLoader::Load(std::shared_ptr<D3Device> device, const ws
 
     ReleaseFbxManager();
 
-    for (int i = 0; i < mesh->m_animations.size(); i++)
+    for (int i = 0; i < m_fbxAniMat.size(); i++)
     {
-        mesh->m_animations[i]->m_keyFrame.resize(mesh->m_animations[i]->m_aniMat.size());
+        mesh->m_animations[i]->m_keyFrame.resize(m_fbxAniMat[i].size());
 
-        for (int j = 0; j < mesh->m_animations[i]->m_aniMat.size(); j++)
+        for (int j = 0; j < m_fbxAniMat[i].size(); j++)
         {
-            mesh->m_animations[i]->m_keyFrame[j].resize(mesh->m_animations[i]->m_aniMat[j].size());
+            mesh->m_animations[i]->m_keyFrame[j].resize(m_fbxAniMat[i][j].size());
 
-            for (int k = 0; k < mesh->m_animations[i]->m_aniMat[j].size(); k++)
+            for (int k = 0; k < m_fbxAniMat[i][j].size(); k++)
             {
                 KeyFrame key;
                 vec3     dummy1;
                 vec4     dummy2;
 
-
-                glm::decompose(mesh->m_animations[i]->m_aniMat[j][k],
-                               key.scale,
-                               key.rot,
-                               key.pos,
-                               dummy1,
-                               dummy2);
+                glm::decompose(m_fbxAniMat[i][j][k], key.scale, key.rot, key.pos, dummy1, dummy2);
 
                 mesh->m_animations[i]->m_keyFrame[j][k] = key;
             }
@@ -206,11 +200,11 @@ bool FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
 
             offsetMat = bindPoseMat.Inverse() * globalInitPosMat;
 
-            for (size_t i = 0; i < mesh->m_animations.size(); i++)
+            for (size_t i = 0; i < m_fbxAniMat.size(); i++)
             {
-                for (size_t j = 0; j < mesh->m_animations[i]->m_aniMat[boneIdx].size(); j++)
+                for (size_t j = 0; j < m_fbxAniMat[i][boneIdx].size(); j++)
                 {
-                    mesh->m_animations[i]->m_aniMat[boneIdx][j] *= ConvertFbxMatToGlmMat(offsetMat);
+                    m_fbxAniMat[i][boneIdx][j] *= ConvertFbxMatToGlmMat(offsetMat);
                 }
             }
 
@@ -389,6 +383,7 @@ void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
     if (stackCount <= 0)
         return;
 
+    m_fbxAniMat.resize(2);
     for (int i = 0; i < 2; i++)
     {
         aniStack = m_fbxScene->FindMember<FbxAnimStack>(animStackNameArray[i]->Buffer());
@@ -405,6 +400,7 @@ void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
 
         clip            = std::make_shared<AnimationClip>();
         clip->m_aniName = TakeName.Buffer();
+        m_fbxAniMat[i].resize(m_fbxNodes.size());
 
         for (int nodeIdx = 0; nodeIdx < m_fbxNodes.size(); nodeIdx++)
         {
@@ -421,17 +417,17 @@ void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
             startFrame = static_cast<int>(startTime.GetFrameCount(timeMode));
             lastFrame  = static_cast<int>(endTime.GetFrameCount(timeMode)) - startFrame;
 
-
             animationTimes.resize(lastFrame);
             for (int frame = 0; frame < lastFrame; frame++)
                 animationTimes[frame].SetFrame(frame, timeMode);
 
-            clip->m_aniMat.resize(m_fbxNodes.size());
             clip->m_aniName    = TakeName.Buffer();
             clip->m_startFrame = 0;
             clip->m_lastFrame  = lastFrame;
-            clip->m_aniMat[boneIdx].resize(lastFrame);
 
+            m_fbxAniMat[i][boneIdx].resize(lastFrame);
+
+            // 스키닝 애니메이션
             if (mesh->m_born.bornIndex.contains(name))
             {
                 for (int frame = 0; frame < lastFrame; frame++)
@@ -441,9 +437,10 @@ void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
                     matWorld      = rootMat.Inverse() * localMat;
                     mat4 matFrame = ConvertFbxMatToGlmMat(matWorld);
 
-                    clip->m_aniMat[boneIdx][frame] = matFrame;
+                    m_fbxAniMat[i][boneIdx][frame] = matFrame;
                 }
             }
+            // 오브젝트 애니메이션
             else
             {
                 for (int frame = 0; frame < lastFrame; frame++)
@@ -453,7 +450,7 @@ void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
                     matWorld      = rootMat.Inverse() * localMat;
                     mat4 matFrame = ConvertFbxMatToGlmMat(matWorld);
 
-                    clip->m_aniMat[boneIdx][frame] = matFrame;
+                    m_fbxAniMat[i][boneIdx][frame] = matFrame;
                 }
             }
         }
