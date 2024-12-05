@@ -47,8 +47,8 @@ void SceneGame::Render()
     m_line.Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
     cube.Render();
     m_map.Render();
-    m_escButton.Render();
     m_mapObjects.Render();
+    m_escButton.Render();
 }
 
 void SceneGame::Release() {}
