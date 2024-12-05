@@ -210,6 +210,7 @@
     <ClCompile Include="Gui\GameButton.cpp">
       <Filter>Gui</Filter>
     </ClCompile>
+    <ClCompile Include="HBSLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -389,6 +390,7 @@
     <ClInclude Include="Gui\GameButton.h">
       <Filter>Gui</Filter>
     </ClInclude>
+    <ClInclude Include="HBSLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.clang-format" />

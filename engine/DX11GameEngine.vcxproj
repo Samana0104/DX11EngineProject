@@ -63,6 +63,7 @@
     <ClCompile Include="Gui\Button.cpp" />
     <ClCompile Include="Gui\GameButton.cpp" />
     <ClCompile Include="Gui\LobbyButton.cpp" />
+    <ClCompile Include="HBSLoader.cpp" />
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Object\2D\MainTitle.cpp" />
     <ClCompile Include="Object\2D\Object2D.cpp" />
@@ -122,6 +123,7 @@
     <ClInclude Include="Gui\Button.h" />
     <ClInclude Include="Gui\GameButton.h" />
     <ClInclude Include="Gui\LobbyButton.h" />
+    <ClInclude Include="HBSLoader.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Object\2D\MainTitle.h" />
     <ClInclude Include="Object\2D\Object2D.h" />

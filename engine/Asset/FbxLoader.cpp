@@ -37,8 +37,33 @@ std::shared_ptr<Mesh> FbxLoader::Load(std::shared_ptr<D3Device> device, const ws
 
     ReleaseFbxManager();
 
-    for ()
-        device->CreateVertexBuffer(mesh->m_vertices, mesh->m_vertexBuffer);
+    for (int i = 0; i < mesh->m_animations.size(); i++)
+    {
+        mesh->m_animations[i]->m_keyFrame.resize(mesh->m_animations[i]->m_aniMat.size());
+
+        for (int j = 0; j < mesh->m_animations[i]->m_aniMat.size(); j++)
+        {
+            mesh->m_animations[i]->m_keyFrame[j].resize(mesh->m_animations[i]->m_aniMat[j].size());
+
+            for (int k = 0; k < mesh->m_animations[i]->m_aniMat[j].size(); k++)
+            {
+                KeyFrame key;
+                vec3     dummy1;
+                vec4     dummy2;
+
+
+                glm::decompose(mesh->m_animations[i]->m_aniMat[j][k],
+                               key.scale,
+                               key.rot,
+                               key.pos,
+                               dummy1,
+                               dummy2);
+
+                mesh->m_animations[i]->m_keyFrame[j][k] = key;
+            }
+        }
+    }
+    device->CreateVertexBuffer(mesh->m_vertices, mesh->m_vertexBuffer);
 
     for (UINT i = 0; i < mesh->m_subMeshes.size(); i++)
         device->CreateIndexBuffer(mesh->m_subMeshes[i]->indices, mesh->m_subMeshes[i]->indexBuffer);
