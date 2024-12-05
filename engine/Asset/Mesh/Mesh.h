@@ -52,10 +52,10 @@ namespace HBSoft
 
     struct Born
     {
-        // 오브젝트 애니메이션도 지원하려고 노드 기준으로 구함
+        // 오브젝트 애니메이션도 지원
+        std::map<std::string, int> objectIndex;  // 오브젝트(뼈 포함)인덱스
+        std::map<std::string, int> parentIndex;  // 오브젝트(뼈 포함)부모 인덱스
         std::map<std::string, int> bornIndex;
-        std::map<std::string, int> bornParentIndex;
-        std::vector<mat4>          bindPoseMat;
     };
 
     struct SubMesh

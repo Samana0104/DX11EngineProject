@@ -17,22 +17,36 @@ Test3DObj::Test3DObj()
 
 void Test3DObj::Update(const float deltaTime)
 {
-    static float currentFrame = 0.f;
-    static int   startFrame   = 0;
-    static int   lastFrame    = 0;
-    static float speed        = 3.f;
-    // static int   selectAnimation = 0;
+    static float currentFrame    = 0.f;
+    static int   startFrame      = 0;
+    static int   lastFrame       = 0;
+    static float speed           = 3.f;
+    static int   selectAnimation = 0;
 
     ImGui::SliderFloat("Speed", &speed, 0, 30.f);
+    float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
+    ImGui::PushItemFlag(ImGuiItemFlags_ButtonRepeat, true);
+    if (ImGui::ArrowButton("##left", ImGuiDir_Left))
+    {
+        selectAnimation--;
+    }
+    ImGui::SameLine(0.0f, spacing);
+    if (ImGui::ArrowButton("##right", ImGuiDir_Right))
+    {
+        selectAnimation++;
+    }
+    ImGui::PopItemFlag();
+    ImGui::SameLine();
+    ImGui::Text("%s", m_mesh->m_animations[selectAnimation]->m_aniName.c_str());
 
     currentFrame += deltaTime * speed;
-    startFrame    = m_mesh->m_animations[0]->GetStartFrame();
-    lastFrame     = m_mesh->m_animations[0]->GetLastFrame();
+    startFrame    = m_mesh->m_animations[selectAnimation]->GetStartFrame();
+    lastFrame     = m_mesh->m_animations[selectAnimation]->GetLastFrame();
 
     if (currentFrame > lastFrame)
         currentFrame = (float)startFrame;
 
-    anim = m_mesh->m_animations[1]->GetAnimationMatrix(
+    anim = m_mesh->m_animations[selectAnimation]->GetAnimationMatrix(
     currentFrame);  // m_mesh->m_animations[0]->m_aniMat[0];  // ->GetAnimationMatrix(currentFrame);
 
     m_vsShader->SetConstantBuffer(HDEVICE, (void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);

@@ -12,12 +12,21 @@ date: 2024-11-29
 
 namespace HBSoft
 {
+    struct KeyFrame
+    {
+        vec3 pos;
+        quat rot;
+        vec3 scale;
+    };
+
     class AnimationClip
     {
-    private:
+    public:
         std::string m_aniName;
         int         m_startFrame;
         int         m_lastFrame;
+
+        std::vector<std::vector<KeyFrame>> m_keyFrame;
 
     public:
         std::vector<std::vector<mat4>> m_aniMat;

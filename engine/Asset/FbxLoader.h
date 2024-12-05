@@ -28,6 +28,7 @@ namespace HBSoft
         std::vector<SkinningData> m_skinningData;
         std::vector<FbxMesh*>     m_fbxMeshes;
         std::vector<FbxNode*>     m_fbxNodes;
+        std::vector<FbxNode*>     m_fbxBornNodes;
 
         int m_vertexIdx;
 

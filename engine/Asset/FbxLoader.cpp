@@ -27,30 +27,18 @@ std::shared_ptr<Mesh> FbxLoader::Load(std::shared_ptr<D3Device> device, const ws
     FbxAxisSystem::MayaZUp.ConvertScene(m_fbxScene);
     fbxRootNode = m_fbxScene->GetRootNode();
 
-    ProcessNode(fbxRootNode, mesh, 0, 0);
+    ProcessNode(fbxRootNode, mesh, 0, -1);
     InitMesh(mesh);
 
     LoadAnimation(mesh);
+
     for (size_t i = 0; i < m_fbxMeshes.size(); i++)
         ProcessMesh(m_fbxMeshes[i], mesh);
 
     ReleaseFbxManager();
 
-    // for (int i = 0; i < mesh->m_animations.size(); i++)
-    //{
-    //     for (int j = 0; j < mesh->m_animations[i]->m_aniMat.size(); j++)
-    //     {
-    //         for (int k = mesh->m_animations[i]->GetStartFrame();
-    //              k < mesh->m_animations[i]->GetLastFrame();
-    //              k++)
-    //         {
-    //             mesh->m_animations[i]->m_aniMat[j][k] =
-    //             mesh->m_animations[i]->m_aniMat[j][k] * mesh->m_born.bindPoseMat[j];
-    //         }
-    //     }
-    // }
-
-    device->CreateVertexBuffer(mesh->m_vertices, mesh->m_vertexBuffer);
+    for ()
+        device->CreateVertexBuffer(mesh->m_vertices, mesh->m_vertexBuffer);
 
     for (UINT i = 0; i < mesh->m_subMeshes.size(); i++)
         device->CreateIndexBuffer(mesh->m_subMeshes[i]->indices, mesh->m_subMeshes[i]->indexBuffer);
@@ -88,6 +76,7 @@ bool FbxLoader::InitFbxLoader(const wstringV filePath)
     }
 
     m_fbxNodes.clear();
+    m_fbxBornNodes.clear();
     m_fbxMeshes.clear();
 
     return true;
@@ -125,17 +114,28 @@ void FbxLoader::ProcessNode(FbxNode* fNode, std::shared_ptr<Mesh> mesh, int curI
     if (fMesh != nullptr)
         m_fbxMeshes.push_back(fMesh);
 
-    int numChild = fNode->GetChildCount();
-    m_fbxNodes.push_back(fNode);
 
-    if (!mesh->m_born.bornIndex.contains(nodeName))
+    if (fNode->GetSkeleton() != nullptr)
     {
-        mesh->m_born.bornIndex[nodeName]       = curIdx;
-        mesh->m_born.bornParentIndex[nodeName] = parentIdx;
+        if (!mesh->m_born.bornIndex.contains(nodeName))
+        {
+            mesh->m_born.bornIndex[nodeName]   = curIdx;
+            mesh->m_born.parentIndex[nodeName] = parentIdx;
+            m_fbxBornNodes.push_back(fNode);
+        }
     }
 
+    if (!mesh->m_born.objectIndex.contains(nodeName))
+    {
+        mesh->m_born.objectIndex[nodeName] = curIdx;
+        mesh->m_born.parentIndex[nodeName] = parentIdx;
+        m_fbxNodes.push_back(fNode);
+    }
+
+
+    int numChild = fNode->GetChildCount();
     for (int childIdx = 0; childIdx < numChild; childIdx++)
-        ProcessNode(fNode->GetChild(childIdx), mesh, (int)mesh->m_born.bornIndex.size(), curIdx);
+        ProcessNode(fNode->GetChild(childIdx), mesh, (int)(mesh->m_born.objectIndex.size()), curIdx);
 }
 
 bool FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
@@ -145,6 +145,7 @@ bool FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
     FbxNode*    clusterNode;
     FbxAMatrix  globalInitPosMat;
     FbxAMatrix  bindPoseMat;
+    FbxAMatrix  offsetMat;
 
     int     deformerCount;
     int     clusterCount;
@@ -162,8 +163,6 @@ bool FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
     m_skinningData.clear();
     m_skinningData.resize(fMesh->GetControlPointsCount());
 
-    mesh->m_born.bindPoseMat.resize(mesh->m_born.bornIndex.size());
-
     for (int deformerIdx = 0; deformerIdx < deformerCount; deformerIdx++)
     {
         fSkin = reinterpret_cast<FbxSkin*>(fMesh->GetDeformer(deformerIdx, FbxDeformer::eSkin));
@@ -180,10 +179,15 @@ bool FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
             fCluster->GetTransformLinkMatrix(bindPoseMat);
             fCluster->GetTransformMatrix(globalInitPosMat);
 
-            FbxAMatrix testMat = bindPoseMat.Inverse() * globalInitPosMat;
+            offsetMat = bindPoseMat.Inverse() * globalInitPosMat;
 
-            mesh->m_born.bindPoseMat[boneIdx] = ConvertFbxMatToGlmMat(testMat);
-
+            for (size_t i = 0; i < mesh->m_animations.size(); i++)
+            {
+                for (size_t j = 0; j < mesh->m_animations[i]->m_aniMat[boneIdx].size(); j++)
+                {
+                    mesh->m_animations[i]->m_aniMat[boneIdx][j] *= ConvertFbxMatToGlmMat(offsetMat);
+                }
+            }
 
             clusterSize   = fCluster->GetControlPointIndicesCount();
             fbxNodeIdices = fCluster->GetControlPointIndices();
@@ -348,20 +352,22 @@ void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
     FbxTime              startTime, endTime;
     FbxTime::EMode       timeMode;
     int                  startFrame, lastFrame;
-    FbxArray<FbxString*> AnimStackNameArray;
+    FbxArray<FbxString*> animStackNameArray;
+    FbxAMatrix           localMat, rootMat, matWorld;
 
     std::vector<FbxTime>           animationTimes;
     std::shared_ptr<AnimationClip> clip;
 
-    m_fbxScene->FillAnimStackNameArray(AnimStackNameArray);
-    int stackCount = AnimStackNameArray.GetCount();
+    m_fbxScene->FillAnimStackNameArray(animStackNameArray);
+    int stackCount = animStackNameArray.GetCount();
 
     if (stackCount <= 0)
         return;
 
-    for (int i = 0; i < stackCount; i++)
+    for (int i = 0; i < 2; i++)
     {
-        aniStack = m_fbxScene->GetSrcObject<FbxAnimStack>(i);
+        aniStack = m_fbxScene->FindMember<FbxAnimStack>(animStackNameArray[i]->Buffer());
+        m_fbxScene->SetCurrentAnimationStack(aniStack);
 
         if (aniStack == nullptr)
             break;
@@ -375,86 +381,58 @@ void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
         clip            = std::make_shared<AnimationClip>();
         clip->m_aniName = TakeName.Buffer();
 
-        int numLayers = aniStack->GetMemberCount<FbxAnimLayer>();
-
-        if (numLayers >= 2)
-            std::cout << "layer가 두개다!" << std::endl;
-
-        for (int i = 0; i < numLayers; i++)
+        for (int nodeIdx = 0; nodeIdx < m_fbxNodes.size(); nodeIdx++)
         {
-            FbxAnimLayer* layer = aniStack->GetMember<FbxAnimLayer>(i);
+            std::string name = m_fbxNodes[nodeIdx]->GetName();
 
-            if (layer == nullptr)
-                break;
+            UINT boneIdx = mesh->m_born.objectIndex[name];
+
+            startTime = TakeInfo->mLocalTimeSpan.GetStart();
+            endTime   = TakeInfo->mLocalTimeSpan.GetStop();
+
+            FbxTime::SetGlobalTimeMode(FbxTime::eFrames30);
+
+            timeMode   = FbxTime::GetGlobalTimeMode();
+            startFrame = static_cast<int>(startTime.GetFrameCount(timeMode));
+            lastFrame  = static_cast<int>(endTime.GetFrameCount(timeMode)) - startFrame;
 
 
-            for (int nodeIdx = 0; nodeIdx < m_fbxNodes.size(); nodeIdx++)
+            animationTimes.resize(lastFrame);
+            for (int frame = 0; frame < lastFrame; frame++)
+                animationTimes[frame].SetFrame(frame, timeMode);
+
+            clip->m_aniMat.resize(m_fbxNodes.size());
+            clip->m_aniName    = TakeName.Buffer();
+            clip->m_startFrame = 0;
+            clip->m_lastFrame  = lastFrame;
+            clip->m_aniMat[boneIdx].resize(lastFrame);
+
+            if (mesh->m_born.bornIndex.contains(name))
             {
-                std::string name    = m_fbxNodes[nodeIdx]->GetName();
-                UINT        boneIdx = mesh->m_born.bornIndex[name];
-
-                FbxAnimCurve* curveXTrans =
-                m_fbxNodes[boneIdx]->LclTranslation.GetCurve(layer, FBXSDK_CURVENODE_COMPONENT_X);
-                FbxAnimCurve* curveYTrans =
-                m_fbxNodes[boneIdx]->LclTranslation.GetCurve(layer, FBXSDK_CURVENODE_COMPONENT_Y);
-                FbxAnimCurve* curveZTrans =
-                m_fbxNodes[boneIdx]->LclTranslation.GetCurve(layer, FBXSDK_CURVENODE_COMPONENT_Z);
-
-                if (curveXTrans)
+                for (int frame = 0; frame < lastFrame; frame++)
                 {
-                    clip->m_keyFrame.resize(curveXTrans->KeyGetCount());
+                    localMat      = m_fbxNodes[boneIdx]->EvaluateGlobalTransform(animationTimes[frame]);
+                    rootMat       = m_fbxBornNodes[0]->EvaluateGlobalTransform(animationTimes[frame]);
+                    matWorld      = rootMat.Inverse() * localMat;
+                    mat4 matFrame = ConvertFbxMatToGlmMat(matWorld);
 
-                    for (int i = 0; i < curveXTrans->KeyGetCount(); i++)
-                    {
-                        FbxTime keyTime = curveXTrans->KeyGetTime(i);
-                        float   value   = curveXTrans->KeyGetValue(i);
-
-                        clip->m_keyFrame[i].time = static_cast<float>(keyTime.GetSecondDouble());
-                        clip->m_keyFrame[i].pos  = {curveXTrans->KeyGetValue(i),
-                                                    curveYTrans->KeyGetValue(i),
-                                                    curveZTrans->KeyGetValue(i)};
-                    }
+                    clip->m_aniMat[boneIdx][frame] = matFrame;
                 }
-                // clip->m_aniMat[boneIdx].resize(lastFrame);
+            }
+            else
+            {
+                for (int frame = 0; frame < lastFrame; frame++)
+                {
+                    localMat      = m_fbxNodes[boneIdx]->EvaluateGlobalTransform(animationTimes[frame]);
+                    rootMat       = m_fbxNodes[boneIdx]->EvaluateGlobalTransform(animationTimes[0]);
+                    matWorld      = rootMat.Inverse() * localMat;
+                    mat4 matFrame = ConvertFbxMatToGlmMat(matWorld);
 
-                // for (int frame = startFrame; frame < lastFrame; frame++)
-                //{
-                //     FbxAMatrix matWorld =
-                //     m_fbxNodes[boneIdx]->EvaluateGlobalTransform(animationTimes[frame]);
-
-                //    mat4 matFrame = ConvertFbxMatToGlmMat(matWorld);
-
-                //    clip->m_aniMat[boneIdx][frame] = matFrame;
-                //}
-
-                // 여기는 오브젝트 애니메이션용
-                // mesh->m_born.bindPoseMat[nodeIdx] = clip->m_aniMat[nodeIdx][startFrame];
+                    clip->m_aniMat[boneIdx][frame] = matFrame;
+                }
             }
         }
-
         mesh->m_animations.push_back(clip);
-        // 속성에 대해 애니메이션 연결 확인
-
-        // startTime = TakeInfo->mLocalTimeSpan.GetStart();
-        // endTime   = TakeInfo->mLocalTimeSpan.GetStop();
-
-        // FbxTime::SetGlobalTimeMode(FbxTime::eFrames30);
-
-        // timeMode   = FbxTime::GetGlobalTimeMode();
-        // startFrame = static_cast<int>(startTime.GetFrameCount(timeMode));
-        // lastFrame  = static_cast<int>(endTime.GetFrameCount(timeMode));
-
-        // animationTimes.resize(lastFrame);
-        // mesh->m_born.bindPoseMat.resize(mesh->m_born.bornIndex.size());
-
-        // clip->m_aniMat.resize(mesh->m_born.bornIndex.size());
-        // clip->SetAnimationName(TakeName.Buffer());
-
-        // for (int frame = startFrame; frame < lastFrame; frame++)
-        //     animationTimes[frame].SetFrame(frame, timeMode);
-
-        // clip->SetStartFrame(startFrame);
-        // clip->SetLastFrame(lastFrame);
     }
 }
 
@@ -644,7 +622,7 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
                 }
                 else
                 {
-                    mesh->m_vertices[m_vertexIdx].i[0] = mesh->m_born.bornIndex[fNode->GetName()];
+                    mesh->m_vertices[m_vertexIdx].i[0] = mesh->m_born.objectIndex[fNode->GetName()];
                     mesh->m_vertices[m_vertexIdx].w[0] = 1.f;
                 }
 
@@ -688,30 +666,24 @@ mat4 FbxLoader::ConvertFbxMatToGlmMat(FbxAMatrix& fMat)
     for (UINT i = 0; i < 4; i++)
     {
         for (UINT j = 0; j < 4; j++)
-            glmMat[j][i] = static_cast<float>(fMat.Get(i, j));
+            glmMat[i][j] = static_cast<float>(fMat.Get(i, j));
     }
 
     copyGlmMat = glmMat;
 
-    glmMat[0][0] = copyGlmMat[0][0];
+    glmMat[1] = copyGlmMat[2];
+    glmMat[2] = copyGlmMat[1];
+
     glmMat[0][1] = copyGlmMat[0][2];
-    glmMat[0][2] = copyGlmMat[0][1];
-    glmMat[0][3] = copyGlmMat[0][3];
-
-    glmMat[1][0] = copyGlmMat[2][0];
     glmMat[1][1] = copyGlmMat[2][2];
-    glmMat[1][2] = copyGlmMat[2][1];
-    glmMat[1][3] = copyGlmMat[2][3];
-
-    glmMat[2][0] = copyGlmMat[1][0];
     glmMat[2][1] = copyGlmMat[1][2];
-    glmMat[2][2] = copyGlmMat[1][1];
-    glmMat[2][3] = copyGlmMat[1][3];
-
-    glmMat[3][0] = copyGlmMat[3][0];
     glmMat[3][1] = copyGlmMat[3][2];
-    glmMat[3][2] = copyGlmMat[3][1];
-    glmMat[3][3] = 1.f;
 
-    return glm::transpose(glmMat);
+    glmMat[0][2] = copyGlmMat[0][1];
+    glmMat[1][2] = copyGlmMat[2][1];
+    glmMat[2][2] = copyGlmMat[1][1];
+    glmMat[3][2] = copyGlmMat[3][1];
+
+
+    return glmMat;
 }
