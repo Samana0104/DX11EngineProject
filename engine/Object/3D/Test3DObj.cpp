@@ -16,7 +16,7 @@ Test3DObj::Test3DObj()
 void Test3DObj::Update(const float deltaTime)
 {
     m_transform.SetRotation(glm::vec3(1.57, 0, 0));
-    m_transform.SetLocation(glm::vec3(-7, 0, -17));
+    m_transform.SetLocation(glm::vec3(-7, 0, -12));
 }
 
 void Test3DObj::Render()

@@ -14,7 +14,7 @@ HeightMapObj::HeightMapObj()
 {
     m_mapTexture = HASSET->m_textures[L"Map512Color.png"];
 
-    CreateMapDesc(L"Map512.hmp", 2.f, 0.1f, 2.f);
+    CreateMapDesc(L"Map512.hmp", 0.06f, 0.003f, 0.06f);
     m_mesh = MeshFactory::CreateHeightMap(HDEVICE, m_mapDesc);
 
     m_vsShader = HASSET->m_shaders[L"VertexShader.hlsl"];
