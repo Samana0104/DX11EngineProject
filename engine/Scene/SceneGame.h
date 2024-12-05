@@ -25,7 +25,7 @@ namespace HBSoft
         std::shared_ptr<Camera> cameraTest;
         LineObj                 m_line;
         HeightMapObj            m_map;
-        Test3DObj               m_water;
+        Test3DObj               m_mapObjects;
 
         bool isWire = false;
 
