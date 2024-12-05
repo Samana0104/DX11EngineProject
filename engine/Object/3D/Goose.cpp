@@ -36,6 +36,7 @@ void Goose::Update(float deltaTime)
 
     m_aabbcollider->UpdateAABB(aabb_goose, m_transform.m_pos, vec3(1.0f, 1.0f, 1.0f));
 
+
     ImGui::SliderFloat("Goose speed", &m_speed1, 0.f, 300.f);
 
     static bool isDownPressed  = false;  // VK_DOWN 상태 추적

@@ -48,6 +48,7 @@ namespace HBSoft
         std::vector<FaceInfo>    m_faceInfo;
         std::vector<VertexInfo>  m_vertexInfo;
 
+
     private:
         /*
             param : texKey -> 높이맵 텍스쳐 키
@@ -72,7 +73,7 @@ namespace HBSoft
         HeightMapObj();
         ~HeightMapObj() = default;
 
-        float GetHeight(float x, float z);
+        float GetHeight(vec3 pos);
 
         virtual void Init() override;
 

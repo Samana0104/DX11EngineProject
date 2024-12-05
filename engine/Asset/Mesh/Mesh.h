@@ -87,6 +87,8 @@ namespace HBSoft
         void SetVertices(std::shared_ptr<D3Device> device, const std::vector<Vertex>& vertices);
         void SetVertex(std::shared_ptr<D3Device> device, const Vertex& vertex, const UINT idx);
         void UpdateVertices(std::shared_ptr<D3Device> device);
+
+        std::vector<Vertex> GetVertices();
     };
 
 }  // namespace HBSoft

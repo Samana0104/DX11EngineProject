@@ -4,6 +4,7 @@
 #include "Object3D.h"
 #include "Transform3D.h"
 #include "Shader/ConstantBuffers.h"
+#include "HeightMapObj.h"
 
 namespace HBSoft
 {
@@ -16,6 +17,8 @@ namespace HBSoft
         float                 m_speed1 = 1.0f;
         std::vector<mat4>     anim;
         AABB                  aabb_goose;
+        HeightMapObj          m_heightmapobj;
+
 
     public:
         Goose();

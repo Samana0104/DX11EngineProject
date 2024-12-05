@@ -30,3 +30,8 @@ void Mesh::UpdateVertices(std::shared_ptr<D3Device> device)
 {
     device->m_context->UpdateSubresource(m_vertexBuffer.Get(), 0, NULL, &m_vertices.at(0), 0, 0);
 }
+
+std::vector<Vertex> Mesh::GetVertices()
+{
+    return m_vertices;
+}

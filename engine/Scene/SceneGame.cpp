@@ -140,8 +140,8 @@ void SceneGame::Render()
     m_gardener.Render();
 
 
-    if (m_aabbCollider.CheckAABBCollision(m_goose.GetaabbCollider(), m_gardener.GetaabbCollider()))
-        std::cout << "1";
+    /*if (m_aabbCollider.CheckAABBCollision(m_goose.GetaabbCollider(), m_gardener.GetaabbCollider()))
+        std::cout << "1";*/
     /* std::cout << m_map.GetHeight(m_goose.GetLocationX(), m_goose.GetLocationZ());*/
 }
 

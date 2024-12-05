@@ -70,10 +70,13 @@ void HeightMapObj::CreateMapDesc(const TEXTURE_KEY heightTexKey, float scaleXPer
     }
 }
 
-float HBSoft::HeightMapObj::GetHeight(float x, float z)
+float HBSoft::HeightMapObj::GetHeight(vec3 pos)
 {
-    float fCellX = (float)(m_numCellCols - 1 * m_cellDistance / 2.0f + x);
-    float fCellZ = (float)(m_numCellRows - 1 * m_cellDistance / 2.0f + z);
+    float posX = pos.x;
+    float posZ = pos.z;
+
+    float fCellX = (float)(m_numCellCols * m_cellDistance / 2.0f + posX);
+    float fCellZ = (float)(m_numCellRows * m_cellDistance / 2.0f + posZ);
 
     fCellX /= (float)m_cellDistance;
     fCellZ /= (float)m_cellDistance;
@@ -92,17 +95,10 @@ float HBSoft::HeightMapObj::GetHeight(float x, float z)
         fVertexRow = (float)(m_mapDesc.numRows - 2);
 
 
-    float A =
-    m_VertexList[static_cast<int>(fVertexRow) * m_mapDesc.numRows + static_cast<int>(fVertexCol)].p.y;
-    float B =
-    m_VertexList[static_cast<int>(fVertexRow) * m_mapDesc.numRows + (static_cast<int>(fVertexCol) + 1)]
-    .p.y;
-    float C =
-    m_VertexList[(static_cast<int>(fVertexRow) + 1) * m_mapDesc.numRows + static_cast<int>(fVertexCol)]
-    .p.y;
-    float D = m_VertexList[(static_cast<int>(fVertexRow) + 1) * m_mapDesc.numRows +
-                           (static_cast<int>(fVertexCol) + 1)]
-              .p.y;
+    float A = m_mesh->GetVertices()[fVertexRow * m_mapDesc.numRows + fVertexCol].p.y;
+    float B = m_mesh->GetVertices()[fVertexRow * m_mapDesc.numRows + fVertexCol + 1].p.y;
+    float C = m_mesh->GetVertices()[(fVertexRow + 1) * m_mapDesc.numRows + fVertexCol].p.y;
+    float D = m_mesh->GetVertices()[(fVertexRow + 1) * m_mapDesc.numRows + (fVertexCol + 1)].p.y;
 
     float fDeltaX = fCellX - fVertexCol;
     float fDeltaZ = fCellZ - fVertexRow;
