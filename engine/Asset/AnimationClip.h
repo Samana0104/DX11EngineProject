@@ -25,6 +25,7 @@ namespace HBSoft
         std::string m_aniName;
         int         m_startFrame;
         int         m_lastFrame;
+        int         m_numFrame;
 
         std::vector<std::vector<KeyFrame>> m_keyFrame;
 

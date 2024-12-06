@@ -383,8 +383,8 @@ void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
     if (stackCount <= 0)
         return;
 
-    m_fbxAniMat.resize(2);
-    for (int i = 0; i < 2; i++)
+    m_fbxAniMat.resize(stackCount);
+    for (int i = 0; i < stackCount; i++)
     {
         aniStack = m_fbxScene->FindMember<FbxAnimStack>(animStackNameArray[i]->Buffer());
         m_fbxScene->SetCurrentAnimationStack(aniStack);
@@ -411,7 +411,7 @@ void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
             startTime = TakeInfo->mLocalTimeSpan.GetStart();
             endTime   = TakeInfo->mLocalTimeSpan.GetStop();
 
-            FbxTime::SetGlobalTimeMode(FbxTime::eFrames30);
+            FbxTime::SetGlobalTimeMode(FbxTime::eCustom, 15.0);
 
             timeMode   = FbxTime::GetGlobalTimeMode();
             startFrame = static_cast<int>(startTime.GetFrameCount(timeMode));
@@ -424,6 +424,7 @@ void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
             clip->m_aniName    = TakeName.Buffer();
             clip->m_startFrame = 0;
             clip->m_lastFrame  = lastFrame;
+            clip->m_numFrame   = lastFrame;
 
             m_fbxAniMat[i][boneIdx].resize(lastFrame);
 

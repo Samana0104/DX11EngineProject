@@ -61,4 +61,24 @@ namespace HBSoft
 
         return std::make_pair(szFileName, szFileExt);
     }
+
+    static std::pair<std::wstring, std::wstring> GetFileDirAndName(const wstringV filePath)
+    {
+        wchar_t szDrive[MAX_PATH] = {
+            0,
+        };
+        wchar_t szDir[MAX_PATH] = {
+            0,
+        };
+        wchar_t szFileName[MAX_PATH] = {
+            0,
+        };
+        wchar_t szFileExt[MAX_PATH] = {
+            0,
+        };
+        _tsplitpath_s(filePath.data(), szDrive, szDir, szFileName, szFileExt);
+        std::wstring fileDir = std::wstring(szDrive) + std::wstring(szDir);
+
+        return std::make_pair(fileDir, szFileName);
+    }
 }  // namespace HBSoft

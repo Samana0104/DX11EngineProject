@@ -37,6 +37,7 @@
     <ClCompile Include="Asset\FbxLoader.cpp" />
     <ClCompile Include="Asset\Font\Font.cpp" />
     <ClCompile Include="Asset\Font\LayoutFont.cpp" />
+    <ClCompile Include="Asset\HBSLoader.cpp" />
     <ClCompile Include="Asset\Mesh\Box2D.cpp" />
     <ClCompile Include="Asset\Mesh\Box3D.cpp" />
     <ClCompile Include="Asset\Mesh\Circle.cpp" />
@@ -63,12 +64,13 @@
     <ClCompile Include="Gui\Button.cpp" />
     <ClCompile Include="Gui\GameButton.cpp" />
     <ClCompile Include="Gui\LobbyButton.cpp" />
-    <ClCompile Include="HBSLoader.cpp" />
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Object\2D\MainTitle.cpp" />
     <ClCompile Include="Object\2D\Object2D.cpp" />
     <ClCompile Include="Object\2D\Transform2D.cpp" />
+    <ClCompile Include="Object\3D\AABBCollider.cpp" />
     <ClCompile Include="Object\3D\CubeMapObj.cpp" />
+    <ClCompile Include="Object\3D\Gardener.cpp" />
     <ClCompile Include="Object\3D\Goose.cpp" />
     <ClCompile Include="Object\3D\HeightMapObj.cpp" />
     <ClCompile Include="Object\3D\LineObj.cpp" />
@@ -94,6 +96,7 @@
     <ClInclude Include="Asset\FbxLoader.h" />
     <ClInclude Include="Asset\Font\Font.h" />
     <ClInclude Include="Asset\Font\LayoutFont.h" />
+    <ClInclude Include="Asset\HBSLoader.h" />
     <ClInclude Include="Asset\Mesh\Box2D.h" />
     <ClInclude Include="Asset\Mesh\Box3D.h" />
     <ClInclude Include="Asset\Mesh\Circle.h" />
@@ -123,12 +126,13 @@
     <ClInclude Include="Gui\Button.h" />
     <ClInclude Include="Gui\GameButton.h" />
     <ClInclude Include="Gui\LobbyButton.h" />
-    <ClInclude Include="HBSLoader.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Object\2D\MainTitle.h" />
     <ClInclude Include="Object\2D\Object2D.h" />
     <ClInclude Include="Object\2D\Transform2D.h" />
+    <ClInclude Include="Object\3D\AABBCollider.h" />
     <ClInclude Include="Object\3D\CubeMapObj.h" />
+    <ClInclude Include="Object\3D\Gardener.h" />
     <ClInclude Include="Object\3D\Goose.h" />
     <ClInclude Include="Object\3D\HeightMapObj.h" />
     <ClInclude Include="Object\3D\LineObj.h" />

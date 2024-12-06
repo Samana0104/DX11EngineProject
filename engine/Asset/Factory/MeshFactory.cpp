@@ -13,8 +13,22 @@ using namespace HBSoft;
 std::shared_ptr<Mesh> MeshFactory::Create(std::shared_ptr<D3Device> device, const wstringV path)
 {
     static FbxLoader fbxLoader;
+    static HBSLoader hbsLoader;
 
-    std::shared_ptr<Mesh> mesh = fbxLoader.Load(device, path);
+    auto [fileName, fileExt] = HBSoft::GetFileNameAndExt(path);
+
+    std::shared_ptr<Mesh> mesh;
+
+
+    if (fileExt.compare(L".hbs") == 0)
+    {
+        mesh = hbsLoader.Load(device, path);
+    }
+    else
+    {
+        mesh = fbxLoader.Load(device, path);
+        hbsLoader.Export(mesh, path);
+    }
 
     if (mesh == nullptr)
         assert(false);

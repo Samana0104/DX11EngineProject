@@ -6,57 +6,25 @@ using namespace HBSoft;
 
 Test3DObj::Test3DObj()
 {
-    m_mesh     = HASSET->m_meshes[L"Goose.fbx"];
-    m_vsShader = HASSET->m_shaders[L"AnimationVertex.hlsl"];
-    // SetVSShaderKey(L"VertexShader.hlsl");
+    m_mesh     = HASSET->m_meshes[L"202412031822testFBXBlender.hbs"];
+    m_vsShader = HASSET->m_shaders[L"VertexShader.hlsl"];
+
 
     // SetPSShaderKey(L"PixelShader.hlsl");  // 텍스쳐 있는 놈
     m_psShader = HASSET->m_shaders[L"ColorPixelShader.hlsl"];  // 텍스쳐 없는 놈
-    anim.resize(m_mesh->m_born.bornIndex.size());
 }
 
 void Test3DObj::Update(const float deltaTime)
 {
-    static float currentFrame    = 0.f;
-    static int   startFrame      = 0;
-    static int   lastFrame       = 0;
-    static float speed           = 3.f;
-    static int   selectAnimation = 0;
-
-    ImGui::SliderFloat("Speed", &speed, 0, 30.f);
-    float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
-    ImGui::PushItemFlag(ImGuiItemFlags_ButtonRepeat, true);
-    if (ImGui::ArrowButton("##left", ImGuiDir_Left))
-    {
-        selectAnimation--;
-    }
-    ImGui::SameLine(0.0f, spacing);
-    if (ImGui::ArrowButton("##right", ImGuiDir_Right))
-    {
-        selectAnimation++;
-    }
-    ImGui::PopItemFlag();
-    ImGui::SameLine();
-    ImGui::Text("%s", m_mesh->m_animations[selectAnimation]->m_aniName.c_str());
-
-    currentFrame += deltaTime * speed;
-    startFrame    = m_mesh->m_animations[selectAnimation]->GetStartFrame();
-    lastFrame     = m_mesh->m_animations[selectAnimation]->GetLastFrame();
-
-    if (currentFrame > lastFrame)
-        currentFrame = (float)startFrame;
-
-    anim = m_mesh->m_animations[selectAnimation]->GetAnimationMatrix(
-    currentFrame);  // m_mesh->m_animations[0]->m_aniMat[0];  // ->GetAnimationMatrix(currentFrame);
-
-    m_vsShader->SetConstantBuffer(HDEVICE, (void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
-    UpdateDefaultCB();
+    m_transform.SetRotation(glm::vec3(1.57, 0, 0));
+    m_transform.SetLocation(glm::vec3(-7, 0, -12));
 }
 
 void Test3DObj::Render()
 {
     UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
     UINT pOffsets = 0;               // 버퍼에 시작 인덱스
+
 
     m_vsShader->SetUpToContext(HDEVICE);
     m_psShader->SetUpToContext(HDEVICE);
@@ -74,6 +42,8 @@ void Test3DObj::Render()
 
     HDEVICE->m_context->PSSetSamplers(0, 1, HDEVICE->m_samplerState.GetAddressOf());
     HDEVICE->m_context->OMSetRenderTargets(1, HDEVICE->m_rtv.GetAddressOf(), HDEVICE->m_dsv.Get());
+
+    UpdateDefaultCB();
 
     for (size_t i = 0; i < m_mesh->m_subMeshes.size(); i++)
     {
@@ -94,3 +64,8 @@ void Test3DObj::Render()
 void Test3DObj::Init() {}
 
 void Test3DObj::Release() {}
+
+AABB HBSoft::Test3DObj::GetaabbCollider()
+{
+    return aabb_goose;
+}
