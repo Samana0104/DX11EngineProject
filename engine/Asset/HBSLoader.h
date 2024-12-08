@@ -2,7 +2,7 @@
 
 #include "Mesh\Mesh.h"
 
-#define HBS_VERSION 10
+#define HBS_VERSION 101
 
 namespace HBSoft
 {
@@ -15,8 +15,8 @@ namespace HBSoft
 
     struct BornHeader
     {
-        size_t numObject;
-        size_t numBorn;
+        size_t bornNameSize;
+        int    bornIndex;
     };
 
     struct AnimationHeader
@@ -48,7 +48,8 @@ namespace HBSoft
         /*
             Born
         */
-
+        size_t numBornObject;  // 본과 오브젝트 애니메이션의 합
+        size_t numBorn;        // 본
 
         // std::map<std::string, int> objectIndex;  // 오브젝트(뼈 포함)인덱스
         // std::map<std::string, int> parentIndex;  // 오브젝트(뼈 포함)부모 인덱스
@@ -92,6 +93,9 @@ namespace HBSoft
     private:
         void WriteHBSHeader(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh> mesh);
         void WriteHBSAsciiFile(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh> mesh);
+        void WriteHBSAsciiFileFromVertex(std::shared_ptr<Mesh> mesh);
+        void WriteHBSAsciiFileFromBorn(std::shared_ptr<Mesh> mesh);
+        void WriteHBSAsciiFileFromAnimation(std::shared_ptr<Mesh> mesh);
         void WriteHBSFile(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh> mesh);
 
     public:

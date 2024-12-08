@@ -28,7 +28,6 @@ std::shared_ptr<Mesh> FbxLoader::Load(std::shared_ptr<D3Device> device, const ws
     fbxRootNode = m_fbxScene->GetRootNode();
 
     ProcessNode(fbxRootNode, mesh, 0, -1);
-    InitMesh(mesh);
 
     LoadAnimation(mesh);
 
@@ -216,6 +215,10 @@ bool FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
             {
                 int   vertexIdx = fbxNodeIdices[v];
                 float weight    = static_cast<float>(weightList[v]);
+
+                if (weight < MIN_WEIGHT_TOLERANCE)
+                    continue;
+
                 m_skinningData[vertexIdx].weights.push_back(weight);
                 m_skinningData[vertexIdx].boneIdx.push_back(boneIdx);
             }
@@ -236,14 +239,11 @@ int FbxLoader::GetSubMaterialPolygonIndex(int polyIdx, FbxLayerElementMaterial* 
             switch (fMaterial->GetReferenceMode())
             {
             case FbxLayerElement::eIndex:
-                {
-                    ret = polyIdx;
-                }
+                ret = polyIdx;
                 break;
+
             case FbxLayerElement::eIndexToDirect:
-                {
-                    ret = fMaterial->GetIndexArray().GetAt(polyIdx);
-                }
+                ret = fMaterial->GetIndexArray().GetAt(polyIdx);
                 break;
             }
         }
@@ -512,17 +512,6 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
             vertexMaterialLayer.emplace_back(fbxLayer->GetMaterials());
     }
 
-    // 정점노말 (재)계산
-    if (vertexNormalLayer.size() > 0)
-    {
-        fMesh->InitNormals();
-#if (FBXSDK_VERSION_MAJOR >= 2015)
-        fMesh->GenerateNormals();
-#else
-        fMesh->ComputeVertexNormals();
-#endif
-    }
-
     // material
     int numMtrl = fNode->GetMaterialCount();
 
@@ -557,15 +546,7 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
     // 정점의 위치가 저장된 배열의 시작주소를 반환.
     FbxVector4* vertexPosition = fMesh->GetControlPoints();
 
-    int numIndices = 0;
-
-    for (int i = 0; i < fMesh->GetPolygonCount(); i++)
-        numIndices += (fMesh->GetPolygonSize(i) - 2) * 3;
-
-    subMesh->indices.resize(numIndices);
-
     int basePolyIdx = 0;
-    int baseIndex   = 0;
 
     for (int polyIdx = 0; polyIdx < numPolyCount; polyIdx++)
     {
@@ -585,98 +566,89 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
             iVertexUVIndex[1] = fMesh->GetTextureUVIndex(polyIdx, iVertexIndex[1]);
             iVertexUVIndex[2] = fMesh->GetTextureUVIndex(polyIdx, iVertexIndex[2]);
 
-            for (int vertexIdx = 0; vertexIdx < 3; vertexIdx++)
+            for (int triangle = 0; triangle < 3; triangle++)
             {
-                FbxVector4 fbxV       = vertexPosition[iVertexPositionIndex[vertexIdx]];
+                FbxVector4 fbxV       = vertexPosition[iVertexPositionIndex[triangle]];
                 FbxColor   color      = FbxColor(1, 1, 1, 1);
                 FbxVector4 vFbxNormal = {0, 0, 0};
+                Vertex     convertV;
+                int        vertexIdx;
 
                 fbxV = geoMat.MultT(fbxV);
 
-                mesh->m_vertices[m_vertexIdx].p.x = static_cast<float>(fbxV.mData[0]);
-                mesh->m_vertices[m_vertexIdx].p.y = static_cast<float>(fbxV.mData[2]);
-                mesh->m_vertices[m_vertexIdx].p.z = static_cast<float>(fbxV.mData[1]);
+                convertV.p.x = static_cast<float>(fbxV.mData[0]);
+                convertV.p.y = static_cast<float>(fbxV.mData[2]);
+                convertV.p.z = static_cast<float>(fbxV.mData[1]);
 
                 if (vertexUVLayer.size() > 0)
                 {
                     FbxVector2 uv =
-                    GetUV(vertexUVLayer[0], iVertexPositionIndex[vertexIdx], iVertexUVIndex[vertexIdx]);
-                    mesh->m_vertices[m_vertexIdx].t.x = static_cast<float>(uv.mData[0]);
-                    mesh->m_vertices[m_vertexIdx].t.y = 1.f - static_cast<float>(uv.mData[1]);
+                    GetUV(vertexUVLayer[0], iVertexPositionIndex[triangle], iVertexUVIndex[triangle]);
+                    convertV.t.x = static_cast<float>(uv.mData[0]);
+                    convertV.t.y = 1.f - static_cast<float>(uv.mData[1]);
                 }
 
-                if (vertexColorLayer.size())
+                if (vertexColorLayer.size() > 0)
                 {
                     color = GetColor(vertexColorLayer[0],
-                                     iVertexPositionIndex[vertexIdx],
-                                     basePolyIdx + iVertexIndex[vertexIdx]);
+                                     iVertexPositionIndex[triangle],
+                                     basePolyIdx + iVertexIndex[triangle]);
                 }
 
-                mesh->m_vertices[m_vertexIdx].c.r = static_cast<float>(color.mRed);
-                mesh->m_vertices[m_vertexIdx].c.g = static_cast<float>(color.mGreen);
-                mesh->m_vertices[m_vertexIdx].c.b = static_cast<float>(color.mBlue);
-                mesh->m_vertices[m_vertexIdx].c.a = static_cast<float>(color.mAlpha);
+                convertV.c.r = static_cast<float>(color.mRed);
+                convertV.c.g = static_cast<float>(color.mGreen);
+                convertV.c.b = static_cast<float>(color.mBlue);
+                convertV.c.a = static_cast<float>(color.mAlpha);
 
-                if (vertexNormalLayer.size())
+                if (vertexNormalLayer.size() > 0)
                 {
                     vFbxNormal = GetNormal(vertexNormalLayer[0],
-                                           iVertexPositionIndex[vertexIdx],
-                                           basePolyIdx + iVertexIndex[vertexIdx]);
+                                           iVertexPositionIndex[triangle],
+                                           basePolyIdx + iVertexIndex[triangle]);
                     vFbxNormal = normalMatrix.MultT(vFbxNormal);
                     vFbxNormal.Normalize();
                 }
 
-                mesh->m_vertices[m_vertexIdx].n.x = static_cast<float>(vFbxNormal.mData[0]);
-                mesh->m_vertices[m_vertexIdx].n.y = static_cast<float>(vFbxNormal.mData[2]);
-                mesh->m_vertices[m_vertexIdx].n.z = static_cast<float>(vFbxNormal.mData[1]);
+                convertV.n.x = static_cast<float>(vFbxNormal.mData[0]);
+                convertV.n.y = static_cast<float>(vFbxNormal.mData[2]);
+                convertV.n.z = static_cast<float>(vFbxNormal.mData[1]);
 
 
                 if (isSkinned)
                 {
-                    size_t iwSize = m_skinningData[iVertexPositionIndex[vertexIdx]].boneIdx.size();
+                    size_t iwSize = m_skinningData[iVertexPositionIndex[triangle]].boneIdx.size();
                     for (size_t iwIdx = 0; iwIdx < iwSize; iwIdx++)
                     {
-                        mesh->m_vertices[m_vertexIdx].i[iwIdx] =
-                        m_skinningData[iVertexPositionIndex[vertexIdx]].boneIdx[iwIdx];
+                        convertV.i[iwIdx] =
+                        m_skinningData[iVertexPositionIndex[triangle]].boneIdx[iwIdx];
 
-                        mesh->m_vertices[m_vertexIdx].w[iwIdx] =
-                        m_skinningData[iVertexPositionIndex[vertexIdx]].weights[iwIdx];
+                        convertV.w[iwIdx] =
+                        m_skinningData[iVertexPositionIndex[triangle]].weights[iwIdx];
                     }
                 }
                 else
                 {
-                    mesh->m_vertices[m_vertexIdx].i[0] = mesh->m_born.objectIndex[fNode->GetName()];
-                    mesh->m_vertices[m_vertexIdx].w[0] = 1.f;
+                    convertV.i[0] = mesh->m_born.objectIndex[fNode->GetName()];
+                    convertV.w[0] = 1.f;
                 }
 
-                subMesh->indices[baseIndex] = m_vertexIdx;
+                vertexIdx = GenBuffer(mesh->m_vertices, convertV);
 
-                baseIndex++;
-                m_vertexIdx++;
+                if (vertexIdx == NOT_EXISTED_VERTEX)
+                {
+                    mesh->m_vertices.push_back(convertV);
+                    subMesh->indices.push_back((UINT)(mesh->m_vertices.size() - 1));
+                }
+                else
+                {
+                    subMesh->indices.push_back((UINT)vertexIdx);
+                }
             }
         }
         basePolyIdx += polySize;
     }
 
     mesh->m_subMeshes.push_back(subMesh);
-}
-
-void FbxLoader::InitMesh(std::shared_ptr<Mesh> mesh)
-{
-    int meshVerticesNums = 0;
-    int polyCount        = 0;
-
-    // 버텍스 개수 구해서 하나의 버텍스 버퍼로 합치기 위해 버텍스 수 구함
-    for (int i = 0; i < m_fbxMeshes.size(); i++)
-    {
-        polyCount = m_fbxMeshes[i]->GetPolygonCount();
-
-        for (int j = 0; j < polyCount; j++)
-            meshVerticesNums += (m_fbxMeshes[i]->GetPolygonSize(j) - 2) * 3;
-    }
-
-    mesh->m_vertices.resize(meshVerticesNums);
-    m_vertexIdx = 0;
 }
 
 mat4 FbxLoader::ConvertFbxMatToGlmMat(FbxAMatrix& fMat)
@@ -709,4 +681,20 @@ mat4 FbxLoader::ConvertFbxMatToGlmMat(FbxAMatrix& fMat)
 
 
     return glmMat;
+}
+
+int FbxLoader::GenBuffer(const std::vector<Vertex>& vertices, const Vertex& compareV)
+{
+    int index = NOT_EXISTED_VERTEX;
+
+    for (int i = 0; i < vertices.size(); i++)
+    {
+        if (vertices[i] == compareV)
+        {
+            index = i;
+            break;
+        }
+    }
+
+    return index;
 }

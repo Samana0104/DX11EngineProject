@@ -32,7 +32,7 @@ namespace HBSoft
         UINT  i[8] = {0, 0, 0, 0, 0, 0, 0, 0};
         float w[8] = {0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f};
 
-        bool operator==(const Vertex& ref)
+        bool operator==(const Vertex& ref) const
         {
             if (p != ref.p)
                 return false;

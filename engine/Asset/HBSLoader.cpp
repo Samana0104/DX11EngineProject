@@ -4,10 +4,12 @@ using namespace HBSoft;
 
 void HBSLoader::WriteHBSHeader(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh> mesh)
 {
-    hbsHeader.version     = HBS_VERSION;
-    hbsHeader.numVertex   = mesh->m_vertices.size();
-    hbsHeader.numSubMesh  = mesh->m_subMeshes.size();
-    hbsHeader.numAnimtion = mesh->m_animations.size();
+    hbsHeader.version       = HBS_VERSION;
+    hbsHeader.numVertex     = mesh->m_vertices.size();
+    hbsHeader.numSubMesh    = mesh->m_subMeshes.size();
+    hbsHeader.numAnimtion   = mesh->m_animations.size();
+    hbsHeader.numBornObject = mesh->m_born.objectIndex.size();
+    hbsHeader.numBorn       = mesh->m_born.bornIndex.size();
 }
 
 void HBSLoader::WriteHBSAsciiFile(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh> mesh)
@@ -15,11 +17,21 @@ void HBSLoader::WriteHBSAsciiFile(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh
     m_outputAsciiFile << "hbs version: " << hbsHeader.version << std::endl;
     m_outputAsciiFile << "hbs numVertex : " << hbsHeader.numVertex << std::endl;
     m_outputAsciiFile << "hbs numSubMesh : " << hbsHeader.numSubMesh << std::endl;
+    m_outputAsciiFile << "hbs bornObject : " << hbsHeader.numBornObject << std::endl;
+    m_outputAsciiFile << "hbs born : " << hbsHeader.numBorn << std::endl;
     m_outputAsciiFile << "hbs numAnimation : " << hbsHeader.numAnimtion << std::endl;
 
-    for (size_t i = 0; i < hbsHeader.numVertex; i++)
+    WriteHBSAsciiFileFromVertex(mesh);
+    WriteHBSAsciiFileFromBorn(mesh);
+    WriteHBSAsciiFileFromAnimation(mesh);
+}
+
+void HBSLoader::WriteHBSAsciiFileFromVertex(std::shared_ptr<Mesh> mesh)
+{
+    for (size_t i = 0; i < mesh->m_vertices.size(); i++)
     {
-        m_outputAsciiFile << "Vertex {";
+        m_outputAsciiFile << "Vertex[index : " << i << "]" << std::endl;
+
         m_outputAsciiFile << " [P] :" << mesh->m_vertices[i].p.x << ", " << mesh->m_vertices[i].p.y
                           << ", " << mesh->m_vertices[i].p.z;
         m_outputAsciiFile << " [N] :" << mesh->m_vertices[i].n.x << ", " << mesh->m_vertices[i].n.y
@@ -27,39 +39,107 @@ void HBSLoader::WriteHBSAsciiFile(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh
         m_outputAsciiFile << " [C] :" << mesh->m_vertices[i].c.r << ", " << mesh->m_vertices[i].c.g
                           << ", " << mesh->m_vertices[i].c.b << ", " << mesh->m_vertices[i].c.a;
         m_outputAsciiFile << " [T] :" << mesh->m_vertices[i].t.x << ", " << mesh->m_vertices[i].t.y;
+        m_outputAsciiFile << std::endl;
 
         // born idx, weight
         for (size_t j = 0; j < 8; j++)
         {
             m_outputAsciiFile << " [I, W][" << j << "]" << mesh->m_vertices[i].i[j] << ", "
                               << mesh->m_vertices[i].w[j];
+            m_outputAsciiFile << std::endl;
         }
-        m_outputAsciiFile << " }" << std::endl;
+        m_outputAsciiFile << std::endl;
     }
 
-    m_outputAsciiFile << std::endl;
-    m_outputAsciiFile << "-----------------------------------------------";
-    m_outputAsciiFile << std::endl;
 
-    for (size_t i = 0; i < hbsHeader.numSubMesh; i++)
+    for (size_t i = 0; i < mesh->m_subMeshes.size(); i++)
     {
+        m_outputAsciiFile << std::endl << std::endl;
+        m_outputAsciiFile << "-----------------------------------------------";
+        m_outputAsciiFile << std::endl << std::endl;
+
         m_outputAsciiFile << "submesh number : " << i << std::endl;
+        m_outputAsciiFile << "submesh index : " << mesh->m_subMeshes[i]->indices.size() << std::endl;
         m_outputAsciiFile << "meshName : " << mesh->m_subMeshes[i]->meshName << std::endl;
         m_outputAsciiFile << "textureName : " << HBSoft::ToMultiByte(mesh->m_subMeshes[i]->textureName)
                           << std::endl;
         m_outputAsciiFile << "hasTexture : " << mesh->m_subMeshes[i]->hasTexture << std::endl
                           << std::endl;
 
-        m_outputAsciiFile << "index {";
+        m_outputAsciiFile << "index" << std::endl;
         for (size_t j = 0; j < mesh->m_subMeshes[i]->indices.size(); j++)
             m_outputAsciiFile << " i[" << j << "] : v[" << mesh->m_subMeshes[i]->indices[j] << "]";
 
-        m_outputAsciiFile << "}" << std::endl;
+        m_outputAsciiFile << std::endl;
     }
 
-    m_outputAsciiFile << std::endl;
+    m_outputAsciiFile << std::endl << std::endl;
     m_outputAsciiFile << "-----------------------------------------------";
-    m_outputAsciiFile << std::endl;
+    m_outputAsciiFile << std::endl << std::endl;
+}
+
+void HBSLoader::WriteHBSAsciiFileFromBorn(std::shared_ptr<Mesh> mesh)
+{
+    m_outputAsciiFile << "born object(born index + object index)" << std::endl;
+
+    for (auto bornObject : mesh->m_born.objectIndex)
+        m_outputAsciiFile << "name : " << bornObject.first << " , index : " << bornObject.second
+                          << std::endl;
+
+
+    m_outputAsciiFile << std::endl << std::endl;
+    m_outputAsciiFile << "-----------------------------------------------";
+    m_outputAsciiFile << std::endl << std::endl;
+    m_outputAsciiFile << "born(born index)" << std::endl;
+
+    for (auto born : mesh->m_born.bornIndex)
+        m_outputAsciiFile << "name : " << born.first << " , index : " << born.second << std::endl;
+
+    m_outputAsciiFile << std::endl << std::endl;
+    m_outputAsciiFile << "-----------------------------------------------";
+    m_outputAsciiFile << std::endl << std::endl;
+    m_outputAsciiFile << "born(parent index)" << std::endl;
+
+    for (auto bornParent : mesh->m_born.parentIndex)
+        m_outputAsciiFile << "name : " << bornParent.first << " , parent index : " << bornParent.second
+                          << std::endl;
+}
+
+void HBSLoader::WriteHBSAsciiFileFromAnimation(std::shared_ptr<Mesh> mesh)
+{
+    for (size_t i = 0; i < mesh->m_animations.size(); i++)
+    {
+        m_outputAsciiFile << std::endl << std::endl;
+        m_outputAsciiFile << "-----------------------------------------------";
+        m_outputAsciiFile << std::endl << std::endl;
+
+        m_outputAsciiFile << "animation name : " << mesh->m_animations[i]->m_aniName << std::endl;
+        m_outputAsciiFile << "start frame : " << mesh->m_animations[i]->m_startFrame << std::endl;
+        m_outputAsciiFile << "last frame : " << mesh->m_animations[i]->m_lastFrame << std::endl;
+        m_outputAsciiFile << "frame count : " << mesh->m_animations[i]->m_numFrame << std::endl;
+
+        m_outputAsciiFile << std::endl;
+
+        for (size_t j = 0; j < mesh->m_animations[i]->m_keyFrame.size(); j++)
+        {
+            m_outputAsciiFile << "keyframe " << std::endl;
+            m_outputAsciiFile << "born index : " << j << std::endl;
+            for (size_t k = 0; k < mesh->m_animations[i]->m_keyFrame[j].size(); k++)
+            {
+                KeyFrame key = mesh->m_animations[i]->m_keyFrame[j][k];
+
+                m_outputAsciiFile << " [Pos] : " << key.pos.x << ", " << key.pos.y << ", " << key.pos.z;
+                m_outputAsciiFile << " [Rotation(quat wxyz)] : " << key.rot.w << ", " << key.rot.x
+                                  << ", " << key.rot.y << ", " << key.rot.z;
+                m_outputAsciiFile << " [Scale] : " << key.scale.x << ", " << key.scale.y << ", "
+                                  << key.scale.z;
+                m_outputAsciiFile << std::endl;
+            }
+
+            m_outputAsciiFile << std::endl;
+        }
+        m_outputAsciiFile << std::endl;
+    }
 }
 
 void HBSLoader::WriteHBSFile(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh> mesh)
@@ -68,10 +148,12 @@ void HBSLoader::WriteHBSFile(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh> mes
     BornHeader      bornHeader;
     AnimationHeader aniHeader;
 
+    // main header 기입
     m_outputFile.write(reinterpret_cast<const char*>(&hbsHeader), sizeof(HBSFileHeader));
     m_outputFile.write(reinterpret_cast<const char*>(&mesh->m_vertices.at(0)),
                        sizeof(Vertex) * mesh->m_vertices.size());
 
+    // submesh header 기입
     for (size_t i = 0; i < hbsHeader.numSubMesh; i++)
     {
         subHeader.numSubMeshIndex = mesh->m_subMeshes[i]->indices.size();
@@ -96,11 +178,38 @@ void HBSLoader::WriteHBSFile(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh> mes
                            sizeof(bool));
     }
 
-    bornHeader.numObject = mesh->m_born.objectIndex.size();
-    bornHeader.numBorn   = mesh->m_born.bornIndex.size();
+    // born header 기입
+    for (auto& bornObject : mesh->m_born.objectIndex)
+    {
+        bornHeader.bornNameSize = bornObject.first.size();
+        bornHeader.bornIndex    = bornObject.second;
 
-    m_outputFile.write(reinterpret_cast<const char*>(&bornHeader), sizeof(BornHeader));
+        m_outputFile.write(reinterpret_cast<const char*>(&bornHeader), sizeof(BornHeader));
+        m_outputFile.write(reinterpret_cast<const char*>(&bornObject.first.at(0)),
+                           sizeof(char) * bornObject.first.size());
+    }
 
+    for (auto& born : mesh->m_born.bornIndex)
+    {
+        bornHeader.bornNameSize = born.first.size();
+        bornHeader.bornIndex    = born.second;
+
+        m_outputFile.write(reinterpret_cast<const char*>(&bornHeader), sizeof(BornHeader));
+        m_outputFile.write(reinterpret_cast<const char*>(&born.first.at(0)),
+                           sizeof(char) * born.first.size());
+    }
+
+    for (auto& bornParent : mesh->m_born.parentIndex)
+    {
+        bornHeader.bornNameSize = bornParent.first.size();
+        bornHeader.bornIndex    = bornParent.second;
+
+        m_outputFile.write(reinterpret_cast<const char*>(&bornHeader), sizeof(BornHeader));
+        m_outputFile.write(reinterpret_cast<const char*>(&bornParent.first.at(0)),
+                           sizeof(char) * bornParent.first.size());
+    }
+
+    // animation header 기입
     for (size_t i = 0; i < hbsHeader.numAnimtion; i++)
     {
         aniHeader.aniNameSize = mesh->m_animations[i]->m_aniName.size();
@@ -112,7 +221,7 @@ void HBSLoader::WriteHBSFile(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh> mes
         m_outputFile.write(reinterpret_cast<const char*>(&mesh->m_animations[i]->m_aniName.at(0)),
                            sizeof(char) * mesh->m_animations[i]->m_aniName.size());
 
-        for (size_t j = 0; j < bornHeader.numObject; j++)
+        for (size_t j = 0; j < hbsHeader.numBornObject; j++)
         {
             m_outputFile.write(
             reinterpret_cast<const char*>(&mesh->m_animations[i]->m_keyFrame[j].at(0)),
@@ -159,8 +268,9 @@ std::shared_ptr<Mesh> HBSLoader::Load(std::shared_ptr<D3Device> device, const ws
     BornHeader      bornHeader;
     AnimationHeader aniHeader;
 
-    std::string           fileDir = HBSoft::ToMultiByte(filePath);
-    std::shared_ptr<Mesh> mesh    = std::make_shared<Mesh>();
+    std::pair<std ::string, int> bornNode;
+    std::string                  fileDir = HBSoft::ToMultiByte(filePath);
+    std::shared_ptr<Mesh>        mesh    = std::make_shared<Mesh>();
 
 
     m_inputFile.open(fileDir, std::ios::in | std::ios::binary);
@@ -215,7 +325,42 @@ std::shared_ptr<Mesh> HBSLoader::Load(std::shared_ptr<D3Device> device, const ws
         m_inputFile.read(reinterpret_cast<char*>(&mesh->m_subMeshes[i]->hasTexture), sizeof(bool));
     }
 
-    m_inputFile.read(reinterpret_cast<char*>(&bornHeader), sizeof(BornHeader));
+    // born header 기입
+    for (size_t i = 0; i < hbsHeader.numBornObject; i++)
+    {
+        m_inputFile.read(reinterpret_cast<char*>(&bornHeader), sizeof(BornHeader));
+        bornNode.first.resize(bornHeader.bornNameSize);
+        bornNode.second = bornHeader.bornIndex;
+
+        m_inputFile.read(reinterpret_cast<char*>(&bornNode.first.at(0)),
+                         sizeof(char) * bornHeader.bornNameSize);
+
+        mesh->m_born.objectIndex.insert(bornNode);
+    }
+
+    for (size_t i = 0; i < hbsHeader.numBorn; i++)
+    {
+        m_inputFile.read(reinterpret_cast<char*>(&bornHeader), sizeof(BornHeader));
+        bornNode.first.resize(bornHeader.bornNameSize);
+        bornNode.second = bornHeader.bornIndex;
+
+        m_inputFile.read(reinterpret_cast<char*>(&bornNode.first.at(0)),
+                         sizeof(char) * bornHeader.bornNameSize);
+
+        mesh->m_born.bornIndex.insert(bornNode);
+    }
+
+    for (size_t i = 0; i < hbsHeader.numBornObject; i++)
+    {
+        m_inputFile.read(reinterpret_cast<char*>(&bornHeader), sizeof(BornHeader));
+        bornNode.first.resize(bornHeader.bornNameSize);
+        bornNode.second = bornHeader.bornIndex;
+
+        m_inputFile.read(reinterpret_cast<char*>(&bornNode.first.at(0)),
+                         sizeof(char) * bornHeader.bornNameSize);
+
+        mesh->m_born.parentIndex.insert(bornNode);
+    }
 
     mesh->m_animations.resize(hbsHeader.numAnimtion);
 
@@ -232,8 +377,8 @@ std::shared_ptr<Mesh> HBSLoader::Load(std::shared_ptr<D3Device> device, const ws
         m_inputFile.read(reinterpret_cast<char*>(&mesh->m_animations[i]->m_aniName.at(0)),
                          sizeof(char) * mesh->m_animations[i]->m_aniName.size());
 
-        mesh->m_animations[i]->m_keyFrame.resize(bornHeader.numObject);
-        for (size_t j = 0; j < bornHeader.numObject; j++)
+        mesh->m_animations[i]->m_keyFrame.resize(hbsHeader.numBornObject);
+        for (size_t j = 0; j < hbsHeader.numBornObject; j++)
         {
             mesh->m_animations[i]->m_keyFrame[j].resize(aniHeader.numFrame);
 

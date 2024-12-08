@@ -54,10 +54,6 @@ void Gardener::Update(const float deltaTime)
     static bool isLeftPressed  = false;
     vec3        moveDirection  = vec3(0.f, 0.f, 0.f);
 
-    m_camera->m_transform.SetLocation(
-    {m_transform.m_pos.x, m_transform.m_pos.y + 2.f, m_transform.m_pos.z - 3.f});
-
-
     if (HINPUT->IsKeyPressed(74) && !isRightPressed)  // VK_LEFT
     {
         isLeftPressed  = true;
