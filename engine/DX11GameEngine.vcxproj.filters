@@ -10,9 +10,6 @@
     <Filter Include="Input">
       <UniqueIdentifier>{b5794595-46d9-42ed-b3e4-9f66af3358f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameStart">
-      <UniqueIdentifier>{dd8dcd91-59c7-4069-8305-5748d43092f3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scene">
       <UniqueIdentifier>{5360846c-2956-48ea-82d0-51b67e579db6}</UniqueIdentifier>
     </Filter>
@@ -52,6 +49,12 @@
     <Filter Include="Object\3D">
       <UniqueIdentifier>{5dec847b-e29e-452f-ab31-d2ecea355be0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DesignPattern\GameStart">
+      <UniqueIdentifier>{dd8dcd91-59c7-4069-8305-5748d43092f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gui">
+      <UniqueIdentifier>{69f7866d-a965-424a-88fc-febb30f99bd3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\D3Device.cpp">
@@ -67,7 +70,7 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="GameStart\Main.cpp">
-      <Filter>GameStart</Filter>
+      <Filter>DesignPattern\GameStart</Filter>
     </ClCompile>
     <ClCompile Include="Input\Input.cpp">
       <Filter>Input</Filter>
@@ -75,14 +78,11 @@
     <ClCompile Include="Timer\SystemTimer.cpp">
       <Filter>Timer</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\SceneLobby.cpp">
+    <ClCompile Include="Scene\SceneGame.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Scene\SceneMgr.cpp">
       <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Button.cpp">
-      <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Object\Camera.cpp">
       <Filter>Object</Filter>
@@ -189,10 +189,34 @@
     <ClCompile Include="Object\Object.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\SceneGame.cpp">
+    <ClCompile Include="Scene\SceneLobby.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Object\3D\Goose.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\2D\MainTitle.cpp">
+      <Filter>Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Font\LayoutFont.cpp">
+      <Filter>Asset\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\Button.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\LobbyButton.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\GameButton.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\HBSLoader.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\Gardener.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\AABBCollider.cpp">
       <Filter>Object\3D</Filter>
     </ClCompile>
   </ItemGroup>
@@ -224,14 +248,11 @@
     <ClInclude Include="Scene\Scene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\SceneLobby.h">
+    <ClInclude Include="Scene\SceneGame.h">
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scene\SceneMgr.h">
       <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Button.h">
-      <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Object\Camera.h">
       <Filter>Object</Filter>
@@ -356,10 +377,34 @@
     <ClInclude Include="Object\Object.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\SceneGame.h">
+    <ClInclude Include="Scene\SceneLobby.h">
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Object\3D\Goose.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\2D\MainTitle.h">
+      <Filter>Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Font\LayoutFont.h">
+      <Filter>Asset\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\Button.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\LobbyButton.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\GameButton.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\HBSLoader.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\Gardener.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\AABBCollider.h">
       <Filter>Object\3D</Filter>
     </ClInclude>
   </ItemGroup>
@@ -392,6 +437,9 @@
       <Filter>hlsl</Filter>
     </FxCompile>
     <FxCompile Include="..\res\Shader\AnimationVertex.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\2DVertex.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>

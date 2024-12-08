@@ -16,35 +16,42 @@ Box2D::Box2D(std::shared_ptr<D3Device> device)
     assert(CreateIndices(device));
 }
 
-bool HBSoft::Box2D::CreateVertices(std::shared_ptr<D3Device>& device)
+bool Box2D::CreateVertices(std::shared_ptr<D3Device>& device)
 {
     m_vertices.resize(4);
 
     m_vertices[0] =
-    Vertex({-1.0f, -1.0f, 0.0f}, {0.0f, 0.0f, -1.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.0f, 1.0f});
-
-    m_vertices[1] =
     Vertex({-1.0f, 1.0f, 0.0f}, {0.0f, 0.0f, -1.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.0f, 0.0f});
 
-    m_vertices[2] =
+    m_vertices[1] =
     Vertex({1.0f, 1.0f, 0.0f}, {0.0f, 0.0f, -1.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {1.0f, 0.0f});
 
-    m_vertices[3] =
+    m_vertices[2] =
     Vertex({1.0f, -1.0f, 0.0f}, {0.0f, 0.0f, -1.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {1.0f, 1.0f});
+
+    m_vertices[3] =
+    Vertex({-1.0f, -1.0f, 0.0f}, {0.0f, 0.0f, -1.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.0f, 1.0f});
 
     return device->CreateVertexBuffer(m_vertices, m_vertexBuffer);
 }
 
-bool HBSoft::Box2D::CreateIndices(std::shared_ptr<D3Device>& device)
+bool Box2D::CreateIndices(std::shared_ptr<D3Device>& device)
 {
-    m_indices.resize(6);
+    std::shared_ptr<SubMesh> subMesh = std::make_shared<SubMesh>();
 
-    m_indices.push_back(0);
-    m_indices.push_back(1);
-    m_indices.push_back(2);
-    m_indices.push_back(0);
-    m_indices.push_back(2);
-    m_indices.push_back(3);
+    subMesh->meshName = "Box2D(Plane)";
 
-    return device->CreateIndexBuffer(m_indices, m_indexBuffer);
+    subMesh->indices.push_back(0);
+    subMesh->indices.push_back(1);
+    subMesh->indices.push_back(2);
+    subMesh->indices.push_back(0);
+    subMesh->indices.push_back(2);
+    subMesh->indices.push_back(3);
+
+    subMesh->hasTexture = false;
+
+    assert(device->CreateIndexBuffer(subMesh->indices, subMesh->indexBuffer));
+    m_subMeshes.push_back(subMesh);
+
+    return true;
 }

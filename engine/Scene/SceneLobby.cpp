@@ -1,36 +1,30 @@
 /*
-author : 변한빛
-description : 씬의 전환을 테스트 하기 위해 만든 파일
+author : 정찬빈, 변한빛
+description : 게임 타이틀 씬 소스 파일
 
 version: 1.0.0
-date: 2024-11-04
+date: 2024-11-30
 */
 
 #include "pch.h"
 #include "SceneLobby.h"
+
 using namespace HBSoft;
 
-SceneLobby::SceneLobby()
-{
-    cameraTest = std::make_shared<Camera>(glm::radians(90.f), 0.1f, 10000.f);
-
-    cameraTest->LookAt({0.f, 5.f, -10.f}, {0.f, 0.f, 0.f}, {0.f, 1.f, 0.f});
-    m_line.SetCamera(cameraTest);
-    cube.SetCamera(cameraTest);
-    m_zelda.SetCamera(cameraTest);
-    m_map.SetCamera(cameraTest);
-}
+SceneLobby::SceneLobby() {}
 
 void SceneLobby::Update(float deltaTime)
 {
     ImGui::Checkbox("wireframe : ", &isWire);
 
-    cameraTest->Update(deltaTime);
+    m_title.Update(deltaTime);
 
-    m_line.Update(deltaTime);
-    cube.Update(deltaTime);
-    m_zelda.Update(deltaTime);
-    m_map.Update(deltaTime);
+    if (HINPUT->IsKeyDown(VK_MBUTTON))
+    {
+        Core::engine->m_sceneMgr.SetCurrentScene(L"Game");
+    }
+
+    m_lobbyBtn.Update(deltaTime);
 }
 
 void SceneLobby::Render()
@@ -40,12 +34,8 @@ void SceneLobby::Render()
     else
         HDEVICE->m_context->RSSetState(HDEVICE->m_rsState.Get());
 
-    m_line.Draw({0.f, 0.f, 0.f}, {1000.f, 0.f, 0.f}, {1.f, 0.f, 0.f, 1.f});
-    m_line.Draw({0.f, 0.f, 0.f}, {0.f, 1000.f, 0.f}, {0.f, 1.f, 0.f, 1.f});
-    m_line.Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
-    cube.Render();
-    m_zelda.Render();
-    // m_map.Render();
+    m_title.Render();
+    m_lobbyBtn.Render();
 }
 
 void SceneLobby::Release() {}

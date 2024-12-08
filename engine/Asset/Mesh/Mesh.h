@@ -32,7 +32,7 @@ namespace HBSoft
         UINT  i[8] = {0, 0, 0, 0, 0, 0, 0, 0};
         float w[8] = {0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f};
 
-        bool operator==(const Vertex& ref)
+        bool operator==(const Vertex& ref) const
         {
             if (p != ref.p)
                 return false;
@@ -52,10 +52,10 @@ namespace HBSoft
 
     struct Born
     {
-        // 오브젝트 애니메이션도 지원하려고 노드 기준으로 구함
+        // 오브젝트 애니메이션도 지원
+        std::map<std::string, int> objectIndex;  // 오브젝트(뼈 포함)인덱스
+        std::map<std::string, int> parentIndex;  // 오브젝트(뼈 포함)부모 인덱스
         std::map<std::string, int> bornIndex;
-        std::map<std::string, int> bornParentIndex;
-        std::vector<mat4>          bindPoseMat;
     };
 
     struct SubMesh
@@ -70,9 +70,7 @@ namespace HBSoft
     class Mesh
     {
     public:
-        std::vector<Vertex> m_vertices;  // 버텍스 버퍼용 배열
-        std::vector<UINT>   m_indices;   // 인덱스  버퍼용 배열
-
+        std::vector<Vertex>                   m_vertices;  // 버텍스 버퍼용 배열
         std::vector<std::shared_ptr<SubMesh>> m_subMeshes;
 
         // 이 두개는 건들지 마셈 로더에서 알아서 함
@@ -81,8 +79,6 @@ namespace HBSoft
         std::vector<std::shared_ptr<AnimationClip>> m_animations;
 
         ComPtr<ID3D11Buffer> m_vertexBuffer;
-        ComPtr<ID3D11Buffer> m_indexBuffer;
-
 
     public:
         Mesh();
@@ -90,6 +86,7 @@ namespace HBSoft
 
         void SetVertices(std::shared_ptr<D3Device> device, const std::vector<Vertex>& vertices);
         void SetVertex(std::shared_ptr<D3Device> device, const Vertex& vertex, const UINT idx);
+        void UpdateVertices(std::shared_ptr<D3Device> device);
     };
 
 }  // namespace HBSoft

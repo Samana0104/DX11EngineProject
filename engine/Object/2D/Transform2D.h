@@ -17,7 +17,7 @@ namespace HBSoft
         vec2  m_pos;
         vec2  m_scale;
         float m_angle;  // radian
-        mat3  m_worldMat;
+        mat4  m_worldMat;
 
     private:
         void CalculateWorldMat();
@@ -29,14 +29,20 @@ namespace HBSoft
         Transform2D& AddLocation(const vec2 pos);
         Transform2D& SetLocation(const vec2 pos);
 
-
-        Transform2D& SetRotation(const float radian);
+        Transform2D& AddRotation(const float angle);
+        Transform2D& SetRotation(const float angle);
 
         Transform2D& AddScale(const vec2 scale);
         Transform2D& AddScale(const float scale);
 
         Transform2D& SetScale(const vec2 scale);
         Transform2D& SetScale(const float scale);
+
+        static const HPoint ConvertScreenToNDC(const HPoint& windowSize, const HPoint& pos);
+        static const HRect  ConvertScreenToNDC(const HPoint& windowSize, const HRect& rect);
+
+        static const HPoint ConvertNDCToScreen(const HPoint& windowSize, const HPoint& pos);
+        static const HRect  ConvertNDCToScreen(const HPoint& windowSize, const HRect& rect);
     };
 
 }  // namespace HBSoft

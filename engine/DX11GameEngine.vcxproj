@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\res\Shader\2DVertex.hlsl" />
     <FxCompile Include="..\res\Shader\AnimationVertex.hlsl" />
     <FxCompile Include="..\res\Shader\ColorPixelShader.hlsl" />
     <FxCompile Include="..\res\Shader\CubePixel.hlsl" />
@@ -35,6 +36,8 @@
     <ClCompile Include="Asset\Factory\TextureFactory.cpp" />
     <ClCompile Include="Asset\FbxLoader.cpp" />
     <ClCompile Include="Asset\Font\Font.cpp" />
+    <ClCompile Include="Asset\Font\LayoutFont.cpp" />
+    <ClCompile Include="Asset\HBSLoader.cpp" />
     <ClCompile Include="Asset\Mesh\Box2D.cpp" />
     <ClCompile Include="Asset\Mesh\Box3D.cpp" />
     <ClCompile Include="Asset\Mesh\Circle.cpp" />
@@ -58,21 +61,26 @@
     </ClCompile>
     <ClCompile Include="DesignPattern\Observer.cpp" />
     <ClCompile Include="GameStart\Main.cpp" />
+    <ClCompile Include="Gui\Button.cpp" />
+    <ClCompile Include="Gui\GameButton.cpp" />
+    <ClCompile Include="Gui\LobbyButton.cpp" />
     <ClCompile Include="Input\Input.cpp" />
+    <ClCompile Include="Object\2D\MainTitle.cpp" />
     <ClCompile Include="Object\2D\Object2D.cpp" />
     <ClCompile Include="Object\2D\Transform2D.cpp" />
+    <ClCompile Include="Object\3D\AABBCollider.cpp" />
     <ClCompile Include="Object\3D\CubeMapObj.cpp" />
+    <ClCompile Include="Object\3D\Gardener.cpp" />
     <ClCompile Include="Object\3D\Goose.cpp" />
     <ClCompile Include="Object\3D\HeightMapObj.cpp" />
     <ClCompile Include="Object\3D\LineObj.cpp" />
     <ClCompile Include="Object\3D\Object3D.cpp" />
     <ClCompile Include="Object\3D\Test3DObj.cpp" />
     <ClCompile Include="Object\3D\Transform3D.cpp" />
-    <ClCompile Include="Object\Button.cpp" />
     <ClCompile Include="Object\Camera.cpp" />
     <ClCompile Include="Object\Object.cpp" />
-    <ClCompile Include="Scene\SceneGame.cpp" />
     <ClCompile Include="Scene\SceneLobby.cpp" />
+    <ClCompile Include="Scene\SceneGame.cpp" />
     <ClCompile Include="Scene\SceneMgr.cpp" />
     <ClCompile Include="Timer\SystemTimer.cpp" />
   </ItemGroup>
@@ -87,6 +95,8 @@
     <ClInclude Include="Asset\Factory\TextureFactory.h" />
     <ClInclude Include="Asset\FbxLoader.h" />
     <ClInclude Include="Asset\Font\Font.h" />
+    <ClInclude Include="Asset\Font\LayoutFont.h" />
+    <ClInclude Include="Asset\HBSLoader.h" />
     <ClInclude Include="Asset\Mesh\Box2D.h" />
     <ClInclude Include="Asset\Mesh\Box3D.h" />
     <ClInclude Include="Asset\Mesh\Circle.h" />
@@ -113,23 +123,28 @@
     <ClInclude Include="Core\MgrTemplate.h" />
     <ClInclude Include="DesignPattern\Observer.h" />
     <ClInclude Include="DesignPattern\Singleton.h" />
+    <ClInclude Include="Gui\Button.h" />
+    <ClInclude Include="Gui\GameButton.h" />
+    <ClInclude Include="Gui\LobbyButton.h" />
     <ClInclude Include="Input\Input.h" />
+    <ClInclude Include="Object\2D\MainTitle.h" />
     <ClInclude Include="Object\2D\Object2D.h" />
     <ClInclude Include="Object\2D\Transform2D.h" />
+    <ClInclude Include="Object\3D\AABBCollider.h" />
     <ClInclude Include="Object\3D\CubeMapObj.h" />
+    <ClInclude Include="Object\3D\Gardener.h" />
     <ClInclude Include="Object\3D\Goose.h" />
     <ClInclude Include="Object\3D\HeightMapObj.h" />
     <ClInclude Include="Object\3D\LineObj.h" />
     <ClInclude Include="Object\3D\Object3D.h" />
     <ClInclude Include="Object\3D\Test3DObj.h" />
     <ClInclude Include="Object\3D\Transform3D.h" />
-    <ClInclude Include="Object\Button.h" />
     <ClInclude Include="Object\Camera.h" />
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\Renderable.h" />
     <ClInclude Include="Scene\Scene.h" />
-    <ClInclude Include="Scene\SceneGame.h" />
     <ClInclude Include="Scene\SceneLobby.h" />
+    <ClInclude Include="Scene\SceneGame.h" />
     <ClInclude Include="Scene\SceneMgr.h" />
     <ClInclude Include="Timer\SystemTimer.h" />
   </ItemGroup>
@@ -218,6 +233,12 @@
     <OutDir>$(SolutionDir)exe\release\</OutDir>
     <IntDir>$(SolutionDir)exe\release\bin\</IntDir>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>false</VcpkgEnabled>
+    <VcpkgManifestInstall>true</VcpkgManifestInstall>
+    <VcpkgAutoLink>true</VcpkgAutoLink>
+    <VcpkgApplocalDeps>false</VcpkgApplocalDeps>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -260,7 +281,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Color\;$(ProjectDir)Core\;$(ProjectDir)DesignPattern\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Object\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc\;$(SolutionDir)extern\inc\fbxsdk\;$(SolutionDir)res\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Color\;$(ProjectDir)Core\;$(ProjectDir)Gui\;$(ProjectDir)DesignPattern\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Object\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc\;$(SolutionDir)extern\inc\fbxsdk\;$(SolutionDir)res\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

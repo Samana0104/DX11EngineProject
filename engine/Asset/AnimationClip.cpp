@@ -19,14 +19,8 @@ std::vector<mat4> AnimationClip::GetAnimationMatrix(float frame)
     if (frame < 0 || frame >= m_lastFrame)
         assert(false);
 
-    vec3 translation1, translation2, interpolatedT;
-    vec3 scale1, scale2, interpolatedS;
-    vec3 dummy1;
-    vec4 dummy2;
-
-    quat rotation1, rotation2, interpolatedR;
-
     std::vector<mat4> interpolatedMat;
+    KeyFrame          key1, key2, interpolatedKey;
 
     int infimumFrame  = static_cast<int>(glm::floor(frame));
     int supremumFrame = static_cast<int>(glm::ceil(frame));
@@ -34,22 +28,22 @@ std::vector<mat4> AnimationClip::GetAnimationMatrix(float frame)
     if (supremumFrame == m_lastFrame)
         supremumFrame = m_startFrame;
 
-    interpolatedMat.resize(m_aniMat.size());
+    interpolatedMat.resize(m_keyFrame.size());
 
-    for (int i = 0; i < m_aniMat.size(); i++)
+    for (int i = 0; i < m_keyFrame.size(); i++)
     {
-        glm::decompose(m_aniMat[i][infimumFrame], scale1, rotation1, translation1, dummy1, dummy2);
-        glm::decompose(m_aniMat[i][supremumFrame], scale2, rotation2, translation2, dummy1, dummy2);
+        key1 = m_keyFrame[i][infimumFrame];
+        key2 = m_keyFrame[i][supremumFrame];
 
-        interpolatedT = glm::lerp(translation1, translation2, frame - infimumFrame);
-        interpolatedR = glm::slerp(rotation1, rotation2, frame - infimumFrame);
-        interpolatedS = glm::lerp(scale1, scale2, frame - infimumFrame);
+        interpolatedKey.pos   = glm::lerp(key1.pos, key2.pos, frame - infimumFrame);
+        interpolatedKey.rot   = glm::slerp(key1.rot, key2.rot, frame - infimumFrame);
+        interpolatedKey.scale = glm::lerp(key1.scale, key2.scale, frame - infimumFrame);
 
-        interpolatedMat[i]     = glm::toMat4(interpolatedR);
-        interpolatedMat[i][0] *= interpolatedS.x;
-        interpolatedMat[i][1] *= interpolatedS.y;
-        interpolatedMat[i][2] *= interpolatedS.z;
-        interpolatedMat[i][3]  = vec4(interpolatedT, 1.f);
+        interpolatedMat[i]     = glm::toMat4(interpolatedKey.rot);
+        interpolatedMat[i][0] *= interpolatedKey.scale.x;
+        interpolatedMat[i][1] *= interpolatedKey.scale.y;
+        interpolatedMat[i][2] *= interpolatedKey.scale.z;
+        interpolatedMat[i][3]  = vec4(interpolatedKey.pos, 1.f);
     }
 
     return std::move(interpolatedMat);

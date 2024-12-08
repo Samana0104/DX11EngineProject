@@ -14,8 +14,8 @@ CubeMap::CubeMap(std::shared_ptr<D3Device> device)
 {
     std::shared_ptr<Mesh> box = std::make_shared<Box3D>(device);
 
-    m_vertices = box->m_vertices;
-    m_indices  = box->m_indices;
+    m_vertices  = box->m_vertices;
+    m_subMeshes = box->m_subMeshes;
 
     assert(CreateVertices(device));
     assert(CreateIndices(device));
@@ -30,6 +30,7 @@ bool CubeMap::CreateVertices(std::shared_ptr<D3Device> device)
 
 bool CubeMap::CreateIndices(std::shared_ptr<D3Device> device)
 {
-
-    return device->CreateIndexBuffer(m_indices, m_indexBuffer);
+    m_subMeshes[0]->indexBuffer->Release();
+    m_subMeshes[0]->meshName = "Cube(Box inverse)";
+    return device->CreateIndexBuffer(m_subMeshes[0]->indices, m_subMeshes[0]->indexBuffer);
 }

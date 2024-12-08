@@ -20,7 +20,8 @@ void Transform2D::InitTransform()
     m_pos      = vec2(0.f, 0.f);
     m_scale    = vec2(1.f, 1.f);
     m_angle    = 0.f;
-    m_worldMat = mat3(1.f);
+    m_worldMat = mat4(1.f);
+    CalculateWorldMat();
 }
 
 Transform2D& Transform2D::AddLocation(const vec2 pos)
@@ -35,9 +36,14 @@ Transform2D& Transform2D::SetLocation(const vec2 pos)
     return *this;
 }
 
-Transform2D& Transform2D::SetRotation(const float radian)
+Transform2D& Transform2D::AddRotation(const float angle)
 {
-    m_angle = radian;
+    return SetRotation(m_angle + angle);
+}
+
+Transform2D& Transform2D::SetRotation(const float angle)
+{
+    m_angle = angle;
     CalculateWorldMat();
     return *this;
 }
@@ -66,6 +72,34 @@ Transform2D& Transform2D::SetScale(const float scale)
     return *this;
 }
 
+const HPoint Transform2D::ConvertScreenToNDC(const HPoint& windowSize, const HPoint& pos)
+{
+    return {2.f * pos.x / windowSize.x - 1.f, -2.f * pos.y / windowSize.y + 1.f};
+}
+
+const HRect Transform2D::ConvertScreenToNDC(const HPoint& windowSize, const HRect& rect)
+{
+    HPoint p1, p2;
+    p1 = HPoint(rect.left, rect.top);
+    p2 = HPoint(rect.right, rect.bottom);
+
+    return {ConvertScreenToNDC(windowSize, p1), ConvertScreenToNDC(windowSize, p2)};
+}
+
+const HPoint Transform2D::ConvertNDCToScreen(const HPoint& windowSize, const HPoint& pos)
+{
+    return {(pos.x + 1.f) * 0.5f * windowSize.x, (pos.y - 1.f) * -0.5f * windowSize.y};
+}
+
+const HRect Transform2D::ConvertNDCToScreen(const HPoint& windowSize, const HRect& rect)
+{
+    HPoint p1, p2;
+    p1 = HPoint(rect.left, rect.top);
+    p2 = HPoint(rect.right, rect.bottom);
+
+    return {ConvertNDCToScreen(windowSize, p1), ConvertNDCToScreen(windowSize, p2)};
+}
+
 void Transform2D::CalculateWorldMat()
 {
     m_worldMat[0][0] = glm::cos(m_angle);
@@ -76,7 +110,10 @@ void Transform2D::CalculateWorldMat()
     m_worldMat[0] *= m_scale.x;
     m_worldMat[1] *= m_scale.y;
 
-    m_worldMat[2][0] = m_pos.x;
-    m_worldMat[2][1] = m_pos.y;
     m_worldMat[2][2] = 1.f;
+
+    m_worldMat[3][0] = m_pos.x;
+    m_worldMat[3][1] = m_pos.y;
+    m_worldMat[3][2] = 0.f;
+    m_worldMat[3][3] = 1.f;
 }

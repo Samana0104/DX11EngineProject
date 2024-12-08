@@ -11,16 +11,20 @@ date: 2024-11-29
 #include "Object.h"
 #include "Transform3D.h"
 #include "Shader/ConstantBuffers.h"
+#include "3D/AABBCollider.h"
 
 namespace HBSoft
 {
     class Camera;
 
+    class AABBCollider;
+
     class Object3D : public Object
     {
     protected:
-        Transform3D m_transform;
-        DefaultCB0  m_cb0;
+        Transform3D   m_transform;
+        DefaultCB0    m_cb0;
+        AABBCollider* m_aabbcollider;
 
     protected:
         Object3D() = default;
@@ -29,6 +33,7 @@ namespace HBSoft
         ~Object3D() = default;
 
         virtual void UpdateDefaultCB() override;
+
 
         virtual void Init()                        = 0;
         virtual void Release()                     = 0;

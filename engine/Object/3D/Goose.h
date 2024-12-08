@@ -1,18 +1,21 @@
 #pragma once
 
 #include "Core.h"
-#include "Object3D.h"
-#include "Transform3D.h"
+#include "3D/Object3D.h"
+#include "3D/Transform3D.h"
 #include "Shader/ConstantBuffers.h"
+#include "HeightMapObj.h"
 
 namespace HBSoft
 {
-    class Camera;
-
     class Goose : public Object3D
     {
     private:
-        float m_speed1 = 5.0f;
+        std::shared_ptr<Mesh> m_mesh;
+        float                 m_speed1 = 1.0f;
+        std::vector<mat4>     anim;
+        AABB                  aabb_goose;
+
 
     public:
         Goose();
@@ -21,6 +24,12 @@ namespace HBSoft
         virtual void Render() override;
         virtual void Release() override;
         virtual void Init() override;
+
+        float GetLocationX();
+        float GetLocationZ();
+        AABB  GetaabbCollider();
+
+        vec3 GetGooseTransform();
     };
 
 

@@ -2,13 +2,12 @@
 author : 변한빛
 description : 폰트 리소스를 정의하기 위해 만든 헤더 파일
 
-version: 1.0.0
-date: 2024-11-04
+version: 1.1.0
+date: 2024-12-02
 */
 
 #pragma once
 #include "pch.h"
-#include "2D/Transform2D.h"
 
 namespace HBSoft
 {
@@ -24,31 +23,36 @@ namespace HBSoft
 
     class Font : public Observer
     {
-    private:
+    protected:
         ComPtr<IDWriteFactory>       m_writeFactory;
         ComPtr<IDWriteTextFormat>    m_textFormat;
         ComPtr<ID2D1SolidColorBrush> m_brush;
 
         FontDesc m_fontDesc;
 
-    public:
-        Transform2D m_transform;  // 혹시 회전할 일 있으면 추가하려함
+        DWRITE_PARAGRAPH_ALIGNMENT m_horizontalAlign;
+        DWRITE_TEXT_ALIGNMENT      m_verticalAlign;
+        COLOR_F                    m_color;
 
-    private:
+    protected:
         bool CreateComponent(const D3Device* device);  // 이벤트에서 디바이스 넘길려고 포인터로 바꿈
         bool CreateDWriteFactory();
         bool CreateTextFormat();
         bool CreateBrush(const D3Device* device);
 
-        virtual void OnNotice(EventList event, void* entity);
+        virtual void OnNotice(EventList event, void* entity) override;
 
     public:
         Font(std::shared_ptr<D3Device> device, const FontDesc& desc);
         virtual ~Font();
 
-        void DrawTexts(std::shared_ptr<D3Device> device, const wstringV msg, HRect rect);
+        void DrawMsg(std::shared_ptr<D3Device> device, const wstringV msg, HRect rect);
         void SetColor(const COLOR_F& color);
-        void SetBold(bool bold);
+
+        void ResetComponent(const D3Device* device);
+
+        virtual void SetHorizontalAlignment(DWRITE_PARAGRAPH_ALIGNMENT horizontalAlign);
+        virtual void SetVerticalAlignment(DWRITE_TEXT_ALIGNMENT verticalAlign);
 
         const FontDesc& GetDesc() const;
     };
