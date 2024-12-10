@@ -1,0 +1,431 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{7385d030-05ef-4bd3-b6e8-21eb1a632d19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{e159133b-dfba-4a57-93df-8fd33fe01ccc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{b5794595-46d9-42ed-b3e4-9f66af3358f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{5360846c-2956-48ea-82d0-51b67e579db6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer">
+      <UniqueIdentifier>{21ddd6cd-dc53-4b4e-8c51-4e56a9f5e14f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DesignPattern">
+      <UniqueIdentifier>{65f1f11e-fd03-46be-80ed-895df7e42037}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset">
+      <UniqueIdentifier>{f8bd002f-81c7-42d8-b568-56b00a534725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Font">
+      <UniqueIdentifier>{39f6a218-fbec-487f-a26f-a1c01949a2aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Mesh">
+      <UniqueIdentifier>{cf96bd79-ff87-4d46-8575-e3ebb900efba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Shader">
+      <UniqueIdentifier>{3d20c6db-375e-4d45-b24c-adff6f794a26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Sound">
+      <UniqueIdentifier>{8f349d87-615f-49cc-b4b4-1d9f02c7c2df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Texture">
+      <UniqueIdentifier>{470eddf9-7644-45b3-ae55-dfe9770dd500}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hlsl">
+      <UniqueIdentifier>{7bc20a05-7cf0-4ec4-bb42-315d2ffdc475}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Factory">
+      <UniqueIdentifier>{4d4122d4-9031-45e6-ad44-20eb665f1456}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\2D">
+      <UniqueIdentifier>{943e4793-3537-4c4c-a980-91a9d8ad5c6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\3D">
+      <UniqueIdentifier>{5dec847b-e29e-452f-ab31-d2ecea355be0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DesignPattern\GameStart">
+      <UniqueIdentifier>{dd8dcd91-59c7-4069-8305-5748d43092f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gui">
+      <UniqueIdentifier>{69f7866d-a965-424a-88fc-febb30f99bd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{6bd828a5-029f-4aec-b274-be58a2ed65ee}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Core\D3Device.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Core.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Window.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\pch.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStart\Main.cpp">
+      <Filter>DesignPattern\GameStart</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\Input.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer\SystemTimer.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneMgr.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Camera.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="DesignPattern\Observer.cpp">
+      <Filter>DesignPattern</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\AssetsMgr.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Mesh\Box2D.cpp">
+      <Filter>Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Mesh\Circle.cpp">
+      <Filter>Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Font\Font.cpp">
+      <Filter>Asset\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Sound\HSound.cpp">
+      <Filter>Asset\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Mesh\Mesh.cpp">
+      <Filter>Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Shader\PixelShader.cpp">
+      <Filter>Asset\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Shader\Shader.cpp">
+      <Filter>Asset\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Shader\VertexShader.cpp">
+      <Filter>Asset\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Texture\Texture.cpp">
+      <Filter>Asset\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Mesh\Box3D.cpp">
+      <Filter>Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Mesh\Line.cpp">
+      <Filter>Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\EventHandler.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Mesh\CubeMap.cpp">
+      <Filter>Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Mesh\HeightMap.cpp">
+      <Filter>Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Factory\FontFactory.cpp">
+      <Filter>Asset\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Factory\MeshFactory.cpp">
+      <Filter>Asset\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Factory\ShaderFactory.cpp">
+      <Filter>Asset\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Factory\SoundFactory.cpp">
+      <Filter>Asset\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Factory\TextureFactory.cpp">
+      <Filter>Asset\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Texture\GeneralTexture.cpp">
+      <Filter>Asset\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Texture\HeightTexture.cpp">
+      <Filter>Asset\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\CubeMapObj.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\HeightMapObj.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\LineObj.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\Object3D.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\Test3DObj.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\Transform3D.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\2D\Object2D.cpp">
+      <Filter>Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\2D\Transform2D.cpp">
+      <Filter>Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\AnimationClip.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Object.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\Goose.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\2D\MainTitle.cpp">
+      <Filter>Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Font\LayoutFont.cpp">
+      <Filter>Asset\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\Button.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\LobbyButton.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\GameButton.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\HBSLoader.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\Gardener.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\AABBCollider.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core\D3Device.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Core.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\CoreAPI.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Window.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\pch.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\MgrTemplate.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\Input.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer\SystemTimer.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneMgr.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Camera.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="DesignPattern\Observer.h">
+      <Filter>DesignPattern</Filter>
+    </ClInclude>
+    <ClInclude Include="DesignPattern\Singleton.h">
+      <Filter>DesignPattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\HPoint.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\HRect.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\AssetsMgr.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\DefaultResource.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Mesh\Box2D.h">
+      <Filter>Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Mesh\Circle.h">
+      <Filter>Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Font\Font.h">
+      <Filter>Asset\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Sound\HSound.h">
+      <Filter>Asset\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Mesh\Mesh.h">
+      <Filter>Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Shader\PixelShader.h">
+      <Filter>Asset\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Shader\Shader.h">
+      <Filter>Asset\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Shader\VertexShader.h">
+      <Filter>Asset\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Texture\Texture.h">
+      <Filter>Asset\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Mesh\Box3D.h">
+      <Filter>Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Shader\ConstantBuffers.h">
+      <Filter>Asset\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Mesh\Line.h">
+      <Filter>Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\EventHandler.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Mesh\CubeMap.h">
+      <Filter>Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Mesh\HeightMap.h">
+      <Filter>Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Factory\FontFactory.h">
+      <Filter>Asset\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Factory\MeshFactory.h">
+      <Filter>Asset\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Factory\ShaderFactory.h">
+      <Filter>Asset\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Factory\SoundFactory.h">
+      <Filter>Asset\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Factory\TextureFactory.h">
+      <Filter>Asset\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Texture\GeneralTexture.h">
+      <Filter>Asset\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Texture\HeightTexture.h">
+      <Filter>Asset\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\CubeMapObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\HeightMapObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\LineObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\Object3D.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\Test3DObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\Transform3D.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\2D\Object2D.h">
+      <Filter>Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\2D\Transform2D.h">
+      <Filter>Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\AnimationClip.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Renderable.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Object.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\Goose.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\2D\MainTitle.h">
+      <Filter>Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Font\LayoutFont.h">
+      <Filter>Asset\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\Button.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\LobbyButton.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\GameButton.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\HBSLoader.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\Gardener.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\AABBCollider.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.clang-format" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\res\Shader\PixelShader.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\VertexShader.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\HBStd.hlsli">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\LinePixel.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\LineVertex.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\CubeVertex.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\CubePixel.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\ColorPixelShader.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\AnimationVertex.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\2DVertex.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>
