@@ -1,3 +1,11 @@
+/*
+author : 이지혁
+description(이지혁) : mapObjects 를 배치하기 위한 소스파일
+
+version: 1.0.0
+date: 2024-12-2
+*/
+
 #include "pch.h"
 #include "Test3DObj.h"
 #include "Camera.h"

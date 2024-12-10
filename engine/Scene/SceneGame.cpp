@@ -1,9 +1,10 @@
 /*
-author : 변한빛
-description : 게임 내부 씬을 정의하는 소스 파일
+author : 변한빛, 이지혁
+description(변한빛) : 게임 내부 씬을 정의하는 소스 파일
+description(이지혁) : mapObjects 추가
 
-version: 1.1.0
-date: 2024-11-30
+version: 1.1.1
+date: 2024-12-10
 */
 
 #include "pch.h"

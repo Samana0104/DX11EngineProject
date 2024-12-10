@@ -1,3 +1,11 @@
+/*
+author : 이지혁
+description(이지혁) : mapObjects 를 배치하기 위한 헤더
+
+version: 1.0.0
+date: 2024-12-2
+*/
+
 #pragma once
 
 #include "Object3D.h"
