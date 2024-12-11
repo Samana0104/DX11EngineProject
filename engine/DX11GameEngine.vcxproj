@@ -34,7 +34,6 @@
     <ClCompile Include="Asset\Factory\ShaderFactory.cpp" />
     <ClCompile Include="Asset\Factory\SoundFactory.cpp" />
     <ClCompile Include="Asset\Factory\TextureFactory.cpp" />
-    <ClCompile Include="Asset\FbxLoader.cpp" />
     <ClCompile Include="Asset\Font\Font.cpp" />
     <ClCompile Include="Asset\Font\LayoutFont.cpp" />
     <ClCompile Include="Asset\HBSLoader.cpp" />
@@ -58,9 +57,9 @@
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="Core\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="DesignPattern\Observer.cpp" />
-    <ClCompile Include="GameStart\Main.cpp" />
     <ClCompile Include="Gui\Button.cpp" />
     <ClCompile Include="Gui\GameButton.cpp" />
     <ClCompile Include="Gui\LobbyButton.cpp" />
@@ -79,8 +78,6 @@
     <ClCompile Include="Object\3D\Transform3D.cpp" />
     <ClCompile Include="Object\Camera.cpp" />
     <ClCompile Include="Object\Object.cpp" />
-    <ClCompile Include="Scene\SceneLobby.cpp" />
-    <ClCompile Include="Scene\SceneGame.cpp" />
     <ClCompile Include="Scene\SceneMgr.cpp" />
     <ClCompile Include="Timer\SystemTimer.cpp" />
   </ItemGroup>
@@ -93,7 +90,6 @@
     <ClInclude Include="Asset\Factory\ShaderFactory.h" />
     <ClInclude Include="Asset\Factory\SoundFactory.h" />
     <ClInclude Include="Asset\Factory\TextureFactory.h" />
-    <ClInclude Include="Asset\FbxLoader.h" />
     <ClInclude Include="Asset\Font\Font.h" />
     <ClInclude Include="Asset\Font\LayoutFont.h" />
     <ClInclude Include="Asset\HBSLoader.h" />
@@ -143,8 +139,6 @@
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\Renderable.h" />
     <ClInclude Include="Scene\Scene.h" />
-    <ClInclude Include="Scene\SceneLobby.h" />
-    <ClInclude Include="Scene\SceneGame.h" />
     <ClInclude Include="Scene\SceneMgr.h" />
     <ClInclude Include="Timer\SystemTimer.h" />
   </ItemGroup>
@@ -187,13 +181,13 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -227,11 +221,13 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)exe\debug\</OutDir>
     <IntDir>$(SolutionDir)exe\debug\bin\</IntDir>
+    <TargetName>DX11EngineLib_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)exe\release\</OutDir>
     <IntDir>$(SolutionDir)exe\release\bin\</IntDir>
+    <TargetName>DX11EngineLib_r</TargetName>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
     <VcpkgEnabled>false</VcpkgEnabled>
@@ -281,7 +277,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Color\;$(ProjectDir)Core\;$(ProjectDir)Gui\;$(ProjectDir)DesignPattern\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Object\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc\;$(SolutionDir)extern\inc\fbxsdk\;$(SolutionDir)res\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Ai\;$(ProjectDir)Core\;$(ProjectDir)Gui\;$(ProjectDir)DesignPattern\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Object\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc\;$(SolutionDir)res\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -300,6 +296,10 @@
       </AdditionalIncludeDirectories>
       <ShaderType>Effect</ShaderType>
     </FxCompile>
+    <PostBuildEvent>
+      <Command>xcopy $(ProjectDir)*.h $(SolutionDir)extern\inc\engine\ /E /Y
+copy $(SolutionDir)exe\Debug\DX11EngineLib_d.lib $(SolutionDir)extern\lib\debug\engine\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -312,18 +312,19 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)Color\;$(ProjectDir)Component\;$(ProjectDir)Core\;$(ProjectDir)fmod\inc\;$(ProjectDir)FSM\;$(ProjectDir)font\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Mesh\;$(ProjectDir)Object\;$(ProjectDir)Shader\;$(ProjectDir)Scene\;$(ProjectDir)Sound\;$(ProjectDir)Sprite\;$(ProjectDir)Texture\;$(ProjectDir)Tile\;$(ProjectDir)Timer\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Ai\;$(ProjectDir)Core\;$(ProjectDir)Gui\;$(ProjectDir)DesignPattern\;$(ProjectDir)Input\;$(ProjectDir)Object\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc\;$(SolutionDir)res\Shader\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)fmod\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)extern\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <FxCompile>
-      <EntryPointName>
-      </EntryPointName>
+      <EntryPointName>main</EntryPointName>
+      <ShaderType>Effect</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
     </FxCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -12,23 +12,10 @@ using namespace HBSoft;
 
 std::shared_ptr<Mesh> MeshFactory::Create(std::shared_ptr<D3Device> device, const wstringV path)
 {
-    static FbxLoader fbxLoader;
-    static HBSLoader hbsLoader;
-
-    auto [fileName, fileExt] = HBSoft::GetFileNameAndExt(path);
-
+    static HBSLoader      hbsLoader;
     std::shared_ptr<Mesh> mesh;
 
-
-    if (fileExt.compare(L".hbs") == 0)
-    {
-        mesh = hbsLoader.Load(device, path);
-    }
-    else
-    {
-        mesh = fbxLoader.Load(device, path);
-        hbsLoader.Export(mesh, path);
-    }
+    mesh = hbsLoader.Load(device, path);
 
     if (mesh == nullptr)
         assert(false);
@@ -77,9 +64,7 @@ std::shared_ptr<Mesh> MeshFactory::CreateHeightMap(std::shared_ptr<D3Device> dev
 
 bool MeshFactory::IsMeshFormat(const wstringV ext)
 {
-    if (ext.compare(L".fbx") == 0)
-        return true;
-    else if (ext.compare(L".hbs") == 0)
+    if (ext.compare(L".hbs") == 0)
         return true;
 
     return false;

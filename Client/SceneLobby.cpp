@@ -6,7 +6,6 @@ version: 1.0.0
 date: 2024-11-30
 */
 
-#include "pch.h"
 #include "SceneLobby.h"
 
 using namespace HBSoft;

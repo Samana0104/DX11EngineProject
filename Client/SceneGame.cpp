@@ -6,7 +6,6 @@ version: 1.1.0
 date: 2024-11-30
 */
 
-#include "pch.h"
 #include "SceneGame.h"
 using namespace HBSoft;
 
@@ -45,7 +44,6 @@ void SceneGame::Update(float deltaTime)
 
     if (m_aabbCollider.CheckAABBCollision(m_goose.GetaabbCollider(), m_gardener.GetaabbCollider()))
     {
-        std::cout << "1";
     }
 }
 
@@ -149,8 +147,6 @@ void SceneGame::Render()
     m_map1.Render();
     cube.Render();
     m_escButton.Render();
-
-    /* std::cout << m_map.GetHeight(m_goose.GetLocationX(), m_goose.GetLocationZ());*/
 }
 
 void SceneGame::Release() {}

@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : HBS 파일 포맷의 import/export를 위한 클래스 소스파일
+
+version: 1.0.4
+date: 2024-12-10
+*/
+
 #include "pch.h"
 #include "HBSLoader.h"
 using namespace HBSoft;

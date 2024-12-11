@@ -7,16 +7,15 @@ date: 2024-12-03
 */
 
 #pragma once
-#include "pch.h"
 #include "Camera.h"
 #include "3D/LineObj.h"
 #include "3D/CubeMapObj.h"
 #include "3D/HeightMapObj.h"
 #include "3D/Test3DObj.h"
 #include "3D/Goose.h"
-#include "GameButton.h"
 #include "3D/Gardener.h"
 #include "3D/AABBCollider.h"
+#include "GameButton.h"
 
 namespace HBSoft
 {

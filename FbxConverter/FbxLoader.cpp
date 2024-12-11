@@ -6,7 +6,6 @@ version: 1.0.0
 date: 2024-11-25
 */
 
-#include "pch.h"
 #include "FbxLoader.h"
 using namespace HBSoft;
 
@@ -14,7 +13,7 @@ FbxLoader::FbxLoader()
     : m_fbxManager(nullptr), m_fbxImporter(nullptr), m_fbxScene(nullptr)
 {}
 
-std::shared_ptr<Mesh> FbxLoader::Load(std::shared_ptr<D3Device> device, const wstringV filePath)
+std::shared_ptr<Mesh> FbxLoader::Load(const wstringV filePath)
 {
     FbxNode*              fbxRootNode = nullptr;
     std::vector<FbxMesh*> meshSet;
@@ -56,10 +55,6 @@ std::shared_ptr<Mesh> FbxLoader::Load(std::shared_ptr<D3Device> device, const ws
             }
         }
     }
-    device->CreateVertexBuffer(mesh->m_vertices, mesh->m_vertexBuffer);
-
-    for (UINT i = 0; i < mesh->m_subMeshes.size(); i++)
-        device->CreateIndexBuffer(mesh->m_subMeshes[i]->indices, mesh->m_subMeshes[i]->indexBuffer);
 
     return mesh;
 }

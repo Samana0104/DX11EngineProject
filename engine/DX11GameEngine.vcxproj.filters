@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Core">
-      <UniqueIdentifier>{7385d030-05ef-4bd3-b6e8-21eb1a632d19}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object">
       <UniqueIdentifier>{e159133b-dfba-4a57-93df-8fd33fe01ccc}</UniqueIdentifier>
     </Filter>
@@ -55,31 +52,31 @@
     <Filter Include="Gui">
       <UniqueIdentifier>{69f7866d-a965-424a-88fc-febb30f99bd3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Ai">
+      <UniqueIdentifier>{5334531b-8249-46f8-88af-f3dfddc3df6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Core">
+      <UniqueIdentifier>{7385d030-05ef-4bd3-b6e8-21eb1a632d19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\D3Device.cpp">
-      <Filter>Core</Filter>
+      <Filter>Asset\Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\Core.cpp">
-      <Filter>Core</Filter>
+      <Filter>Asset\Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\Window.cpp">
-      <Filter>Core</Filter>
+      <Filter>Asset\Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\pch.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStart\Main.cpp">
-      <Filter>DesignPattern\GameStart</Filter>
+      <Filter>Asset\Core</Filter>
     </ClCompile>
     <ClCompile Include="Input\Input.cpp">
       <Filter>Input</Filter>
     </ClCompile>
     <ClCompile Include="Timer\SystemTimer.cpp">
       <Filter>Timer</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\SceneGame.cpp">
-      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Scene\SceneMgr.cpp">
       <Filter>Scene</Filter>
@@ -127,7 +124,7 @@
       <Filter>Asset\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Core\EventHandler.cpp">
-      <Filter>Core</Filter>
+      <Filter>Asset\Core</Filter>
     </ClCompile>
     <ClCompile Include="Asset\Mesh\CubeMap.cpp">
       <Filter>Asset\Mesh</Filter>
@@ -180,17 +177,11 @@
     <ClCompile Include="Object\2D\Transform2D.cpp">
       <Filter>Object\2D</Filter>
     </ClCompile>
-    <ClCompile Include="Asset\FbxLoader.cpp">
-      <Filter>Asset</Filter>
-    </ClCompile>
     <ClCompile Include="Asset\AnimationClip.cpp">
       <Filter>Asset</Filter>
     </ClCompile>
     <ClCompile Include="Object\Object.cpp">
       <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\SceneLobby.cpp">
-      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Object\3D\Goose.cpp">
       <Filter>Object\3D</Filter>
@@ -222,22 +213,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
-      <Filter>Core</Filter>
+      <Filter>Asset\Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Core.h">
-      <Filter>Core</Filter>
+      <Filter>Asset\Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\CoreAPI.h">
-      <Filter>Core</Filter>
+      <Filter>Asset\Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Window.h">
-      <Filter>Core</Filter>
+      <Filter>Asset\Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\pch.h">
-      <Filter>Core</Filter>
+      <Filter>Asset\Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\MgrTemplate.h">
-      <Filter>Core</Filter>
+      <Filter>Asset\Core</Filter>
     </ClInclude>
     <ClInclude Include="Input\Input.h">
       <Filter>Input</Filter>
@@ -246,9 +237,6 @@
       <Filter>Timer</Filter>
     </ClInclude>
     <ClInclude Include="Scene\Scene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\SceneGame.h">
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scene\SceneMgr.h">
@@ -264,10 +252,10 @@
       <Filter>DesignPattern</Filter>
     </ClInclude>
     <ClInclude Include="Core\HPoint.h">
-      <Filter>Core</Filter>
+      <Filter>Asset\Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\HRect.h">
-      <Filter>Core</Filter>
+      <Filter>Asset\Core</Filter>
     </ClInclude>
     <ClInclude Include="Asset\AssetsMgr.h">
       <Filter>Asset</Filter>
@@ -312,7 +300,7 @@
       <Filter>Asset\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Core\EventHandler.h">
-      <Filter>Core</Filter>
+      <Filter>Asset\Core</Filter>
     </ClInclude>
     <ClInclude Include="Asset\Mesh\CubeMap.h">
       <Filter>Asset\Mesh</Filter>
@@ -365,9 +353,6 @@
     <ClInclude Include="Object\2D\Transform2D.h">
       <Filter>Object\2D</Filter>
     </ClInclude>
-    <ClInclude Include="Asset\FbxLoader.h">
-      <Filter>Asset</Filter>
-    </ClInclude>
     <ClInclude Include="Asset\AnimationClip.h">
       <Filter>Asset</Filter>
     </ClInclude>
@@ -376,9 +361,6 @@
     </ClInclude>
     <ClInclude Include="Object\Object.h">
       <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\SceneLobby.h">
-      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Object\3D\Goose.h">
       <Filter>Object\3D</Filter>

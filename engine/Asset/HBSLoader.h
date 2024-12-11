@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : HBS 파일 포맷의 import/export를 위한 클래스 헤더파일
+
+version: 1.0.4
+date: 2024-12-10
+*/
+
 #pragma once
 
 #include "Mesh\Mesh.h"
@@ -83,7 +91,6 @@ namespace HBSoft
     };
 
     class HBSLoader
-
     {
     private:
         std::ofstream m_outputAsciiFile;

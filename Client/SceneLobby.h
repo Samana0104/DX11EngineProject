@@ -12,8 +12,8 @@ date: 2024-11-30
 #include "Scene.h"
 #include "Camera.h"
 #include "Button.h"
-#include "2D/MainTitle.h"
 #include "LobbyButton.h"
+#include "2D/MainTitle.h"
 
 namespace HBSoft
 {

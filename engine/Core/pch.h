@@ -2,18 +2,16 @@
 author : 변한빛
 description : Precompile header 기능을 사용하기 위해 만든 헤더파일
 
-version: 1.0.5
-date: 2024-11-17
+version: 1.1
+date: 2024-12-11
 */
 
 #pragma once
 #include <memory>
-#include <initializer_list>
 #include <vector>
 #include <string>
 #include <queue>
 #include <stack>
-#include <unordered_map>
 #include <map>
 #include <set>
 #include <list>
@@ -23,7 +21,6 @@ date: 2024-11-17
 #include <string_view>
 #include <optional>
 #include <functional>
-#include <tuple>
 #include <random>
 #include <filesystem>
 #include <Windows.h>
@@ -76,12 +73,6 @@ date: 2024-11-17
 #endif
 
 // ---------------------------------------
-//			     fbx sdk
-// ---------------------------------------
-
-#include <fbxsdk.h>
-
-// ---------------------------------------
 //			  Library load
 // ---------------------------------------
 
@@ -96,18 +87,12 @@ date: 2024-11-17
     #pragma comment(lib, "debug/glm/glm_d.lib")
     #pragma comment(lib, "debug/fmod/fmod_vc.lib")
     #pragma comment(lib, "debug/network/network_d.lib")
-    #pragma comment(lib, "debug/fbxsdk/libfbxsdk-md.lib")
-    #pragma comment(lib, "debug/fbxsdk/libxml2-md.lib")
-    #pragma comment(lib, "debug/fbxsdk/zlib-md.lib")
     #pragma comment(lib, "debug/imgui/imguid.lib")
 #else
     #pragma comment(lib, "release/DirectXTK/DirectXTK_r.lib")
     #pragma comment(lib, "release/glm/glm.lib")
     #pragma comment(lib, "release/fmod/fmod_vc.lib")
-    #pragma comment(lib, "release/fbxsdk/libfbxsdk-md.lib")
-    #pragma comment(lib, "release/fbxsdk/libxml2-md.lib")
-    #pragma comment(lib, "release/fbxsdk/zlib-md.lib")
-    #pragma comment(lib, "debug/imgui/imgui.lib")
+    #pragma comment(lib, "release/imgui/imgui.lib")
 #endif
 
 // ---------------------------------------
