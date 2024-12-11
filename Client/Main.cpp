@@ -2,15 +2,19 @@
 author : 변한빛
 description : 코드 메인 엔트리 포인트
 
-version: 1.0.0
-date: 2024-11-04
+version: 1.0.5
+date: 2024-12-11
 */
 
 #include "Core.h"
 #include "SceneGame.h"
 #include "SceneLobby.h"
 
-#pragma comment(lib, "debug/engine/DX11EngineLib_d.lib")
+#ifdef _DEBUG
+    #pragma comment(lib, "debug/engine/DX11EngineLib_d.lib")
+#else
+    #pragma comment(lib, "release/engine/DX11EngineLib_r.lib")
+#endif
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {

@@ -74,6 +74,13 @@
     <OutDir>$(SolutionDir)exe\debug\</OutDir>
     <IntDir>$(SolutionDir)exe\debug\bin\</IntDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)exe\release\</OutDir>
+    <IntDir>$(SolutionDir)exe\release\bin\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>false</VcpkgEnabled>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -108,7 +115,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)extern\inc\engine\Core\;$(SolutionDir)extern\inc\engine\Gui\;$(SolutionDir)extern\inc\engine\DesignPattern\;$(SolutionDir)extern\inc\engine\Input\;$(SolutionDir)extern\inc\engine\Object\;$(SolutionDir)extern\inc\engine\Timer\;$(SolutionDir)extern\inc\engine\Scene\;$(SolutionDir)extern\inc\engine\Asset\;$(SolutionDir)extern\inc\;$(SolutionDir)res\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)extern\inc\engine\Ai\;$(SolutionDir)extern\inc\engine\Core\;$(SolutionDir)extern\inc\engine\Gui\;$(SolutionDir)extern\inc\engine\DesignPattern\;$(SolutionDir)extern\inc\engine\Input\;$(SolutionDir)extern\inc\engine\Object\;$(SolutionDir)extern\inc\engine\Timer\;$(SolutionDir)extern\inc\engine\Scene\;$(SolutionDir)extern\inc\engine\Asset\;$(SolutionDir)extern\inc\;$(SolutionDir)res\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -125,6 +132,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)extern\inc\engine\Ai\;$(SolutionDir)extern\inc\engine\Core\;$(SolutionDir)extern\inc\engine\Gui\;$(SolutionDir)extern\inc\engine\DesignPattern\;$(SolutionDir)extern\inc\engine\Input\;$(SolutionDir)extern\inc\engine\Object\;$(SolutionDir)extern\inc\engine\Timer\;$(SolutionDir)extern\inc\engine\Scene\;$(SolutionDir)extern\inc\engine\Asset\;$(SolutionDir)extern\inc\;$(SolutionDir)res\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,8 +152,8 @@
     <ClInclude Include="SceneLobby.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DX11EngineLib\DX11EngineLib.vcxproj">
-      <Project>{7e123296-e4cc-4e18-9b29-0d19bbda7471}</Project>
+    <ProjectReference Include="..\engine\DX11GameEngine.vcxproj">
+      <Project>{0657b6a4-7d38-4b3c-8517-2034b37ff84a}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

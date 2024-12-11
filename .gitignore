@@ -3,14 +3,17 @@
 ################################################################################
 
 /.vs
-/network/.vs/NetworkLib/v16
 /exe/debug/bin
-/exe/release/bin
 /exe/debug/*.pdb
 /exe/debug/*.cso
 /exe/debug/*.exe
 /exe/debug/*.lib
-/x64/Debug/NetTest.pdb
-/exe/debug/network_d.idb
+/exe/debug/*.idb
+/exe/release/bin
+/exe/release/*.pdb
+/exe/release/*.cso
+/exe/release/*.exe
+/exe/release/*.lib
+/exe/release/*.idb
 extern/
 
