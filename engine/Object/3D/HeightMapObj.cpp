@@ -70,6 +70,12 @@ void HeightMapObj::CreateMapDesc(const TEXTURE_KEY heightTexKey, float scaleXPer
     }
 }
 
+float HeightMapObj::GetHeight(float x, float z)
+{
+
+    return 0.0f;
+}
+
 void HeightMapObj::Init() {}
 
 void HeightMapObj::Release() {}
