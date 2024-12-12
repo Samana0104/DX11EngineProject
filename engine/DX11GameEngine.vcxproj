@@ -19,14 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\res\Shader\2DVertex.hlsl" />
-    <FxCompile Include="..\res\Shader\AnimationVertex.hlsl" />
-    <FxCompile Include="..\res\Shader\ColorPixelShader.hlsl" />
-    <FxCompile Include="..\res\Shader\CubePixel.hlsl" />
-    <FxCompile Include="..\res\Shader\CubeVertex.hlsl" />
-    <FxCompile Include="..\res\Shader\LineVertex.hlsl">
-      <FileType>CppCode</FileType>
-    </FxCompile>
+    <None Include="..\.clang-format" />
+    <None Include="..\res\Shader\HBStd.hlsli" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="Asset\AnimationClip.cpp" />
     <ClCompile Include="Asset\AssetsMgr.cpp" />
     <ClCompile Include="Asset\Factory\FontFactory.cpp" />
@@ -51,14 +47,13 @@
     <ClCompile Include="Asset\Texture\GeneralTexture.cpp" />
     <ClCompile Include="Asset\Texture\HeightTexture.cpp" />
     <ClCompile Include="Asset\Texture\Texture.cpp" />
-    <ClCompile Include="Core\D3Device.cpp" />
     <ClCompile Include="Core\Core.cpp" />
+    <ClCompile Include="Core\D3Device.cpp" />
     <ClCompile Include="Core\EventHandler.cpp" />
-    <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="Core\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="DesignPattern\Observer.cpp" />
     <ClCompile Include="Gui\Button.cpp" />
     <ClCompile Include="Gui\GameButton.cpp" />
@@ -100,15 +95,15 @@
     <ClInclude Include="Asset\Texture\GeneralTexture.h" />
     <ClInclude Include="Asset\Texture\HeightTexture.h" />
     <ClInclude Include="Asset\Texture\Texture.h" />
-    <ClInclude Include="Core\D3Device.h" />
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Core\CoreAPI.h" />
+    <ClInclude Include="Core\D3Device.h" />
     <ClInclude Include="Core\EventHandler.h" />
     <ClInclude Include="Core\HPoint.h" />
     <ClInclude Include="Core\HRect.h" />
-    <ClInclude Include="Core\Window.h" />
-    <ClInclude Include="Core\pch.h" />
     <ClInclude Include="Core\MgrTemplate.h" />
+    <ClInclude Include="Core\pch.h" />
+    <ClInclude Include="Core\Window.h" />
     <ClInclude Include="DesignPattern\Observer.h" />
     <ClInclude Include="DesignPattern\Singleton.h" />
     <ClInclude Include="Gui\Button.h" />
@@ -127,21 +122,15 @@
     <ClInclude Include="Timer\SystemTimer.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\.clang-format" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="..\res\Shader\HBStd.hlsli" />
+    <FxCompile Include="..\res\Shader\2DVertex.hlsl" />
+    <FxCompile Include="..\res\Shader\AnimationVertex.hlsl" />
+    <FxCompile Include="..\res\Shader\ColorPixelShader.hlsl" />
+    <FxCompile Include="..\res\Shader\CubePixel.hlsl" />
+    <FxCompile Include="..\res\Shader\CubeVertex.hlsl" />
     <FxCompile Include="..\res\Shader\LinePixel.hlsl" />
-    <FxCompile Include="..\res\Shader\PixelShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <DisableOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DisableOptimizations>
-      <EnableDebuggingInformation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</EnableDebuggingInformation>
-    </FxCompile>
-    <FxCompile Include="..\res\Shader\VertexShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <DisableOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DisableOptimizations>
-      <EnableDebuggingInformation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</EnableDebuggingInformation>
-    </FxCompile>
+    <FxCompile Include="..\res\Shader\LineVertex.hlsl" />
+    <FxCompile Include="..\res\Shader\PixelShader.hlsl" />
+    <FxCompile Include="..\res\Shader\VertexShader.hlsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -281,7 +270,8 @@
       <ShaderType>Effect</ShaderType>
     </FxCompile>
     <PostBuildEvent>
-      <Command>xcopy $(ProjectDir)*.h $(SolutionDir)extern\inc\engine\ /E /Y
+      <Command>rmdir /S /Q $(SolutionDir)extern\inc\engine\
+xcopy $(ProjectDir)*.h $(SolutionDir)extern\inc\engine\ /E /Y
 copy $(SolutionDir)exe\Debug\DX11EngineLib_d.lib $(SolutionDir)extern\lib\debug\engine\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

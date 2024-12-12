@@ -6,6 +6,7 @@ version: 1.0.0
 date: 2024-11-25
 */
 
+#include "pch.h"
 #include "FbxLoader.h"
 using namespace HBSoft;
 

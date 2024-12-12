@@ -8,18 +8,6 @@ date: 2024-11-25
 
 #pragma once
 
-#include <fbxsdk.h>
-
-#ifdef _DEBUG
-    #pragma comment(lib, "debug/fbxsdk/libfbxsdk-md.lib")
-    #pragma comment(lib, "debug/fbxsdk/libxml2-md.lib")
-    #pragma comment(lib, "debug/fbxsdk/zlib-md.lib")
-#else
-    #pragma comment(lib, "release/fbxsdk/libfbxsdk-md.lib")
-    #pragma comment(lib, "release/fbxsdk/libxml2-md.lib")
-    #pragma comment(lib, "release/fbxsdk/zlib-md.lib")
-#endif
-
 #include "Mesh/Mesh.h"
 
 namespace HBSoft

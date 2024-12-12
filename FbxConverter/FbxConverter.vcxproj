@@ -114,6 +114,8 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)extern\inc\engine\Ai\;$(SolutionDir)extern\inc\engine\Core\;$(SolutionDir)extern\inc\engine\Gui\;$(SolutionDir)extern\inc\engine\DesignPattern\;$(SolutionDir)extern\inc\engine\Input\;$(SolutionDir)extern\inc\engine\Timer\;$(SolutionDir)extern\inc\engine\Scene\;$(SolutionDir)extern\inc\engine\Object\;$(SolutionDir)extern\inc\engine\Asset\;$(SolutionDir)extern\inc\;$(SolutionDir)extern\inc\fbxsdk\;$(SolutionDir)res\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,9 +145,16 @@
   <ItemGroup>
     <ClCompile Include="FbxLoader.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FbxLoader.h" />
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.clang-format" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
