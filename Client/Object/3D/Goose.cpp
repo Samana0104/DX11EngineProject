@@ -324,7 +324,7 @@ void Goose::Update(float deltaTime)
     {
         isUpPressed = false;
     }
-    float height = m_mapObj->GetHeight(m_transform.m_pos.x, m_transform.m_pos.z);
+    float height = m_mapObj->GetHeight(m_transform.m_pos);
 
     m_transform.AddLocation(moveDirection * deltaTime * m_speed1);
 

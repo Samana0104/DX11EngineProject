@@ -2,8 +2,8 @@
 author : 변한빛
 description : 높이 맵의 오브젝트 소스 파일
 
-version: 1.0.7
-date: 2024-11-22
+version: 1.0.8
+date: 2024-12-12
 */
 
 #include "pch.h"
@@ -14,7 +14,7 @@ HeightMapObj::HeightMapObj()
 {
     m_mapTexture = HASSET->m_textures[L"Map512Color.png"];
 
-    CreateMapDesc(L"Map512.hmp", 0.06f, 0.003f, 0.06f);
+    CreateMapDesc(L"Map512.hmp", 2.f, 0.2f, 2.f);
     m_mesh = MeshFactory::CreateHeightMap(HDEVICE, m_mapDesc);
 
     m_vsShader = HASSET->m_shaders[L"VertexShader.hlsl"];
@@ -68,10 +68,10 @@ void HeightMapObj::CreateMapDesc(const TEXTURE_KEY heightTexKey, float scaleXPer
     }
 }
 
-float HeightMapObj::GetHeight(float x, float z)
+float HeightMapObj::GetHeight(vec3 pos)
 {
-    float cellX = (float)(m_mapDesc.numCols - 1) * 0.5f + x / m_mapDesc.scaleXPerCell;
-    float cellZ = (float)(m_mapDesc.numRows - 1) * 0.5f - z / m_mapDesc.scaleZPerCell;
+    float cellX = (float)(m_mapDesc.numCols - 1) * 0.5f + pos.x / m_mapDesc.scaleXPerCell;
+    float cellZ = (float)(m_mapDesc.numRows - 1) * 0.5f - pos.z / m_mapDesc.scaleZPerCell;
 
     float floorCellX = glm::floor(cellX);
     float floorCellZ = glm::floor(cellZ);
@@ -119,6 +119,14 @@ float HeightMapObj::GetHeight(float x, float z)
     }
 
     return height;
+}
+
+std::shared_ptr<Mesh> HeightMapObj::GetMesh()
+{
+    if (m_mesh == nullptr)
+        assert(false);
+
+    return m_mesh;
 }
 
 void HeightMapObj::Init() {}

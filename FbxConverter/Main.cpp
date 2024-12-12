@@ -6,15 +6,8 @@ version: 1.0.5
 date: 2024-12-11
 */
 
-#include "HBSLoader.h"
+#include "pch.h"
 #include "FbxLoader.h"
-
-#ifdef _DEBUG
-    #pragma comment(lib, "debug/engine/DX11EngineLib_d.lib")
-#else
-// release버전은 아직 무리
-    #pragma comment(lib, "debug/engine/DX11EngineLib_d.lib")
-#endif
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {

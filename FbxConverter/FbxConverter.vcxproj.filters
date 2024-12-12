@@ -17,10 +17,19 @@
     <ClCompile Include="FbxLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FbxLoader.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.clang-format" />
   </ItemGroup>
 </Project>

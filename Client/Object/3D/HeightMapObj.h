@@ -2,8 +2,8 @@
 author : 변한빛
 description : 높이 맵의 오브젝트 헤더 파일
 
-version: 1.0.9
-date: 2024-11-25
+version: 1.0.8
+date: 2024-12-12
 */
 
 #pragma once
@@ -37,9 +37,10 @@ namespace HBSoft
         };
     */
 
+    // 귀찮아서 퍼블릭으로 바꿈
     class HeightMapObj : public Object3D
     {
-    private:
+    public:
         MapDesc                  m_mapDesc;
         std::shared_ptr<Texture> m_mapTexture;
         std::shared_ptr<Mesh>    m_mesh;
@@ -62,9 +63,9 @@ namespace HBSoft
         HeightMapObj();
         ~HeightMapObj() = default;
 
-        float        GetHeight(float x, float z);
-        virtual void Init() override;
+        float GetHeight(vec3 pos);
 
+        virtual void Init() override;
         virtual void Release() override;
         virtual void Update(const float deltaTime) override;
         virtual void Render() override;
