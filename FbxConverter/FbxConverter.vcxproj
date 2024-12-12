@@ -112,7 +112,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)extern\inc\engine\Ai\;$(SolutionDir)extern\inc\engine\Core\;$(SolutionDir)extern\inc\engine\Gui\;$(SolutionDir)extern\inc\engine\DesignPattern\;$(SolutionDir)extern\inc\engine\Input\;$(SolutionDir)extern\inc\engine\Object\;$(SolutionDir)extern\inc\engine\Timer\;$(SolutionDir)extern\inc\engine\Scene\;$(SolutionDir)extern\inc\engine\Asset\;$(SolutionDir)extern\inc\;$(SolutionDir)extern\inc\fbxsdk\;$(SolutionDir)res\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)extern\inc\engine\Ai\;$(SolutionDir)extern\inc\engine\Core\;$(SolutionDir)extern\inc\engine\Gui\;$(SolutionDir)extern\inc\engine\DesignPattern\;$(SolutionDir)extern\inc\engine\Input\;$(SolutionDir)extern\inc\engine\Timer\;$(SolutionDir)extern\inc\engine\Scene\;$(SolutionDir)extern\inc\engine\Object\;$(SolutionDir)extern\inc\engine\Asset\;$(SolutionDir)extern\inc\;$(SolutionDir)extern\inc\fbxsdk\;$(SolutionDir)res\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>

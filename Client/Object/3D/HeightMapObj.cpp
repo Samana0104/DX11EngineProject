@@ -14,13 +14,11 @@ HeightMapObj::HeightMapObj()
 {
     m_mapTexture = HASSET->m_textures[L"Map512Color.png"];
 
-    CreateMapDesc(L"Map512.hmp", 2.f, 0.1f, 2.f);
+    CreateMapDesc(L"Map512.hmp", 0.06f, 0.003f, 0.06f);
     m_mesh = MeshFactory::CreateHeightMap(HDEVICE, m_mapDesc);
 
     m_vsShader = HASSET->m_shaders[L"VertexShader.hlsl"];
     m_psShader = HASSET->m_shaders[L"PixelShader.hlsl"];
-
-    // m_transform.SetLocation({0.f, -100.f, 0.f});
 }
 
 void HeightMapObj::CreateMapDesc(const TEXTURE_KEY heightTexKey, float scaleXPerCell,
@@ -72,8 +70,55 @@ void HeightMapObj::CreateMapDesc(const TEXTURE_KEY heightTexKey, float scaleXPer
 
 float HeightMapObj::GetHeight(float x, float z)
 {
+    float cellX = (float)(m_mapDesc.numCols - 1) * 0.5f + x / m_mapDesc.scaleXPerCell;
+    float cellZ = (float)(m_mapDesc.numRows - 1) * 0.5f - z / m_mapDesc.scaleZPerCell;
 
-    return 0.0f;
+    float floorCellX = glm::floor(cellX);
+    float floorCellZ = glm::floor(cellZ);
+    float height     = 0.f;
+    float colHeight  = 0.f;
+    float rowHeight  = 0.f;
+
+    if (floorCellX < 0.f)
+        floorCellX = 0.f;
+    if (floorCellZ < 0.f)
+        floorCellZ = 0.f;
+
+    if (floorCellX > (float)m_mapDesc.numCols - 1.f)
+        floorCellX = (float)m_mapDesc.numCols - 1.f;
+    if (floorCellZ > (float)m_mapDesc.numRows - 1.f)
+        floorCellZ = (float)m_mapDesc.numRows - 1.f;
+
+    // 계산된 셀의 플랜을 구성하는 4개 정점의 높이값을 찾는다.
+    //  A   B      A   B
+    //  *---*      *---*
+    //  | \ | =>   | / | 이렇게 계산해도 상관없을듯?
+    //  *---*      *---*
+    //  C   D      C   D
+    float A = m_mesh->m_vertices[(int)floorCellZ * m_mapDesc.numCols + (int)floorCellX].p.y;
+    float B = m_mesh->m_vertices[(int)floorCellZ * m_mapDesc.numCols + (int)floorCellX + 1].p.y;
+    float C = m_mesh->m_vertices[((int)floorCellZ + 1) * m_mapDesc.numCols + (int)floorCellX].p.y;
+    float D = m_mesh->m_vertices[((int)floorCellZ + 1) * m_mapDesc.numCols + ((int)floorCellX + 1)].p.y;
+
+    float dtCol = cellX - floorCellX;
+    float dtRow = cellZ - floorCellZ;
+
+    if (dtCol + dtRow < 1.f)
+    {
+        colHeight = B - A;
+        rowHeight = C - A;
+
+        height = A + glm::lerp(0.f, colHeight, dtCol) + glm::lerp(0.f, rowHeight, dtRow);
+    }
+    else
+    {
+        colHeight = C - D;
+        rowHeight = B - D;
+
+        height = D + glm::lerp(0.f, colHeight, 1.f - dtCol) + glm::lerp(0.f, rowHeight, 1.f - dtRow);
+    }
+
+    return height;
 }
 
 void HeightMapObj::Init() {}

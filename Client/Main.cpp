@@ -6,15 +6,10 @@ version: 1.0.5
 date: 2024-12-11
 */
 
-#include "Core.h"
+#include "pch.h"
+
 #include "SceneGame.h"
 #include "SceneLobby.h"
-
-#ifdef _DEBUG
-    #pragma comment(lib, "debug/engine/DX11EngineLib_d.lib")
-#else
-    #pragma comment(lib, "release/engine/DX11EngineLib_r.lib")
-#endif
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {

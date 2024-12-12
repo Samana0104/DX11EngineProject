@@ -5,9 +5,14 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Object">
+      <UniqueIdentifier>{1ecd90ad-a826-41b4-9081-b20dd32dd16b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\2D">
+      <UniqueIdentifier>{6930efc2-e767-4d87-be2e-a76d25c3d36e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\3D">
+      <UniqueIdentifier>{d423c297-4002-479d-bb64-ddd6216918ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -20,12 +25,66 @@
     <ClCompile Include="SceneLobby.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Object\2D\MainTitle.cpp">
+      <Filter>Object\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\AABBCollider.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\CubeMapObj.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\Gardener.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\Goose.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\HeightMapObj.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\LineObj.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\Test3DObj.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneGame.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="SceneLobby.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\2D\MainTitle.h">
+      <Filter>Object\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\AABBCollider.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\CubeMapObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\Gardener.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\Goose.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\HeightMapObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\LineObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\Test3DObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

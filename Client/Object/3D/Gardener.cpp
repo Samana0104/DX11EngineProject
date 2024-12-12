@@ -5,10 +5,6 @@ using namespace HBSoft;
 
 Gardener::Gardener()
 {
-
-    aabb_gardener =
-    m_aabbcollider->CalculateAABB(aabb_gardener, vec3(0.f, 0.75f, 0.f), vec3(1.5f, 1.5f, 1.5f));
-
     m_mesh     = HASSET->m_meshes[L"Walking.hbs"];
     m_vsShader = HASSET->m_shaders[L"AnimationVertex.hlsl"];
     /*m_vsShader = HASSET->m_shaders[L"VertexShader.hlsl"];*/
@@ -45,8 +41,6 @@ void Gardener::Update(const float deltaTime)
 
 
     ImGui::SliderFloat("Gardener speed", &m_speed2, 0.f, 50.f);
-
-    m_aabbcollider->UpdateAABB(aabb_gardener, m_transform.m_pos, vec3(1.5f, 1.5f, 1.5f));
 
     static bool isDownPressed  = false;  // VK_DOWN 상태 추적
     static bool isUpPressed    = false;  // VK_UP 상태 추적
@@ -243,8 +237,3 @@ void Gardener::Render()
 void Gardener::Init() {}
 
 void Gardener::Release() {}
-
-AABB HBSoft::Gardener::GetaabbCollider()
-{
-    return aabb_gardener;
-}

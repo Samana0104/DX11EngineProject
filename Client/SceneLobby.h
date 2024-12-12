@@ -1,5 +1,5 @@
 /*
-author : 정찬빈, 변한빛
+author : 변한빛
 description : 게임 타이틀 씬 헤더 파일
 
 version: 1.0.0
