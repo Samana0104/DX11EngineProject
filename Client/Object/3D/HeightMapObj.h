@@ -8,7 +8,7 @@ date: 2024-11-25
 
 #pragma once
 
-#include "Object3D.h"
+#include "3D/Object3D.h"
 #include "Factory/MeshFactory.h"
 #include "Texture/Texture.h"
 

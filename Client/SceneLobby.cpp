@@ -1,11 +1,11 @@
 /*
-author : 정찬빈, 변한빛
+author : 변한빛
 description : 게임 타이틀 씬 소스 파일
 
 version: 1.0.0
 date: 2024-11-30
 */
-
+#include "pch.h"
 #include "SceneLobby.h"
 
 using namespace HBSoft;

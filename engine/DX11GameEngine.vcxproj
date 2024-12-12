@@ -64,17 +64,9 @@
     <ClCompile Include="Gui\GameButton.cpp" />
     <ClCompile Include="Gui\LobbyButton.cpp" />
     <ClCompile Include="Input\Input.cpp" />
-    <ClCompile Include="Object\2D\MainTitle.cpp" />
     <ClCompile Include="Object\2D\Object2D.cpp" />
     <ClCompile Include="Object\2D\Transform2D.cpp" />
-    <ClCompile Include="Object\3D\AABBCollider.cpp" />
-    <ClCompile Include="Object\3D\CubeMapObj.cpp" />
-    <ClCompile Include="Object\3D\Gardener.cpp" />
-    <ClCompile Include="Object\3D\Goose.cpp" />
-    <ClCompile Include="Object\3D\HeightMapObj.cpp" />
-    <ClCompile Include="Object\3D\LineObj.cpp" />
     <ClCompile Include="Object\3D\Object3D.cpp" />
-    <ClCompile Include="Object\3D\Test3DObj.cpp" />
     <ClCompile Include="Object\3D\Transform3D.cpp" />
     <ClCompile Include="Object\Camera.cpp" />
     <ClCompile Include="Object\Object.cpp" />
@@ -123,17 +115,9 @@
     <ClInclude Include="Gui\GameButton.h" />
     <ClInclude Include="Gui\LobbyButton.h" />
     <ClInclude Include="Input\Input.h" />
-    <ClInclude Include="Object\2D\MainTitle.h" />
     <ClInclude Include="Object\2D\Object2D.h" />
     <ClInclude Include="Object\2D\Transform2D.h" />
-    <ClInclude Include="Object\3D\AABBCollider.h" />
-    <ClInclude Include="Object\3D\CubeMapObj.h" />
-    <ClInclude Include="Object\3D\Gardener.h" />
-    <ClInclude Include="Object\3D\Goose.h" />
-    <ClInclude Include="Object\3D\HeightMapObj.h" />
-    <ClInclude Include="Object\3D\LineObj.h" />
     <ClInclude Include="Object\3D\Object3D.h" />
-    <ClInclude Include="Object\3D\Test3DObj.h" />
     <ClInclude Include="Object\3D\Transform3D.h" />
     <ClInclude Include="Object\Camera.h" />
     <ClInclude Include="Object\Object.h" />
@@ -277,7 +261,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Ai\;$(ProjectDir)Core\;$(ProjectDir)Gui\;$(ProjectDir)DesignPattern\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Object\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc\;$(SolutionDir)res\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Ai\;$(ProjectDir)Core\;$(ProjectDir)Gui\;$(ProjectDir)DesignPattern\;$(ProjectDir)GameStart\;$(ProjectDir)Object\;$(ProjectDir)Input\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc\;$(SolutionDir)res\Shader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

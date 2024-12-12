@@ -64,8 +64,3 @@ void Test3DObj::Render()
 void Test3DObj::Init() {}
 
 void Test3DObj::Release() {}
-
-AABB HBSoft::Test3DObj::GetaabbCollider()
-{
-    return aabb_goose;
-}

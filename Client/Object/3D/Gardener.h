@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Core.h"
-#include "Object3D.h"
-#include "Transform3D.h"
 #include "Shader/ConstantBuffers.h"
+#include "3D/Transform3D.h"
+#include "3D/Object3D.h"
 #include "3D/HeightMapObj.h"
 
 namespace HBSoft
@@ -17,7 +17,6 @@ namespace HBSoft
         std::vector<mat4> anim;
 
         float m_speed2 = 1.0f;
-        AABB  aabb_gardener;
 
         // std::shared_ptr<HeightMapObj> m_heightmap;
 
@@ -28,7 +27,6 @@ namespace HBSoft
         virtual void Render() override;
         virtual void Init();
         virtual void Release();
-        AABB         GetaabbCollider();
     };
 
 

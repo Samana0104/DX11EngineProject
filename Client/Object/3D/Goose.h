@@ -11,11 +11,10 @@ namespace HBSoft
     class Goose : public Object3D
     {
     private:
-        std::shared_ptr<Mesh> m_mesh;
-        float                 m_speed1 = 1.0f;
-        std::vector<mat4>     anim;
-        AABB                  aabb_goose;
-
+        std::shared_ptr<Mesh>         m_mesh;
+        float                         m_speed1 = 0.7f;
+        std::vector<mat4>             anim;
+        std::shared_ptr<HeightMapObj> m_mapObj;
 
     public:
         Goose();
@@ -27,9 +26,10 @@ namespace HBSoft
 
         float GetLocationX();
         float GetLocationZ();
-        AABB  GetaabbCollider();
 
         vec3 GetGooseTransform();
+
+        void SetHeightMap(std::shared_ptr<HeightMapObj> mapObj);
     };
 
 

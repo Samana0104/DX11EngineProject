@@ -11,7 +11,6 @@ date: 2024-11-29
 #include "Object.h"
 #include "Transform3D.h"
 #include "Shader/ConstantBuffers.h"
-#include "3D/AABBCollider.h"
 
 namespace HBSoft
 {
