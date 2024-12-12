@@ -10,12 +10,13 @@ namespace HBSoft
     struct QNode
     {
         UINT depth;
-        bool isLeaf;
+        UINT cornerIdx[4];
 
         std::unique_ptr<QNode> child[4];
+        std::vector<UINT>      indexList;
+        ComPtr<ID3D11Buffer>   indexBuffer;
 
-        std::vector<UINT>    indexList;
-        ComPtr<ID3D11Buffer> indexBuffer;
+        bool isLeaf;
 
         QNode()
         {
@@ -45,7 +46,10 @@ namespace HBSoft
 
         std::shared_ptr<HeightMapObj> GetMapObj();
         std::unique_ptr<QNode> CreateNode(UINT depth, UINT TopLeft, UINT TopRight, UINT BottomLeft,
-                                          UINT BottonRight);
+                                          UINT BottomRight);
+
+        void BuildTree(QNode pNode);
+        bool SubDivide(QNode* pNode);
 
         virtual void Init() override;
         virtual void Release() override;
