@@ -11,17 +11,16 @@ date: 2024-11-30
 using namespace HBSoft;
 
 SceneGame::SceneGame()
+    : m_tree(5)
 {
     cameraTest = std::make_shared<Camera>(glm::radians(90.f), 0.1f, 10000.f);
-    m_map      = std::make_shared<HeightMapObj>();
 
     cameraTest->LookAt({0.f, 3.f, -1.5f}, {0.f, 0.f, 0.f}, {0.f, 1.f, 0.f});
     m_line.SetCamera(cameraTest);
     cube.SetCamera(cameraTest);
+    m_tree.SetCamera(cameraTest);
     m_goose.SetCamera(cameraTest);
-    m_map->SetCamera(cameraTest);
-
-    m_goose.SetHeightMap(m_map);
+    m_goose.SetHeightMap(m_tree.GetMapObj());
 }
 
 void SceneGame::Update(float deltaTime)
@@ -34,9 +33,9 @@ void SceneGame::Update(float deltaTime)
 
     m_line.Update(deltaTime);
     cube.Update(deltaTime);
-    m_map->Update(deltaTime);
     m_escButton.Update(deltaTime);
     m_goose.Update(deltaTime);
+    m_tree.Update(deltaTime);
 }
 
 void SceneGame::Render()
@@ -52,8 +51,8 @@ void SceneGame::Render()
 
     m_goose.Render();
     cube.Render();
-    m_map->Render();
     m_escButton.Render();
+    m_tree.Render();
 }
 
 void SceneGame::Release() {}

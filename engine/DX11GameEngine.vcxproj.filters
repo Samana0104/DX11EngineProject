@@ -58,6 +58,9 @@
     <Filter Include="hlsl">
       <UniqueIdentifier>{2017f099-72ea-414f-892d-00680161d82b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Ai">
+      <UniqueIdentifier>{bbeeaafd-9274-4c85-b07f-a3eb3b81a06a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\D3Device.cpp">
@@ -186,6 +189,7 @@
     <ClCompile Include="Object\3D\Object3D.cpp">
       <Filter>Object\3D</Filter>
     </ClCompile>
+    <ClCompile Include="EasyRender.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -341,6 +345,7 @@
     <ClInclude Include="Object\3D\Transform3D.h">
       <Filter>Object\3D</Filter>
     </ClInclude>
+    <ClInclude Include="EasyRender.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\res\Shader\2DVertex.hlsl">

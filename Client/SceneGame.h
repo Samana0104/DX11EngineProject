@@ -12,7 +12,7 @@ date: 2024-12-03
 #include "Camera.h"
 #include "3D/LineObj.h"
 #include "3D/CubeMapObj.h"
-#include "3D/HeightMapObj.h"
+#include "3D/QuadTree.h"
 #include "3D/Test3DObj.h"
 #include "3D/Goose.h"
 #include "3D/Gardener.h"
@@ -24,13 +24,13 @@ namespace HBSoft
     class SceneGame : public Scene
     {
     public:
-        GameButton                    m_escButton;
-        CubeMapObj                    cube;
-        std::shared_ptr<Camera>       cameraTest;
-        LineObj                       m_line;
-        std::shared_ptr<HeightMapObj> m_map;
-        Goose                         m_goose;
-        Gardener                      m_gardener;
+        GameButton              m_escButton;
+        CubeMapObj              cube;
+        std::shared_ptr<Camera> cameraTest;
+        LineObj                 m_line;
+        QuadTree                m_tree;
+        Goose                   m_goose;
+        Gardener                m_gardener;
 
 
         bool isWire = false;

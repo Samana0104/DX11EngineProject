@@ -55,6 +55,7 @@
     </ClCompile>
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="DesignPattern\Observer.cpp" />
+    <ClCompile Include="EasyRender.cpp" />
     <ClCompile Include="Gui\Button.cpp" />
     <ClCompile Include="Gui\GameButton.cpp" />
     <ClCompile Include="Gui\LobbyButton.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="DesignPattern\Observer.h" />
     <ClInclude Include="DesignPattern\Singleton.h" />
+    <ClInclude Include="EasyRender.h" />
     <ClInclude Include="Gui\Button.h" />
     <ClInclude Include="Gui\GameButton.h" />
     <ClInclude Include="Gui\LobbyButton.h" />
