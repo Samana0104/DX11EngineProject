@@ -14,13 +14,21 @@ date: 2024-11-04
 
 namespace HBSoft
 {
+#define MAX_RT 10
+
+    struct HRenderTarget
+    {
+        ComPtr<ID3D11RenderTargetView> m_rtv;
+        // D3D11_VIEWPORT
+    };
+
     class D3Device : public Observer
     {
     public:
         ComPtr<ID3D11Device>            m_d3dDevice;
         ComPtr<ID3D11DeviceContext>     m_context;
-        ComPtr<ID3D11RenderTargetView>  m_rtv;  // rtv = render target view
-        ComPtr<ID2D1RenderTarget>       m_2dRtv;
+        ComPtr<ID3D11RenderTargetView>  m_rtv;    // rtv = render target view
+        ComPtr<ID2D1RenderTarget>       m_2dRtv;  // 2d surface rtv is made by back buffer
         ComPtr<ID3D11BlendState>        m_alphaBlend;
         ComPtr<ID3D11SamplerState>      m_samplerState;
         ComPtr<IDXGISwapChain>          m_swapChain;

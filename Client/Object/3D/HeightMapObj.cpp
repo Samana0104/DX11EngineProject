@@ -121,14 +121,6 @@ float HeightMapObj::GetHeight(vec3 pos)
     return height;
 }
 
-std::shared_ptr<Mesh> HeightMapObj::GetMesh()
-{
-    if (m_mesh == nullptr)
-        assert(false);
-
-    return m_mesh;
-}
-
 void HeightMapObj::Init() {}
 
 void HeightMapObj::Release() {}

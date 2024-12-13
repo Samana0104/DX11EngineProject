@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : Object의 기본 정의
+
+version: 1.0.4
+date: 2024-12-13
+*/
+
 #pragma once
 
 #include "Camera.h"
@@ -7,7 +15,7 @@ namespace HBSoft
 {
     class Object : public Renderable
     {
-    protected:
+    public:
         std::shared_ptr<Shader> m_vsShader;
         std::shared_ptr<Shader> m_psShader;
         std::shared_ptr<Camera> m_camera;

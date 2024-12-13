@@ -1,3 +1,10 @@
+/*
+author : 변한빛
+description : 쿼드트리 헤더파일
+
+version: 1.0.1
+date: 2024-12-13
+*/
 #pragma once
 
 #include "3D\LineObj.h"
@@ -12,9 +19,10 @@ namespace HBSoft
         UINT depth;
         UINT cornerIdx[4];
 
-        std::unique_ptr<QNode> child[4];
-        std::vector<UINT>      indexList;
-        ComPtr<ID3D11Buffer>   indexBuffer;
+        QNode* child[4];
+
+        std::vector<UINT>    indexList;
+        ComPtr<ID3D11Buffer> indexBuffer;
 
         bool isLeaf;
 
@@ -27,29 +35,38 @@ namespace HBSoft
             child[2] = nullptr;
             child[3] = nullptr;
         }
+
+        ~QNode()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (child[i] != nullptr)
+                    delete child[i];
+            }
+        }
     };
 
     class QuadTree : public Renderable
     {
     private:
         std::shared_ptr<HeightMapObj> m_mapObj;
-        std::unique_ptr<QNode>        m_rootNode;
 
-        UINT m_maxDepth;
+        QNode* m_rootNode;
+        UINT   m_maxDepth;
 
     private:
-        // void SubDivide
-        // void BuildTree()
+        QNode* MakeRoot();
 
     public:
         QuadTree(UINT depth);
+        ~QuadTree();
 
         std::shared_ptr<HeightMapObj> GetMapObj();
-        std::unique_ptr<QNode> CreateNode(UINT depth, UINT TopLeft, UINT TopRight, UINT BottomLeft,
-                                          UINT BottomRight);
+        QNode* CreateNode(UINT depth, UINT TopLeft, UINT TopRight, UINT BottomLeft, UINT BottomRight);
 
-        void BuildTree(QNode pNode);
-        bool SubDivide(QNode* pNode);
+        void BuildTree(QNode* node);
+        bool SubDivide(QNode* node);
+        void SetCamera(std::shared_ptr<Camera> camera);
 
         virtual void Init() override;
         virtual void Release() override;
