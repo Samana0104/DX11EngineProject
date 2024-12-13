@@ -6,7 +6,7 @@ namespace HBSoft
 {
     // 상태 값 모르면 무지성 0번 ㄱㄱㄱㄱ
 
-    enum class RasterRizerState
+    enum class ERRasterRizerState
     {
         SOLID_BACK_FACE = 0,
         SOLID_NO_CULL   = 1,
@@ -14,13 +14,20 @@ namespace HBSoft
         WIRE_NO_CULL    = 3,
     };
 
-    enum class BlendingState
+    enum class ERBlendingState
     {
         DEFAULT     = 0,
         DUAL_SOURCE = 1
     };
 
-    enum class DepthStencilState
+    enum class ERSamplerState
+    {
+        POINT       = 0,
+        LINEAR      = 1,
+        ANISOTROPIC = 2
+    };
+
+    enum class ERDepthStencilState
     {
         LESS     = 0,
         GREATER  = 1,
@@ -39,7 +46,7 @@ namespace HBSoft
 
     public:
         static void Begin();
-        static void Begin();
+        static void End();
 
         void Draw();
 

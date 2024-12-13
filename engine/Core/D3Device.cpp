@@ -119,16 +119,52 @@ bool D3Device::CreateRenderTarget()
     HRESULT                 hr;
     ComPtr<ID3D11Texture2D> backBuffer;
 
+    D3D11_TEXTURE2D_DESC textureDesc;
+    ZeroMemory(&textureDesc, sizeof(textureDesc));
+    textureDesc.Width            = m_swapChainDesc.BufferDesc.Width;
+    textureDesc.Height           = m_swapChainDesc.BufferDesc.Height;
+    textureDesc.MipLevels        = 1;
+    textureDesc.ArraySize        = 1;
+    textureDesc.Format           = m_swapChainDesc.BufferDesc.Format;
+    textureDesc.SampleDesc.Count = 1;
+    textureDesc.Usage            = D3D11_USAGE_DEFAULT;
+    textureDesc.BindFlags        = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+
     hr = m_swapChain->GetBuffer(0, IID_PPV_ARGS(backBuffer.GetAddressOf()));
 
     if (FAILED(hr))
         return false;
 
-    hr = m_d3dDevice->CreateRenderTargetView(reinterpret_cast<ID3D11Resource*>(backBuffer.Get()),
+    hr = m_d3dDevice->CreateRenderTargetView(reinterpret_cast<ID3D11Texture2D*>(backBuffer.Get()),
                                              nullptr,
-                                             m_rtv.GetAddressOf());
+                                             m_multiRT[MultiRTV::MAIN].rtv.GetAddressOf());
 
-    m_context->OMSetRenderTargets(1, m_rtv.GetAddressOf(), nullptr);
+    m_multiRT[MultiRTV::MAIN].rtSrv = nullptr;
+    m_multiRT[MultiRTV::MAIN].texRt = nullptr;
+
+    if (FAILED(hr))
+        return false;
+
+    // 0번은 백버퍼 전용 렌더타겟임
+    for (int i = 1; i < MAX_RENDER_TARGET; i++)
+    {
+        hr = m_d3dDevice->CreateTexture2D(&textureDesc, nullptr, m_multiRT[i].texRt.GetAddressOf());
+
+        if (FAILED(hr))
+            return false;
+
+        hr = m_d3dDevice->CreateRenderTargetView(m_multiRT[i].texRt.Get(),
+                                                 nullptr,
+                                                 m_multiRT[i].rtv.GetAddressOf());
+        if (FAILED(hr))
+            return false;
+
+        hr = m_d3dDevice->CreateShaderResourceView(m_multiRT[i].texRt.Get(),
+                                                   nullptr,
+                                                   m_multiRT[i].rtSrv.GetAddressOf());
+        if (FAILED(hr))
+            return false;
+    }
 
     return SUCCEEDED(hr);
 }
@@ -167,22 +203,36 @@ bool D3Device::Create2DRenderTarget()
 
 bool D3Device::CreateSamplerState()
 {
-    D3D11_SAMPLER_DESC samplerDesc = {};
-    samplerDesc.Filter             = D3D11_FILTER_MIN_MAG_MIP_POINT;  // 선형 필터링 설정
-    samplerDesc.AddressU           = D3D11_TEXTURE_ADDRESS_WRAP;
-    samplerDesc.AddressV           = D3D11_TEXTURE_ADDRESS_WRAP;
-    samplerDesc.AddressW           = D3D11_TEXTURE_ADDRESS_WRAP;
-    samplerDesc.ComparisonFunc     = D3D11_COMPARISON_NEVER;
-    samplerDesc.MaxLOD             = FLT_MAX;
-    samplerDesc.MinLOD             = FLT_MIN;
+    D3D11_SAMPLER_DESC samplerDesc;
+    ZeroMemory(&samplerDesc, sizeof(samplerDesc));
+    {
+        samplerDesc.Filter         = D3D11_FILTER_MIN_MAG_MIP_POINT;  // 선형 필터링 설정
+        samplerDesc.AddressU       = D3D11_TEXTURE_ADDRESS_WRAP;
+        samplerDesc.AddressV       = D3D11_TEXTURE_ADDRESS_WRAP;
+        samplerDesc.AddressW       = D3D11_TEXTURE_ADDRESS_WRAP;
+        samplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+        samplerDesc.MaxLOD         = FLT_MAX;
+        samplerDesc.MinLOD         = FLT_MIN;
+    }
 
     // 샘플러 상태 객체 생성
-    HRESULT hr = m_d3dDevice->CreateSamplerState(&samplerDesc, m_samplerState.GetAddressOf());
+    HRESULT hr =
+    m_d3dDevice->CreateSamplerState(&samplerDesc, m_renderState.pointSampler.GetAddressOf());
     if (FAILED(hr))
         return false;
 
-    // 샘플러 상태를 파이프라인에 바인딩
-    m_context->PSSetSamplers(0, 1, m_samplerState.GetAddressOf());
+    samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+
+    hr = m_d3dDevice->CreateSamplerState(&samplerDesc, m_renderState.linearSampler.GetAddressOf());
+    if (FAILED(hr))
+        return false;
+
+    samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
+
+    hr = m_d3dDevice->CreateSamplerState(&samplerDesc, m_renderState.anisotropicSampler.GetAddressOf());
+    if (FAILED(hr))
+        return false;
+
     return true;
 }
 

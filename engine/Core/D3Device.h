@@ -14,30 +14,61 @@ date: 2024-11-04
 
 namespace HBSoft
 {
-#define MAX_RT 10
+#define MAX_RENDER_TARGET 5
+
+    enum MultiRTV
+    {
+        MAIN   = 0,
+        GUI    = 1,
+        SHADOW = 2,
+        SUB1   = 3,
+        SUB2   = 4,
+    };
 
     struct HRenderTarget
     {
-        ComPtr<ID3D11RenderTargetView> m_rtv;
-        // D3D11_VIEWPORT
+        ComPtr<ID3D11Texture2D>        texRt;
+        ComPtr<ID3D11RenderTargetView> rtv;
+        ComPtr<ID3D11DepthStencilView> dsv;
+
+        ComPtr<ID3D11ShaderResourceView> rtSrv;
+        ComPtr<ID3D11ShaderResourceView> dsSrv;
+
+        D3D11_VIEWPORT viewPort;
+    };
+
+    struct HRenderState
+    {
+        ComPtr<ID3D11BlendState> alphaBS;
+        ComPtr<ID3D11BlendState> dualSourceBS;
+
+        ComPtr<ID3D11SamplerState> pointSampler;
+        ComPtr<ID3D11SamplerState> linearSampler;
+        ComPtr<ID3D11SamplerState> anisotropicSampler;
+
+        ComPtr<ID3D11RasterizerState> solidBackFaceRS;
+        ComPtr<ID3D11RasterizerState> solidNoCullRS;
+        ComPtr<ID3D11RasterizerState> wireBackFaceRS;
+        ComPtr<ID3D11RasterizerState> wireNoCullRS;
+
+        ComPtr<ID3D11DepthStencilState> lessDSS;
+        ComPtr<ID3D11DepthStencilState> greaterDSS;
+        ComPtr<ID3D11DepthStencilState> noWriteDSS;
+        ComPtr<ID3D11DepthStencilState> disableDSS;
     };
 
     class D3Device : public Observer
     {
     public:
-        ComPtr<ID3D11Device>            m_d3dDevice;
-        ComPtr<ID3D11DeviceContext>     m_context;
-        ComPtr<ID3D11RenderTargetView>  m_rtv;    // rtv = render target view
-        ComPtr<ID2D1RenderTarget>       m_2dRtv;  // 2d surface rtv is made by back buffer
-        ComPtr<ID3D11BlendState>        m_alphaBlend;
-        ComPtr<ID3D11SamplerState>      m_samplerState;
-        ComPtr<IDXGISwapChain>          m_swapChain;
-        ComPtr<ID3D11RasterizerState>   m_rsState;
-        ComPtr<ID3D11RasterizerState>   m_rsWireState;
-        ComPtr<ID3D11DepthStencilState> m_dsState;
-        ComPtr<ID3D11DepthStencilView>  m_dsv;
+        ComPtr<ID3D11Device>        m_d3dDevice;
+        ComPtr<ID3D11DeviceContext> m_context;
+        ComPtr<IDXGISwapChain>      m_swapChain;
 
-        D3D11_VIEWPORT          m_viewPort;
+        ComPtr<ID2D1RenderTarget> m_2dRtv;  // 2d surface rtv is made by back buffer
+
+        HRenderTarget m_multiRT[MAX_RENDER_TARGET];
+        HRenderState  m_renderState;
+
         DXGI_SWAP_CHAIN_DESC    m_swapChainDesc;
         std::shared_ptr<Window> m_window;
 
