@@ -8,16 +8,17 @@ namespace HBSoft
 
     enum class ERRasterRizerState
     {
-        SOLID_BACK_FACE = 0,
-        SOLID_NO_CULL   = 1,
-        WIRE_BACK_FACE  = 2,
-        WIRE_NO_CULL    = 3,
+        SOLID_BACK_CULL  = 0,
+        SOLID_FRONT_CULL = 1,
+        SOLID_NO_CULL    = 2,
+        WIRE_BACK_CULL   = 3,
+        WIRE_FRONT_CULL  = 4,
+        WIRE_NO_CULL     = 5,
     };
 
     enum class ERBlendingState
     {
-        DEFAULT     = 0,
-        DUAL_SOURCE = 1
+        DEFAULT = 0,
     };
 
     enum class ERSamplerState

@@ -40,15 +40,16 @@ namespace HBSoft
     struct HRenderState
     {
         ComPtr<ID3D11BlendState> alphaBS;
-        ComPtr<ID3D11BlendState> dualSourceBS;
 
         ComPtr<ID3D11SamplerState> pointSampler;
         ComPtr<ID3D11SamplerState> linearSampler;
         ComPtr<ID3D11SamplerState> anisotropicSampler;
 
-        ComPtr<ID3D11RasterizerState> solidBackFaceRS;
+        ComPtr<ID3D11RasterizerState> solidBackCullRS;
+        ComPtr<ID3D11RasterizerState> solidFrontCullRS;
         ComPtr<ID3D11RasterizerState> solidNoCullRS;
-        ComPtr<ID3D11RasterizerState> wireBackFaceRS;
+        ComPtr<ID3D11RasterizerState> wireBackCullRS;
+        ComPtr<ID3D11RasterizerState> wireFrontCullRS;
         ComPtr<ID3D11RasterizerState> wireNoCullRS;
 
         ComPtr<ID3D11DepthStencilState> lessDSS;
@@ -89,8 +90,6 @@ namespace HBSoft
     public:
         D3Device(const std::shared_ptr<Window> window);
         virtual ~D3Device();
-
-        vec2 GetViewportSize() const;
 
         template <class T>
         bool CreateVertexBuffer(std::vector<T>& vertices, ComPtr<ID3D11Buffer>& vertexBuffer);
