@@ -22,11 +22,6 @@ D3Device::~D3Device()
     EventHandler::GetInstance().DeleteEvent(EventList::WINDOW_RESIZE, this);
 }
 
-vec2 D3Device::GetViewportSize() const
-{
-    return {m_viewPort.Width, m_viewPort.Height};
-}
-
 bool D3Device::CreateIndexBuffer(std::vector<UINT>& indices, ComPtr<ID3D11Buffer>& indexBuffer)
 {
     if (indices.size() <= 0)
@@ -245,17 +240,38 @@ bool D3Device::CreateRSState()
     rd.FillMode        = D3D11_FILL_SOLID;
     rd.CullMode        = D3D11_CULL_BACK;  // backface culling
     rd.DepthClipEnable = TRUE;
+    hr = m_d3dDevice->CreateRasterizerState(&rd, m_renderState.solidBackCullRS.GetAddressOf());
 
-    hr = m_d3dDevice->CreateRasterizerState(&rd, m_rsState.GetAddressOf());
+    if (FAILED(hr))
+        return false;
 
-    ZeroMemory(&rd, sizeof(rd));
-    rd.FillMode        = D3D11_FILL_WIREFRAME;
-    rd.CullMode        = D3D11_CULL_NONE;  // backface culling
-    rd.DepthClipEnable = TRUE;
+    rd.CullMode = D3D11_CULL_FRONT;
+    hr          = m_d3dDevice->CreateRasterizerState(&rd, m_renderState.solidFrontCullRS.GetAddressOf());
 
-    hr = m_d3dDevice->CreateRasterizerState(&rd, m_rsWireState.GetAddressOf());
+    if (FAILED(hr))
+        return false;
 
-    m_context->RSSetState(m_rsState.Get());
+    rd.CullMode = D3D11_CULL_NONE;
+    hr          = m_d3dDevice->CreateRasterizerState(&rd, m_renderState.solidNoCullRS.GetAddressOf());
+
+    if (FAILED(hr))
+        return false;
+
+    rd.FillMode = D3D11_FILL_WIREFRAME;
+    rd.CullMode = D3D11_CULL_BACK;
+    hr          = m_d3dDevice->CreateRasterizerState(&rd, m_renderState.wireBackCullRS.GetAddressOf());
+
+    if (FAILED(hr))
+        return false;
+
+    rd.CullMode = D3D11_CULL_FRONT;
+    hr          = m_d3dDevice->CreateRasterizerState(&rd, m_renderState.wireFrontCullRS.GetAddressOf());
+
+    if (FAILED(hr))
+        return false;
+
+    rd.CullMode = D3D11_CULL_NONE;
+    hr          = m_d3dDevice->CreateRasterizerState(&rd, m_renderState.wireNoCullRS.GetAddressOf());
 
     return SUCCEEDED(hr);
 }
@@ -266,14 +282,40 @@ bool D3Device::CreateDepthStencilState()
     D3D11_DEPTH_STENCIL_DESC dsDesc;
 
     ZeroMemory(&dsDesc, sizeof(dsDesc));
-    {
-        dsDesc.DepthEnable    = TRUE;
-        dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-        dsDesc.DepthFunc      = D3D11_COMPARISON_LESS_EQUAL;
-    }
-    hr = m_d3dDevice->CreateDepthStencilState(&dsDesc, m_dsState.GetAddressOf());
+    dsDesc.DepthEnable                  = FALSE;
+    dsDesc.DepthWriteMask               = D3D11_DEPTH_WRITE_MASK_ALL;
+    dsDesc.DepthFunc                    = D3D11_COMPARISON_LESS_EQUAL;
+    dsDesc.StencilEnable                = FALSE;
+    dsDesc.StencilReadMask              = 0xff;
+    dsDesc.StencilWriteMask             = 0xff;
+    dsDesc.FrontFace.StencilPassOp      = D3D11_STENCIL_OP_INCR;
+    dsDesc.FrontFace.StencilFailOp      = D3D11_STENCIL_OP_KEEP;
+    dsDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+    dsDesc.BackFace.StencilFunc         = D3D11_COMPARISON_ALWAYS;
+    dsDesc.BackFace.StencilPassOp       = D3D11_STENCIL_OP_KEEP;
+    dsDesc.BackFace.StencilFailOp       = D3D11_STENCIL_OP_KEEP;
+    dsDesc.BackFace.StencilDepthFailOp  = D3D11_STENCIL_OP_KEEP;
 
-    m_context->OMSetDepthStencilState(m_dsState.Get(), 0);
+    hr = m_d3dDevice->CreateDepthStencilState(&dsDesc, m_renderState.disableDSS.GetAddressOf());
+
+    if (FAILED(hr))
+        return false;
+
+    dsDesc.DepthEnable = TRUE;
+    hr = m_d3dDevice->CreateDepthStencilState(&dsDesc, m_renderState.lessDSS.GetAddressOf());
+
+    if (FAILED(hr))
+        return false;
+
+    dsDesc.DepthFunc = D3D11_COMPARISON_GREATER;
+    hr = m_d3dDevice->CreateDepthStencilState(&dsDesc, m_renderState.greaterDSS.GetAddressOf());
+
+    if (FAILED(hr))
+        return false;
+
+    dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+    hr = m_d3dDevice->CreateDepthStencilState(&dsDesc, m_renderState.noWriteDSS.GetAddressOf());
+
     return SUCCEEDED(hr);
 }
 
@@ -330,8 +372,7 @@ bool D3Device::CreateBlendingState()
         bd.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
     }
 
-    hr = m_d3dDevice->CreateBlendState(&bd, m_alphaBlend.GetAddressOf());
-    m_context->OMSetBlendState(m_alphaBlend.Get(), 0, -1);
+    hr = m_d3dDevice->CreateBlendState(&bd, m_renderState.alphaBS.GetAddressOf());
 
     return SUCCEEDED(hr);
 }
@@ -343,8 +384,6 @@ void D3Device::OnNotice(EventList event, void* entity)
     m_context->Flush();
     m_context->OMSetRenderTargets(0, nullptr, nullptr);
     m_2dRtv->Release();
-    m_rtv->Release();
-    m_dsv->Release();
 
     m_swapChainDesc.BufferDesc.Width  = (UINT)windowSize.x;
     m_swapChainDesc.BufferDesc.Height = (UINT)windowSize.y;
@@ -354,6 +393,16 @@ void D3Device::OnNotice(EventList event, void* entity)
                                             m_swapChainDesc.BufferDesc.Height,
                                             m_swapChainDesc.BufferDesc.Format,
                                             m_swapChainDesc.Flags);
+
+    for (int i = 0; i < MAX_RENDER_TARGET; i++)
+    {
+        m_multiRT[i].texRt->Release();
+        m_multiRT[i].rtSrv->Release();
+        m_multiRT[i].rtv->Release();
+        m_multiRT[i].dsSrv->Release();
+        m_multiRT[i].dsv->Release();
+    }
+
 
     // if (FAILED(hr))
     //     return;
