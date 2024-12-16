@@ -8,6 +8,14 @@ date: 2024-11-30
 
 #include "HBStd.hlsli"
 
+cbuffer DefaultMat3D : register(b0)
+{
+    Matrix worldMat;
+    Matrix normalMat; // 월드 행렬 역행렬 시키고 전치시킨거
+    Matrix viewMat;
+    Matrix projMat;
+};
+
 PSInput main(VSInput vsIn)
 {
     PSInput psIn = (PSInput) 0;

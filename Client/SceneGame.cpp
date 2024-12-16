@@ -25,7 +25,6 @@ SceneGame::SceneGame()
 
 void SceneGame::Update(float deltaTime)
 {
-
     ImGui::Checkbox("wireframe : ", &isWire);
 
     cameraTest->Update(deltaTime);
@@ -40,19 +39,21 @@ void SceneGame::Update(float deltaTime)
 
 void SceneGame::Render()
 {
-    if (isWire)
-        HDEVICE->m_context->RSSetState(HDEVICE->m_rsWireState.Get());
-    else
-        HDEVICE->m_context->RSSetState(HDEVICE->m_rsState.Get());
-
+    EasyRender::Begin(MultiRT::MAIN);
+    EasyRender::SetWireFrame(isWire);
     m_line.Draw({0.f, 0.f, 0.f}, {1000.f, 0.f, 0.f}, {1.f, 0.f, 0.f, 1.f});
     m_line.Draw({0.f, 0.f, 0.f}, {0.f, 1000.f, 0.f}, {0.f, 1.f, 0.f, 1.f});
     m_line.Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
 
     m_goose.Render();
     cube.Render();
-    m_escButton.Render();
     m_tree.Render();
+    EasyRender::End();
+
+    EasyRender::Begin(MultiRT::GUI);
+    m_escButton.Render();
+    HASSET->m_fonts[L"DEBUG_FONT"]->DrawMsg(HDEVICE, HTIMER.m_csBuffer, {10.f, 10.f, 1000.f, 1000.f});
+    EasyRender::End();
 }
 
 void SceneGame::Release() {}

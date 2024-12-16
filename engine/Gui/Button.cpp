@@ -25,11 +25,13 @@ Button::Button()
     m_font->SetHorizontalAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
     m_font->SetVerticalAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
 
-    m_boxMesh  = MeshFactory::Create(HDEVICE, MeshShape::BOX2D);
-    m_state    = ButtonState::DEFAULT;
-    m_texture  = nullptr;
-    m_vsShader = HASSET->m_shaders[L"2DVertex.hlsl"];
-    m_psShader = HASSET->m_shaders[L"PixelShader.hlsl"];
+    m_boxMesh = MeshFactory::Create(HDEVICE, MeshShape::BOX2D);
+    m_state   = ButtonState::DEFAULT;
+    m_texture = nullptr;
+    m_easyRender.SetVSShader(L"2DVertex.hlsl");
+    m_easyRender.SetPSShader(L"PixelShader.hlsl");
+    m_easyRender.SetDSS(ERDepthStencilState::DISABLE);
+    m_easyRender.SetMesh(m_boxMesh);
 
     EventHandler::GetInstance().AddEvent(EventList::DEVICE_CHANGE, this);
 }
@@ -73,6 +75,7 @@ void Button::SetArea(const HRect& rect)
 void Button::SetImage(const TEXTURE_KEY textureKey)
 {
     m_texture = HASSET->m_textures[textureKey];
+    m_easyRender.SetTexture(m_texture);
 }
 
 void Button::SetOnClickCallback(std::function<void()> callback)
@@ -121,34 +124,12 @@ void Button::Update(const float deltaTime)
     {
         m_font->SetUnderline(false);
     }
+    UpdateDefaultCB();
 }
 
 void Button::Render()
 {
-    UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
-    UINT pOffsets = 0;               // 버퍼에 시작 인덱스
-
-    UpdateDefaultCB();
-    m_vsShader->SetUpToContext(HDEVICE);
-    m_psShader->SetUpToContext(HDEVICE);
-
-    HDEVICE->m_context->IASetVertexBuffers(0,
-                                           1,
-                                           m_boxMesh->m_vertexBuffer.GetAddressOf(),
-                                           &pStrides,
-                                           &pOffsets);
-
-    // DXGI_FORMAT_R32_UINT는 인덱스 버퍼의 타입이 UINT라 그럼
-    HDEVICE->m_context->IASetIndexBuffer(m_boxMesh->m_subMeshes[0]->indexBuffer.Get(),
-                                         DXGI_FORMAT_R32_UINT,
-                                         0);
-    HDEVICE->m_context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-    HDEVICE->m_context->PSSetShaderResources(0, 1, m_texture->GetSRV().GetAddressOf());
-
-    HDEVICE->m_context->PSSetSamplers(0, 1, HDEVICE->m_samplerState.GetAddressOf());
-    HDEVICE->m_context->OMSetRenderTargets(1, HDEVICE->m_rtv.GetAddressOf(), nullptr);
-    HDEVICE->m_context->DrawIndexed((UINT)m_boxMesh->m_subMeshes[0]->indices.size(), 0, 0);
+    m_easyRender.Draw();
     m_font->DrawMsg(HDEVICE);
 }
 

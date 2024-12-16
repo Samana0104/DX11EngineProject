@@ -17,8 +17,8 @@ HeightMapObj::HeightMapObj()
     CreateMapDesc(L"Map512.hmp", 2.f, 0.2f, 2.f);
     m_mesh = MeshFactory::CreateHeightMap(HDEVICE, m_mapDesc);
 
-    m_vsShader = HASSET->m_shaders[L"VertexShader.hlsl"];
-    m_psShader = HASSET->m_shaders[L"PixelShader.hlsl"];
+    m_easyRender.SetVSShader(L"VertexShader.hlsl");
+    m_easyRender.SetPSShader(L"PixelShader.hlsl");
 }
 
 void HeightMapObj::CreateMapDesc(const TEXTURE_KEY heightTexKey, float scaleXPerCell,
@@ -32,6 +32,9 @@ void HeightMapObj::CreateMapDesc(const TEXTURE_KEY heightTexKey, float scaleXPer
 
     textureRes  = heightTexture->GetResource();
     textureDesc = heightTexture->GetDesc();
+
+    // 높이맵은 항상 홀수로 만드시오
+    assert(textureDesc.Width % 2 != 0 || textureDesc.Height % 2 != 0);
 
     if (SUCCEEDED(HDEVICE->m_context
                   ->Map(textureRes.Get(), D3D11CalcSubresource(0, 0, 1), D3D11_MAP_READ, 0, &mapped)))
@@ -135,9 +138,7 @@ void HeightMapObj::Render()
     UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
     UINT pOffsets = 0;               // 버퍼에 시작 인덱스
 
-    m_vsShader->SetUpToContext(HDEVICE);
-    m_psShader->SetUpToContext(HDEVICE);
-
+    m_easyRender.SetEntireState();
     HDEVICE->m_context->IASetVertexBuffers(0,
                                            1,
                                            m_mesh->m_vertexBuffer.GetAddressOf(),
@@ -148,11 +149,6 @@ void HeightMapObj::Render()
     HDEVICE->m_context->IASetIndexBuffer(m_mesh->m_subMeshes[0]->indexBuffer.Get(),
                                          DXGI_FORMAT_R32_UINT,
                                          0);
-    HDEVICE->m_context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
     HDEVICE->m_context->PSSetShaderResources(0, 1, m_mapTexture->GetSRV().GetAddressOf());
-
-    HDEVICE->m_context->PSSetSamplers(0, 1, HDEVICE->m_samplerState.GetAddressOf());
-    HDEVICE->m_context->OMSetRenderTargets(1, HDEVICE->m_rtv.GetAddressOf(), HDEVICE->m_dsv.Get());
     HDEVICE->m_context->DrawIndexed((UINT)m_mesh->m_subMeshes[0]->indices.size(), 0, 0);
 }

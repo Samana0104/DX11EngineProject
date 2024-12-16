@@ -20,22 +20,9 @@ size_t Shader::GetConstantCount() const
     return m_constantBuffers.size();
 }
 
-void Shader::SetConstantBuffer(std::shared_ptr<D3Device> device, const void* data, const size_t dataSize,
-                               const UINT constantIdx)
+std::vector<ComPtr<ID3D11Buffer>>& Shader::GetConstantBuffers()
 {
-    if (m_constantBuffers.size() <= 0)
-        return;
-
-    D3D11_MAPPED_SUBRESOURCE ms;
-    HRESULT                  hr;
-
-    hr = device->m_context->Map(m_constantBuffers[constantIdx].Get(),
-                                NULL,
-                                D3D11_MAP_WRITE_DISCARD,
-                                NULL,
-                                &ms);
-    memcpy(ms.pData, data, dataSize);
-    device->m_context->Unmap(m_constantBuffers[constantIdx].Get(), NULL);
+    return m_constantBuffers;
 }
 
 const ShaderType& Shader::GetShaderType() const

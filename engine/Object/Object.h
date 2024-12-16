@@ -10,14 +10,14 @@ date: 2024-12-13
 
 #include "Camera.h"
 #include "Renderable.h"
+#include "EasyRender.h"
 
 namespace HBSoft
 {
     class Object : public Renderable
     {
     public:
-        std::shared_ptr<Shader> m_vsShader;
-        std::shared_ptr<Shader> m_psShader;
+        EasyRender              m_easyRender;
         std::shared_ptr<Camera> m_camera;
 
     protected:

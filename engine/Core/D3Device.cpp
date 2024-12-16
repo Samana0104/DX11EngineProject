@@ -132,13 +132,11 @@ bool D3Device::CreateRenderTarget()
 
     hr = m_d3dDevice->CreateRenderTargetView(reinterpret_cast<ID3D11Texture2D*>(backBuffer.Get()),
                                              nullptr,
-                                             m_multiRT[MultiRTV::MAIN].rtv.GetAddressOf());
-
-    m_multiRT[MultiRTV::MAIN].rtSrv = nullptr;
-    m_multiRT[MultiRTV::MAIN].texRt = nullptr;
-
+                                             m_multiRT[MultiRT::MAIN].rtv.GetAddressOf());
     if (FAILED(hr))
         return false;
+
+    m_multiRT[MultiRT::MAIN].texRt = backBuffer;
 
     // 0번은 백버퍼 전용 렌더타겟임
     for (int i = 1; i < MAX_RENDER_TARGET; i++)
@@ -170,7 +168,7 @@ bool D3Device::Create2DRenderTarget()
     ComPtr<IDXGISurface> dxgiSurface;
     ComPtr<ID2D1Factory> m_d2dFactory;
 
-    hr = m_swapChain->GetBuffer(0, IID_PPV_ARGS(dxgiSurface.GetAddressOf()));
+    hr = m_multiRT[MultiRT::GUI].texRt.As(&dxgiSurface);
 
     if (FAILED(hr))
         return false;
@@ -321,9 +319,9 @@ bool D3Device::CreateDepthStencilState()
 
 bool D3Device::CreateDepthStencilView()
 {
-    HRESULT                 hr;
-    ComPtr<ID3D11Texture2D> tex;
-    D3D11_TEXTURE2D_DESC    td;
+    HRESULT                       hr;
+    D3D11_TEXTURE2D_DESC          td;
+    D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc;
 
     ZeroMemory(&td, sizeof(td));
 
@@ -336,17 +334,21 @@ bool D3Device::CreateDepthStencilView()
     td.Usage            = D3D11_USAGE_DEFAULT;
     td.BindFlags        = D3D11_BIND_DEPTH_STENCIL;
 
-    hr = m_d3dDevice->CreateTexture2D(&td, nullptr, tex.GetAddressOf());
-    if (FAILED(hr))
-        return false;
-
-    D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc;
     ZeroMemory(&dsvDesc, sizeof(dsvDesc));
     dsvDesc.Format        = DXGI_FORMAT_D24_UNORM_S8_UINT;
     dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-    // dsvd.Texture2D.MipSlice  -> ShaderResourceView에서 사용됨.
 
-    hr = m_d3dDevice->CreateDepthStencilView(tex.Get(), &dsvDesc, m_dsv.GetAddressOf());
+    for (int i = 0; i < MAX_RENDER_TARGET; i++)
+    {
+        hr = m_d3dDevice->CreateTexture2D(&td, nullptr, m_multiRT[i].dsRt.GetAddressOf());
+        if (FAILED(hr))
+            return false;
+
+        hr = m_d3dDevice->CreateDepthStencilView(m_multiRT[i].dsRt.Get(),
+                                                 &dsvDesc,
+                                                 m_multiRT[i].dsv.GetAddressOf());
+    }
+
     return SUCCEEDED(hr);
 }
 
@@ -385,6 +387,32 @@ void D3Device::OnNotice(EventList event, void* entity)
     m_context->OMSetRenderTargets(0, nullptr, nullptr);
     m_2dRtv->Release();
 
+    // 백버퍼 초기화는 다른자원에게 맡기기
+    if (m_multiRT[MultiRT::MAIN].texRt != nullptr)
+        m_multiRT[MultiRT::MAIN].texRt = nullptr;
+
+    if (m_multiRT[MultiRT::MAIN].dsv != nullptr)
+        m_multiRT[MultiRT::MAIN].dsv->Release();
+
+
+    if (m_multiRT[MultiRT::MAIN].dsRt != nullptr)
+        m_multiRT[MultiRT::MAIN].dsRt->Release();
+
+    for (int i = 0; i < MAX_RENDER_TARGET; i++)
+    {
+        if (m_multiRT[i].rtSrv != nullptr)
+            m_multiRT[i].rtSrv->Release();
+
+        if (m_multiRT[i].rtv != nullptr)
+            m_multiRT[i].rtv->Release();
+
+        if (m_multiRT[i].dsv != nullptr)
+            m_multiRT[i].dsv->Release();
+
+        if (m_multiRT[i].texRt != nullptr)
+            m_multiRT[i].texRt->Release();
+    }
+
     m_swapChainDesc.BufferDesc.Width  = (UINT)windowSize.x;
     m_swapChainDesc.BufferDesc.Height = (UINT)windowSize.y;
 
@@ -393,16 +421,6 @@ void D3Device::OnNotice(EventList event, void* entity)
                                             m_swapChainDesc.BufferDesc.Height,
                                             m_swapChainDesc.BufferDesc.Format,
                                             m_swapChainDesc.Flags);
-
-    for (int i = 0; i < MAX_RENDER_TARGET; i++)
-    {
-        m_multiRT[i].texRt->Release();
-        m_multiRT[i].rtSrv->Release();
-        m_multiRT[i].rtv->Release();
-        m_multiRT[i].dsSrv->Release();
-        m_multiRT[i].dsv->Release();
-    }
-
 
     // if (FAILED(hr))
     //     return;
@@ -419,12 +437,13 @@ void D3Device::CreateViewport()
 {
     HPoint windowSize = m_window->GetWindowSize();
 
-    m_viewPort.TopLeftX = 0;
-    m_viewPort.TopLeftY = 0;
-    m_viewPort.Width    = windowSize.x;
-    m_viewPort.Height   = windowSize.y;
-    m_viewPort.MinDepth = 0;
-    m_viewPort.MaxDepth = 1;
-
-    m_context->RSSetViewports(1, &m_viewPort);
+    for (int i = 0; i < MAX_RENDER_TARGET; i++)
+    {
+        m_multiRT[i].viewPort.TopLeftX = 0;
+        m_multiRT[i].viewPort.TopLeftY = 0;
+        m_multiRT[i].viewPort.Width    = windowSize.x;
+        m_multiRT[i].viewPort.Height   = windowSize.y;
+        m_multiRT[i].viewPort.MinDepth = 0;
+        m_multiRT[i].viewPort.MaxDepth = 1;
+    }
 }
