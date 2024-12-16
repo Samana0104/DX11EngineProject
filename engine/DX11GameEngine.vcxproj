@@ -55,7 +55,6 @@
     </ClCompile>
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="DesignPattern\Observer.cpp" />
-    <ClCompile Include="EasyRender.cpp" />
     <ClCompile Include="Gui\Button.cpp" />
     <ClCompile Include="Gui\GameButton.cpp" />
     <ClCompile Include="Gui\LobbyButton.cpp" />
@@ -65,6 +64,7 @@
     <ClCompile Include="Object\3D\Object3D.cpp" />
     <ClCompile Include="Object\3D\Transform3D.cpp" />
     <ClCompile Include="Object\Camera.cpp" />
+    <ClCompile Include="Object\EasyRender.cpp" />
     <ClCompile Include="Object\Object.cpp" />
     <ClCompile Include="Scene\SceneMgr.cpp" />
     <ClCompile Include="Timer\SystemTimer.cpp" />
@@ -107,7 +107,6 @@
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="DesignPattern\Observer.h" />
     <ClInclude Include="DesignPattern\Singleton.h" />
-    <ClInclude Include="EasyRender.h" />
     <ClInclude Include="Gui\Button.h" />
     <ClInclude Include="Gui\GameButton.h" />
     <ClInclude Include="Gui\LobbyButton.h" />
@@ -117,6 +116,7 @@
     <ClInclude Include="Object\3D\Object3D.h" />
     <ClInclude Include="Object\3D\Transform3D.h" />
     <ClInclude Include="Object\Camera.h" />
+    <ClInclude Include="Object\EasyRender.h" />
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\Renderable.h" />
     <ClInclude Include="Scene\Scene.h" />
@@ -131,6 +131,12 @@
     <FxCompile Include="..\res\Shader\CubeVertex.hlsl" />
     <FxCompile Include="..\res\Shader\LinePixel.hlsl" />
     <FxCompile Include="..\res\Shader\LineVertex.hlsl" />
+    <FxCompile Include="..\res\Shader\MergePixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\MergeVertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
+    </FxCompile>
     <FxCompile Include="..\res\Shader\PixelShader.hlsl" />
     <FxCompile Include="..\res\Shader\VertexShader.hlsl" />
   </ItemGroup>

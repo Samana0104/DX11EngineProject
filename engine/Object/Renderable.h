@@ -8,11 +8,13 @@ date: 2024-11-17
 
 #pragma once
 #include "pch.h"
+#include "EasyRender.h"
 
 namespace HBSoft
 {
     class Renderable
     {
+
     protected:
         virtual void Init()                        = 0;
         virtual void Release()                     = 0;

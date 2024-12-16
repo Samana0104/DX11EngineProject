@@ -189,7 +189,9 @@
     <ClCompile Include="Object\3D\Object3D.cpp">
       <Filter>Object\3D</Filter>
     </ClCompile>
-    <ClCompile Include="EasyRender.cpp" />
+    <ClCompile Include="Object\EasyRender.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -345,7 +347,9 @@
     <ClInclude Include="Object\3D\Transform3D.h">
       <Filter>Object\3D</Filter>
     </ClInclude>
-    <ClInclude Include="EasyRender.h" />
+    <ClInclude Include="Object\EasyRender.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\res\Shader\2DVertex.hlsl">
@@ -373,6 +377,12 @@
       <Filter>hlsl</Filter>
     </FxCompile>
     <FxCompile Include="..\res\Shader\VertexShader.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\MergeVertex.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\MergePixel.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>

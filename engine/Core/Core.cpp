@@ -63,19 +63,7 @@ void Core::Update()
 
 void Core::Render()
 {
-    float clearColor[] = {0.f, 0.f, 0.f, 1.0f};
-    m_device->m_context->ClearDepthStencilView(m_device->m_dsv.Get(),
-                                               D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
-                                               1.0f,
-                                               0);
-    m_device->m_context->ClearRenderTargetView(m_device->m_rtv.Get(), clearColor);
-
-
     m_sceneMgr.Render();
-    m_assets->m_fonts[L"DEBUG_FONT"]->DrawMsg(m_device,
-                                              m_timer.m_csBuffer,
-                                              {10.f, 10.f, 1000.f, 1000.f});
-
     ImGui::Render();
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
     m_device->m_swapChain->Present(0, 0);

@@ -16,7 +16,7 @@ namespace HBSoft
 {
 #define MAX_RENDER_TARGET 5
 
-    enum MultiRTV
+    enum MultiRT
     {
         MAIN   = 0,
         GUI    = 1,
@@ -28,11 +28,12 @@ namespace HBSoft
     struct HRenderTarget
     {
         ComPtr<ID3D11Texture2D>        texRt;
+        ComPtr<ID3D11Texture2D>        dsRt;
         ComPtr<ID3D11RenderTargetView> rtv;
         ComPtr<ID3D11DepthStencilView> dsv;
 
         ComPtr<ID3D11ShaderResourceView> rtSrv;
-        ComPtr<ID3D11ShaderResourceView> dsSrv;
+        // ComPtr<ID3D11ShaderResourceView> dsSrv; 필요하면 만듬
 
         D3D11_VIEWPORT viewPort;
     };
@@ -65,7 +66,7 @@ namespace HBSoft
         ComPtr<ID3D11DeviceContext> m_context;
         ComPtr<IDXGISwapChain>      m_swapChain;
 
-        ComPtr<ID2D1RenderTarget> m_2dRtv;  // 2d surface rtv is made by back buffer
+        ComPtr<ID2D1RenderTarget> m_2dRtv;  // 2d surface rtv is made by gui texture buffer
 
         HRenderTarget m_multiRT[MAX_RENDER_TARGET];
         HRenderState  m_renderState;

@@ -28,13 +28,21 @@ void SceneLobby::Update(float deltaTime)
 
 void SceneLobby::Render()
 {
-    if (isWire)
-        HDEVICE->m_context->RSSetState(HDEVICE->m_rsWireState.Get());
-    else
-        HDEVICE->m_context->RSSetState(HDEVICE->m_rsState.Get());
-
+    EasyRender::Begin(MultiRT::MAIN);
     m_title.Render();
+    EasyRender::SetWireFrame(isWire);
+    EasyRender::End();
+
+    EasyRender::Begin(MultiRT::GUI);
     m_lobbyBtn.Render();
+    HASSET->m_fonts[L"DEBUG_FONT"]->DrawMsg(HDEVICE, HTIMER.m_csBuffer, {10.f, 10.f, 1000.f, 1000.f});
+    EasyRender::End();
+
+    if (HINPUT->IsKeyDown(VK_HOME))
+    {
+        EasyRender::SaveScreenShot(MultiRT::GUI, L"Gui");
+        EasyRender::SaveScreenShot(MultiRT::MAIN, L"Test");
+    }
 }
 
 void SceneLobby::Release() {}

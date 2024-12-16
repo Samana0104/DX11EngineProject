@@ -40,11 +40,19 @@ date: 2024-12-11
 #endif
 
 // ---------------------------------------
+//			    WinCodec
+// ---------------------------------------
+
+#include <wincodec.h>
+#include <wincodecsdk.h>
+
+// ---------------------------------------
 //			    DirectXTK
 // ---------------------------------------
 
 #include "DirectXTK/WICTextureLoader.h"
 #include "DirectXTK/DDSTextureLoader.h"
+#include "DirectXTK/ScreenGrab.h"
 
 // ---------------------------------------
 //			      GLM
@@ -81,6 +89,7 @@ date: 2024-12-11
 #pragma comment(lib, "dwrite.lib")
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "windowscodecs.lib")
 
 #ifdef _DEBUG
     #pragma comment(lib, "debug/DirectXTK/DirectXTK_d.lib")

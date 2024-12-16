@@ -16,6 +16,7 @@ namespace HBSoft
     {
         VERTEX = 1,
         PIXEL,
+        GEOMETRY
     };
 
     class Shader
@@ -26,7 +27,6 @@ namespace HBSoft
 
         std::wstring m_path;
         ShaderType   m_shaderType;
-
 
     protected:
         Shader(const wstringV path, const ShaderType& type);
@@ -41,15 +41,14 @@ namespace HBSoft
 
         size_t GetConstantCount() const;
 
+        std::vector<ComPtr<ID3D11Buffer>>& GetConstantBuffers();
+
         /*
             param : data -> 상수 버퍼에 넣을 void형 포인터 | dataSize -> 상수 버퍼에 넣을 데이터의 크기
                     constantIdx -> 상수 버퍼 레지스터 번호
             description :
                상수 버퍼를 갱신시켜준다.
         */
-        void SetConstantBuffer(std::shared_ptr<D3Device> device, const void* data, const size_t dataSize,
-                               const UINT constantIdx);
-
         const ShaderType& GetShaderType() const;
     };
 }  // namespace HBSoft

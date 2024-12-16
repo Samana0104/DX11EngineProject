@@ -5,18 +5,16 @@ using namespace HBSoft;
 
 Gardener::Gardener()
 {
-    m_mesh     = HASSET->m_meshes[L"Walking.hbs"];
-    m_vsShader = HASSET->m_shaders[L"AnimationVertex.hlsl"];
-    /*m_vsShader = HASSET->m_shaders[L"VertexShader.hlsl"];*/
+    m_mesh = HASSET->m_meshes[L"Walking.hbs"];
+    m_easyRender.SetVSShader(L"AnimationVertex.hlsl");
+    m_easyRender.SetPSShader(L"ColorPixelShader.hlsl");
+    m_easyRender.SetMesh(m_mesh);
+    m_easyRender.SetTexture(nullptr);
 
-
-    // SetPSShaderKey(L"PixelShader.hlsl");  // 텍스쳐 있는 놈
-    m_psShader = HASSET->m_shaders[L"ColorPixelShader.hlsl"];  // 텍스쳐 없는 놈
     anim.resize(m_mesh->m_born.bornIndex.size());
     m_transform.m_pos = {1.f, 0.5f, 1.f};
 
     m_transform.SetScale(0.1f);
-    /* m_heightmap = std::make_shared<HeightMapObj>();*/
 }
 
 void Gardener::Update(const float deltaTime)
@@ -191,47 +189,13 @@ void Gardener::Update(const float deltaTime)
     {
         isUpPressed = false;
     }
+
+    m_easyRender.UpdateVSCB((void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
 }
 
 void Gardener::Render()
 {
-    UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
-    UINT pOffsets = 0;               // 버퍼에 시작 인덱스
-
-    m_vsShader->SetUpToContext(HDEVICE);
-    m_psShader->SetUpToContext(HDEVICE);
-    m_vsShader->SetConstantBuffer(HDEVICE, (void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
-
-    HDEVICE->m_context->IASetVertexBuffers(0,
-                                           1,
-                                           m_mesh->m_vertexBuffer.GetAddressOf(),
-                                           &pStrides,
-                                           &pOffsets);
-
-    // DXGI_FORMAT_R32_UINT는 인덱스 버퍼의 타입이 UINT라 그럼
-    HDEVICE->m_context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-
-    HDEVICE->m_context->PSSetSamplers(0, 1, HDEVICE->m_samplerState.GetAddressOf());
-    HDEVICE->m_context->OMSetRenderTargets(1, HDEVICE->m_rtv.GetAddressOf(), HDEVICE->m_dsv.Get());
-
-
-    UpdateDefaultCB();
-
-    for (size_t i = 0; i < m_mesh->m_subMeshes.size(); i++)
-    {
-        if (m_mesh->m_subMeshes[i]->hasTexture)
-        {
-            HDEVICE->m_context->PSSetShaderResources(
-            0,
-            1,
-            HASSET->m_textures[m_mesh->m_subMeshes[i]->textureName]->GetSRV().GetAddressOf());
-        }
-        HDEVICE->m_context->IASetIndexBuffer(m_mesh->m_subMeshes[i]->indexBuffer.Get(),
-                                             DXGI_FORMAT_R32_UINT,
-                                             0);
-        HDEVICE->m_context->DrawIndexed((UINT)m_mesh->m_subMeshes[i]->indices.size(), 0, 0);
-    }
+    m_easyRender.Draw();
 }
 
 void Gardener::Init() {}

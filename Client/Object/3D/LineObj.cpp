@@ -12,9 +12,12 @@ using namespace HBSoft;
 
 LineObj::LineObj()
 {
-    m_mesh     = HASSET->m_meshes[L"LINE"];
-    m_vsShader = HASSET->m_shaders[L"LineVertex.hlsl"];
-    m_psShader = HASSET->m_shaders[L"LinePixel.hlsl"];
+    m_mesh = MeshFactory::Create(HDEVICE, MeshShape::LINE);
+    m_easyRender.SetVSShader(L"LineVertex.hlsl");
+    m_easyRender.SetPSShader(L"LinePixel.hlsl");
+    m_easyRender.SetTopology(ERTopology::LINE_LIST);
+    m_easyRender.SetMesh(m_mesh);
+    m_easyRender.SetTexture(nullptr);
 }
 
 void LineObj::Render() {}
@@ -42,9 +45,7 @@ void LineObj::Draw(vec3 start, vec3 end, vec4 color)
     UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
     UINT pOffsets = 0;               // 버퍼에 시작 인덱스
 
-    m_vsShader->SetUpToContext(HDEVICE);
-    m_psShader->SetUpToContext(HDEVICE);
-
+    m_easyRender.SetEntireState();
     HDEVICE->m_context->IASetVertexBuffers(0,
                                            1,
                                            m_mesh->m_vertexBuffer.GetAddressOf(),
@@ -53,7 +54,5 @@ void LineObj::Draw(vec3 start, vec3 end, vec4 color)
     HDEVICE->m_context->IASetIndexBuffer(m_mesh->m_subMeshes[0]->indexBuffer.Get(),
                                          DXGI_FORMAT_R32_UINT,
                                          0);
-    HDEVICE->m_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
-    HDEVICE->m_context->OMSetRenderTargets(1, HDEVICE->m_rtv.GetAddressOf(), HDEVICE->m_dsv.Get());
     HDEVICE->m_context->DrawIndexed((UINT)m_mesh->m_subMeshes[0]->indices.size(), 0, 0);
 }

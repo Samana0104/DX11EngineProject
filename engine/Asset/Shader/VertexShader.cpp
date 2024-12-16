@@ -22,13 +22,6 @@ void VertexShader::SetUpToContext(std::shared_ptr<D3Device> device)
 
     device->m_context->IASetInputLayout(m_vertexLayout.Get());
     device->m_context->VSSetShader(m_vertexShader.Get(), nullptr, 0);
-
-
-    for (UINT i = 0; i < m_constantBuffers.size(); i++)
-        buffer.push_back(m_constantBuffers[i].Get());
-
-    if (buffer.size() > 0)
-        device->m_context->VSSetConstantBuffers(0, (UINT)buffer.size(), &buffer.at(0));
 }
 
 bool VertexShader::CreateVertexShader(std::shared_ptr<D3Device> device)
@@ -152,6 +145,27 @@ bool VertexShader::CreateIALayoutAndConstantBuffer(std::shared_ptr<D3Device> dev
     if (FAILED(hr))
         return false;
 
+    // D3D11_SHADER_INPUT_BIND_DESC bindDesc;
+    //// 리소스 바인딩 설명을 가져오는 루프
+    // for (UINT i = 0;; ++i)
+    //{
+    //     hr = pReflector->GetResourceBindingDesc(i, &bindDesc);
+
+    //    if (FAILED(hr))
+    //        break;
+
+    //    switch (bindDesc.Type)
+    //    {
+    //    case D3D_SIT_TEXTURE:
+    //        m_numTexture++;
+    //        break;
+
+    //    case D3D_SIT_SAMPLER:
+    //        m_numSampler;
+    //        break;
+    //    }
+    //}
+
     m_constantBuffers.resize(shaderDesc.ConstantBuffers);
 
     // 1. Vertex Shader의 상수 버퍼 정보를 가져옴
@@ -169,8 +183,6 @@ bool VertexShader::CreateIALayoutAndConstantBuffer(std::shared_ptr<D3Device> dev
 
         ComPtr<ID3D11Buffer> constantBuffer = nullptr;
         hr = device->m_d3dDevice->CreateBuffer(&bufferDesc, nullptr, constantBuffer.GetAddressOf());
-        D3D11_BUFFER_DESC buf;
-        constantBuffer->GetDesc(&buf);
 
         if (FAILED(hr))
             return false;

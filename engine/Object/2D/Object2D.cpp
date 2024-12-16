@@ -27,5 +27,5 @@ void Object2D::UpdateDefaultCB()
     }
 
     m_cb0.world = m_transform.m_worldMat;
-    m_vsShader->SetConstantBuffer(HDEVICE, (void*)&m_cb0, sizeof(m_cb0), 0);
+    m_easyRender.UpdateVSCB((void*)&m_cb0, sizeof(m_cb0), 0);
 }
