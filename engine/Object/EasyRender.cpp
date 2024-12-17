@@ -23,11 +23,23 @@ void EasyRender::InitShaderState()
 {
     std::vector<ID3D11Buffer*> buffer;
 
-    m_vsShader->SetUpToContext(HDEVICE);
-    m_psShader->SetUpToContext(HDEVICE);
+    if (m_vsShader != nullptr)
+        m_vsShader->SetUpToContext(HDEVICE);
+    else
+        HDEVICE->m_context->PSSetShader(NULL, NULL, 0);
+
+    if (m_psShader != nullptr)
+        m_psShader->SetUpToContext(HDEVICE);
+    else
+        HDEVICE->m_context->PSSetShader(NULL, NULL, 0);
+
+    if (m_gsShader != nullptr)
+        m_gsShader->SetUpToContext(HDEVICE);
+    else
+        HDEVICE->m_context->GSSetShader(NULL, NULL, 0);
+
     HDEVICE->m_context->HSSetShader(NULL, NULL, 0);
     HDEVICE->m_context->DSSetShader(NULL, NULL, 0);
-    HDEVICE->m_context->GSSetShader(NULL, NULL, 0);
 
     for (UINT i = 0; i < m_vsCB.size(); i++)
         buffer.push_back(m_vsCB[i].Get());
@@ -43,6 +55,8 @@ void EasyRender::InitShaderState()
     if (buffer.size() > 0)
         HDEVICE->m_context->PSSetConstantBuffers(0, (UINT)buffer.size(), &buffer.at(0));
 }
+
+void EasyRender::InitShaderCBState() {}
 
 void EasyRender::Begin(MultiRT renderTarget)
 {
@@ -125,6 +139,8 @@ void EasyRender::SetPSShader(const SHADER_KEY shaderKey)
         m_psCB.push_back(constantBuffer);
     }
 }
+
+void EasyRender::SetGSShader(const SHADER_KEY shaderKey) {}
 
 void EasyRender::SetRRS(ERRasterRizerState rrs)
 {
@@ -334,6 +350,8 @@ void EasyRender::UpdatePSCB(const void* data, const size_t dataSize, const UINT 
     HDEVICE->m_context->Unmap(m_psCB[constantIdx].Get(), NULL);
 }
 
+void EasyRender::UpdateGSCB(const void* data, const size_t dataSize, const UINT constantIdx) {}
+
 void EasyRender::MergeRenderTarget(MultiRT dst, MultiRT src)
 {
     // 메인은 srv가 없어요~
@@ -381,4 +399,9 @@ void EasyRender::SaveScreenShot(MultiRT renderTarget, std::wstring fileName)
 void EasyRender::SetWireFrame(bool isWire)
 {
     m_isWireFrame = isWire;
+}
+
+void EasyRender::DrawNormal(bool isNormalDrawn)
+{
+    m_isNormalDrawn = isNormalDrawn;
 }

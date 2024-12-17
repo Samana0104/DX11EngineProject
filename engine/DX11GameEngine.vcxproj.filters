@@ -192,6 +192,7 @@
     <ClCompile Include="Object\EasyRender.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="GeometryShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -350,6 +351,7 @@
     <ClInclude Include="Object\EasyRender.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="GeometryShader.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\res\Shader\2DVertex.hlsl">

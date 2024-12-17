@@ -42,17 +42,5 @@ void LineObj::Draw(vec3 start, vec3 end, vec4 color)
 
     m_mesh->SetVertices(HDEVICE, {v1, v2});
 
-    UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
-    UINT pOffsets = 0;               // 버퍼에 시작 인덱스
-
-    m_easyRender.SetEntireState();
-    HDEVICE->m_context->IASetVertexBuffers(0,
-                                           1,
-                                           m_mesh->m_vertexBuffer.GetAddressOf(),
-                                           &pStrides,
-                                           &pOffsets);
-    HDEVICE->m_context->IASetIndexBuffer(m_mesh->m_subMeshes[0]->indexBuffer.Get(),
-                                         DXGI_FORMAT_R32_UINT,
-                                         0);
-    HDEVICE->m_context->DrawIndexed((UINT)m_mesh->m_subMeshes[0]->indices.size(), 0, 0);
+    m_easyRender.Draw();
 }

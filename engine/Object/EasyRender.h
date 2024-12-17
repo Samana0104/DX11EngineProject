@@ -73,6 +73,7 @@ namespace HBSoft
 
         std::vector<ComPtr<ID3D11Buffer>> m_vsCB;
         std::vector<ComPtr<ID3D11Buffer>> m_psCB;
+        std::vector<ComPtr<ID3D11Buffer>> m_gsCB;
 
         ERRasterRizerState  m_rrs;
         ERDepthStencilState m_dss;
@@ -80,10 +81,12 @@ namespace HBSoft
         ERSamplerState      m_ss;
         ERTopology          m_topology;
 
-        inline static bool m_isWireFrame = false;
+        inline static bool m_isWireFrame   = false;
+        inline static bool m_isNormalDrawn = false;
 
     private:
         void InitShaderState();
+        void InitShaderCBState();
         void SetRRSFromDevice();
         void SetDSSFromDevice();
         void SetBSFromDevice();
@@ -97,6 +100,7 @@ namespace HBSoft
 
         void SetVSShader(const SHADER_KEY shaderKey);
         void SetPSShader(const SHADER_KEY shaderKey);
+        void SetGSShader(const SHADER_KEY shaderKey);
         void SetRRS(ERRasterRizerState rrs);
         void SetDSS(ERDepthStencilState dss);
         void SetBS(ERBlendingState bs);
@@ -110,12 +114,14 @@ namespace HBSoft
 
         void UpdateVSCB(const void* data, const size_t dataSize, const UINT constantIdx);
         void UpdatePSCB(const void* data, const size_t dataSize, const UINT constantIdx);
+        void UpdateGSCB(const void* data, const size_t dataSize, const UINT constantIdx);
 
         static void Begin(MultiRT renderTarget);
         static void End();
         static void MergeRenderTarget(MultiRT dst, MultiRT src);
         static void SaveScreenShot(MultiRT renderTarget, std::wstring fileName);
         static void SetWireFrame(bool isWire);
+        static void DrawNormal(bool isNormalDrawn);
 
         // void DrawInstance()
     };

@@ -55,6 +55,7 @@
     </ClCompile>
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="DesignPattern\Observer.cpp" />
+    <ClCompile Include="GeometryShader.cpp" />
     <ClCompile Include="Gui\Button.cpp" />
     <ClCompile Include="Gui\GameButton.cpp" />
     <ClCompile Include="Gui\LobbyButton.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="DesignPattern\Observer.h" />
     <ClInclude Include="DesignPattern\Singleton.h" />
+    <ClInclude Include="GeometryShader.h" />
     <ClInclude Include="Gui\Button.h" />
     <ClInclude Include="Gui\GameButton.h" />
     <ClInclude Include="Gui\LobbyButton.h" />
@@ -280,6 +282,7 @@
     <PostBuildEvent>
       <Command>rmdir /S /Q $(SolutionDir)extern\inc\engine\
 xcopy $(ProjectDir)*.h $(SolutionDir)extern\inc\engine\ /E /Y
+if not exist $(SolutionDir)extern\lib\debug\engine mkdir $(SolutionDir)extern\lib\debug\engine
 copy $(SolutionDir)exe\Debug\DX11EngineLib_d.lib $(SolutionDir)extern\lib\debug\engine\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
