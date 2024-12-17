@@ -228,12 +228,15 @@ void EasyRender::SetDSSFromDevice()
     case ERDepthStencilState::LESS:
         HDEVICE->m_context->OMSetDepthStencilState(HDEVICE->m_renderState.lessDSS.Get(), 0);
         break;
+
     case ERDepthStencilState::GREATER:
         HDEVICE->m_context->OMSetDepthStencilState(HDEVICE->m_renderState.greaterDSS.Get(), 0);
         break;
+
     case ERDepthStencilState::NO_WRITE:
         HDEVICE->m_context->OMSetDepthStencilState(HDEVICE->m_renderState.noWriteDSS.Get(), 0);
         break;
+
     case ERDepthStencilState::DISABLE:
         HDEVICE->m_context->OMSetDepthStencilState(HDEVICE->m_renderState.disableDSS.Get(), 0);
         break;

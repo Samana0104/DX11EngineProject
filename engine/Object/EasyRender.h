@@ -16,7 +16,6 @@ namespace HBSoft
 {
 #define MAX_SAMPLER 3
     // 상태 값 모르면 무지성 0번 ㄱㄱㄱㄱ
-
     enum class ERRasterRizerState
     {
         SOLID_BACK_CULL  = 0,
@@ -117,8 +116,6 @@ namespace HBSoft
         static void MergeRenderTarget(MultiRT dst, MultiRT src);
         static void SaveScreenShot(MultiRT renderTarget, std::wstring fileName);
         static void SetWireFrame(bool isWire);
-
-        void SetEntireState();
 
         // void DrawInstance()
     };
