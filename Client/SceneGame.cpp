@@ -54,6 +54,14 @@ void SceneGame::Render()
     m_escButton.Render();
     HASSET->m_fonts[L"DEBUG_FONT"]->DrawMsg(HDEVICE, HTIMER.m_csBuffer, {10.f, 10.f, 1000.f, 1000.f});
     EasyRender::End();
+
+    if (HINPUT->IsKeyDown(VK_HOME))
+    {
+        EasyRender::SaveScreenShot(MultiRT::GUI, L"Gui");
+        EasyRender::SaveScreenShot(MultiRT::MAIN, L"Test");
+    }
+
+    EasyRender::MergeRenderTarget(MultiRT::MAIN, MultiRT::GUI);
 }
 
 void SceneGame::Release() {}

@@ -10,6 +10,7 @@ MainTitle::MainTitle()
     m_easyRender.SetPSShader(L"PixelShader.hlsl");
     m_easyRender.SetMesh(m_boxMesh);
     m_easyRender.SetTexture(m_titleTexture);
+    m_easyRender.SetSS(ERSamplerState::LINEAR, 0);
 }
 
 void MainTitle::Update(const float deltaTime)

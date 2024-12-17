@@ -32,6 +32,7 @@ Button::Button()
     m_easyRender.SetPSShader(L"PixelShader.hlsl");
     m_easyRender.SetDSS(ERDepthStencilState::DISABLE);
     m_easyRender.SetMesh(m_boxMesh);
+    m_easyRender.SetSS(ERSamplerState::LINEAR, 0);
 
     EventHandler::GetInstance().AddEvent(EventList::DEVICE_CHANGE, this);
 }

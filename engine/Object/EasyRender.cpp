@@ -14,7 +14,7 @@ EasyRender::EasyRender()
 {
     m_rrs      = ERRasterRizerState::SOLID_BACK_CULL;
     m_dss      = ERDepthStencilState::LESS;
-    m_bs       = ERBlendingState::DEFAULT;
+    m_bs       = ERBlendingState::Alpha;
     m_ss[0]    = ERSamplerState::POINT;
     m_ss[1]    = ERSamplerState::POINT;
     m_ss[2]    = ERSamplerState::POINT;
@@ -48,7 +48,7 @@ void EasyRender::InitShaderState()
 
 void EasyRender::Begin(MultiRT renderTarget)
 {
-    float clearColor[] = {0.f, 0.f, 0.f, 1.0f};
+    float clearColor[] = {0.f, 0.f, 0.f, 0.0f};
     HDEVICE->m_context->ClearRenderTargetView(HDEVICE->m_multiRT[renderTarget].rtv.Get(), clearColor);
     HDEVICE->m_context->ClearDepthStencilView(HDEVICE->m_multiRT[renderTarget].dsv.Get(),
                                               D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
@@ -249,8 +249,11 @@ void EasyRender::SetBSFromDevice()
 {
     switch (m_bs)
     {
-    case ERBlendingState::DEFAULT:
+    case ERBlendingState::Alpha:
         HDEVICE->m_context->OMSetBlendState(HDEVICE->m_renderState.alphaBS.Get(), 0, -1);
+
+    case ERBlendingState::Merge:
+        HDEVICE->m_context->OMSetBlendState(HDEVICE->m_renderState.mergeBS.Get(), 0, -1);
         break;
     }
 }
@@ -341,18 +344,36 @@ void EasyRender::UpdatePSCB(const void* data, const size_t dataSize, const UINT 
 void EasyRender::MergeRenderTarget(MultiRT dst, MultiRT src)
 {
     // 메인은 srv가 없어요~
-    if (dst == MultiRT::MAIN || MultiRT::MAIN)
+    if (src == MultiRT::MAIN)
         return;
-}
 
-void EasyRender::MergeMainRenderTarget(MultiRT src)
-{
+    UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
+    UINT pOffsets = 0;               // 버퍼에 시작 인덱스
 
-    // HDEVICE->m_context->VSSetShader
-    HDEVICE->m_context->RSSetViewports(1, &HDEVICE->m_multiRT[MultiRT::MAIN].viewPort);
+    HASSET->m_shaders[L"MergeVertex.hlsl"]->SetUpToContext(HDEVICE);
+    HASSET->m_shaders[L"MergePixel.hlsl"]->SetUpToContext(HDEVICE);
+    HDEVICE->m_context->IASetVertexBuffers(0,
+                                           1,
+                                           HASSET->m_meshes[L"BOX2D"]->m_vertexBuffer.GetAddressOf(),
+                                           &pStrides,
+                                           &pOffsets);
+    HDEVICE->m_context->IASetIndexBuffer(HASSET->m_meshes[L"BOX2D"]->m_subMeshes[0]->indexBuffer.Get(),
+                                         DXGI_FORMAT_R32_UINT,
+                                         0);
+    HDEVICE->m_context->PSSetShaderResources(0, 1, HDEVICE->m_multiRT[src].rtSrv.GetAddressOf());
+    HDEVICE->m_context->PSSetSamplers(0, 1, HDEVICE->m_renderState.pointSampler.GetAddressOf());
+
+    HDEVICE->m_context->RSSetViewports(1, &HDEVICE->m_multiRT[dst].viewPort);
+    HDEVICE->m_context->RSSetState(HDEVICE->m_renderState.solidBackCullRS.Get());
+
+    HDEVICE->m_context->OMSetBlendState(HDEVICE->m_renderState.mergeBS.Get(), 0, -1);
     HDEVICE->m_context->OMSetRenderTargets(1,
-                                           HDEVICE->m_multiRT[MultiRT::MAIN].rtv.GetAddressOf(),
-                                           HDEVICE->m_multiRT[MultiRT::MAIN].dsv.Get());
+                                           HDEVICE->m_multiRT[dst].rtv.GetAddressOf(),
+                                           HDEVICE->m_multiRT[dst].dsv.Get());
+    HDEVICE->m_context->OMSetDepthStencilState(HDEVICE->m_renderState.disableDSS.Get(), 0);
+    HDEVICE->m_context->DrawIndexed((UINT)HASSET->m_meshes[L"BOX2D"]->m_subMeshes[0]->indices.size(),
+                                    0,
+                                    0);
 }
 
 void EasyRender::SaveScreenShot(MultiRT renderTarget, std::wstring fileName)

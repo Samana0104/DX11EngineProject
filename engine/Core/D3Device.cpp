@@ -284,8 +284,9 @@ bool D3Device::CreateDepthStencilState()
     dsDesc.DepthWriteMask               = D3D11_DEPTH_WRITE_MASK_ALL;
     dsDesc.DepthFunc                    = D3D11_COMPARISON_LESS_EQUAL;
     dsDesc.StencilEnable                = FALSE;
-    dsDesc.StencilReadMask              = 0xff;
-    dsDesc.StencilWriteMask             = 0xff;
+    dsDesc.StencilReadMask              = 0xFF;
+    dsDesc.StencilWriteMask             = 0xFF;
+    dsDesc.FrontFace.StencilFunc        = D3D11_COMPARISON_ALWAYS;
     dsDesc.FrontFace.StencilPassOp      = D3D11_STENCIL_OP_INCR;
     dsDesc.FrontFace.StencilFailOp      = D3D11_STENCIL_OP_KEEP;
     dsDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
@@ -355,26 +356,39 @@ bool D3Device::CreateDepthStencilView()
 bool D3Device::CreateBlendingState()
 {
     HRESULT          hr;
-    D3D11_BLEND_DESC bd = {};
-    {
-        bd.AlphaToCoverageEnable  = FALSE;  // discard;같은 결과.
-        bd.IndependentBlendEnable = FALSE;
-        // D3D11_RENDER_TARGET_BLEND_DESC RenderTarget[8];
-        //  백버퍼의 컬러값(DestBlend) 과  현재 출력 컬러(SrcBlend)값을 혼합연산한다.
-        bd.RenderTarget[0].BlendEnable = TRUE;
-        bd.RenderTarget[0].SrcBlend    = D3D11_BLEND_SRC_ALPHA;
-        bd.RenderTarget[0].DestBlend   = D3D11_BLEND_INV_SRC_ALPHA;
-        bd.RenderTarget[0].BlendOp     = D3D11_BLEND_OP_ADD;
-        // A 알파값 연산
-        // A = SRC Alpha*1 + DestAlpha*0;
-        bd.RenderTarget[0].SrcBlendAlpha  = D3D11_BLEND_ONE;
-        bd.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
-        bd.RenderTarget[0].BlendOpAlpha   = D3D11_BLEND_OP_ADD;
+    D3D11_BLEND_DESC bd;
 
-        bd.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-    }
+    ZeroMemory(&bd, sizeof(bd));
+
+    bd.AlphaToCoverageEnable  = FALSE;  // discard;같은 결과.
+    bd.IndependentBlendEnable = FALSE;
+    // D3D11_RENDER_TARGET_BLEND_DESC RenderTarget[8];
+    //  백버퍼의 컬러값(DestBlend) 과  현재 출력 컬러(SrcBlend)값을 혼합연산한다.
+    bd.RenderTarget[0].BlendEnable = TRUE;
+    bd.RenderTarget[0].SrcBlend    = D3D11_BLEND_SRC_ALPHA;
+    bd.RenderTarget[0].DestBlend   = D3D11_BLEND_INV_SRC_ALPHA;
+    bd.RenderTarget[0].BlendOp     = D3D11_BLEND_OP_ADD;
+    // A 알파값 연산
+    // A = SRC Alpha*1 + DestAlpha*0;
+    bd.RenderTarget[0].SrcBlendAlpha  = D3D11_BLEND_ONE;
+    bd.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+    bd.RenderTarget[0].BlendOpAlpha   = D3D11_BLEND_OP_ADD;
+
+    bd.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
     hr = m_d3dDevice->CreateBlendState(&bd, m_renderState.alphaBS.GetAddressOf());
+
+    if (FAILED(hr))
+        return false;
+
+    bd.RenderTarget[0].SrcBlend  = D3D11_BLEND_ONE;
+    bd.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+    bd.RenderTarget[0].BlendOp   = D3D11_BLEND_OP_ADD;
+
+    hr = m_d3dDevice->CreateBlendState(&bd, m_renderState.mergeBS.GetAddressOf());
+
+    if (FAILED(hr))
+        return false;
 
     return SUCCEEDED(hr);
 }

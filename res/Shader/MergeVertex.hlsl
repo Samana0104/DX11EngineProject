@@ -8,9 +8,12 @@ date: 2024-12-16
 
 #include "HBStd.hlsli"
 
-LinePsInput main(VSInput vsIn)
+ImagePSInput main(VSInput vsIn)
 {
-    LinePsInput psIn = (LinePsInput) 0;
+    ImagePSInput psIn = (ImagePSInput) 0;
 
+    psIn.p = float4(vsIn.p.xyz, 1.f);
+    psIn.c = vsIn.c;
+    psIn.t = vsIn.t;
     return psIn;
 }
