@@ -364,6 +364,7 @@ void EasyRender::MergeRenderTarget(MultiRT dst, MultiRT src)
                                            HDEVICE->m_multiRT[dst].rtv.GetAddressOf(),
                                            HDEVICE->m_multiRT[dst].dsv.Get());
     HDEVICE->m_context->OMSetDepthStencilState(HDEVICE->m_renderState.disableDSS.Get(), 0);
+
     HDEVICE->m_context->DrawIndexed((UINT)HASSET->m_meshes[L"BOX2D"]->m_subMeshes[0]->indices.size(),
                                     0,
                                     0);
