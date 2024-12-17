@@ -1,29 +1,30 @@
 /*
 author : 변한빛
-description : 픽셀 쉐이더의 기본 정의를 하기 위해 만든 소스 파일
+description : 기하 쉐이더의 기본 정의를 하기 위해 만든 소스 파일
 
-version: 1.0.3
-date: 2024-11-09
+version: 1.0.0
+date: 2024-12-17
 */
 
 #include "pch.h"
-#include "PixelShader.h"
+#include "GeometryShader.h"
 using namespace HBSoft;
 
-PixelShader::PixelShader(std::shared_ptr<D3Device> device, const wstringV path, const ShaderType& type)
+GeometryShader::GeometryShader(std::shared_ptr<D3Device> device, const wstringV path,
+                               const ShaderType& type)
     : Shader(path, type)
 {
     assert(CreateShader(device));
 }
 
-void PixelShader::SetUpToContext(std::shared_ptr<D3Device> device)
+void GeometryShader::SetUpToContext(std::shared_ptr<D3Device> device)
 {
-    device->m_context->PSSetShader(m_pixelShader.Get(), nullptr, 0);
+    device->m_context->GSSetShader(m_geometryShader.Get(), nullptr, 0);
 }
 
-bool PixelShader::CreateShader(std::shared_ptr<D3Device> device)
+bool GeometryShader::CreateShader(std::shared_ptr<D3Device> device)
 {
-    if (!CreatePixelShader(device))
+    if (!CreateGeometryShader(device))
         return false;
 
     if (!CreateConstantBuffer(device))
@@ -32,7 +33,7 @@ bool PixelShader::CreateShader(std::shared_ptr<D3Device> device)
     return true;
 }
 
-bool PixelShader::CreateConstantBuffer(std::shared_ptr<D3Device> device)
+bool GeometryShader::CreateConstantBuffer(std::shared_ptr<D3Device> device)
 {
     HRESULT hr;
 
@@ -76,7 +77,7 @@ bool PixelShader::CreateConstantBuffer(std::shared_ptr<D3Device> device)
     return true;
 }
 
-bool PixelShader::CreatePixelShader(std::shared_ptr<D3Device> device)
+bool GeometryShader::CreateGeometryShader(std::shared_ptr<D3Device> device)
 {
     HRESULT          hr;
     ComPtr<ID3DBlob> errorMsg;
@@ -90,7 +91,7 @@ bool PixelShader::CreatePixelShader(std::shared_ptr<D3Device> device)
                             nullptr,
                             D3D_COMPILE_STANDARD_FILE_INCLUDE,
                             "main",
-                            "ps_5_0",  // dx11 정점쉐이더 컴파일러
+                            "gs_5_0",  // dx11 정점쉐이더 컴파일러
                             compileFlags,
                             0,
                             m_shaderByteCode.GetAddressOf(),
@@ -102,10 +103,10 @@ bool PixelShader::CreatePixelShader(std::shared_ptr<D3Device> device)
         return false;
     }
 
-    hr = device->m_d3dDevice->CreatePixelShader(m_shaderByteCode->GetBufferPointer(),
-                                                m_shaderByteCode->GetBufferSize(),
-                                                nullptr,
-                                                m_pixelShader.GetAddressOf());
+    hr = device->m_d3dDevice->CreateGeometryShader(m_shaderByteCode->GetBufferPointer(),
+                                                   m_shaderByteCode->GetBufferSize(),
+                                                   nullptr,
+                                                   m_geometryShader.GetAddressOf());
 
     return SUCCEEDED(hr);
 }

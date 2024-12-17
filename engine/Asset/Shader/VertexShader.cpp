@@ -18,8 +18,6 @@ VertexShader::VertexShader(std::shared_ptr<D3Device> device, const wstringV path
 
 void VertexShader::SetUpToContext(std::shared_ptr<D3Device> device)
 {
-    std::vector<ID3D11Buffer*> buffer;
-
     device->m_context->IASetInputLayout(m_vertexLayout.Get());
     device->m_context->VSSetShader(m_vertexShader.Get(), nullptr, 0);
 }
