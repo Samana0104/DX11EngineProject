@@ -274,9 +274,6 @@ void EasyRender::SetSSFromDevice()
                                           HDEVICE->m_renderState.anisotropicSampler.GetAddressOf());
         break;
     }
-    }
-
-    HDEVICE->m_context->PSSetSamplers(0, MAX_SAMPLER, &samplers.at(0));
 }
 
 void EasyRender::SetTopologyFromDevice()
