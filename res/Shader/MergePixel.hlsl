@@ -8,7 +8,12 @@ date: 2024-12-16
 
 #include "HBStd.hlsli"
 
-float4 main(LinePsInput vsIn) : SV_Target0
+Texture2D g_txTexture : register(t0);
+SamplerState sampler0 : register(s0);
+
+float4 main(ImagePSInput psIn) : SV_Target0
 {
-    return vsIn.c;
+    float4 pixel = g_txTexture.Sample(sampler0, psIn.t);
+
+    return pixel;
 }

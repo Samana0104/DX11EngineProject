@@ -41,6 +41,7 @@ namespace HBSoft
     struct HRenderState
     {
         ComPtr<ID3D11BlendState> alphaBS;
+        ComPtr<ID3D11BlendState> mergeBS;
 
         ComPtr<ID3D11SamplerState> pointSampler;
         ComPtr<ID3D11SamplerState> linearSampler;

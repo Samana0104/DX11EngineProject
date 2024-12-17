@@ -37,4 +37,11 @@ struct CubePSInput
     float3 worldPos : POSITION;
 };
 
+struct ImagePSInput
+{
+    float4 p : SV_Position;
+    float4 c : COLOR0;
+    float2 t : TEXCOORD0;
+};
+
 #endif

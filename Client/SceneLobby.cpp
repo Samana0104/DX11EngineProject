@@ -43,6 +43,8 @@ void SceneLobby::Render()
         EasyRender::SaveScreenShot(MultiRT::GUI, L"Gui");
         EasyRender::SaveScreenShot(MultiRT::MAIN, L"Test");
     }
+
+    EasyRender::MergeRenderTarget(MultiRT::MAIN, MultiRT::GUI);
 }
 
 void SceneLobby::Release() {}

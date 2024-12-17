@@ -29,7 +29,8 @@ namespace HBSoft
 
     enum class ERBlendingState
     {
-        DEFAULT = 0,
+        Alpha = 0,
+        Merge = 1,
     };
 
     enum class ERSamplerState
@@ -68,8 +69,8 @@ namespace HBSoft
         std::shared_ptr<Shader>  m_vsShader;
         std::shared_ptr<Shader>  m_psShader;
         std::shared_ptr<Shader>  m_gsShader;
-        std::shared_ptr<Mesh>    m_mesh;
         std::shared_ptr<Texture> m_texture;
+        std::shared_ptr<Mesh>    m_mesh;
 
         std::vector<ComPtr<ID3D11Buffer>> m_vsCB;
         std::vector<ComPtr<ID3D11Buffer>> m_psCB;
@@ -113,7 +114,6 @@ namespace HBSoft
         static void Begin(MultiRT renderTarget);
         static void End();
         static void MergeRenderTarget(MultiRT dst, MultiRT src);
-        static void MergeMainRenderTarget(MultiRT src);
         static void SaveScreenShot(MultiRT renderTarget, std::wstring fileName);
         static void SetWireFrame(bool isWire);
 
