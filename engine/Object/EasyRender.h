@@ -78,7 +78,7 @@ namespace HBSoft
         ERRasterRizerState  m_rrs;
         ERDepthStencilState m_dss;
         ERBlendingState     m_bs;
-        ERSamplerState      m_ss[3];
+        ERSamplerState      m_ss;
         ERTopology          m_topology;
 
         inline static bool m_isWireFrame = false;
@@ -101,10 +101,11 @@ namespace HBSoft
         void SetRRS(ERRasterRizerState rrs);
         void SetDSS(ERDepthStencilState dss);
         void SetBS(ERBlendingState bs);
-        void SetSS(ERSamplerState ss, UINT slot);
+        void SetSS(ERSamplerState ss);
         void SetTopology(ERTopology topology);
         void SetMesh(std::shared_ptr<Mesh> mesh);
         void SetTexture(std::shared_ptr<Texture> texture);
+        void SetEntireState();
 
         void Draw();
 
