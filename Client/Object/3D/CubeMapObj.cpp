@@ -18,7 +18,7 @@ CubeMapObj::CubeMapObj()
     m_easyRender.SetPSShader(L"CubePixel.hlsl");
     m_easyRender.SetTexture(m_texture);
     m_easyRender.SetMesh(m_cubeMesh);
-    m_easyRender.SetSS(ERSamplerState::LINEAR, 0);
+    m_easyRender.SetSS(ERSamplerState::LINEAR);
 
     m_transform.SetScale({1000.f, 1000.f, 1000.f});
 }

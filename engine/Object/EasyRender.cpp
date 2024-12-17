@@ -15,9 +15,7 @@ EasyRender::EasyRender()
     m_rrs      = ERRasterRizerState::SOLID_BACK_CULL;
     m_dss      = ERDepthStencilState::LESS;
     m_bs       = ERBlendingState::Alpha;
-    m_ss[0]    = ERSamplerState::POINT;
-    m_ss[1]    = ERSamplerState::POINT;
-    m_ss[2]    = ERSamplerState::POINT;
+    m_ss       = ERSamplerState::POINT;
     m_topology = ERTopology::TRIANGLE_LIST;
 }
 
@@ -143,12 +141,9 @@ void EasyRender::SetBS(ERBlendingState bs)
     m_bs = bs;
 }
 
-void EasyRender::SetSS(ERSamplerState ss, UINT slot)
+void EasyRender::SetSS(ERSamplerState ss)
 {
-    if (slot >= MAX_SAMPLER)
-        return;
-
-    m_ss[slot] = ss;
+    m_ss = ss;
 }
 
 void EasyRender::SetTopology(ERTopology topology)
@@ -260,27 +255,22 @@ void EasyRender::SetBSFromDevice()
 
 void EasyRender::SetSSFromDevice()
 {
-    std::vector<ID3D11SamplerState*> samplers;
-
-    for (int i = 0; i < MAX_SAMPLER; i++)
+    switch (m_ss)
     {
-        switch (m_ss[i])
-        {
-        case ERSamplerState::POINT:
-            samplers.push_back(HDEVICE->m_renderState.pointSampler.Get());
-            break;
+    case ERSamplerState::POINT:
+        HDEVICE->m_context->PSSetSamplers(0, 1, HDEVICE->m_renderState.pointSampler.GetAddressOf());
+        break;
 
-        case ERSamplerState::LINEAR:
-            samplers.push_back(HDEVICE->m_renderState.linearSampler.Get());
-            break;
+    case ERSamplerState::LINEAR:
+        HDEVICE->m_context->PSSetSamplers(0, 1, HDEVICE->m_renderState.linearSampler.GetAddressOf());
+        break;
 
-        case ERSamplerState::ANISOTROPIC:
-            samplers.push_back(HDEVICE->m_renderState.anisotropicSampler.Get());
-            break;
-        }
+    case ERSamplerState::ANISOTROPIC:
+        HDEVICE->m_context->PSSetSamplers(0,
+                                          1,
+                                          HDEVICE->m_renderState.anisotropicSampler.GetAddressOf());
+        break;
     }
-
-    HDEVICE->m_context->PSSetSamplers(0, MAX_SAMPLER, &samplers.at(0));
 }
 
 void EasyRender::SetTopologyFromDevice()
