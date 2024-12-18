@@ -80,8 +80,7 @@ namespace HBSoft
         ERSamplerState      m_ss;
         ERTopology          m_topology;
 
-        inline static bool m_isWireFrame   = false;
-        inline static bool m_isNormalDrawn = false;
+        inline static bool m_isWireFrame = false;
 
     private:
         void InitShaderState();
@@ -91,6 +90,7 @@ namespace HBSoft
         void SetBSFromDevice();
         void SetSSFromDevice();
         void SetTopologyFromDevice();
+        void DrawMesh();
 
     public:
         EasyRender();
@@ -110,6 +110,8 @@ namespace HBSoft
         void SetEntireState();
 
         void Draw();
+        void DrawNormal();
+        void DrawAnimationNormal();
 
         void UpdateVSCB(const void* data, const size_t dataSize, const UINT constantIdx);
         void UpdatePSCB(const void* data, const size_t dataSize, const UINT constantIdx);
@@ -120,7 +122,6 @@ namespace HBSoft
         static void MergeRenderTarget(MultiRT dst, MultiRT src);
         static void SaveScreenShot(MultiRT renderTarget, std::wstring fileName);
         static void SetWireFrame(bool isWire);
-        static void DrawNormal(bool isNormalDrawn);
 
         // void DrawInstance()
     };

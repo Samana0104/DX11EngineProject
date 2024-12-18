@@ -185,4 +185,6 @@ void QuadTree::Render()
                                          DXGI_FORMAT_R32_UINT,
                                          0);
     HDEVICE->m_context->DrawIndexed((UINT)m_rootNode->child[0]->child[0]->indexList.size(), 0, 0);
+    m_mapObj->m_easyRender.DrawNormal();
+    HDEVICE->m_context->DrawIndexed((UINT)m_rootNode->child[0]->child[0]->indexList.size(), 0, 0);
 }

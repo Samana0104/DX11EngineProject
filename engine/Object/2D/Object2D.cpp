@@ -26,6 +26,7 @@ void Object2D::UpdateDefaultCB()
         m_cb0.view = mat4(1.0f);
     }
 
-    m_cb0.world = m_transform.m_worldMat;
+    m_cb0.world       = m_transform.m_worldMat;
+    m_cb0.normalWorld = 1.f;
     m_easyRender.UpdateVSCB((void*)&m_cb0, sizeof(m_cb0), 0);
 }

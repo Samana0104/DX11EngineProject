@@ -60,6 +60,7 @@ void EasyRender::InitShaderCBState() {}
 
 void EasyRender::Begin(MultiRT renderTarget)
 {
+
     float clearColor[] = {0.f, 0.f, 0.f, 0.0f};
     HDEVICE->m_context->ClearRenderTargetView(HDEVICE->m_multiRT[renderTarget].rtv.Get(), clearColor);
     HDEVICE->m_context->ClearDepthStencilView(HDEVICE->m_multiRT[renderTarget].dsv.Get(),
@@ -83,7 +84,6 @@ void EasyRender::End()
 
 void EasyRender::SetEntireState()
 {
-    InitShaderState();
     SetRRSFromDevice();
     SetDSSFromDevice();
     SetBSFromDevice();
@@ -92,6 +92,8 @@ void EasyRender::SetEntireState()
 
     if (m_isWireFrame)
         HDEVICE->m_context->RSSetState(HDEVICE->m_renderState.wireNoCullRS.Get());
+
+    InitShaderState();
 }
 
 void EasyRender::SetVSShader(const SHADER_KEY shaderKey)
@@ -140,7 +142,28 @@ void EasyRender::SetPSShader(const SHADER_KEY shaderKey)
     }
 }
 
-void EasyRender::SetGSShader(const SHADER_KEY shaderKey) {}
+void EasyRender::SetGSShader(const SHADER_KEY shaderKey)
+{
+    m_gsShader              = HASSET->m_shaders[shaderKey];
+    auto&   constantBuffers = m_gsShader->GetConstantBuffers();
+    HRESULT hr;
+
+    D3D11_BUFFER_DESC bufferDesc;
+
+    m_gsCB.clear();
+
+    for (int i = 0; i < constantBuffers.size(); i++)
+    {
+        ComPtr<ID3D11Buffer> constantBuffer = nullptr;
+        constantBuffers[i]->GetDesc(&bufferDesc);
+        hr = HDEVICE->m_d3dDevice->CreateBuffer(&bufferDesc, nullptr, constantBuffer.GetAddressOf());
+
+        if (FAILED(hr))
+            assert(false);
+
+        m_gsCB.push_back(constantBuffer);
+    }
+}
 
 void EasyRender::SetRRS(ERRasterRizerState rrs)
 {
@@ -180,36 +203,7 @@ void EasyRender::SetTexture(std::shared_ptr<Texture> texture)
 void EasyRender::Draw()
 {
     SetEntireState();
-
-    if (m_texture != nullptr)
-        HDEVICE->m_context->PSSetShaderResources(0, 1, m_texture->GetSRV().GetAddressOf());
-
-    if (m_mesh != nullptr)
-    {
-        UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
-        UINT pOffsets = 0;               // 버퍼에 시작 인덱스
-
-        HDEVICE->m_context->IASetVertexBuffers(0,
-                                               1,
-                                               m_mesh->m_vertexBuffer.GetAddressOf(),
-                                               &pStrides,
-                                               &pOffsets);
-
-        for (size_t i = 0; i < m_mesh->m_subMeshes.size(); i++)
-        {
-            if (m_mesh->m_subMeshes[i]->hasTexture)
-            {
-                HDEVICE->m_context->PSSetShaderResources(
-                0,
-                1,
-                HASSET->m_textures[m_mesh->m_subMeshes[i]->textureName]->GetSRV().GetAddressOf());
-            }
-            HDEVICE->m_context->IASetIndexBuffer(m_mesh->m_subMeshes[i]->indexBuffer.Get(),
-                                                 DXGI_FORMAT_R32_UINT,
-                                                 0);
-            HDEVICE->m_context->DrawIndexed((UINT)m_mesh->m_subMeshes[i]->indices.size(), 0, 0);
-        }
-    }
+    DrawMesh();
 }
 
 void EasyRender::SetRRSFromDevice()
@@ -318,6 +312,64 @@ void EasyRender::SetTopologyFromDevice()
     }
 }
 
+void EasyRender::DrawNormal()
+{
+    HASSET->m_shaders[L"NormalVertex.hlsl"]->SetUpToContext(HDEVICE);
+    HASSET->m_shaders[L"NormalGeometry.hlsl"]->SetUpToContext(HDEVICE);
+    HASSET->m_shaders[L"LinePixel.hlsl"]->SetUpToContext(HDEVICE);
+
+    HDEVICE->m_context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
+
+    HDEVICE->m_context->HSSetShader(NULL, NULL, 0);
+    HDEVICE->m_context->DSSetShader(NULL, NULL, 0);
+
+    std::vector<ID3D11Buffer*> buffer;
+
+    for (UINT i = 0; i < m_vsCB.size(); i++)
+        buffer.push_back(m_vsCB[i].Get());
+
+    if (buffer.size() > 0)
+        HDEVICE->m_context->GSSetConstantBuffers(0, (UINT)buffer.size(), &buffer.at(0));
+
+    DrawMesh();
+}
+
+void EasyRender::DrawAnimationNormal() {}
+
+void EasyRender::DrawMesh()
+{
+    if (m_texture != nullptr)
+        HDEVICE->m_context->PSSetShaderResources(0, 1, m_texture->GetSRV().GetAddressOf());
+
+    if (m_mesh != nullptr)
+    {
+
+        UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
+        UINT pOffsets = 0;               // 버퍼에 시작 인덱스
+
+        HDEVICE->m_context->IASetVertexBuffers(0,
+                                               1,
+                                               m_mesh->m_vertexBuffer.GetAddressOf(),
+                                               &pStrides,
+                                               &pOffsets);
+
+        for (size_t i = 0; i < m_mesh->m_subMeshes.size(); i++)
+        {
+            if (m_mesh->m_subMeshes[i]->hasTexture)
+            {
+                HDEVICE->m_context->PSSetShaderResources(
+                0,
+                1,
+                HASSET->m_textures[m_mesh->m_subMeshes[i]->textureName]->GetSRV().GetAddressOf());
+            }
+            HDEVICE->m_context->IASetIndexBuffer(m_mesh->m_subMeshes[i]->indexBuffer.Get(),
+                                                 DXGI_FORMAT_R32_UINT,
+                                                 0);
+            HDEVICE->m_context->DrawIndexed((UINT)m_mesh->m_subMeshes[i]->indices.size(), 0, 0);
+        }
+    }
+}
+
 void EasyRender::UpdateVSCB(const void* data, const size_t dataSize, const UINT constantIdx)
 {
     if (m_vsShader == nullptr)
@@ -363,6 +415,11 @@ void EasyRender::MergeRenderTarget(MultiRT dst, MultiRT src)
 
     HASSET->m_shaders[L"MergeVertex.hlsl"]->SetUpToContext(HDEVICE);
     HASSET->m_shaders[L"MergePixel.hlsl"]->SetUpToContext(HDEVICE);
+
+    HDEVICE->m_context->GSSetShader(NULL, NULL, 0);
+    HDEVICE->m_context->HSSetShader(NULL, NULL, 0);
+    HDEVICE->m_context->DSSetShader(NULL, NULL, 0);
+
     HDEVICE->m_context->IASetVertexBuffers(0,
                                            1,
                                            HASSET->m_meshes[L"BOX2D"]->m_vertexBuffer.GetAddressOf(),
@@ -399,9 +456,4 @@ void EasyRender::SaveScreenShot(MultiRT renderTarget, std::wstring fileName)
 void EasyRender::SetWireFrame(bool isWire)
 {
     m_isWireFrame = isWire;
-}
-
-void EasyRender::DrawNormal(bool isNormalDrawn)
-{
-    m_isNormalDrawn = isNormalDrawn;
 }

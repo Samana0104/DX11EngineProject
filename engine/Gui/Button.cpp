@@ -131,7 +131,7 @@ void Button::Update(const float deltaTime)
 void Button::Render()
 {
     m_easyRender.Draw();
-    m_font->DrawMsg(HDEVICE);
+    // m_font->DrawMsg(HDEVICE);
 }
 
 void Button::Release() {}

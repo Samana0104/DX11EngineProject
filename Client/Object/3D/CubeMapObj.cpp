@@ -32,6 +32,7 @@ void CubeMapObj::Render()
 {
     m_easyRender.SetEntireState();
     m_easyRender.Draw();
+    m_easyRender.DrawNormal();
 }
 
 void CubeMapObj::Release() {}

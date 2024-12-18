@@ -12,6 +12,7 @@ date: 2024-11-17
 #include "Shader/Shader.h"
 #include "Shader/VertexShader.h"
 #include "Shader/PixelShader.h"
+#include "Shader/GeometryShader.h"
 
 namespace HBSoft
 {

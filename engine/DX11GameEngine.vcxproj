@@ -40,6 +40,7 @@
     <ClCompile Include="Asset\Mesh\HeightMap.cpp" />
     <ClCompile Include="Asset\Mesh\Line.cpp" />
     <ClCompile Include="Asset\Mesh\Mesh.cpp" />
+    <ClCompile Include="Asset\Shader\GeometryShader.cpp" />
     <ClCompile Include="Asset\Shader\PixelShader.cpp" />
     <ClCompile Include="Asset\Shader\Shader.cpp" />
     <ClCompile Include="Asset\Shader\VertexShader.cpp" />
@@ -55,7 +56,6 @@
     </ClCompile>
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="DesignPattern\Observer.cpp" />
-    <ClCompile Include="GeometryShader.cpp" />
     <ClCompile Include="Gui\Button.cpp" />
     <ClCompile Include="Gui\GameButton.cpp" />
     <ClCompile Include="Gui\LobbyButton.cpp" />
@@ -90,6 +90,7 @@
     <ClInclude Include="Asset\Mesh\Line.h" />
     <ClInclude Include="Asset\Mesh\Mesh.h" />
     <ClInclude Include="Asset\Shader\ConstantBuffers.h" />
+    <ClInclude Include="Asset\Shader\GeometryShader.h" />
     <ClInclude Include="Asset\Shader\PixelShader.h" />
     <ClInclude Include="Asset\Shader\Shader.h" />
     <ClInclude Include="Asset\Shader\VertexShader.h" />
@@ -108,7 +109,6 @@
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="DesignPattern\Observer.h" />
     <ClInclude Include="DesignPattern\Singleton.h" />
-    <ClInclude Include="GeometryShader.h" />
     <ClInclude Include="Gui\Button.h" />
     <ClInclude Include="Gui\GameButton.h" />
     <ClInclude Include="Gui\LobbyButton.h" />
@@ -139,6 +139,9 @@
     <FxCompile Include="..\res\Shader\MergeVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
     </FxCompile>
+    <FxCompile Include="..\res\Shader\NormalAniGeomety.hlsl" />
+    <FxCompile Include="..\res\Shader\NormalGeometry.hlsl" />
+    <FxCompile Include="..\res\Shader\NormalVertex.hlsl" />
     <FxCompile Include="..\res\Shader\PixelShader.hlsl" />
     <FxCompile Include="..\res\Shader\VertexShader.hlsl" />
   </ItemGroup>
