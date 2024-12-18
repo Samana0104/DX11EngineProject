@@ -81,13 +81,11 @@ bool Font::CreateBrush(const D3Device* device)
 
 void Font::DrawMsg(std::shared_ptr<D3Device> device, const wstringV msg, HRect rect)
 {
-    device->m_2dRtv->BeginDraw();
     device->m_2dRtv->DrawText(msg.data(),
                               static_cast<UINT32>(msg.size()),
                               m_textFormat.Get(),
                               static_cast<const D2D1_RECT_F>(rect),
                               m_brush.Get());
-    device->m_2dRtv->EndDraw();
 }
 
 void Font::SetColor(const COLOR_F& color)

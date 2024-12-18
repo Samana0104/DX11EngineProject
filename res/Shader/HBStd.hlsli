@@ -37,6 +37,13 @@ struct CubePSInput
     float3 worldPos : POSITION;
 };
 
+struct NormalGeoInput
+{
+    float4 p : SV_Position;
+    float3 n : NORMAL;
+    float4 c : COLOR0;
+};
+
 struct ImagePSInput
 {
     float4 p : SV_Position;

@@ -99,7 +99,7 @@ bool GeometryShader::CreateGeometryShader(std::shared_ptr<D3Device> device)
 
     if (FAILED(hr))
     {
-        MessageBoxA(NULL, (char*)errorMsg->GetBufferPointer(), "PixelShader error", MB_OK);
+        MessageBoxA(NULL, (char*)errorMsg->GetBufferPointer(), "Geometry error", MB_OK);
         return false;
     }
 

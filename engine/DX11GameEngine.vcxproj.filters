@@ -192,7 +192,9 @@
     <ClCompile Include="Object\EasyRender.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="GeometryShader.cpp" />
+    <ClCompile Include="Asset\Shader\GeometryShader.cpp">
+      <Filter>Asset\Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -351,7 +353,9 @@
     <ClInclude Include="Object\EasyRender.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="GeometryShader.h" />
+    <ClInclude Include="Asset\Shader\GeometryShader.h">
+      <Filter>Asset\Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\res\Shader\2DVertex.hlsl">
@@ -385,6 +389,15 @@
       <Filter>hlsl</Filter>
     </FxCompile>
     <FxCompile Include="..\res\Shader\MergePixel.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\NormalGeometry.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\NormalVertex.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\NormalAniGeomety.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>

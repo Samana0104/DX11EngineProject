@@ -32,11 +32,11 @@ namespace HBSoft
     inline static const std::map<FONT_KEY, FontDesc> g_defaultFonts = {
         {L"DEBUG_FONT",
          {L"malgun",
-          L"ko-kr",
-          20.f,
-          DWRITE_FONT_WEIGHT_THIN,
-          DWRITE_FONT_STYLE_NORMAL,
-          DWRITE_FONT_STRETCH_NORMAL}},
+         L"ko-kr",
+         20.f,
+         DWRITE_FONT_WEIGHT_THIN,
+         DWRITE_FONT_STYLE_NORMAL,
+         DWRITE_FONT_STRETCH_NORMAL}},
     };
 
     /*
@@ -65,16 +65,19 @@ namespace HBSoft
     */
 
     inline static const std::map<SHADER_KEY, ShaderType> g_defaultShaders = {
-        {    L"VertexShader.hlsl", ShaderType::VERTEX},
-        {     L"PixelShader.hlsl",  ShaderType::PIXEL},
-        {       L"LinePixel.hlsl",  ShaderType::PIXEL},
-        {      L"LineVertex.hlsl", ShaderType::VERTEX},
-        {      L"CubeVertex.hlsl", ShaderType::VERTEX},
-        {       L"CubePixel.hlsl",  ShaderType::PIXEL},
-        {L"ColorPixelShader.hlsl",  ShaderType::PIXEL},
-        { L"AnimationVertex.hlsl", ShaderType::VERTEX},
-        {        L"2DVertex.hlsl", ShaderType::VERTEX},
-        {     L"MergeVertex.hlsl", ShaderType::VERTEX},
-        {      L"MergePixel.hlsl",  ShaderType::PIXEL}
+        {    L"VertexShader.hlsl",   ShaderType::VERTEX},
+        {     L"PixelShader.hlsl",    ShaderType::PIXEL},
+        {       L"LinePixel.hlsl",    ShaderType::PIXEL},
+        {      L"LineVertex.hlsl",   ShaderType::VERTEX},
+        {      L"CubeVertex.hlsl",   ShaderType::VERTEX},
+        {       L"CubePixel.hlsl",    ShaderType::PIXEL},
+        {L"ColorPixelShader.hlsl",    ShaderType::PIXEL},
+        { L"AnimationVertex.hlsl",   ShaderType::VERTEX},
+        {        L"2DVertex.hlsl",   ShaderType::VERTEX},
+        {     L"MergeVertex.hlsl",   ShaderType::VERTEX},
+        {      L"MergePixel.hlsl",    ShaderType::PIXEL},
+        {  L"NormalGeometry.hlsl", ShaderType::GEOMETRY},
+        {    L"NormalVertex.hlsl",   ShaderType::VERTEX},
+        {L"NormalAniGeomety.hlsl", ShaderType::GEOMETRY}
     };
 }  // namespace HBSoft

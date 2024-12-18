@@ -121,9 +121,7 @@ void LayoutFont::SetVerticalAlignment(DWRITE_TEXT_ALIGNMENT verticalAlign)
 
 void LayoutFont::DrawMsg(std::shared_ptr<D3Device> device)
 {
-    device->m_2dRtv->BeginDraw();
     device->m_2dRtv->DrawTextLayout(static_cast<const D2D1_POINT_2F>(m_textPos),
                                     m_layout.Get(),
                                     m_brush.Get());
-    device->m_2dRtv->EndDraw();
 }

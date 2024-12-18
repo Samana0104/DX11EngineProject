@@ -35,7 +35,9 @@ void SceneLobby::Render()
 
     EasyRender::Begin(MultiRT::GUI);
     m_lobbyBtn.Render();
+    HDEVICE->m_2dRtv->BeginDraw();
     HASSET->m_fonts[L"DEBUG_FONT"]->DrawMsg(HDEVICE, HTIMER.m_csBuffer, {10.f, 10.f, 1000.f, 1000.f});
+    HDEVICE->m_2dRtv->EndDraw();
     EasyRender::End();
 
     if (HINPUT->IsKeyDown(VK_HOME))

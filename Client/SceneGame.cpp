@@ -29,7 +29,6 @@ void SceneGame::Update(float deltaTime)
 
     cameraTest->Update(deltaTime);
 
-
     m_line.Update(deltaTime);
     cube.Update(deltaTime);
     m_escButton.Update(deltaTime);
@@ -50,9 +49,13 @@ void SceneGame::Render()
     m_tree.Render();
     EasyRender::End();
 
+    // 글자 안나오는 이유 상수 버퍼
+    // 프레임 떨어지는 이유 폰트로
     EasyRender::Begin(MultiRT::GUI);
     m_escButton.Render();
+    HDEVICE->m_2dRtv->BeginDraw();
     HASSET->m_fonts[L"DEBUG_FONT"]->DrawMsg(HDEVICE, HTIMER.m_csBuffer, {10.f, 10.f, 1000.f, 1000.f});
+    HDEVICE->m_2dRtv->EndDraw();
     EasyRender::End();
 
     if (HINPUT->IsKeyDown(VK_HOME))
