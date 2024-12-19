@@ -181,10 +181,8 @@ void QuadTree::Render()
                                            &pStrides,
                                            &pOffsets);
 
-    HDEVICE->m_context->IASetIndexBuffer(m_rootNode->child[0]->child[0]->indexBuffer.Get(),
-                                         DXGI_FORMAT_R32_UINT,
-                                         0);
-    HDEVICE->m_context->DrawIndexed((UINT)m_rootNode->child[0]->child[0]->indexList.size(), 0, 0);
-    m_mapObj->m_easyRender.DrawNormal();
-    HDEVICE->m_context->DrawIndexed((UINT)m_rootNode->child[0]->child[0]->indexList.size(), 0, 0);
+    HDEVICE->m_context->IASetIndexBuffer(m_rootNode->indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+    HDEVICE->m_context->DrawIndexed((UINT)m_rootNode->indexList.size(), 0, 0);
+    // m_mapObj->m_easyRender.SetNormalState();
+    // HDEVICE->m_context->DrawIndexed((UINT)m_rootNode->indexList.size(), 0, 0);
 }

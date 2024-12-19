@@ -31,14 +31,12 @@ void SceneLobby::Render()
     EasyRender::Begin(MultiRT::MAIN);
     m_title.Render();
     EasyRender::SetWireFrame(isWire);
-    EasyRender::End();
+    EasyRender::End(MultiRT::MAIN);
 
     EasyRender::Begin(MultiRT::GUI);
     m_lobbyBtn.Render();
-    HDEVICE->m_2dRtv->BeginDraw();
-    HASSET->m_fonts[L"DEBUG_FONT"]->DrawMsg(HDEVICE, HTIMER.m_csBuffer, {10.f, 10.f, 1000.f, 1000.f});
-    HDEVICE->m_2dRtv->EndDraw();
-    EasyRender::End();
+    HASSET->m_fonts[L"DEBUG_FONT"]->DrawMsg(HTIMER.m_csBuffer);
+    EasyRender::End(MultiRT::GUI);
 
     if (HINPUT->IsKeyDown(VK_HOME))
     {

@@ -16,6 +16,7 @@ HeightMapObj::HeightMapObj()
 
     CreateMapDesc(L"Map512.hmp", 2.f, 0.2f, 2.f);
     m_mesh = MeshFactory::CreateHeightMap(HDEVICE, m_mapDesc);
+    GenerateVertexNormal();
 
     m_easyRender.SetVSShader(L"VertexShader.hlsl");
     m_easyRender.SetPSShader(L"PixelShader.hlsl");
@@ -122,6 +123,44 @@ float HeightMapObj::GetHeight(vec3 pos)
     }
 
     return height;
+}
+
+void HeightMapObj::GenerateVertexNormal()
+{
+    UINT faces = m_mesh->m_subMeshes[0]->indices.size() / 3;
+    m_vertexInfo.resize(m_mesh->m_vertices.size());
+
+    for (UINT i = 0; i < faces; i++)
+    {
+        for (UINT j = 0; j < 3; j++)
+        {
+            UINT idxInFace = m_mesh->m_subMeshes[0]->indices[i * 3 + j];
+            m_vertexInfo[idxInFace].faceIndices.push_back(i);
+        }
+    }
+
+    for (UINT i = 0; i < m_vertexInfo.size(); i++)
+        ComputeVertexNormal(i);
+
+    m_mesh->UpdateVertices(HDEVICE);
+}
+
+void HeightMapObj::ComputeVertexNormal(UINT vertex)
+{
+    for (UINT i = 0; i < m_vertexInfo[vertex].faceIndices.size(); i++)
+    {
+        UINT faceindex  = m_vertexInfo[vertex].faceIndices[i];
+        UINT idxInFace1 = m_mesh->m_subMeshes[0]->indices[faceindex * 3];
+        UINT idxInFace2 = m_mesh->m_subMeshes[0]->indices[faceindex * 3 + 1];
+        UINT idxInFace3 = m_mesh->m_subMeshes[0]->indices[faceindex * 3 + 2];
+        vec3 edge0      = m_mesh->m_vertices[idxInFace2].p - m_mesh->m_vertices[idxInFace1].p;
+        vec3 edge1      = m_mesh->m_vertices[idxInFace3].p - m_mesh->m_vertices[idxInFace1].p;
+        vec3 normal     = glm::normalize(glm::cross(edge0, edge1));
+
+        m_vertexInfo[vertex].normal += normal;
+    }
+
+    m_mesh->m_vertices[vertex].n = glm::normalize(m_vertexInfo[vertex].normal);
 }
 
 void HeightMapObj::Init() {}

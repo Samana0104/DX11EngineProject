@@ -19,6 +19,7 @@ SceneGame::SceneGame()
     m_line.SetCamera(cameraTest);
     cube.SetCamera(cameraTest);
     m_tree.SetCamera(cameraTest);
+    m_test.SetCamera(cameraTest);
     m_goose.SetCamera(cameraTest);
     m_goose.SetHeightMap(m_tree.GetMapObj());
 }
@@ -32,6 +33,7 @@ void SceneGame::Update(float deltaTime)
     m_line.Update(deltaTime);
     cube.Update(deltaTime);
     m_escButton.Update(deltaTime);
+    m_test.Update(deltaTime);
     m_goose.Update(deltaTime);
     m_tree.Update(deltaTime);
 }
@@ -47,16 +49,15 @@ void SceneGame::Render()
     m_goose.Render();
     cube.Render();
     m_tree.Render();
-    EasyRender::End();
+    m_test.Render();
+    EasyRender::End(MultiRT::MAIN);
 
     // 글자 안나오는 이유 상수 버퍼
     // 프레임 떨어지는 이유 폰트로
     EasyRender::Begin(MultiRT::GUI);
     m_escButton.Render();
-    HDEVICE->m_2dRtv->BeginDraw();
-    HASSET->m_fonts[L"DEBUG_FONT"]->DrawMsg(HDEVICE, HTIMER.m_csBuffer, {10.f, 10.f, 1000.f, 1000.f});
-    HDEVICE->m_2dRtv->EndDraw();
-    EasyRender::End();
+    HASSET->m_fonts[L"DEBUG_FONT"]->DrawMsg(HTIMER.m_csBuffer);
+    EasyRender::End(MultiRT::GUI);
 
     if (HINPUT->IsKeyDown(VK_HOME))
     {

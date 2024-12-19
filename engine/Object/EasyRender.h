@@ -110,16 +110,18 @@ namespace HBSoft
         void SetTexture(std::shared_ptr<Texture> texture);
         void SetEntireState();
 
-        void Draw();
-        void DrawNormal();
-        void DrawAnimationNormal();
+        void Draw(bool hasState = true);
+
+        void SetNormalState();
+        // 반드시 버텍스 쉐이더 0번 상수버퍼가 애니메이션 행렬이여야함
+        void SetAnimationNormalState();
 
         void UpdateVSCB(const void* data, const size_t dataSize, const UINT constantIdx);
         void UpdatePSCB(const void* data, const size_t dataSize, const UINT constantIdx);
         void UpdateGSCB(const void* data, const size_t dataSize, const UINT constantIdx);
 
         static void Begin(MultiRT renderTarget);
-        static void End();
+        static void End(MultiRT renderTarget);
         static void MergeRenderTarget(MultiRT dst, MultiRT src);
         static void SaveScreenShot(MultiRT renderTarget, std::wstring fileName);
         static void SetWireFrame(bool isWire);

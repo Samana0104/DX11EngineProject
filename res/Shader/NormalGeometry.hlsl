@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : 노말벡터를 출력하기 위한 기하쉐이더 파일
+
+version: 1.0.0
+date: 2024-12-19
+*/
+
 #include "HBStd.hlsli"
 
 cbuffer DefaultMat3D : register(b0)
@@ -29,7 +37,7 @@ void main(point NormalGeoInput input[1], uint primID : SV_PrimitiveID,
 
     outputStream.Append(psIn);
 
-    viewPos = mul(viewMat, normalWorld * 5.f + worldPos);
+    viewPos = mul(viewMat, normalWorld * 0.5f + worldPos);
     projPos = mul(projMat, viewPos);
     psIn.p = projPos;
     psIn.c = input[0].c;

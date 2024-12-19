@@ -397,7 +397,7 @@
     <FxCompile Include="..\res\Shader\NormalVertex.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="..\res\Shader\NormalAniGeomety.hlsl">
+    <FxCompile Include="..\res\Shader\NormalAniVertex.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>

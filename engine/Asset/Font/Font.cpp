@@ -16,6 +16,7 @@ Font::Font(std::shared_ptr<D3Device> device, const FontDesc& desc)
     m_horizontalAlign = DWRITE_PARAGRAPH_ALIGNMENT_NEAR;
     m_verticalAlign   = DWRITE_TEXT_ALIGNMENT_LEADING;
     m_color           = {1.f, 1.f, 1.f, 1.f};
+    m_textRect        = {0.f, 0.f, FLT_MAX, FLT_MAX};
 
     assert(CreateComponent(device.get()));
     EventHandler::GetInstance().AddEvent(EventList::DEVICE_CHANGE, this);
@@ -30,6 +31,15 @@ void Font::OnNotice(EventList event, void* entity)
 {
     D3Device* device = reinterpret_cast<D3Device*>(entity);
     ResetComponent(device);
+}
+
+void Font::Render(std::shared_ptr<D3Device> device, const FontMsgQueue& msgQueue)
+{
+    device->m_2dRtv->DrawText(msgQueue.msg.data(),
+                              static_cast<UINT32>(msgQueue.msg.size()),
+                              m_textFormat.Get(),
+                              static_cast<const D2D1_RECT_F>(m_textRect),
+                              m_brush.Get());
 }
 
 bool Font::CreateComponent(const D3Device* device)
@@ -79,13 +89,13 @@ bool Font::CreateBrush(const D3Device* device)
     return SUCCEEDED(hr);
 }
 
-void Font::DrawMsg(std::shared_ptr<D3Device> device, const wstringV msg, HRect rect)
+void Font::DrawMsg(const wstringV msg)
 {
-    device->m_2dRtv->DrawText(msg.data(),
-                              static_cast<UINT32>(msg.size()),
-                              m_textFormat.Get(),
-                              static_cast<const D2D1_RECT_F>(rect),
-                              m_brush.Get());
+    FontMsgQueue msgQueue;
+    msgQueue.font = this;
+    msgQueue.msg  = msg;
+
+    m_msgQueue.push(msgQueue);
 }
 
 void Font::SetColor(const COLOR_F& color)
@@ -121,24 +131,23 @@ void Font::SetVerticalAlignment(DWRITE_TEXT_ALIGNMENT verticalAlign)
     m_textFormat->SetTextAlignment(m_verticalAlign);
 }
 
+void Font::SetRect(const HRect& rect) {}
+
+void Font::ProcessQueue(std::shared_ptr<D3Device> device)
+{
+    FontMsgQueue queue;
+
+    device->m_2dRtv->BeginDraw();
+    while (!m_msgQueue.empty())
+    {
+        queue = m_msgQueue.front();
+        queue.font->Render(device, queue);
+        m_msgQueue.pop();
+    }
+    device->m_2dRtv->EndDraw();
+}
+
 const FontDesc& Font::GetDesc() const
 {
     return m_fontDesc;
 }
-
-// vec2 Font::GetTextSize(const wstringV text) const
-//{
-//     ComPtr<IDWriteTextLayout> textLayout;
-//     DWRITE_TEXT_METRICS       textMetrics;
-//
-//     m_writeFactory->CreateTextLayout(text.data(),
-//                                      static_cast<UINT32>(text.size()),
-//                                      m_textFormat.Get(),
-//                                      FLT_MAX,  // Max width
-//                                      FLT_MAX,  // Max height
-//                                      textLayout.GetAddressOf());
-//
-//     textLayout->GetMetrics(&textMetrics);
-//
-//     return {textMetrics.width, textMetrics.height};
-// }

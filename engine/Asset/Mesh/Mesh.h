@@ -67,6 +67,14 @@ namespace HBSoft
         bool                 hasTexture;
     };
 
+    struct Material
+    {
+        vec3  diffuse;
+        vec3  ambient;
+        vec3  specular;
+        float shininess;
+    };
+
     class Mesh
     {
     public:

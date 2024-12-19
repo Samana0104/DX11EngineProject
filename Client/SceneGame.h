@@ -31,6 +31,7 @@ namespace HBSoft
         QuadTree                m_tree;
         Goose                   m_goose;
         Gardener                m_gardener;
+        Test3DObj               m_test;
 
 
         bool isWire = false;
