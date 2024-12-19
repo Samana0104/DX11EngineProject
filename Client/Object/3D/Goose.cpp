@@ -346,6 +346,8 @@ void Goose::Update(float deltaTime)
 void Goose::Render()
 {
     m_easyRender.Draw();
+    m_easyRender.SetAnimationNormalState();
+    m_easyRender.Draw(false);
 }
 
 void Goose::Release() {}

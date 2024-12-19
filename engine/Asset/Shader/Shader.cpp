@@ -15,14 +15,9 @@ Shader::Shader(const wstringV path, const ShaderType& type)
     : m_shaderType(type), m_path(path)
 {}
 
-size_t Shader::GetConstantCount() const
+std::vector<D3D11_BUFFER_DESC>& Shader::GetCBDescs()
 {
-    return m_constantBuffers.size();
-}
-
-std::vector<ComPtr<ID3D11Buffer>>& Shader::GetConstantBuffers()
-{
-    return m_constantBuffers;
+    return m_cbDesc;
 }
 
 const ShaderType& Shader::GetShaderType() const

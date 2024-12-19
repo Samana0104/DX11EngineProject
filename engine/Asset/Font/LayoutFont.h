@@ -29,17 +29,18 @@ namespace HBSoft
         bool CreateLayout();
 
         virtual void OnNotice(EventList event, void* entity) override;
+        virtual void Render(std::shared_ptr<D3Device> device, const FontMsgQueue& msgQueue) override;
 
     public:
         LayoutFont(std::shared_ptr<D3Device> device, const FontDesc& desc);
 
         void SetText(const wstringV text);
-        void SetRect(const HRect& rect);
         void SetUnderline(bool isUnderline);
 
-        void DrawMsg(std::shared_ptr<D3Device> device);
+        void DrawMsg();
 
         virtual void SetHorizontalAlignment(DWRITE_PARAGRAPH_ALIGNMENT horizontalAlign) override;
         virtual void SetVerticalAlignment(DWRITE_TEXT_ALIGNMENT verticalAlign) override;
+        virtual void SetRect(const HRect& rect) override;
     };
 }  // namespace HBSoft

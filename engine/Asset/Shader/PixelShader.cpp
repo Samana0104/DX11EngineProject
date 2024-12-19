@@ -50,7 +50,7 @@ bool PixelShader::CreateConstantBuffer(std::shared_ptr<D3Device> device)
     D3D11_SHADER_DESC shaderDesc;
     pReflector->GetDesc(&shaderDesc);
 
-    m_constantBuffers.resize(shaderDesc.ConstantBuffers);
+    m_cbDesc.resize(shaderDesc.ConstantBuffers);
 
     for (UINT i = 0; i < shaderDesc.ConstantBuffers; ++i)
     {
@@ -58,19 +58,11 @@ bool PixelShader::CreateConstantBuffer(std::shared_ptr<D3Device> device)
         D3D11_SHADER_BUFFER_DESC              cbDesc;
         pCB->GetDesc(&cbDesc);
 
-        D3D11_BUFFER_DESC bufferDesc = {};
-        bufferDesc.BindFlags         = D3D11_BIND_CONSTANT_BUFFER;
-        bufferDesc.ByteWidth         = cbDesc.Size;
-        bufferDesc.Usage             = D3D11_USAGE_DYNAMIC;
-        bufferDesc.CPUAccessFlags    = D3D11_CPU_ACCESS_WRITE;
-
-        ComPtr<ID3D11Buffer> constantBuffer = nullptr;
-        hr = device->m_d3dDevice->CreateBuffer(&bufferDesc, nullptr, constantBuffer.GetAddressOf());
-
-        if (FAILED(hr))
-            return false;
-
-        m_constantBuffers.push_back(constantBuffer);
+        ZeroMemory(&m_cbDesc[i], sizeof(D3D11_BUFFER_DESC));
+        m_cbDesc[i].BindFlags      = D3D11_BIND_CONSTANT_BUFFER;
+        m_cbDesc[i].ByteWidth      = cbDesc.Size;
+        m_cbDesc[i].Usage          = D3D11_USAGE_DYNAMIC;
+        m_cbDesc[i].CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
     }
 
     return true;

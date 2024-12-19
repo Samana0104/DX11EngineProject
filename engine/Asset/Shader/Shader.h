@@ -22,8 +22,8 @@ namespace HBSoft
     class Shader
     {
     protected:
-        ComPtr<ID3DBlob>                  m_shaderByteCode;
-        std::vector<ComPtr<ID3D11Buffer>> m_constantBuffers;
+        ComPtr<ID3DBlob>               m_shaderByteCode;
+        std::vector<D3D11_BUFFER_DESC> m_cbDesc;
 
         std::wstring m_path;
         ShaderType   m_shaderType;
@@ -39,9 +39,7 @@ namespace HBSoft
        */
         virtual void SetUpToContext(std::shared_ptr<D3Device> device) = 0;
 
-        size_t GetConstantCount() const;
-
-        std::vector<ComPtr<ID3D11Buffer>>& GetConstantBuffers();
+        std::vector<D3D11_BUFFER_DESC>& GetCBDescs();
 
         /*
             param : data -> 상수 버퍼에 넣을 void형 포인터 | dataSize -> 상수 버퍼에 넣을 데이터의 크기

@@ -8,20 +8,6 @@ date: 2024-11-17
 
 #include "HBStd.hlsli"
 
-#define MAX_BONE_MAT 255
-
-struct AnimationInput
-{
-    float3 p : POSITION0;
-    float3 n : NORMAL0;
-    float4 c : COLOR0;
-    float2 t : TEXCOORD0;
-    uint4 i1 : BLENDINDICES0;
-    uint4 i2 : BLENDINDICES1;
-    float4 w1 : BLENDWEIGHT0;
-    float4 w2 : BLENDWEIGHT1;
-};
-
 cbuffer DefaultMat3D : register(b0)
 {
     Matrix worldMat;
@@ -71,7 +57,7 @@ PSInput main(AnimationInput vsIn)
     float4 normal = mul(normalMat, float4(vsIn.n.xyz, 0));
     
     psIn.p = projPos;
-    psIn.n = normal;
+    psIn.n = normalize(normal);
     psIn.c = vsIn.c;
     psIn.t = vsIn.t;
     return psIn;

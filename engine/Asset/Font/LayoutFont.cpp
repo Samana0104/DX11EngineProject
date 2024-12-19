@@ -28,6 +28,13 @@ void LayoutFont::OnNotice(EventList event, void* entity)
     CreateLayout();
 }
 
+void LayoutFont::Render(std::shared_ptr<D3Device> device, const FontMsgQueue& msgQueue)
+{
+    device->m_2dRtv->DrawTextLayout(static_cast<const D2D1_POINT_2F>(m_textPos),
+                                    m_layout.Get(),
+                                    m_brush.Get());
+}
+
 bool LayoutFont::CreateLayout()
 {
     if (m_layout)
@@ -55,7 +62,7 @@ bool LayoutFont::CreateLayout()
 void LayoutFont::SetText(const wstringV text)
 {
     m_text = text;
-    CreateLayout();
+    assert(CreateLayout());
 }
 
 void LayoutFont::SetRect(const HRect& rect)
@@ -119,9 +126,11 @@ void LayoutFont::SetVerticalAlignment(DWRITE_TEXT_ALIGNMENT verticalAlign)
     }
 }
 
-void LayoutFont::DrawMsg(std::shared_ptr<D3Device> device)
+void LayoutFont::DrawMsg()
 {
-    device->m_2dRtv->DrawTextLayout(static_cast<const D2D1_POINT_2F>(m_textPos),
-                                    m_layout.Get(),
-                                    m_brush.Get());
+    FontMsgQueue msgQueue;
+    msgQueue.font = this;
+    msgQueue.msg;
+
+    m_msgQueue.push(msgQueue);
 }

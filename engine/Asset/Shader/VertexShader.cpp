@@ -143,49 +143,19 @@ bool VertexShader::CreateIALayoutAndConstantBuffer(std::shared_ptr<D3Device> dev
     if (FAILED(hr))
         return false;
 
-    // D3D11_SHADER_INPUT_BIND_DESC bindDesc;
-    //// 리소스 바인딩 설명을 가져오는 루프
-    // for (UINT i = 0;; ++i)
-    //{
-    //     hr = pReflector->GetResourceBindingDesc(i, &bindDesc);
+    m_cbDesc.resize(shaderDesc.ConstantBuffers);
 
-    //    if (FAILED(hr))
-    //        break;
-
-    //    switch (bindDesc.Type)
-    //    {
-    //    case D3D_SIT_TEXTURE:
-    //        m_numTexture++;
-    //        break;
-
-    //    case D3D_SIT_SAMPLER:
-    //        m_numSampler;
-    //        break;
-    //    }
-    //}
-
-    m_constantBuffers.resize(shaderDesc.ConstantBuffers);
-
-    // 1. Vertex Shader의 상수 버퍼 정보를 가져옴
     for (UINT i = 0; i < shaderDesc.ConstantBuffers; ++i)
     {
         ID3D11ShaderReflectionConstantBuffer* pCB = pReflector->GetConstantBufferByIndex(i);
         D3D11_SHADER_BUFFER_DESC              cbDesc;
         pCB->GetDesc(&cbDesc);
 
-        D3D11_BUFFER_DESC bufferDesc = {};
-        bufferDesc.BindFlags         = D3D11_BIND_CONSTANT_BUFFER;
-        bufferDesc.ByteWidth         = cbDesc.Size;
-        bufferDesc.Usage             = D3D11_USAGE_DYNAMIC;
-        bufferDesc.CPUAccessFlags    = D3D11_CPU_ACCESS_WRITE;
-
-        ComPtr<ID3D11Buffer> constantBuffer = nullptr;
-        hr = device->m_d3dDevice->CreateBuffer(&bufferDesc, nullptr, constantBuffer.GetAddressOf());
-
-        if (FAILED(hr))
-            return false;
-
-        m_constantBuffers[i] = constantBuffer;
+        ZeroMemory(&m_cbDesc[i], sizeof(D3D11_BUFFER_DESC));
+        m_cbDesc[i].BindFlags      = D3D11_BIND_CONSTANT_BUFFER;
+        m_cbDesc[i].ByteWidth      = cbDesc.Size;
+        m_cbDesc[i].Usage          = D3D11_USAGE_DYNAMIC;
+        m_cbDesc[i].CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
     }
 
     return true;

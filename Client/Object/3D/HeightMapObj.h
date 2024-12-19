@@ -14,14 +14,10 @@ date: 2024-12-12
 
 namespace HBSoft
 {
-    struct FaceInfo
-    {
-        vec3 normal;
-    };
-
     struct VertexInfo
     {
         std::vector<UINT> faceIndices;
+        vec3              normal;
     };
 
     /*
@@ -44,7 +40,6 @@ namespace HBSoft
         MapDesc                  m_mapDesc;
         std::shared_ptr<Texture> m_mapTexture;
         std::shared_ptr<Mesh>    m_mesh;
-        std::vector<FaceInfo>    m_faceInfo;
         std::vector<VertexInfo>  m_vertexInfo;
 
     private:
@@ -58,6 +53,8 @@ namespace HBSoft
         */
         void CreateMapDesc(const TEXTURE_KEY texKey, float scaleXPerCell, float scaleYPerCell,
                            float scaleZPerCell);
+        void GenerateVertexNormal();
+        void ComputeVertexNormal(UINT vertex);
 
     public:
         HeightMapObj();

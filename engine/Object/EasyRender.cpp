@@ -74,8 +74,11 @@ void EasyRender::Begin(MultiRT renderTarget)
                                            HDEVICE->m_multiRT[renderTarget].dsv.Get());
 }
 
-void EasyRender::End()
+void EasyRender::End(MultiRT renderTarget)
 {
+    if (renderTarget == MultiRT::GUI)
+        Font::ProcessQueue(HDEVICE);
+
     HDEVICE->m_context->RSSetViewports(1, &HDEVICE->m_multiRT[MultiRT::MAIN].viewPort);
     HDEVICE->m_context->OMSetRenderTargets(1,
                                            HDEVICE->m_multiRT[MultiRT::MAIN].rtv.GetAddressOf(),
@@ -98,19 +101,16 @@ void EasyRender::SetEntireState()
 
 void EasyRender::SetVSShader(const SHADER_KEY shaderKey)
 {
-    m_vsShader              = HASSET->m_shaders[shaderKey];
-    auto&   constantBuffers = m_vsShader->GetConstantBuffers();
+    m_vsShader      = HASSET->m_shaders[shaderKey];
+    auto&   cbDescs = m_vsShader->GetCBDescs();
     HRESULT hr;
-
-    D3D11_BUFFER_DESC bufferDesc;
 
     m_vsCB.clear();
 
-    for (size_t i = 0; i < constantBuffers.size(); i++)
+    for (size_t i = 0; i < cbDescs.size(); i++)
     {
         ComPtr<ID3D11Buffer> constantBuffer = nullptr;
-        constantBuffers[i]->GetDesc(&bufferDesc);
-        hr = HDEVICE->m_d3dDevice->CreateBuffer(&bufferDesc, nullptr, constantBuffer.GetAddressOf());
+        hr = HDEVICE->m_d3dDevice->CreateBuffer(&cbDescs[i], nullptr, constantBuffer.GetAddressOf());
 
         if (FAILED(hr))
             assert(false);
@@ -121,19 +121,16 @@ void EasyRender::SetVSShader(const SHADER_KEY shaderKey)
 
 void EasyRender::SetPSShader(const SHADER_KEY shaderKey)
 {
-    m_psShader              = HASSET->m_shaders[shaderKey];
-    auto&   constantBuffers = m_psShader->GetConstantBuffers();
+    m_psShader      = HASSET->m_shaders[shaderKey];
+    auto&   cbDescs = m_psShader->GetCBDescs();
     HRESULT hr;
-
-    D3D11_BUFFER_DESC bufferDesc;
 
     m_psCB.clear();
 
-    for (int i = 0; i < constantBuffers.size(); i++)
+    for (size_t i = 0; i < cbDescs.size(); i++)
     {
         ComPtr<ID3D11Buffer> constantBuffer = nullptr;
-        constantBuffers[i]->GetDesc(&bufferDesc);
-        hr = HDEVICE->m_d3dDevice->CreateBuffer(&bufferDesc, nullptr, constantBuffer.GetAddressOf());
+        hr = HDEVICE->m_d3dDevice->CreateBuffer(&cbDescs[i], nullptr, constantBuffer.GetAddressOf());
 
         if (FAILED(hr))
             assert(false);
@@ -144,19 +141,16 @@ void EasyRender::SetPSShader(const SHADER_KEY shaderKey)
 
 void EasyRender::SetGSShader(const SHADER_KEY shaderKey)
 {
-    m_gsShader              = HASSET->m_shaders[shaderKey];
-    auto&   constantBuffers = m_gsShader->GetConstantBuffers();
+    m_gsShader      = HASSET->m_shaders[shaderKey];
+    auto&   cbDescs = m_gsShader->GetCBDescs();
     HRESULT hr;
-
-    D3D11_BUFFER_DESC bufferDesc;
 
     m_gsCB.clear();
 
-    for (int i = 0; i < constantBuffers.size(); i++)
+    for (size_t i = 0; i < cbDescs.size(); i++)
     {
         ComPtr<ID3D11Buffer> constantBuffer = nullptr;
-        constantBuffers[i]->GetDesc(&bufferDesc);
-        hr = HDEVICE->m_d3dDevice->CreateBuffer(&bufferDesc, nullptr, constantBuffer.GetAddressOf());
+        hr = HDEVICE->m_d3dDevice->CreateBuffer(&cbDescs[i], nullptr, constantBuffer.GetAddressOf());
 
         if (FAILED(hr))
             assert(false);
@@ -200,9 +194,11 @@ void EasyRender::SetTexture(std::shared_ptr<Texture> texture)
     m_texture = texture;
 }
 
-void EasyRender::Draw()
+void EasyRender::Draw(bool hasState)
 {
-    SetEntireState();
+    if (hasState)
+        SetEntireState();
+
     DrawMesh();
 }
 
@@ -312,7 +308,7 @@ void EasyRender::SetTopologyFromDevice()
     }
 }
 
-void EasyRender::DrawNormal()
+void EasyRender::SetNormalState()
 {
     HASSET->m_shaders[L"NormalVertex.hlsl"]->SetUpToContext(HDEVICE);
     HASSET->m_shaders[L"NormalGeometry.hlsl"]->SetUpToContext(HDEVICE);
@@ -323,18 +319,23 @@ void EasyRender::DrawNormal()
     HDEVICE->m_context->HSSetShader(NULL, NULL, 0);
     HDEVICE->m_context->DSSetShader(NULL, NULL, 0);
 
-    std::vector<ID3D11Buffer*> buffer;
-
-    for (UINT i = 0; i < m_vsCB.size(); i++)
-        buffer.push_back(m_vsCB[i].Get());
-
-    if (buffer.size() > 0)
-        HDEVICE->m_context->GSSetConstantBuffers(0, (UINT)buffer.size(), &buffer.at(0));
-
-    DrawMesh();
+    HDEVICE->m_context->GSSetConstantBuffers(0, 1, m_vsCB.at(0).GetAddressOf());
 }
 
-void EasyRender::DrawAnimationNormal() {}
+void EasyRender::SetAnimationNormalState()
+{
+    HASSET->m_shaders[L"NormalAniVertex.hlsl"]->SetUpToContext(HDEVICE);
+    HASSET->m_shaders[L"NormalGeometry.hlsl"]->SetUpToContext(HDEVICE);
+    HASSET->m_shaders[L"LinePixel.hlsl"]->SetUpToContext(HDEVICE);
+
+    HDEVICE->m_context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
+
+    HDEVICE->m_context->HSSetShader(NULL, NULL, 0);
+    HDEVICE->m_context->DSSetShader(NULL, NULL, 0);
+
+    HDEVICE->m_context->VSSetConstantBuffers(0, 1, m_vsCB.at(1).GetAddressOf());
+    HDEVICE->m_context->GSSetConstantBuffers(0, 1, m_vsCB.at(0).GetAddressOf());
+}
 
 void EasyRender::DrawMesh()
 {
@@ -388,7 +389,7 @@ void EasyRender::UpdateVSCB(const void* data, const size_t dataSize, const UINT 
 
 void EasyRender::UpdatePSCB(const void* data, const size_t dataSize, const UINT constantIdx)
 {
-    if (m_vsShader == nullptr)
+    if (m_psShader == nullptr)
         return;
 
     if (m_psCB.size() <= 0)
@@ -402,7 +403,21 @@ void EasyRender::UpdatePSCB(const void* data, const size_t dataSize, const UINT 
     HDEVICE->m_context->Unmap(m_psCB[constantIdx].Get(), NULL);
 }
 
-void EasyRender::UpdateGSCB(const void* data, const size_t dataSize, const UINT constantIdx) {}
+void EasyRender::UpdateGSCB(const void* data, const size_t dataSize, const UINT constantIdx)
+{
+    if (m_gsShader == nullptr)
+        return;
+
+    if (m_gsCB.size() <= 0)
+        return;
+
+    D3D11_MAPPED_SUBRESOURCE ms;
+    HRESULT                  hr;
+
+    hr = HDEVICE->m_context->Map(m_gsCB[constantIdx].Get(), NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms);
+    memcpy(ms.pData, data, dataSize);
+    HDEVICE->m_context->Unmap(m_gsCB[constantIdx].Get(), NULL);
+}
 
 void EasyRender::MergeRenderTarget(MultiRT dst, MultiRT src)
 {
@@ -420,6 +435,7 @@ void EasyRender::MergeRenderTarget(MultiRT dst, MultiRT src)
     HDEVICE->m_context->HSSetShader(NULL, NULL, 0);
     HDEVICE->m_context->DSSetShader(NULL, NULL, 0);
 
+    HDEVICE->m_context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     HDEVICE->m_context->IASetVertexBuffers(0,
                                            1,
                                            HASSET->m_meshes[L"BOX2D"]->m_vertexBuffer.GetAddressOf(),

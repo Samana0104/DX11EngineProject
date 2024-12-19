@@ -139,7 +139,7 @@
     <FxCompile Include="..\res\Shader\MergeVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
     </FxCompile>
-    <FxCompile Include="..\res\Shader\NormalAniGeomety.hlsl" />
+    <FxCompile Include="..\res\Shader\NormalAniVertex.hlsl" />
     <FxCompile Include="..\res\Shader\NormalGeometry.hlsl" />
     <FxCompile Include="..\res\Shader\NormalVertex.hlsl" />
     <FxCompile Include="..\res\Shader\PixelShader.hlsl" />
