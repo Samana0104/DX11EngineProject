@@ -30,7 +30,6 @@ void CubeMapObj::Update(const float deltaTime)
 
 void CubeMapObj::Render()
 {
-    m_easyRender.SetEntireState();
     m_easyRender.Draw();
 }
 

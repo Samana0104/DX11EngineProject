@@ -73,6 +73,24 @@ void HBSLoader::WriteHBSAsciiFileFromVertex(std::shared_ptr<Mesh> mesh)
                           << std::endl;
         m_outputAsciiFile << "hasTexture : " << mesh->m_subMeshes[i]->hasTexture << std::endl
                           << std::endl;
+        m_outputAsciiFile << "material(ambient) : " << mesh->m_subMeshes[i]->material.ambient[0] << ", "
+                          << mesh->m_subMeshes[i]->material.ambient[1] << ", "
+                          << mesh->m_subMeshes[i]->material.ambient[2] << std::endl;
+        m_outputAsciiFile << "material(diffuse) : " << mesh->m_subMeshes[i]->material.diffuse[0] << ", "
+                          << mesh->m_subMeshes[i]->material.diffuse[1] << ", "
+                          << mesh->m_subMeshes[i]->material.diffuse[2] << std::endl;
+        m_outputAsciiFile << "material(specular) : " << mesh->m_subMeshes[i]->material.specular[0]
+                          << ", " << mesh->m_subMeshes[i]->material.specular[1] << ", "
+                          << mesh->m_subMeshes[i]->material.specular[2] << std::endl;
+        m_outputAsciiFile << "material(ambient factor) : "
+                          << mesh->m_subMeshes[i]->material.ambientFactor << std::endl;
+        m_outputAsciiFile << "material(diffuse factor) : "
+                          << mesh->m_subMeshes[i]->material.diffuseFactor << std::endl;
+        m_outputAsciiFile << "material(specular factor) : "
+                          << mesh->m_subMeshes[i]->material.specularFactor << std::endl;
+        m_outputAsciiFile << "material(shininess factor) : " << mesh->m_subMeshes[i]->material.shininess
+                          << std::endl
+                          << std::endl;
 
         m_outputAsciiFile << "index" << std::endl;
         for (size_t j = 0; j < mesh->m_subMeshes[i]->indices.size(); j++)
@@ -184,6 +202,9 @@ void HBSLoader::WriteHBSFile(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh> mes
 
         m_outputFile.write(reinterpret_cast<const char*>(&mesh->m_subMeshes[i]->hasTexture),
                            sizeof(bool));
+
+        m_outputFile.write(reinterpret_cast<const char*>(&mesh->m_subMeshes[i]->material),
+                           sizeof(Material));
     }
 
     // born header 기입
@@ -331,6 +352,7 @@ std::shared_ptr<Mesh> HBSLoader::Load(std::shared_ptr<D3Device> device, const ws
                              sizeof(wchar_t) * mesh->m_subMeshes[i]->textureName.size());
 
         m_inputFile.read(reinterpret_cast<char*>(&mesh->m_subMeshes[i]->hasTexture), sizeof(bool));
+        m_inputFile.read(reinterpret_cast<char*>(&mesh->m_subMeshes[i]->material), sizeof(Material));
     }
 
     // born header 기입

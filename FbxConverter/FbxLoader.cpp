@@ -359,6 +359,77 @@ FbxVector4 FbxLoader::GetNormal(FbxLayerElementNormal* vertexNormalSet, int vert
     return ret;
 }
 
+void FbxLoader::GetMaterial(std::shared_ptr<SubMesh> subMesh, FbxSurfaceMaterial* fMaterial)
+{
+    if (fMaterial)
+    {
+        auto Property = fMaterial->FindProperty(FbxSurfaceMaterial::sDiffuse);
+        if (Property.IsValid())
+        {
+            FbxFileTexture* tex = Property.GetSrcObject<FbxFileTexture>(0);
+
+            if (tex)
+            {
+                auto [fileName, fileExt] = HBSoft::GetFileNameAndExt(ToUnicode(tex->GetFileName()));
+
+                subMesh->hasTexture  = true;
+                subMesh->textureName = fileName + fileExt;
+            }
+            else
+            {
+                subMesh->hasTexture = false;
+            }
+        }
+        FbxSurfacePhong* phongMaterial = FbxCast<FbxSurfacePhong>(fMaterial);
+        if (phongMaterial)
+        {
+            FbxDouble3 diffuse        = phongMaterial->Diffuse;
+            FbxDouble3 specular       = phongMaterial->Specular;
+            FbxDouble3 ambient        = phongMaterial->Ambient;
+            FbxDouble  shininess      = phongMaterial->Shininess;
+            FbxDouble  ambientFactor  = phongMaterial->AmbientFactor;
+            FbxDouble  diffuseFactor  = phongMaterial->DiffuseFactor;
+            FbxDouble  specularFactor = phongMaterial->SpecularFactor;
+
+            subMesh->material.ambient[0] = static_cast<float>(ambient[0]);
+            subMesh->material.ambient[1] = static_cast<float>(ambient[1]);
+            subMesh->material.ambient[2] = static_cast<float>(ambient[2]);
+
+            subMesh->material.diffuse[0] = static_cast<float>(diffuse[0]);
+            subMesh->material.diffuse[1] = static_cast<float>(diffuse[1]);
+            subMesh->material.diffuse[2] = static_cast<float>(diffuse[2]);
+
+            subMesh->material.specular[0] = static_cast<float>(specular[0]);
+            subMesh->material.specular[1] = static_cast<float>(specular[1]);
+            subMesh->material.specular[2] = static_cast<float>(specular[2]);
+
+            subMesh->material.shininess      = static_cast<float>(shininess);
+            subMesh->material.ambientFactor  = static_cast<float>(ambientFactor);
+            subMesh->material.diffuseFactor  = static_cast<float>(diffuseFactor);
+            subMesh->material.specularFactor = static_cast<float>(specularFactor);
+        }
+        else
+        {
+            subMesh->material.ambient[0] = 0.3f;
+            subMesh->material.ambient[1] = 0.3f;
+            subMesh->material.ambient[2] = 0.3f;
+
+            subMesh->material.diffuse[0] = 0.f;
+            subMesh->material.diffuse[1] = 0.f;
+            subMesh->material.diffuse[2] = 0.f;
+
+            subMesh->material.specular[0] = 0.f;
+            subMesh->material.specular[1] = 0.f;
+            subMesh->material.specular[2] = 0.f;
+
+            subMesh->material.shininess      = 0.f;
+            subMesh->material.ambientFactor  = 1.f;
+            subMesh->material.diffuseFactor  = 0.f;
+            subMesh->material.specularFactor = 0.f;
+        }
+    }
+}
+
 void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
 {
     FbxAnimStack*        aniStack;
@@ -513,27 +584,8 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
 
     for (int mtrlIdx = 0; mtrlIdx < numMtrl; mtrlIdx++)
     {
-        FbxSurfaceMaterial* pSurfaceMtrl = fNode->GetMaterial(mtrlIdx);
-        if (pSurfaceMtrl)
-        {
-            auto Property = pSurfaceMtrl->FindProperty(FbxSurfaceMaterial::sDiffuse);
-            if (Property.IsValid())
-            {
-                FbxFileTexture* tex = Property.GetSrcObject<FbxFileTexture>(0);
-
-                if (tex)
-                {
-                    auto [fileName, fileExt] = HBSoft::GetFileNameAndExt(ToUnicode(tex->GetFileName()));
-
-                    subMesh->hasTexture  = true;
-                    subMesh->textureName = fileName + fileExt;
-                }
-                else
-                {
-                    subMesh->hasTexture = false;
-                }
-            }
-        }
+        FbxSurfaceMaterial* fMaterial = fNode->GetMaterial(mtrlIdx);
+        GetMaterial(subMesh, fMaterial);
     }
 
     // »ï°¢Çü ¸î°³

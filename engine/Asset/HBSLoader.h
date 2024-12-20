@@ -10,7 +10,7 @@ date: 2024-12-10
 
 #include "Mesh\Mesh.h"
 
-#define HBS_VERSION 101
+#define HBS_VERSION 102
 
 namespace HBSoft
 {
