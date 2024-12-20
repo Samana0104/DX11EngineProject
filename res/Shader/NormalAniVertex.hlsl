@@ -28,7 +28,7 @@ NormalGeoInput main(AnimationInput vsIn)
         float4x4 matBone = m_matBoneWorld[iBoneIndex];
 
         vAnimVertex += mul(matBone, localPos) * fWeight;
-        vAnimNormal += normalize(mul((float3x3) matBone, vsIn.n) * fWeight);
+        vAnimNormal += mul((float3x3) matBone, vsIn.n) * fWeight;
 
     }
 
@@ -39,8 +39,7 @@ NormalGeoInput main(AnimationInput vsIn)
         Matrix matBone = m_matBoneWorld[iBoneIndex];
 
         vAnimVertex += mul(matBone, localPos) * fWeight;
-        vAnimNormal += normalize(mul((float3x3) matBone, vsIn.n) * fWeight);
-
+        vAnimNormal += mul((float3x3) matBone, vsIn.n) * fWeight;
     }
 
     gsIn.p = float4(vAnimVertex.xyz, 1.f);

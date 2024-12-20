@@ -20,6 +20,8 @@ HeightMapObj::HeightMapObj()
 
     m_easyRender.SetVSShader(L"VertexShader.hlsl");
     m_easyRender.SetPSShader(L"PixelShader.hlsl");
+    m_transform.SetScale({1.f, 2.f, 1.f});
+    m_transform.SetLocation({0.f, 10.f, 0.f});
 }
 
 void HeightMapObj::CreateMapDesc(const TEXTURE_KEY heightTexKey, float scaleXPerCell,
@@ -122,7 +124,7 @@ float HeightMapObj::GetHeight(vec3 pos)
         height = D + glm::lerp(0.f, colHeight, 1.f - dtCol) + glm::lerp(0.f, rowHeight, 1.f - dtRow);
     }
 
-    return height;
+    return height * m_transform.m_scale.y + m_transform.m_pos.y;
 }
 
 void HeightMapObj::GenerateVertexNormal()

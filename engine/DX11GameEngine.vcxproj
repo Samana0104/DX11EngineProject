@@ -118,6 +118,7 @@
     <ClInclude Include="Object\3D\Object3D.h" />
     <ClInclude Include="Object\3D\Transform3D.h" />
     <ClInclude Include="Object\Camera.h" />
+    <ClInclude Include="Object\Collision.h" />
     <ClInclude Include="Object\EasyRender.h" />
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\Renderable.h" />

@@ -8,6 +8,7 @@ date: 2024-11-25
 
 #pragma once
 
+#include "pch.h"
 #include "Mesh/Mesh.h"
 
 namespace HBSoft
@@ -49,6 +50,7 @@ namespace HBSoft
                             int vertexColorIdx);
         FbxVector4 GetNormal(FbxLayerElementNormal* vertexNormalSet, int vertexPosIdx,
                              int vertexNormalIdx);
+        void       GetMaterial(std::shared_ptr<SubMesh> subMesh, FbxSurfaceMaterial* fMaterial);
 
 
         void LoadAnimation(std::shared_ptr<Mesh> mesh);

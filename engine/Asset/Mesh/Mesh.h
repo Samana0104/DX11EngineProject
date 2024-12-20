@@ -9,6 +9,7 @@ date: 2024-11-08
 #pragma once
 #include "pch.h"
 #include "AnimationClip.h"
+#include "Collision.h"
 
 namespace HBSoft
 {
@@ -58,6 +59,24 @@ namespace HBSoft
         std::map<std::string, int> bornIndex;
     };
 
+    struct Material
+    {
+        vec3  ambient;
+        vec3  diffuse;
+        vec3  specular;
+        float shininess;
+        float ambientFactor;
+        float diffuseFactor;
+        float specularFactor;
+    };
+
+    // 추가 예정
+    struct AutoCollision
+    {
+        AABB   aabb;
+        Sphere sphere;
+    };
+
     struct SubMesh
     {
         ComPtr<ID3D11Buffer> indexBuffer;
@@ -65,14 +84,7 @@ namespace HBSoft
         std::string          meshName;
         std::wstring         textureName;
         bool                 hasTexture;
-    };
-
-    struct Material
-    {
-        vec3  diffuse;
-        vec3  ambient;
-        vec3  specular;
-        float shininess;
+        Material             material;
     };
 
     class Mesh

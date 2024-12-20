@@ -24,10 +24,8 @@ void main(point NormalGeoInput input[1], uint primID : SV_PrimitiveID,
     float4 viewPos;
     float4 projPos;
     float4 normalWorld;
+    float4 test;
     LinePsInput psIn;
-    
-    normalWorld = mul(normalMat, float4(input[0].n, 0.f));
-    normalWorld = normalize(normalWorld);
 
     worldPos = mul(worldMat, input[0].p);
     viewPos = mul(viewMat, worldPos);
@@ -37,7 +35,9 @@ void main(point NormalGeoInput input[1], uint primID : SV_PrimitiveID,
 
     outputStream.Append(psIn);
 
-    viewPos = mul(viewMat, normalWorld * 0.5f + worldPos);
+    normalWorld = mul(normalMat, float4(input[0].n, 0.f));
+    normalWorld = float4(normalize(normalWorld.xyz), 0.f);
+    viewPos = mul(viewMat, normalWorld * 0.1f + worldPos);
     projPos = mul(projMat, viewPos);
     psIn.p = projPos;
     psIn.c = input[0].c;
