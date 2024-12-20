@@ -12,6 +12,11 @@ using namespace HBSoft;
 
 HeightMapObj::HeightMapObj()
 {
+    m_x     = -3.0f;
+    m_y     = -1.7f;
+    m_z     = 2.7f;
+    m_scale = 3.0f;
+
     m_mapTexture = HASSET->m_textures[L"Map512Color.png"];
 
     //CreateMapDesc(L"Map512.hmp", 2.f, 0.2f, 2.f);
@@ -131,6 +136,14 @@ void HeightMapObj::Release() {}
 
 void HeightMapObj::Update(const float deltaTime)
 {
+   /* ImGui::DragFloat("TerrainScale", &m_scale, 0.01f, 0.0f, 900.f);
+    ImGui::DragFloat("TerrainX", &m_x, 0.01f, -100.0f, 100.f);
+    ImGui::DragFloat("TerrainY", &m_y, 0.01f, -100.0f, 100.f);
+    ImGui::DragFloat("TerrainZ", &m_z, 0.01f, -100.0f, 100.f);*/
+
+    m_transform.SetLocation(glm::vec3(m_x, m_y, m_z));
+    m_transform.SetScale(m_scale);
+
     UpdateDefaultCB();
 }
 
