@@ -278,8 +278,7 @@
       <ShaderType>Effect</ShaderType>
     </FxCompile>
     <PostBuildEvent>
-      <Command>rmdir /S /Q $(SolutionDir)extern\inc\engine\
-xcopy $(ProjectDir)*.h $(SolutionDir)extern\inc\engine\ /E /Y
+      <Command>xcopy $(ProjectDir)*.h $(SolutionDir)extern\inc\engine\ /E /Y
 copy $(SolutionDir)exe\Debug\DX11EngineLib_d.lib $(SolutionDir)extern\lib\debug\engine\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
