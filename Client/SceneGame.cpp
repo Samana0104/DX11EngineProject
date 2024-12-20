@@ -21,6 +21,9 @@ SceneGame::SceneGame()
     m_tree.SetCamera(cameraTest);
     m_goose.SetCamera(cameraTest);
     m_goose.SetHeightMap(m_tree.GetMapObj());
+    m_testObj.SetCamera(cameraTest);
+    m_planterFG.SetCamera(cameraTest);
+    m_terrain.SetCamera(cameraTest);
 }
 
 void SceneGame::Update(float deltaTime)
@@ -35,6 +38,9 @@ void SceneGame::Update(float deltaTime)
     m_escButton.Update(deltaTime);
     m_goose.Update(deltaTime);
     m_tree.Update(deltaTime);
+    m_testObj.Update(deltaTime);
+    m_planterFG.Update(deltaTime);
+    m_terrain.Update(deltaTime);
 }
 
 void SceneGame::Render()
@@ -48,6 +54,9 @@ void SceneGame::Render()
     m_goose.Render();
     cube.Render();
     m_tree.Render();
+    m_testObj.Render();
+    m_planterFG.Render();
+    m_terrain.Render();
     EasyRender::End();
 
     EasyRender::Begin(MultiRT::GUI);

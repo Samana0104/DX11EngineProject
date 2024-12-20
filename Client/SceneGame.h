@@ -18,6 +18,7 @@ date: 2024-12-03
 #include "3D/Gardener.h"
 #include "3D/AABBCollider.h"
 #include "GameButton.h"
+#include "PlanterFenceGrass.h"
 
 namespace HBSoft
 {
@@ -31,6 +32,10 @@ namespace HBSoft
         QuadTree                m_tree;
         Goose                   m_goose;
         Gardener                m_gardener;
+        Test3DObj               m_testObj;
+        PlanterFenceGrass       m_planterFG;
+        HeightMapObj            m_terrain;
+        
 
 
         bool isWire = false;

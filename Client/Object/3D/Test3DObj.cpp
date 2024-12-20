@@ -6,7 +6,7 @@ using namespace HBSoft;
 
 Test3DObj::Test3DObj()
 {
-    m_mesh = HASSET->m_meshes[L"202412031822testFBXBlender.hbs"];
+    m_mesh = HASSET->m_meshes[L"TestObjOrdered.hbs"];
 
     m_easyRender.SetVSShader(L"VertexShader.hlsl");
     m_easyRender.SetPSShader(L"ColorPixelShader.hlsl");

@@ -159,6 +159,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="PlanterFenceGrass.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneLobby.cpp" />
   </ItemGroup>
@@ -174,6 +175,7 @@
     <ClInclude Include="Object\3D\QuadTree.h" />
     <ClInclude Include="Object\3D\Test3DObj.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PlanterFenceGrass.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneLobby.h" />
   </ItemGroup>

@@ -55,6 +55,9 @@
     <ClCompile Include="Object\3D\QuadTree.cpp">
       <Filter>Object\3D</Filter>
     </ClCompile>
+    <ClCompile Include="PlanterFenceGrass.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneGame.h">
@@ -94,6 +97,9 @@
       <Filter>Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="Object\3D\QuadTree.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="PlanterFenceGrass.h">
       <Filter>Object\3D</Filter>
     </ClInclude>
   </ItemGroup>
