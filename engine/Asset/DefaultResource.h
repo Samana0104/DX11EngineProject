@@ -65,19 +65,19 @@ namespace HBSoft
     */
 
     inline static const std::map<SHADER_KEY, ShaderType> g_defaultShaders = {
-        {    L"VertexShader.hlsl",   ShaderType::VERTEX},
-        {     L"PixelShader.hlsl",    ShaderType::PIXEL},
-        {       L"LinePixel.hlsl",    ShaderType::PIXEL},
-        {      L"LineVertex.hlsl",   ShaderType::VERTEX},
-        {      L"CubeVertex.hlsl",   ShaderType::VERTEX},
-        {       L"CubePixel.hlsl",    ShaderType::PIXEL},
-        {L"ColorPixelShader.hlsl",    ShaderType::PIXEL},
-        { L"AnimationVertex.hlsl",   ShaderType::VERTEX},
-        {        L"2DVertex.hlsl",   ShaderType::VERTEX},
-        {     L"MergeVertex.hlsl",   ShaderType::VERTEX},
-        {      L"MergePixel.hlsl",    ShaderType::PIXEL},
-        {  L"NormalGeometry.hlsl", ShaderType::GEOMETRY},
-        {    L"NormalVertex.hlsl",   ShaderType::VERTEX},
-        { L"NormalAniVertex.hlsl",   ShaderType::VERTEX}
+        {    L"BasicVS.hlsl",   ShaderType::VERTEX},
+        { L"BasicAniVS.hlsl",   ShaderType::VERTEX},
+        {    L"BasicPS.hlsl",    ShaderType::PIXEL},
+        {    L"LinePS.hlsl ",    ShaderType::PIXEL},
+        {     L"LineVS.hlsl",   ShaderType::VERTEX},
+        {     L"CubeVS.hlsl",   ShaderType::VERTEX},
+        {     L"CubePS.hlsl",    ShaderType::PIXEL},
+        {    L"ColorPS.hlsl",    ShaderType::PIXEL},
+        {  L"2DBasicVS.hlsl",   ShaderType::VERTEX},
+        {    L"MergeVS.hlsl",   ShaderType::VERTEX},
+        {   L"MergePS.hlsl ",    ShaderType::PIXEL},
+        {   L"NormalGS.hlsl", ShaderType::GEOMETRY},
+        {   L"NormalVS.hlsl",   ShaderType::VERTEX},
+        {L"NormalAniVS.hlsl",   ShaderType::VERTEX}
     };
 }  // namespace HBSoft

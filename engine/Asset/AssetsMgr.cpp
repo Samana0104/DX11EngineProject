@@ -69,6 +69,11 @@ void AssetsMgr::CreateAsset(const wstringV path)
         SHADER_KEY key = fileName + fileExt;
         m_shaders.Add(key, ShaderFactory::Create(m_device, path, g_defaultShaders.at(key)));
     }
+    else if (AnimationFactory::IsAnimationFormat(fileExt))
+    {
+        ANIMATION_KEY key = fileName + fileExt;
+        m_animations.Add(key, AnimationFactory::Create(path));
+    }
     else if (SoundFactory::IsSoundFormat(fileExt))
     {
         SOUND_KEY key = fileName + fileExt;

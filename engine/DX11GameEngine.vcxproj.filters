@@ -195,6 +195,12 @@
     <ClCompile Include="Asset\Shader\GeometryShader.cpp">
       <Filter>Asset\Shader</Filter>
     </ClCompile>
+    <ClCompile Include="Asset\SkmLoader.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Factory\AnimationFactory.cpp">
+      <Filter>Asset\Factory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -359,48 +365,54 @@
     <ClInclude Include="Object\Collision.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="Asset\SkmLoader.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Factory\AnimationFactory.h">
+      <Filter>Asset\Factory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\res\Shader\2DVertex.hlsl">
+    <FxCompile Include="..\res\Shader\2DBasicVS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="..\res\Shader\AnimationVertex.hlsl">
+    <FxCompile Include="..\res\Shader\BasicAniVS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="..\res\Shader\ColorPixelShader.hlsl">
+    <FxCompile Include="..\res\Shader\ColorPS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="..\res\Shader\CubePixel.hlsl">
+    <FxCompile Include="..\res\Shader\CubePS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="..\res\Shader\CubeVertex.hlsl">
+    <FxCompile Include="..\res\Shader\CubeVS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="..\res\Shader\LinePixel.hlsl">
+    <FxCompile Include="..\res\Shader\LinePS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="..\res\Shader\LineVertex.hlsl">
+    <FxCompile Include="..\res\Shader\LineVS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="..\res\Shader\PixelShader.hlsl">
+    <FxCompile Include="..\res\Shader\BasicPS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="..\res\Shader\VertexShader.hlsl">
+    <FxCompile Include="..\res\Shader\BasicVS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="..\res\Shader\MergeVertex.hlsl">
+    <FxCompile Include="..\res\Shader\MergeVS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="..\res\Shader\MergePixel.hlsl">
+    <FxCompile Include="..\res\Shader\MergePS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="..\res\Shader\NormalGeometry.hlsl">
+    <FxCompile Include="..\res\Shader\NormalGS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="..\res\Shader\NormalVertex.hlsl">
+    <FxCompile Include="..\res\Shader\NormalVS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="..\res\Shader\NormalAniVertex.hlsl">
+    <FxCompile Include="..\res\Shader\NormalAniVS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>

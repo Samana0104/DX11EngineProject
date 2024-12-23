@@ -53,7 +53,8 @@ namespace HBSoft
         void       GetMaterial(std::shared_ptr<SubMesh> subMesh, FbxSurfaceMaterial* fMaterial);
 
 
-        void LoadAnimation(std::shared_ptr<Mesh> mesh);
+        void LoadAnimation(std::shared_ptr<Mesh>                        mesh,
+                           std::vector<std::shared_ptr<AnimationClip>>& animations);
 
         mat4 ConvertFbxMatToGlmMat(FbxAMatrix& fMat);
 
@@ -70,6 +71,7 @@ namespace HBSoft
         FbxLoader();
         ~FbxLoader() = default;
 
-        std::shared_ptr<Mesh> Load(const wstringV filePath);
+        void Load(const wstringV filePath, std::shared_ptr<Mesh> loadedMesh,
+                  std::vector<std::shared_ptr<AnimationClip>>& loadedAni);
     };
 }  // namespace HBSoft

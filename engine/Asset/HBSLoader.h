@@ -2,18 +2,18 @@
 author : 변한빛
 description : HBS 파일 포맷의 import/export를 위한 클래스 헤더파일
 
-version: 1.0.4
-date: 2024-12-10
+version: 1.1
+date: 2024-12-23
 */
 
 #pragma once
 
 #include "Mesh\Mesh.h"
 
-#define HBS_VERSION 102
-
 namespace HBSoft
 {
+#define HBS_VERSION 103
+
     struct SubMeshHeader
     {
         size_t numSubMeshIndex;
@@ -25,14 +25,6 @@ namespace HBSoft
     {
         size_t bornNameSize;
         int    bornIndex;
-    };
-
-    struct AnimationHeader
-    {
-        size_t aniNameSize;
-        int    startFrame;
-        int    lastFrame;
-        int    numFrame;
     };
 
     struct HBSFileHeader
@@ -62,32 +54,6 @@ namespace HBSoft
         // std::map<std::string, int> objectIndex;  // 오브젝트(뼈 포함)인덱스
         // std::map<std::string, int> parentIndex;  // 오브젝트(뼈 포함)부모 인덱스
         // std::map<std::string, int> bornIndex;
-
-        /*
-            Animation Track
-        */
-        size_t numAnimtion;
-
-        // int startFrame  = 0;
-        // int lastFrame   = 0;
-        // int numKeyFrame = 0;
-
-        // struct KeyFrame
-        //{
-        //     vec3 pos;
-        //     quat rot;
-        //     vec3 scale;
-        // };
-
-        // class AnimationClip
-        //{
-        // public:
-        //     std::string m_aniName;
-        //     int         m_startFrame;
-        //     int         m_lastFrame;
-
-        //    std::vector<std::vector<KeyFrame>> m_keyFrame;
-        //};
     };
 
     class HBSLoader
@@ -102,7 +68,6 @@ namespace HBSoft
         void WriteHBSAsciiFile(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh> mesh);
         void WriteHBSAsciiFileFromVertex(std::shared_ptr<Mesh> mesh);
         void WriteHBSAsciiFileFromBorn(std::shared_ptr<Mesh> mesh);
-        void WriteHBSAsciiFileFromAnimation(std::shared_ptr<Mesh> mesh);
         void WriteHBSFile(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh> mesh);
 
     public:

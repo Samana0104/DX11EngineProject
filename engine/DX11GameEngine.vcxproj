@@ -25,6 +25,7 @@
   <ItemGroup>
     <ClCompile Include="Asset\AnimationClip.cpp" />
     <ClCompile Include="Asset\AssetsMgr.cpp" />
+    <ClCompile Include="Asset\Factory\AnimationFactory.cpp" />
     <ClCompile Include="Asset\Factory\FontFactory.cpp" />
     <ClCompile Include="Asset\Factory\MeshFactory.cpp" />
     <ClCompile Include="Asset\Factory\ShaderFactory.cpp" />
@@ -44,6 +45,7 @@
     <ClCompile Include="Asset\Shader\PixelShader.cpp" />
     <ClCompile Include="Asset\Shader\Shader.cpp" />
     <ClCompile Include="Asset\Shader\VertexShader.cpp" />
+    <ClCompile Include="Asset\SkmLoader.cpp" />
     <ClCompile Include="Asset\Sound\HSound.cpp" />
     <ClCompile Include="Asset\Texture\GeneralTexture.cpp" />
     <ClCompile Include="Asset\Texture\HeightTexture.cpp" />
@@ -74,6 +76,7 @@
     <ClInclude Include="Asset\AnimationClip.h" />
     <ClInclude Include="Asset\AssetsMgr.h" />
     <ClInclude Include="Asset\DefaultResource.h" />
+    <ClInclude Include="Asset\Factory\AnimationFactory.h" />
     <ClInclude Include="Asset\Factory\FontFactory.h" />
     <ClInclude Include="Asset\Factory\MeshFactory.h" />
     <ClInclude Include="Asset\Factory\ShaderFactory.h" />
@@ -94,6 +97,7 @@
     <ClInclude Include="Asset\Shader\PixelShader.h" />
     <ClInclude Include="Asset\Shader\Shader.h" />
     <ClInclude Include="Asset\Shader\VertexShader.h" />
+    <ClInclude Include="Asset\SkmLoader.h" />
     <ClInclude Include="Asset\Sound\HSound.h" />
     <ClInclude Include="Asset\Texture\GeneralTexture.h" />
     <ClInclude Include="Asset\Texture\HeightTexture.h" />
@@ -127,24 +131,24 @@
     <ClInclude Include="Timer\SystemTimer.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\res\Shader\2DVertex.hlsl" />
-    <FxCompile Include="..\res\Shader\AnimationVertex.hlsl" />
-    <FxCompile Include="..\res\Shader\ColorPixelShader.hlsl" />
-    <FxCompile Include="..\res\Shader\CubePixel.hlsl" />
-    <FxCompile Include="..\res\Shader\CubeVertex.hlsl" />
-    <FxCompile Include="..\res\Shader\LinePixel.hlsl" />
-    <FxCompile Include="..\res\Shader\LineVertex.hlsl" />
-    <FxCompile Include="..\res\Shader\MergePixel.hlsl">
+    <FxCompile Include="..\res\Shader\2DBasicVS.hlsl" />
+    <FxCompile Include="..\res\Shader\BasicAniVS.hlsl" />
+    <FxCompile Include="..\res\Shader\ColorPS.hlsl" />
+    <FxCompile Include="..\res\Shader\CubePS.hlsl" />
+    <FxCompile Include="..\res\Shader\CubeVS.hlsl" />
+    <FxCompile Include="..\res\Shader\LinePS.hlsl" />
+    <FxCompile Include="..\res\Shader\LineVS.hlsl" />
+    <FxCompile Include="..\res\Shader\MergePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
     </FxCompile>
-    <FxCompile Include="..\res\Shader\MergeVertex.hlsl">
+    <FxCompile Include="..\res\Shader\MergeVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
     </FxCompile>
-    <FxCompile Include="..\res\Shader\NormalAniVertex.hlsl" />
-    <FxCompile Include="..\res\Shader\NormalGeometry.hlsl" />
-    <FxCompile Include="..\res\Shader\NormalVertex.hlsl" />
-    <FxCompile Include="..\res\Shader\PixelShader.hlsl" />
-    <FxCompile Include="..\res\Shader\VertexShader.hlsl" />
+    <FxCompile Include="..\res\Shader\NormalAniVS.hlsl" />
+    <FxCompile Include="..\res\Shader\NormalGS.hlsl" />
+    <FxCompile Include="..\res\Shader\NormalVS.hlsl" />
+    <FxCompile Include="..\res\Shader\BasicPS.hlsl" />
+    <FxCompile Include="..\res\Shader\BasicVS.hlsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

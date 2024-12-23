@@ -14,35 +14,33 @@ FbxLoader::FbxLoader()
     : m_fbxManager(nullptr), m_fbxImporter(nullptr), m_fbxScene(nullptr)
 {}
 
-std::shared_ptr<Mesh> FbxLoader::Load(const wstringV filePath)
+void FbxLoader::Load(const wstringV filePath, std::shared_ptr<Mesh> loadedMesh,
+                     std::vector<std::shared_ptr<AnimationClip>>& loadedAni)
 {
     FbxNode*              fbxRootNode = nullptr;
     std::vector<FbxMesh*> meshSet;
 
-    std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-
     if (!InitFbxLoader(filePath))
-        return nullptr;
+        return;
 
     FbxAxisSystem::MayaZUp.ConvertScene(m_fbxScene);
     fbxRootNode = m_fbxScene->GetRootNode();
 
-    ProcessNode(fbxRootNode, mesh, 0, -1);
-
-    LoadAnimation(mesh);
+    ProcessNode(fbxRootNode, loadedMesh, 0, -1);
+    LoadAnimation(loadedMesh, loadedAni);
 
     for (size_t i = 0; i < m_fbxMeshes.size(); i++)
-        ProcessMesh(m_fbxMeshes[i], mesh);
+        ProcessMesh(m_fbxMeshes[i], loadedMesh);
 
     ReleaseFbxManager();
 
     for (int i = 0; i < m_fbxAniMat.size(); i++)
     {
-        mesh->m_animations[i]->m_keyFrame.resize(m_fbxAniMat[i].size());
+        loadedAni[i]->m_keyFrame.resize(m_fbxAniMat[i].size());
 
         for (int j = 0; j < m_fbxAniMat[i].size(); j++)
         {
-            mesh->m_animations[i]->m_keyFrame[j].resize(m_fbxAniMat[i][j].size());
+            loadedAni[i]->m_keyFrame[j].resize(m_fbxAniMat[i][j].size());
 
             for (int k = 0; k < m_fbxAniMat[i][j].size(); k++)
             {
@@ -52,12 +50,10 @@ std::shared_ptr<Mesh> FbxLoader::Load(const wstringV filePath)
 
                 glm::decompose(m_fbxAniMat[i][j][k], key.scale, key.rot, key.pos, dummy1, dummy2);
 
-                mesh->m_animations[i]->m_keyFrame[j][k] = key;
+                loadedAni[i]->m_keyFrame[j][k] = key;
             }
         }
     }
-
-    return mesh;
 }
 
 bool FbxLoader::InitFbxLoader(const wstringV filePath)
@@ -92,6 +88,7 @@ bool FbxLoader::InitFbxLoader(const wstringV filePath)
     m_fbxNodes.clear();
     m_fbxBornNodes.clear();
     m_fbxMeshes.clear();
+    m_fbxAniMat.clear();
 
     return true;
 }
@@ -430,7 +427,8 @@ void FbxLoader::GetMaterial(std::shared_ptr<SubMesh> subMesh, FbxSurfaceMaterial
     }
 }
 
-void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
+void FbxLoader::LoadAnimation(std::shared_ptr<Mesh>                        mesh,
+                              std::vector<std::shared_ptr<AnimationClip>>& animations)
 {
     FbxAnimStack*        aniStack;
     FbxString            TakeName;
@@ -522,7 +520,7 @@ void FbxLoader::LoadAnimation(std::shared_ptr<Mesh> mesh)
                 }
             }
         }
-        mesh->m_animations.push_back(clip);
+        animations.push_back(clip);
     }
 }
 

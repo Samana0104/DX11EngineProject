@@ -6,8 +6,8 @@ using namespace HBSoft;
 Gardener::Gardener()
 {
     m_mesh = HASSET->m_meshes[L"Walking.hbs"];
-    m_easyRender.SetVSShader(L"AnimationVertex.hlsl");
-    m_easyRender.SetPSShader(L"ColorPixelShader.hlsl");
+    m_easyRender.SetVSShader(L"BasicAniVS.hlsl");
+    m_easyRender.SetPSShader(L"ColorPS.hlsl");
     m_easyRender.SetMesh(m_mesh);
     m_easyRender.SetTexture(nullptr);
 

@@ -13,6 +13,7 @@ date: 2024-11-17
 #include "Factory/FontFactory.h"
 #include "Factory/ShaderFactory.h"
 #include "Factory/TextureFactory.h"
+#include "Factory/AnimationFactory.h"
 
 namespace HBSoft
 {
@@ -22,11 +23,12 @@ namespace HBSoft
         std::shared_ptr<D3Device> m_device;
 
     public:
-        MgrTemplate<Texture> m_textures;
-        MgrTemplate<Mesh>    m_meshes;
-        MgrTemplate<Font>    m_fonts;
-        MgrTemplate<Shader>  m_shaders;
-        MgrTemplate<HSound>  m_sounds;
+        MgrTemplate<Texture, TEXTURE_KEY>         m_textures;
+        MgrTemplate<Mesh, MESH_KEY>               m_meshes;
+        MgrTemplate<Font, FONT_KEY>               m_fonts;
+        MgrTemplate<Shader, SHADER_KEY>           m_shaders;
+        MgrTemplate<HSound, SOUND_KEY>            m_sounds;
+        MgrTemplate<AnimationClip, ANIMATION_KEY> m_animations;
 
     private:
         void CreateResFromDefault();

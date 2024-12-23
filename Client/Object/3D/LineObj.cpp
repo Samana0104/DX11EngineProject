@@ -13,8 +13,8 @@ using namespace HBSoft;
 LineObj::LineObj()
 {
     m_mesh = MeshFactory::Create(HDEVICE, MeshShape::LINE);
-    m_easyRender.SetVSShader(L"LineVertex.hlsl");
-    m_easyRender.SetPSShader(L"LinePixel.hlsl");
+    m_easyRender.SetVSShader(L"LineVS.hlsl");
+    m_easyRender.SetPSShader(L"LinePS.hlsl");
     m_easyRender.SetTopology(ERTopology::LINE_LIST);
     m_easyRender.SetMesh(m_mesh);
     m_easyRender.SetTexture(nullptr);
