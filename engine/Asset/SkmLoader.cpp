@@ -138,6 +138,9 @@ std::shared_ptr<AnimationClip> SkmLoader::Load(const wstringV filePath)
         MessageBoxA(nullptr, "skm파일 로드 오류[버전 불일치 최신 skm로 컨버터]", "load error", MB_OK);
         return nullptr;
     }
+    animation->m_startFrame = skmHeader.startFrame;
+    animation->m_lastFrame  = skmHeader.lastFrame;
+    animation->m_numFrame   = skmHeader.numFrame;
 
     animation->m_aniName.resize(skmHeader.aniNameSize);
     m_inputFile.read(reinterpret_cast<char*>(&animation->m_aniName.at(0)),
@@ -152,5 +155,6 @@ std::shared_ptr<AnimationClip> SkmLoader::Load(const wstringV filePath)
                          sizeof(KeyFrame) * skmHeader.numFrame);
     }
 
+    m_inputFile.close();
     return animation;
 }

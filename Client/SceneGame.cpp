@@ -56,7 +56,6 @@ void SceneGame::Render()
     // 프레임 떨어지는 이유 폰트로
     EasyRender::Begin(MultiRT::GUI);
     m_escButton.Render();
-    HASSET->m_fonts[L"DEBUG_FONT"]->DrawMsg(HTIMER.m_csBuffer);
     EasyRender::End(MultiRT::GUI);
 
     if (HINPUT->IsKeyDown(VK_HOME))

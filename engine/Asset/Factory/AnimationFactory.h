@@ -8,6 +8,7 @@ date: 2024-12-23
 #pragma once
 
 #include "pch.h"
+#include "AnimationClip.h"
 #include "SkmLoader.h"
 
 namespace HBSoft

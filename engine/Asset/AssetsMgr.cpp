@@ -24,6 +24,7 @@ AssetsMgr::~AssetsMgr()
     m_shaders.Clear();
     m_sounds.Clear();
     m_textures.Clear();
+    m_animations.Clear();
 
     FontFactory::ClearExternalAllFonts();
     SoundFactory::ReleaseFmodSystem();

@@ -32,11 +32,11 @@ namespace HBSoft
     inline static const std::map<FONT_KEY, FontDesc> g_defaultFonts = {
         {L"DEBUG_FONT",
          {L"malgun",
-          L"ko-kr",
-          20.f,
-          DWRITE_FONT_WEIGHT_THIN,
-          DWRITE_FONT_STYLE_NORMAL,
-          DWRITE_FONT_STRETCH_NORMAL}},
+         L"ko-kr",
+         20.f,
+         DWRITE_FONT_WEIGHT_THIN,
+         DWRITE_FONT_STYLE_NORMAL,
+         DWRITE_FONT_STRETCH_NORMAL}},
     };
 
     /*
@@ -68,14 +68,14 @@ namespace HBSoft
         {    L"BasicVS.hlsl",   ShaderType::VERTEX},
         { L"BasicAniVS.hlsl",   ShaderType::VERTEX},
         {    L"BasicPS.hlsl",    ShaderType::PIXEL},
-        {    L"LinePS.hlsl ",    ShaderType::PIXEL},
+        {     L"LinePS.hlsl",    ShaderType::PIXEL},
         {     L"LineVS.hlsl",   ShaderType::VERTEX},
         {     L"CubeVS.hlsl",   ShaderType::VERTEX},
         {     L"CubePS.hlsl",    ShaderType::PIXEL},
         {    L"ColorPS.hlsl",    ShaderType::PIXEL},
         {  L"2DBasicVS.hlsl",   ShaderType::VERTEX},
         {    L"MergeVS.hlsl",   ShaderType::VERTEX},
-        {   L"MergePS.hlsl ",    ShaderType::PIXEL},
+        {    L"MergePS.hlsl",    ShaderType::PIXEL},
         {   L"NormalGS.hlsl", ShaderType::GEOMETRY},
         {   L"NormalVS.hlsl",   ShaderType::VERTEX},
         {L"NormalAniVS.hlsl",   ShaderType::VERTEX}
