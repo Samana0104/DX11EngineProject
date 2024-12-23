@@ -1,3 +1,10 @@
+/*
+author : 이지혁
+description : 오브젝트 로드 자동화를 위한 헤더 파일
+
+version: 1.1.0
+date: 2024-12-23
+*/
 #pragma once
 
 #include "3D/Static3DObj.h"

@@ -1,3 +1,10 @@
+/*
+author : 이지혁
+description : 오브젝트 로드 자동화를 위한 소스 파일
+
+version: 1.1.0
+date: 2024-12-23
+*/
 #include "pch.h"
 #include "HBSLoader.h"
 
