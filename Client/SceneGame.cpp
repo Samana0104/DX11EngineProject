@@ -2,8 +2,8 @@
 author : 변한빛, 정찬빈, 이지혁
 description : 게임 내부 씬을 정의하는 소스 파일
 
-version: 1.1.0
-date: 2024-11-30
+version: 1.1.1
+date: 2024-12-23
 */
 
 #include "pch.h"
@@ -21,9 +21,13 @@ SceneGame::SceneGame()
     m_tree.SetCamera(cameraTest);
     m_goose.SetCamera(cameraTest);
     m_goose.SetHeightMap(m_tree.GetMapObj());
-    m_testObj.SetCamera(cameraTest);
-    m_planterFG.SetCamera(cameraTest);
     m_terrain.SetCamera(cameraTest);
+    m_planterLeftLowDirt.Init(L"PlanterLeftLowDirt.hbs");
+    m_planterLeftLowDirt.SetCamera(cameraTest);
+    m_planterLeftLowEdges.Init(L"PlanterLeftLowEdges.hbs");
+    m_planterLeftLowEdges.SetCamera(cameraTest);
+    //m_testObj.SetCamera(cameraTest);
+    //m_planterFG.SetCamera(cameraTest);
 }
 
 void SceneGame::Update(float deltaTime)
@@ -38,9 +42,11 @@ void SceneGame::Update(float deltaTime)
     m_escButton.Update(deltaTime);
     m_goose.Update(deltaTime);
     m_tree.Update(deltaTime);
-    m_testObj.Update(deltaTime);
-    m_planterFG.Update(deltaTime);
     m_terrain.Update(deltaTime);
+    m_planterLeftLowDirt.Update(deltaTime, TransformType::OriginalTrans);
+    m_planterLeftLowEdges.Update(deltaTime, TransformType::UnityTrans);
+    //m_testObj.Update(deltaTime);
+    //m_planterFG.Update(deltaTime);
 }
 
 void SceneGame::Render()
@@ -54,9 +60,11 @@ void SceneGame::Render()
     m_goose.Render();
     cube.Render();
     m_tree.Render();
-    m_testObj.Render();
-    m_planterFG.Render();
     m_terrain.Render();
+    m_planterLeftLowDirt.Render();
+    m_planterLeftLowEdges.Render();
+    //m_testObj.Render();
+    //m_planterFG.Render();
     EasyRender::End();
 
     EasyRender::Begin(MultiRT::GUI);

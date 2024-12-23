@@ -2,8 +2,8 @@
 author : 변한빛, 정찬빈, 이지혁
 description : 게임 내부 씬을 정의하는 헤더 파일
 
-version: 1.1.0
-date: 2024-12-03
+version: 1.1.1
+date: 2024-12-23
 */
 
 #pragma once
@@ -18,7 +18,8 @@ date: 2024-12-03
 #include "3D/Gardener.h"
 #include "3D/AABBCollider.h"
 #include "GameButton.h"
-#include "PlanterFenceGrass.h"
+//#include "3D/PlanterFenceGrass.h"
+#include "3D/Static3DObj.h"
 
 namespace HBSoft
 {
@@ -32,9 +33,11 @@ namespace HBSoft
         QuadTree                m_tree;
         Goose                   m_goose;
         Gardener                m_gardener;
-        Test3DObj               m_testObj;
-        PlanterFenceGrass       m_planterFG;
         HeightMapObj            m_terrain;
+        Static3DObj             m_planterLeftLowDirt;
+        Static3DObj             m_planterLeftLowEdges;
+        //Test3DObj               m_testObj;
+        //PlanterFenceGrass       m_planterFG;
         
 
 

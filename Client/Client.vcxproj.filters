@@ -55,7 +55,7 @@
     <ClCompile Include="Object\3D\QuadTree.cpp">
       <Filter>Object\3D</Filter>
     </ClCompile>
-    <ClCompile Include="PlanterFenceGrass.cpp">
+    <ClCompile Include="Object\3D\Static3DObj.cpp">
       <Filter>Object\3D</Filter>
     </ClCompile>
   </ItemGroup>
@@ -99,7 +99,7 @@
     <ClInclude Include="Object\3D\QuadTree.h">
       <Filter>Object\3D</Filter>
     </ClInclude>
-    <ClInclude Include="PlanterFenceGrass.h">
+    <ClInclude Include="Object\3D\Static3DObj.h">
       <Filter>Object\3D</Filter>
     </ClInclude>
   </ItemGroup>

@@ -33,7 +33,6 @@ namespace HBSoft
 
         virtual void UpdateDefaultCB() override;
 
-
         virtual void Init()                        = 0;
         virtual void Release()                     = 0;
         virtual void Update(const float deltaTime) = 0;
