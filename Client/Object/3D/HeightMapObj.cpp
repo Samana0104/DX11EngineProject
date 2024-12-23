@@ -18,8 +18,8 @@ HeightMapObj::HeightMapObj()
     m_mesh = MeshFactory::CreateHeightMap(HDEVICE, m_mapDesc);
     GenerateVertexNormal();
 
-    m_easyRender.SetVSShader(L"VertexShader.hlsl");
-    m_easyRender.SetPSShader(L"PixelShader.hlsl");
+    m_easyRender.SetVSShader(L"BasicVS.hlsl");
+    m_easyRender.SetPSShader(L"BasicPS.hlsl");
     m_transform.SetScale({1.f, 2.f, 1.f});
     m_transform.SetLocation({0.f, 10.f, 0.f});
 }

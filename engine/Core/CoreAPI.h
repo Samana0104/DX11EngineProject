@@ -24,10 +24,11 @@ namespace HBSoft
     using SCENE_KEY = std::wstring;
 
     // 파일 이름으로 키 값을 받아오기에 이 4개는 wstring으로 선언 안하면 큰일
-    using SHADER_KEY  = std::wstring;
-    using TEXTURE_KEY = std::wstring;
-    using SOUND_KEY   = std::wstring;
-    using SPRITE_KEY  = std::wstring;
+    using SHADER_KEY    = std::wstring;
+    using TEXTURE_KEY   = std::wstring;
+    using SOUND_KEY     = std::wstring;
+    using ANIMATION_KEY = std::wstring;
+    using SPRITE_KEY    = std::wstring;
 
     static std::wstring ToUnicode(const stringV src)
     {

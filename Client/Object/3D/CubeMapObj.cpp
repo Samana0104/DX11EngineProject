@@ -14,8 +14,8 @@ CubeMapObj::CubeMapObj()
 {
     m_texture  = HASSET->m_textures[L"cubeTest.dds"];
     m_cubeMesh = HASSET->m_meshes[L"CUBEMAP"];
-    m_easyRender.SetVSShader(L"CubeVertex.hlsl");
-    m_easyRender.SetPSShader(L"CubePixel.hlsl");
+    m_easyRender.SetVSShader(L"CubeVS.hlsl");
+    m_easyRender.SetPSShader(L"CubePS.hlsl");
     m_easyRender.SetTexture(m_texture);
     m_easyRender.SetMesh(m_cubeMesh);
     m_easyRender.SetSS(ERSamplerState::LINEAR);

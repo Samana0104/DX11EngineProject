@@ -96,8 +96,6 @@ namespace HBSoft
         // 이 두개는 건들지 마셈 로더에서 알아서 함
         Born m_born;
 
-        std::vector<std::shared_ptr<AnimationClip>> m_animations;
-
         ComPtr<ID3D11Buffer> m_vertexBuffer;
 
     public:
