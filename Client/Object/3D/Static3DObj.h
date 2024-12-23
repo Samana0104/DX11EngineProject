@@ -25,6 +25,9 @@ namespace HBSoft
 
         std::vector<mat4> anim;
 
+    public:
+        std::string name;
+
 
     public:
         Static3DObj();

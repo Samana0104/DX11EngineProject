@@ -18,7 +18,6 @@ date: 2024-12-23
 #include "3D/Gardener.h"
 #include "3D/AABBCollider.h"
 #include "GameButton.h"
-//#include "3D/PlanterFenceGrass.h"
 #include "3D/Static3DObj.h"
 
 namespace HBSoft
@@ -36,8 +35,15 @@ namespace HBSoft
         HeightMapObj            m_terrain;
         Static3DObj             m_planterLeftLowDirt;
         Static3DObj             m_planterLeftLowEdges;
-        //Test3DObj               m_testObj;
-        //PlanterFenceGrass       m_planterFG;
+        Static3DObj             m_hedges[5];
+        Static3DObj             m_brickwalls[6];
+        Static3DObj             m_waterTank;
+        Static3DObj             m_shed;
+        Static3DObj             m_shedporch;
+        Static3DObj             m_trestletable;
+        Static3DObj             m_plasticchair;
+        Static3DObj             m_oilbarrels;
+        Static3DObj             m_foregroundgarden;
         
 
 

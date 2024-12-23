@@ -58,6 +58,9 @@
     <ClCompile Include="Object\3D\Static3DObj.cpp">
       <Filter>Object\3D</Filter>
     </ClCompile>
+    <ClCompile Include="HBSLoader.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneGame.h">
@@ -100,6 +103,9 @@
       <Filter>Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="Object\3D\Static3DObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="HBSLoader.h">
       <Filter>Object\3D</Filter>
     </ClInclude>
   </ItemGroup>
