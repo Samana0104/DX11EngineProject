@@ -310,9 +310,9 @@ void EasyRender::SetTopologyFromDevice()
 
 void EasyRender::SetNormalState()
 {
-    HASSET->m_shaders[L"NormalVertex.hlsl"]->SetUpToContext(HDEVICE);
-    HASSET->m_shaders[L"NormalGeometry.hlsl"]->SetUpToContext(HDEVICE);
-    HASSET->m_shaders[L"LinePixel.hlsl"]->SetUpToContext(HDEVICE);
+    HASSET->m_shaders[L"NormalVS.hlsl"]->SetUpToContext(HDEVICE);
+    HASSET->m_shaders[L"NormalGS.hlsl"]->SetUpToContext(HDEVICE);
+    HASSET->m_shaders[L"LinePS.hlsl"]->SetUpToContext(HDEVICE);
 
     HDEVICE->m_context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 
@@ -324,9 +324,9 @@ void EasyRender::SetNormalState()
 
 void EasyRender::SetAnimationNormalState()
 {
-    HASSET->m_shaders[L"NormalAniVertex.hlsl"]->SetUpToContext(HDEVICE);
-    HASSET->m_shaders[L"NormalGeometry.hlsl"]->SetUpToContext(HDEVICE);
-    HASSET->m_shaders[L"LinePixel.hlsl"]->SetUpToContext(HDEVICE);
+    HASSET->m_shaders[L"NormalAniVS.hlsl"]->SetUpToContext(HDEVICE);
+    HASSET->m_shaders[L"NormalGS.hlsl"]->SetUpToContext(HDEVICE);
+    HASSET->m_shaders[L"LinePS.hlsl"]->SetUpToContext(HDEVICE);
 
     HDEVICE->m_context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 
@@ -428,8 +428,8 @@ void EasyRender::MergeRenderTarget(MultiRT dst, MultiRT src)
     UINT pStrides = sizeof(Vertex);  // 1개의 정점 크기
     UINT pOffsets = 0;               // 버퍼에 시작 인덱스
 
-    HASSET->m_shaders[L"MergeVertex.hlsl"]->SetUpToContext(HDEVICE);
-    HASSET->m_shaders[L"MergePixel.hlsl"]->SetUpToContext(HDEVICE);
+    HASSET->m_shaders[L"MergeVS.hlsl"]->SetUpToContext(HDEVICE);
+    HASSET->m_shaders[L"MergePS.hlsl"]->SetUpToContext(HDEVICE);
 
     HDEVICE->m_context->GSSetShader(NULL, NULL, 0);
     HDEVICE->m_context->HSSetShader(NULL, NULL, 0);

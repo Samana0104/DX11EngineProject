@@ -201,6 +201,9 @@
     <ClCompile Include="Asset\Factory\AnimationFactory.cpp">
       <Filter>Asset\Factory</Filter>
     </ClCompile>
+    <ClCompile Include="Object\3D\AABBCollider.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -370,6 +373,9 @@
     </ClInclude>
     <ClInclude Include="Asset\Factory\AnimationFactory.h">
       <Filter>Asset\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\AABBCollider.h">
+      <Filter>Object\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

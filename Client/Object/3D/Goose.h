@@ -11,7 +11,9 @@ namespace HBSoft
     class Goose : public Object3D
     {
     private:
-        std::shared_ptr<Mesh>         m_mesh;
+        std::shared_ptr<Mesh>                       m_mesh;
+        std::vector<std::shared_ptr<AnimationClip>> m_gooseAnis;
+
         float                         m_speed1 = 0.7f;
         std::vector<mat4>             anim;
         std::shared_ptr<HeightMapObj> m_mapObj;

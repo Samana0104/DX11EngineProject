@@ -64,6 +64,7 @@
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Object\2D\Object2D.cpp" />
     <ClCompile Include="Object\2D\Transform2D.cpp" />
+    <ClCompile Include="Object\3D\AABBCollider.cpp" />
     <ClCompile Include="Object\3D\Object3D.cpp" />
     <ClCompile Include="Object\3D\Transform3D.cpp" />
     <ClCompile Include="Object\Camera.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Object\2D\Object2D.h" />
     <ClInclude Include="Object\2D\Transform2D.h" />
+    <ClInclude Include="Object\3D\AABBCollider.h" />
     <ClInclude Include="Object\3D\Object3D.h" />
     <ClInclude Include="Object\3D\Transform3D.h" />
     <ClInclude Include="Object\Camera.h" />

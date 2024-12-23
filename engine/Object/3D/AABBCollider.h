@@ -1,18 +1,13 @@
 #pragma once
 
 #include "Core.h"
+#include "Collision.h"
 #include "3D/Object3D.h"
 #include "3D/Transform3D.h"
 #include "Shader/ConstantBuffers.h"
 
 namespace HBSoft
 {
-    struct AABB
-    {
-        vec3 min;
-        vec3 max;
-    };
-
     class AABBCollider
     {
 

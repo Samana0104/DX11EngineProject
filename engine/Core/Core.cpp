@@ -63,6 +63,7 @@ void Core::Update()
 
 void Core::Render()
 {
+    HASSET->m_fonts[L"DEBUG_FONT"]->DrawMsg(HTIMER.m_csBuffer);
     m_sceneMgr.Render();
     ImGui::Render();
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());

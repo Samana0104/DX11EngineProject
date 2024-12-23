@@ -12,8 +12,8 @@ namespace HBSoft
     class Gardener : public Object3D
     {
     private:
-        std::shared_ptr<Mesh>                       m_mesh;
-        std::vector<std::shared_ptr<AnimationClip>> m_animation;
+        std::shared_ptr<Mesh>          m_mesh;
+        std::shared_ptr<AnimationClip> m_animation;
 
         std::vector<mat4> anim;
 

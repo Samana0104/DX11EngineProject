@@ -15,6 +15,8 @@ Gardener::Gardener()
     m_transform.m_pos = {1.f, 0.5f, 1.f};
 
     m_transform.SetScale(0.1f);
+
+    m_animation = HASSET->m_animations[L"mixamo.com.skm"];
 }
 
 void Gardener::Update(const float deltaTime)
@@ -29,13 +31,13 @@ void Gardener::Update(const float deltaTime)
     ImGui::SliderFloat("Speed", &speed, 0, 30.f);
 
     currentFrame += deltaTime * speed;
-    startFrame    = m_mesh->m_animations[0]->GetStartFrame();
-    lastFrame     = m_mesh->m_animations[0]->GetLastFrame();
+    startFrame    = m_animation->GetStartFrame();
+    lastFrame     = m_animation->GetLastFrame();
 
     if (currentFrame > lastFrame)
         currentFrame = startFrame;
 
-    anim = m_mesh->m_animations[0]->GetAnimationMatrix(currentFrame);
+    anim = m_animation->GetAnimationMatrix(currentFrame);
 
 
     ImGui::SliderFloat("Gardener speed", &m_speed2, 0.f, 50.f);
