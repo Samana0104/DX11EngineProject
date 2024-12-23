@@ -5,7 +5,7 @@ description : 정적인 오브젝트를 관리하는 헤더 파일
 version: 1.1.0
 date: 2024-12-23
 */
-pragma once
+#pragma once
 
 #include "3D/Object3D.h"
 #include "3D/Transform3D.h"
