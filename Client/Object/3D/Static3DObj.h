@@ -31,6 +31,8 @@ namespace HBSoft
 
     public:
         Static3DObj();
+        Static3DObj(const std::string& n)
+            : name(n) {}
 
         virtual void Update(const float deltaTime) override;
         void         Update(const float deltaTime, TransformType transType);

@@ -19,6 +19,7 @@ date: 2024-12-23
 #include "3D/AABBCollider.h"
 #include "GameButton.h"
 #include "3D/Static3DObj.h"
+#include "3D/HBSAutoLoader.h"
 
 namespace HBSoft
 {
@@ -44,6 +45,8 @@ namespace HBSoft
         Static3DObj             m_plasticchair;
         Static3DObj             m_oilbarrels;
         Static3DObj             m_foregroundgarden;
+
+        HBSAutoLoader           m_hbsAL;
         
 
 

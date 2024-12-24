@@ -55,6 +55,8 @@ SceneGame::SceneGame()
     m_oilbarrels.SetCamera(cameraTest);
     m_foregroundgarden.Init(L"foregroundgarden.hbs");
     m_foregroundgarden.SetCamera(cameraTest);
+
+    m_hbsAL.LoadFromFolder("D:/My_Projects/DXTeamProject_TeamC/res/Mesh", cameraTest);
 }
 
 void SceneGame::Update(float deltaTime)
