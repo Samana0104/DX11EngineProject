@@ -20,6 +20,6 @@ namespace HBSoft
         void LoadFromFolder(const std::string& folderPath, std::shared_ptr<Camera> camera);
 
         // 특정 이름으로 객체 검색
-        Static3DObj* FindByName(const std::string& name)
+        Static3DObj* FindByName(const std::string& name);
     };
 }  // namespace HBSoft

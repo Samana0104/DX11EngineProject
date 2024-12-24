@@ -59,7 +59,7 @@
       <Filter>Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="HBSAutoLoader.cpp">
-      <Filter>Object\3D</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,7 +106,7 @@
       <Filter>Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="HBSAutoLoader.h">
-      <Filter>Object\3D</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

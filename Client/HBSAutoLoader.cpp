@@ -6,7 +6,7 @@ version: 1.1.1
 date: 2024-12-24
 */
 #include "pch.h"
-#include "3D/HBSAutoLoader.h"
+#include "HBSAutoLoader.h"
 
 using namespace HBSoft;
 

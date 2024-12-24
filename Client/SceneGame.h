@@ -19,7 +19,7 @@ date: 2024-12-23
 #include "3D/AABBCollider.h"
 #include "GameButton.h"
 #include "3D/Static3DObj.h"
-#include "3D/HBSAutoLoader.h"
+#include "HBSAutoLoader.h"
 
 namespace HBSoft
 {
