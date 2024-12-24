@@ -2,8 +2,8 @@
 author : 변한빛
 description : 메쉬의 기본 리소스를 정의하기 위한 헤더 파일
 
-version: 1.0.0
-date: 2024-11-08
+version: 1.1
+date: 2024-12-24
 */
 
 #pragma once
@@ -70,7 +70,6 @@ namespace HBSoft
         float specularFactor;
     };
 
-    // 추가 예정
     struct AutoCollision
     {
         AABB   aabb;
@@ -93,8 +92,9 @@ namespace HBSoft
         std::vector<Vertex>                   m_vertices;  // 버텍스 버퍼용 배열
         std::vector<std::shared_ptr<SubMesh>> m_subMeshes;
 
-        // 이 두개는 건들지 마셈 로더에서 알아서 함
-        Born m_born;
+        // 이거 두개 건들지 마셈 로더에서 알아서 함
+        Born          m_born;
+        AutoCollision m_autoCollision;
 
         ComPtr<ID3D11Buffer> m_vertexBuffer;
 

@@ -28,8 +28,24 @@ void HBSLoader::WriteHBSAsciiFile(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh
     m_outputAsciiFile << "hbs bornObject : " << hbsHeader.numBornObject << std::endl;
     m_outputAsciiFile << "hbs born : " << hbsHeader.numBorn << std::endl;
 
+    WriteHBSAsciiFileFromCollision(mesh);
     WriteHBSAsciiFileFromVertex(mesh);
     WriteHBSAsciiFileFromBorn(mesh);
+}
+
+void HBSLoader::WriteHBSAsciiFileFromCollision(std::shared_ptr<Mesh> mesh)
+{
+    m_outputAsciiFile << std::endl << "< auto collision >" << std::endl;
+    m_outputAsciiFile << "aabb min : " << mesh->m_autoCollision.aabb.min.x << ", "
+                      << mesh->m_autoCollision.aabb.min.y << ", " << mesh->m_autoCollision.aabb.min.z
+                      << std::endl;
+    m_outputAsciiFile << "aabb max : " << mesh->m_autoCollision.aabb.max.x << ", "
+                      << mesh->m_autoCollision.aabb.max.y << ", " << mesh->m_autoCollision.aabb.max.z
+                      << std::endl;
+    m_outputAsciiFile << "sphere center : " << mesh->m_autoCollision.sphere.center.x << ", "
+                      << mesh->m_autoCollision.sphere.center.y << ", "
+                      << mesh->m_autoCollision.sphere.center.z << std::endl;
+    m_outputAsciiFile << "sphere radius : " << mesh->m_autoCollision.sphere.radius << std::endl;
 }
 
 void HBSLoader::WriteHBSAsciiFileFromVertex(std::shared_ptr<Mesh> mesh)
@@ -197,6 +213,8 @@ void HBSLoader::WriteHBSFile(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh> mes
         m_outputFile.write(reinterpret_cast<const char*>(&bornParent.first.at(0)),
                            sizeof(char) * bornParent.first.size());
     }
+
+    m_outputFile.write(reinterpret_cast<const char*>(&mesh->m_autoCollision), sizeof(AutoCollision));
 }
 
 bool HBSLoader::Export(std::shared_ptr<Mesh> mesh, const wstringV filePath)
@@ -331,6 +349,7 @@ std::shared_ptr<Mesh> HBSLoader::Load(std::shared_ptr<D3Device> device, const ws
         mesh->m_born.parentIndex.insert(bornNode);
     }
 
+    m_inputFile.read(reinterpret_cast<char*>(&mesh->m_autoCollision), sizeof(AutoCollision));
 
     m_inputFile.close();
 
