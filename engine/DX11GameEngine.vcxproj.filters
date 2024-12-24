@@ -204,6 +204,9 @@
     <ClCompile Include="Object\3D\AABBCollider.cpp">
       <Filter>Object\3D</Filter>
     </ClCompile>
+    <ClCompile Include="Object\3D\DirectionalLight.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -375,6 +378,9 @@
       <Filter>Asset\Factory</Filter>
     </ClInclude>
     <ClInclude Include="Object\3D\AABBCollider.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\DirectionalLight.h">
       <Filter>Object\3D</Filter>
     </ClInclude>
   </ItemGroup>

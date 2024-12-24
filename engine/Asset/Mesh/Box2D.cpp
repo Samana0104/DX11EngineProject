@@ -55,3 +55,11 @@ bool Box2D::CreateIndices(std::shared_ptr<D3Device>& device)
 
     return true;
 }
+
+void Box2D::CreateAutoCollision()
+{
+    m_autoCollision.aabb.min = vec3(-1.f, -1.f, 0.f);
+    m_autoCollision.aabb.max = vec3(1.f, 1.f, 0.f);
+
+    m_autoCollision.sphere.SetRangeFromAABB(m_autoCollision.aabb);
+}

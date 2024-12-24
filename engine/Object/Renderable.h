@@ -14,7 +14,6 @@ namespace HBSoft
 {
     class Renderable
     {
-
     protected:
         virtual void Init()                        = 0;
         virtual void Release()                     = 0;

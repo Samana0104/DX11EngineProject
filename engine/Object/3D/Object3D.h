@@ -11,6 +11,7 @@ date: 2024-11-29
 #include "Object.h"
 #include "Transform3D.h"
 #include "Shader/ConstantBuffers.h"
+#include "3D/DirectionalLight.h"
 
 namespace HBSoft
 {
@@ -21,18 +22,19 @@ namespace HBSoft
     class Object3D : public Object
     {
     protected:
-        Transform3D   m_transform;
-        DefaultCB0    m_cb0;
-        AABBCollider* m_aabbcollider;
+        Transform3D m_transform;
+        DefaultCB0  m_cb0;
+
+        std::shared_ptr<DirectionalLight> m_light;
 
     protected:
-        Object3D() = default;
-
-    public:
+        Object3D()  = default;
         ~Object3D() = default;
 
-        virtual void UpdateDefaultCB() override;
+    public:
+        void SetLight(std::shared_ptr<DirectionalLight> light);
 
+        virtual void UpdateDefaultCB() override;
 
         virtual void Init()                        = 0;
         virtual void Release()                     = 0;

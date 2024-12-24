@@ -61,13 +61,23 @@ namespace HBSoft
 
     struct Material
     {
-        vec3  ambient;
-        vec3  diffuse;
-        vec3  specular;
+        vec4  ambient;
+        vec4  diffuse;
+        vec4  specular;
         float shininess;
         float ambientFactor;
         float diffuseFactor;
         float specularFactor;
+
+        Material()
+            : ambient(0.3f, 0.3f, 0.3f, 1.f),
+              diffuse(0.f),
+              specular(0.f),
+              shininess(0.f),
+              ambientFactor(1.f),
+              diffuseFactor(0.f),
+              specularFactor(0.f)
+        {}
     };
 
     struct AutoCollision
@@ -79,6 +89,7 @@ namespace HBSoft
     struct SubMesh
     {
         ComPtr<ID3D11Buffer> indexBuffer;
+        ComPtr<ID3D11Buffer> materialBuffer;
         std::vector<UINT>    indices;
         std::string          meshName;
         std::wstring         textureName;
@@ -92,7 +103,7 @@ namespace HBSoft
         std::vector<Vertex>                   m_vertices;  // 버텍스 버퍼용 배열
         std::vector<std::shared_ptr<SubMesh>> m_subMeshes;
 
-        // 이거 두개 건들지 마셈 로더에서 알아서 함
+        // 이거 뼈 건들지 마셈 로더에서 알아서 함
         Born          m_born;
         AutoCollision m_autoCollision;
 
@@ -102,9 +113,11 @@ namespace HBSoft
         Mesh();
         ~Mesh() = default;
 
+        bool CreateMaterialBuffer(std::shared_ptr<D3Device> device);
         void SetVertices(std::shared_ptr<D3Device> device, const std::vector<Vertex>& vertices);
         void SetVertex(std::shared_ptr<D3Device> device, const Vertex& vertex, const UINT idx);
         void UpdateVertices(std::shared_ptr<D3Device> device);
+        void UpdateMaterial(std::shared_ptr<D3Device> device, UINT submeshIdx);
     };
 
 }  // namespace HBSoft

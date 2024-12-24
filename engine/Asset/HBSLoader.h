@@ -12,7 +12,7 @@ date: 2024-12-23
 
 namespace HBSoft
 {
-#define HBS_VERSION 103
+#define HBS_VERSION 104
 
     struct SubMeshHeader
     {

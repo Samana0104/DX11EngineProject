@@ -11,6 +11,11 @@ date: 2024-11-29
 #include "Camera.h"
 using namespace HBSoft;
 
+void Object3D::SetLight(std::shared_ptr<DirectionalLight> light)
+{
+    m_light = light;
+}
+
 void Object3D::UpdateDefaultCB()
 {
     if (m_camera != nullptr)

@@ -375,39 +375,24 @@ void FbxLoader::GetMaterial(std::shared_ptr<SubMesh> subMesh, FbxSurfaceMaterial
             subMesh->material.ambient[0] = static_cast<float>(ambient[0]);
             subMesh->material.ambient[1] = static_cast<float>(ambient[1]);
             subMesh->material.ambient[2] = static_cast<float>(ambient[2]);
+            subMesh->material.ambient[3] = 1.f;
 
             subMesh->material.diffuse[0] = static_cast<float>(diffuse[0]);
             subMesh->material.diffuse[1] = static_cast<float>(diffuse[1]);
             subMesh->material.diffuse[2] = static_cast<float>(diffuse[2]);
+            subMesh->material.diffuse[3] = 1.f;
 
             subMesh->material.specular[0] = static_cast<float>(specular[0]);
             subMesh->material.specular[1] = static_cast<float>(specular[1]);
             subMesh->material.specular[2] = static_cast<float>(specular[2]);
+            subMesh->material.specular[3] = 1.f;
 
             subMesh->material.shininess      = static_cast<float>(shininess);
             subMesh->material.ambientFactor  = static_cast<float>(ambientFactor);
             subMesh->material.diffuseFactor  = static_cast<float>(diffuseFactor);
             subMesh->material.specularFactor = static_cast<float>(specularFactor);
         }
-        else
-        {
-            subMesh->material.ambient[0] = 0.3f;
-            subMesh->material.ambient[1] = 0.3f;
-            subMesh->material.ambient[2] = 0.3f;
-
-            subMesh->material.diffuse[0] = 0.f;
-            subMesh->material.diffuse[1] = 0.f;
-            subMesh->material.diffuse[2] = 0.f;
-
-            subMesh->material.specular[0] = 0.f;
-            subMesh->material.specular[1] = 0.f;
-            subMesh->material.specular[2] = 0.f;
-
-            subMesh->material.shininess      = 0.f;
-            subMesh->material.ambientFactor  = 1.f;
-            subMesh->material.diffuseFactor  = 0.f;
-            subMesh->material.specularFactor = 0.f;
-        }
+        1
     }
 }
 

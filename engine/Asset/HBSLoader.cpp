@@ -358,6 +358,7 @@ std::shared_ptr<Mesh> HBSLoader::Load(std::shared_ptr<D3Device> device, const ws
     for (UINT i = 0; i < mesh->m_subMeshes.size(); i++)
         device->CreateIndexBuffer(mesh->m_subMeshes[i]->indices, mesh->m_subMeshes[i]->indexBuffer);
 
+    mesh->CreateMaterialBuffer(device);
 
     return mesh;
 }

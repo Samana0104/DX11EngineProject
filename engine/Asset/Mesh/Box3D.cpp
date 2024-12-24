@@ -14,6 +14,7 @@ Box3D::Box3D(std::shared_ptr<D3Device> device)
 {
     assert(CreateVertices(device));
     assert(CreateIndices(device));
+    assert(CreateMaterialBuffer(device));
 }
 
 bool Box3D::CreateVertices(std::shared_ptr<D3Device> device)
@@ -154,4 +155,12 @@ bool Box3D::CreateIndices(std::shared_ptr<D3Device> device)
     m_subMeshes.push_back(subMesh);
 
     return true;
+}
+
+void Box3D::CreateAutoCollision()
+{
+    m_autoCollision.aabb.min = vec3(-1.f, -1.f, -1.f);
+    m_autoCollision.aabb.max = vec3(1.f, 1.f, 1.f);
+
+    m_autoCollision.sphere.SetRangeFromAABB(m_autoCollision.aabb);
 }
