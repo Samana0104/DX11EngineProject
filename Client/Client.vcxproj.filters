@@ -58,9 +58,6 @@
     <ClCompile Include="Object\3D\Static3DObj.cpp">
       <Filter>Object\3D</Filter>
     </ClCompile>
-    <ClCompile Include="HBSAutoLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneGame.h">

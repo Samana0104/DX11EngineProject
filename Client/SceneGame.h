@@ -46,7 +46,7 @@ namespace HBSoft
         Static3DObj             m_oilbarrels;
         Static3DObj             m_foregroundgarden;
 
-        HBSAutoLoader           m_hbsAL;
+        HBSAutoLoader<Static3DObj>           m_hbsAL;
         
 
 

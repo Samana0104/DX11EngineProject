@@ -145,7 +145,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="HBSAutoLoader.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Object\2D\MainTitle.cpp" />
     <ClCompile Include="Object\3D\AABBCollider.cpp" />
