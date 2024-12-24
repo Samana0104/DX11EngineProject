@@ -33,27 +33,10 @@ void FbxLoader::Load(const wstringV filePath, std::shared_ptr<Mesh> loadedMesh,
         ProcessMesh(m_fbxMeshes[i], loadedMesh);
 
     ReleaseFbxManager();
+    ProcessKeyFrame(loadedAni);
 
-    for (int i = 0; i < m_fbxAniMat.size(); i++)
-    {
-        loadedAni[i]->m_keyFrame.resize(m_fbxAniMat[i].size());
-
-        for (int j = 0; j < m_fbxAniMat[i].size(); j++)
-        {
-            loadedAni[i]->m_keyFrame[j].resize(m_fbxAniMat[i][j].size());
-
-            for (int k = 0; k < m_fbxAniMat[i][j].size(); k++)
-            {
-                KeyFrame key;
-                vec3     dummy1;
-                vec4     dummy2;
-
-                glm::decompose(m_fbxAniMat[i][j][k], key.scale, key.rot, key.pos, dummy1, dummy2);
-
-                loadedAni[i]->m_keyFrame[j][k] = key;
-            }
-        }
-    }
+    loadedMesh->m_autoCollision.aabb = m_autoColAABB;
+    loadedMesh->m_autoCollision.sphere.SetRangeFromAABB(m_autoColAABB);
 }
 
 bool FbxLoader::InitFbxLoader(const wstringV filePath)
@@ -89,6 +72,7 @@ bool FbxLoader::InitFbxLoader(const wstringV filePath)
     m_fbxBornNodes.clear();
     m_fbxMeshes.clear();
     m_fbxAniMat.clear();
+    m_isColInitialized = false;
 
     return true;
 }
@@ -682,6 +666,23 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
 
                 if (vertexIdx == NOT_EXISTED_VERTEX)
                 {
+                    if (!m_isColInitialized)
+                    {
+                        m_autoColAABB.max  = convertV.p;
+                        m_autoColAABB.min  = convertV.p;
+                        m_isColInitialized = true;
+                    }
+                    else
+                    {
+                        m_autoColAABB.max.x = glm::max<float>(m_autoColAABB.max.x, convertV.p.x);
+                        m_autoColAABB.max.y = glm::max<float>(m_autoColAABB.max.y, convertV.p.y);
+                        m_autoColAABB.max.z = glm::max<float>(m_autoColAABB.max.z, convertV.p.z);
+
+                        m_autoColAABB.min.x = glm::min<float>(m_autoColAABB.min.x, convertV.p.x);
+                        m_autoColAABB.min.y = glm::min<float>(m_autoColAABB.min.y, convertV.p.y);
+                        m_autoColAABB.min.z = glm::min<float>(m_autoColAABB.min.z, convertV.p.z);
+                    }
+
                     mesh->m_vertices.push_back(convertV);
                     subMesh->indices.push_back((UINT)(mesh->m_vertices.size() - 1));
                 }
@@ -695,6 +696,30 @@ void FbxLoader::ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
     }
 
     mesh->m_subMeshes.push_back(subMesh);
+}
+
+void FbxLoader::ProcessKeyFrame(std::vector<std::shared_ptr<AnimationClip>>& loadedAni)
+{
+    for (int i = 0; i < m_fbxAniMat.size(); i++)
+    {
+        loadedAni[i]->m_keyFrame.resize(m_fbxAniMat[i].size());
+
+        for (int j = 0; j < m_fbxAniMat[i].size(); j++)
+        {
+            loadedAni[i]->m_keyFrame[j].resize(m_fbxAniMat[i][j].size());
+
+            for (int k = 0; k < m_fbxAniMat[i][j].size(); k++)
+            {
+                KeyFrame key;
+                vec3     dummy1;
+                vec4     dummy2;
+
+                glm::decompose(m_fbxAniMat[i][j][k], key.scale, key.rot, key.pos, dummy1, dummy2);
+
+                loadedAni[i]->m_keyFrame[j][k] = key;
+            }
+        }
+    }
 }
 
 mat4 FbxLoader::ConvertFbxMatToGlmMat(FbxAMatrix& fMat)

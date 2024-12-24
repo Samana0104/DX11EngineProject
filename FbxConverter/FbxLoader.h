@@ -3,7 +3,7 @@ author : 변한빛
 description : fbx load를 위한 클래스 소스 파일
 
 version: 1.0.0
-date: 2024-11-25
+date: 2024-12-23
 */
 
 #pragma once
@@ -34,6 +34,9 @@ namespace HBSoft
         std::vector<FbxNode*>                       m_fbxNodes;
         std::vector<FbxNode*>                       m_fbxBornNodes;
         std::vector<std::vector<std::vector<mat4>>> m_fbxAniMat;
+
+        AABB m_autoColAABB;
+        bool m_isColInitialized;
         // 애니메이션 수 / 본 개수 / 프레임 개수
 
     private:
@@ -43,6 +46,7 @@ namespace HBSoft
         void ProcessNode(FbxNode* fNode, std::shared_ptr<Mesh> mesh, int curIdx, int parentIdx);
         bool ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh);
         void ProcessMesh(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh);
+        void ProcessKeyFrame(std::vector<std::shared_ptr<AnimationClip>>& loadedAni);
 
         int        GetSubMaterialPolygonIndex(int polyIdx, FbxLayerElementMaterial* fMaterial);
         FbxVector2 GetUV(FbxLayerElementUV* uvSet, int vertexPosIdx, int vertexUVIdx);

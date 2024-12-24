@@ -66,6 +66,7 @@ namespace HBSoft
     private:
         void WriteHBSHeader(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh> mesh);
         void WriteHBSAsciiFile(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh> mesh);
+        void WriteHBSAsciiFileFromCollision(std::shared_ptr<Mesh> mesh);
         void WriteHBSAsciiFileFromVertex(std::shared_ptr<Mesh> mesh);
         void WriteHBSAsciiFileFromBorn(std::shared_ptr<Mesh> mesh);
         void WriteHBSFile(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh> mesh);
