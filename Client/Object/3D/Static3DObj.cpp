@@ -13,36 +13,36 @@ using namespace HBSoft;
 
 Static3DObj::Static3DObj()
 {
-    m_mesh = HASSET->m_meshes[L"TestObjOrdered.hbs"];
-
     m_easyRender.SetVSShader(L"VertexShader.hlsl");
     m_easyRender.SetPSShader(L"ColorPixelShader.hlsl");
     m_easyRender.SetTexture(nullptr);
     m_easyRender.SetMesh(m_mesh);
 }
 
-void Static3DObj::Update(const float deltaTime)
+std::string HBSoft::Static3DObj::GetName()
 {
-    m_transform.SetRotation(glm::vec3(1.57, 0, 0));
-    m_transform.SetLocation(glm::vec3(-7, 0, -12));
-
-    UpdateDefaultCB();
+    return m_name;
 }
 
-void Static3DObj::Update(const float deltaTime, TransformType transType)
+void HBSoft::Static3DObj::SetTransType(TransformType transType)
 {
-    if (transType == TransformType::OriginalTrans)
+    m_transType = transType;
+}
+
+void Static3DObj::Update(const float deltaTime)
+{
+    if (m_transType == TransformType::GooseGameTrans)
     {
         m_transform.SetRotation(glm::vec3(1.57, 0, 0));
         m_transform.SetLocation(glm::vec3(-7, 0, -12));
     }
-    else if (transType == TransformType::UnityTrans)
+    else if (m_transType == TransformType::UnityTrans)
     {
         m_transform.SetRotation(glm::vec3(1.57, 0, 0));
         m_transform.SetLocation(glm::vec3(-7.0f, 0.0f, -12.0f));
         m_transform.SetScale({1 / 100.0f, 1 / 100.0f, 1 / 100.0f});
     }
-    
+
     UpdateDefaultCB();
 }
 

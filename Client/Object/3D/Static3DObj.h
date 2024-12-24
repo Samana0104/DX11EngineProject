@@ -14,7 +14,8 @@ namespace HBSoft
 {
     enum class TransformType
     {
-        OriginalTrans,
+        DefaultTrans,
+        GooseGameTrans,
         UnityTrans
     };
 
@@ -22,20 +23,20 @@ namespace HBSoft
     {
     private:
         std::shared_ptr<Mesh> m_mesh;
-
-        std::vector<mat4> anim;
-
-    public:
-        std::string name;
+        std::vector<mat4>     m_anim;
+        std::string           m_name;
+        TransformType         m_transType = TransformType::DefaultTrans;
 
 
     public:
         Static3DObj();
         Static3DObj(const std::string& n)
-            : name(n) {}
+            : m_name(n) {}
+
+        std::string GetName();
+        void        SetTransType(TransformType);
 
         virtual void Update(const float deltaTime) override;
-        void         Update(const float deltaTime, TransformType transType);
         virtual void Render() override;
         virtual void Init();
         void         Init(const std::wstring&);

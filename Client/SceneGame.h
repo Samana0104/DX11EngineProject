@@ -34,19 +34,8 @@ namespace HBSoft
         Goose                   m_goose;
         Gardener                m_gardener;
         HeightMapObj            m_terrain;
-        Static3DObj             m_planterLeftLowDirt;
-        Static3DObj             m_planterLeftLowEdges;
-        Static3DObj             m_hedges[5];
-        Static3DObj             m_brickwalls[6];
-        Static3DObj             m_waterTank;
-        Static3DObj             m_shed;
-        Static3DObj             m_shedporch;
-        Static3DObj             m_trestletable;
-        Static3DObj             m_plasticchair;
-        Static3DObj             m_oilbarrels;
-        Static3DObj             m_foregroundgarden;
 
-        HBSAutoLoader<Static3DObj>           m_hbsAL;
+        HBSAutoLoader<Static3DObj>           m_hbsAutoLoader;
         
 
 

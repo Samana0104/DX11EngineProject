@@ -1,9 +1,10 @@
 /*
 author : 변한빛, 정찬빈, 이지혁
 description : 게임 내부 씬을 정의하는 소스 파일
+              v1.1.2 : 하드코딩된 오브젝트 초기화, 업데이트, 렌더 부분 자동화
 
-version: 1.1.1
-date: 2024-12-23
+version: 1.1.2
+date: 2024-12-24
 */
 
 #include "pch.h"
@@ -22,41 +23,8 @@ SceneGame::SceneGame()
     m_goose.SetCamera(cameraTest);
     m_goose.SetHeightMap(m_tree.GetMapObj());
     m_terrain.SetCamera(cameraTest);
-    m_planterLeftLowDirt.Init(L"PlanterLeftLowDirt.hbs");
-    m_planterLeftLowDirt.SetCamera(cameraTest);
-    m_planterLeftLowEdges.Init(L"PlanterLeftLowEdges.hbs");
-    m_planterLeftLowEdges.SetCamera(cameraTest);
-    m_hedges[0].Init(L"HedgeLeft0.hbs");
-    m_hedges[1].Init(L"HedgeLeft1.hbs");
-    m_hedges[2].Init(L"HedgeLeft2.hbs");
-    m_hedges[3].Init(L"HedgeRight0.hbs");
-    m_hedges[4].Init(L"HedgeRight1.hbs");
-    for (int i = 0; i < std::size(m_hedges); i++)
-        m_hedges[i].SetCamera(cameraTest);
-    m_brickwalls[0].Init(L"brickwall0.hbs");
-    m_brickwalls[1].Init(L"brickwall1.hbs");
-    m_brickwalls[2].Init(L"brickwall2.hbs");
-    m_brickwalls[3].Init(L"brickwall3.hbs");
-    m_brickwalls[4].Init(L"brickwall4.hbs");
-    m_brickwalls[5].Init(L"brickgate.hbs");
-    for (int i = 0; i < std::size(m_brickwalls); i++)
-        m_brickwalls[i].SetCamera(cameraTest);
-    m_waterTank.Init(L"watertank.hbs");
-    m_waterTank.SetCamera(cameraTest);
-    m_shed.Init(L"shed.hbs");
-    m_shed.SetCamera(cameraTest);
-    m_shedporch.Init(L"shedporch.hbs");
-    m_shedporch.SetCamera(cameraTest);
-    m_trestletable.Init(L"trestletable.hbs");
-    m_trestletable.SetCamera(cameraTest);
-    m_plasticchair.Init(L"plasticchair1.hbs");
-    m_plasticchair.SetCamera(cameraTest);
-    m_oilbarrels.Init(L"oilbarrels.hbs");
-    m_oilbarrels.SetCamera(cameraTest);
-    m_foregroundgarden.Init(L"foregroundgarden.hbs");
-    m_foregroundgarden.SetCamera(cameraTest);
 
-    m_hbsAL.LoadFromFolder("D:/My_Projects/DXTeamProject_TeamC/res/Mesh", cameraTest);
+    m_hbsAutoLoader.LoadFromFolder("D:/My_Projects/DXTeamProject_TeamC/res/Mesh/StaticObj", cameraTest);
 }
 
 void SceneGame::Update(float deltaTime)
@@ -72,19 +40,11 @@ void SceneGame::Update(float deltaTime)
     m_goose.Update(deltaTime);
     m_tree.Update(deltaTime);
     m_terrain.Update(deltaTime);
-    m_planterLeftLowDirt.Update(deltaTime, TransformType::OriginalTrans);
-    m_planterLeftLowEdges.Update(deltaTime, TransformType::UnityTrans);
-    for (int i = 0; i < std::size(m_hedges); i++)
-        m_hedges[i].Update(deltaTime, TransformType::OriginalTrans);
-    for (int i = 0; i < std::size(m_brickwalls); i++)
-        m_brickwalls[i].Update(deltaTime, TransformType::OriginalTrans);
-    m_waterTank.Update(deltaTime, TransformType::OriginalTrans);
-    m_shed.Update(deltaTime);
-    m_shedporch.Update(deltaTime);
-    m_trestletable.Update(deltaTime);
-    m_plasticchair.Update(deltaTime);
-    m_oilbarrels.Update(deltaTime);
-    m_foregroundgarden.Update(deltaTime);
+
+    for (auto& hbsc : m_hbsAutoLoader.HBSContainer)
+    {
+        hbsc.Update(deltaTime);
+    }
 }
 
 void SceneGame::Render()
@@ -99,19 +59,11 @@ void SceneGame::Render()
     cube.Render();
     m_tree.Render();
     m_terrain.Render();
-    m_planterLeftLowDirt.Render();
-    m_planterLeftLowEdges.Render();
-    for (int i = 0; i < std::size(m_hedges); i++)
-        m_hedges[i].Render();
-    for (int i = 0; i < std::size(m_brickwalls); i++)
-        m_brickwalls[i].Render();
-    m_waterTank.Render();
-    m_shed.Render();
-    m_shedporch.Render();
-    m_trestletable.Render();
-    m_plasticchair.Render();
-    m_oilbarrels.Render();
-    m_foregroundgarden.Render();
+
+    for (auto& hbsc : m_hbsAutoLoader.HBSContainer)
+    {
+        hbsc.Render();
+    }
     EasyRender::End();
 
     EasyRender::Begin(MultiRT::GUI);
