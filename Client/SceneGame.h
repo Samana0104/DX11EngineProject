@@ -35,7 +35,7 @@ namespace HBSoft
         Gardener                m_gardener;
         HeightMapObj            m_terrain;
 
-        HBSAutoLoader<Static3DObj>           m_hbsAutoLoader;
+        HBSAutoLoader<Static3DObj>           m_staticObjs;
         
 
 

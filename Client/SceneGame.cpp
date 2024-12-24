@@ -24,7 +24,7 @@ SceneGame::SceneGame()
     m_goose.SetHeightMap(m_tree.GetMapObj());
     m_terrain.SetCamera(cameraTest);
 
-    m_hbsAutoLoader.LoadFromFolder("D:/My_Projects/DXTeamProject_TeamC/res/Mesh/StaticObj", cameraTest);
+    m_staticObjs.LoadFromFolder("D:/My_Projects/DXTeamProject_TeamC/res/Mesh/StaticObj", cameraTest);
 }
 
 void SceneGame::Update(float deltaTime)
@@ -41,7 +41,7 @@ void SceneGame::Update(float deltaTime)
     m_tree.Update(deltaTime);
     m_terrain.Update(deltaTime);
 
-    for (auto& hbsc : m_hbsAutoLoader.HBSContainer)
+    for (auto& hbsc : m_staticObjs.HBSContainer)
     {
         hbsc.Update(deltaTime);
     }
@@ -60,7 +60,7 @@ void SceneGame::Render()
     m_tree.Render();
     m_terrain.Render();
 
-    for (auto& hbsc : m_hbsAutoLoader.HBSContainer)
+    for (auto& hbsc : m_staticObjs.HBSContainer)
     {
         hbsc.Render();
     }

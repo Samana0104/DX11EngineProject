@@ -31,7 +31,8 @@ namespace HBSoft
         try
         {
             // 템플릿으로 들어온 타입이 Static3DObj 일 때 파일을 로드하면서 TransformType 을 지정해줌
-            if constexpr (std::is_same<T, Static3DObj>::value)
+            // 특정 타입의 오브젝트가 로드될 때 분기 처리가 필요하면 이 조건문 밑에 조건을 추가하면 됨
+            if constexpr (std::is_same<T, Static3DObj>::value) // C++ 17 부터 추가된 기능, 컴파일 타임에서 조건을 확인하고 해당 조건에 맞는 분기를 선택함
             {
                 for (const auto& entry : fs::directory_iterator(folderPath))
                 {
@@ -74,6 +75,7 @@ namespace HBSoft
         }
     }
 
+    // 파일 이름을 통해 특정 오브젝트 인스턴스에 접근
     template <typename T>
     T* HBSAutoLoader<T>::FindByName(const std::string& name)
     {
