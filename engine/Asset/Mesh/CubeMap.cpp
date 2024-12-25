@@ -20,6 +20,7 @@ CubeMap::CubeMap(std::shared_ptr<D3Device> device)
 
     assert(CreateVertices(device));
     assert(CreateIndices(device));
+    assert(CreateMaterialBuffer(device));
 }
 
 bool CubeMap::CreateVertices(std::shared_ptr<D3Device> device)

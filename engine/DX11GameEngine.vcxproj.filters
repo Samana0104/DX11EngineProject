@@ -427,5 +427,8 @@
     <FxCompile Include="..\res\Shader\NormalAniVS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
+    <FxCompile Include="..\res\Shader\2DBasicPS.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

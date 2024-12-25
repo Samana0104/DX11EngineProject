@@ -392,7 +392,6 @@ void FbxLoader::GetMaterial(std::shared_ptr<SubMesh> subMesh, FbxSurfaceMaterial
             subMesh->material.diffuseFactor  = static_cast<float>(diffuseFactor);
             subMesh->material.specularFactor = static_cast<float>(specularFactor);
         }
-        1
     }
 }
 

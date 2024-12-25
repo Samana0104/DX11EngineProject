@@ -135,6 +135,7 @@
     <ClInclude Include="Timer\SystemTimer.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\res\Shader\2DBasicPS.hlsl" />
     <FxCompile Include="..\res\Shader\2DBasicVS.hlsl" />
     <FxCompile Include="..\res\Shader\BasicAniVS.hlsl" />
     <FxCompile Include="..\res\Shader\ColorPS.hlsl" />

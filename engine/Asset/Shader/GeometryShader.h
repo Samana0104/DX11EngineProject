@@ -23,7 +23,7 @@ namespace HBSoft
         bool CreateGeometryShader(std::shared_ptr<D3Device> device);
 
     public:
-        GeometryShader(std::shared_ptr<D3Device> device, const wstringV path, const ShaderType& type);
+        GeometryShader(std::shared_ptr<D3Device> device, const wstringV path);
         /*
            description :
                context에 쉐이더를 설정해준다. ( 상수, 쉐이더 코드 )

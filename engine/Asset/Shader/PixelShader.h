@@ -22,7 +22,7 @@ namespace HBSoft
         bool CreatePixelShader(std::shared_ptr<D3Device> device);
 
     public:
-        PixelShader(std::shared_ptr<D3Device> device, const wstringV path, const ShaderType& type);
+        PixelShader(std::shared_ptr<D3Device> device, const wstringV path);
         /*
            description :
                context에 쉐이더를 설정해준다. ( 상수, 쉐이더 코드 )

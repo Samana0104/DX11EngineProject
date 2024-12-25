@@ -16,7 +16,7 @@ Mesh::Mesh()
 
 bool Mesh::CreateMaterialBuffer(std::shared_ptr<D3Device> device)
 {
-    HRESULT           hr;
+    HRESULT           hr = S_OK;
     D3D11_BUFFER_DESC bd;
 
     ZeroMemory(&bd, sizeof(D3D11_BUFFER_DESC));

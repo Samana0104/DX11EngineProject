@@ -20,7 +20,7 @@ namespace HBSoft
     {
     public:
         static std::shared_ptr<Shader> Create(std::shared_ptr<D3Device> device, wstringV path,
-                                              ShaderType type);
+                                              const wchar_t type);
 
         static bool IsShaderFormat(const wstringV ext);
     };

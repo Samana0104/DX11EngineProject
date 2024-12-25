@@ -31,6 +31,7 @@ struct PSInput
     float3 n : NORMAL;
     float4 c : COLOR0;
     float2 t : TEXCOORD0;
+    float4 worldP : TEXCOORD1;
 };
 
 struct LinePsInput
@@ -96,9 +97,9 @@ description :
 */
 float3 ComputeBlinnPhong(float3 lightDir, float3 normal, float3 eye, BlinnInfo info)
 {
-    float lDotN = dot(-lightDir, normal);
+    float lDotN = saturate(dot(-lightDir, normal));
     float3 halfVector = normalize(-eye + -lightDir);
-    float hDotN = dot(halfVector, normal);
+    float hDotN = saturate(dot(halfVector, normal));
     float specularPower = pow(hDotN, info.shininess);
     
     float3 color = saturate(info.ambientColor * info.ambientFactor

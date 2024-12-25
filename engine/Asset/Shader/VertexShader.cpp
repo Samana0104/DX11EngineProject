@@ -10,8 +10,8 @@ date: 2024-11-09
 #include "VertexShader.h"
 using namespace HBSoft;
 
-VertexShader::VertexShader(std::shared_ptr<D3Device> device, const wstringV path, const ShaderType& type)
-    : Shader(path, type)
+VertexShader::VertexShader(std::shared_ptr<D3Device> device, const wstringV path)
+    : Shader(path, ShaderType::VERTEX)
 {
     assert(CreateShader(device));
 }
