@@ -37,23 +37,11 @@
     <ClCompile Include="Object\3D\Goose.cpp">
       <Filter>Object\3D</Filter>
     </ClCompile>
-    <ClCompile Include="Object\3D\HeightMapObj.cpp">
-      <Filter>Object\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\3D\LineObj.cpp">
-      <Filter>Object\3D</Filter>
-    </ClCompile>
     <ClCompile Include="Object\3D\Test3DObj.cpp">
       <Filter>Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\3D\QuadTree.cpp">
-      <Filter>Object\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\3D\Static3DObj.cpp">
-      <Filter>Object\3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -75,25 +63,10 @@
     <ClInclude Include="Object\3D\Goose.h">
       <Filter>Object\3D</Filter>
     </ClInclude>
-    <ClInclude Include="Object\3D\HeightMapObj.h">
-      <Filter>Object\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\3D\LineObj.h">
-      <Filter>Object\3D</Filter>
-    </ClInclude>
     <ClInclude Include="Object\3D\Test3DObj.h">
       <Filter>Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\3D\QuadTree.h">
-      <Filter>Object\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\3D\Static3DObj.h">
-      <Filter>Object\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="HBSAutoLoader.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

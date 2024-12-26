@@ -43,7 +43,7 @@ NormalGSInput main(AnimationInput vsIn)
     }
 
     gsIn.p = float4(vAnimVertex.xyz, 1.f);
-    gsIn.n = vAnimNormal;
+    gsIn.n = normalize(vAnimNormal);
     gsIn.c = float4(1.f, 0.f, 0.f, 1.f);
     return gsIn;
 }

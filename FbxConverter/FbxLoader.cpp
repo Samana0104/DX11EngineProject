@@ -361,12 +361,14 @@ void FbxLoader::GetMaterial(std::shared_ptr<SubMesh> subMesh, FbxSurfaceMaterial
                 subMesh->hasTexture = false;
             }
         }
-        FbxSurfacePhong* phongMaterial = FbxCast<FbxSurfacePhong>(fMaterial);
+        FbxSurfacePhong*   phongMaterial = FbxCast<FbxSurfacePhong>(fMaterial);
+        FbxSurfaceLambert* lambert       = FbxCast<FbxSurfaceLambert>(fMaterial);
+
         if (phongMaterial)
         {
+            FbxDouble3 ambient        = phongMaterial->Ambient;
             FbxDouble3 diffuse        = phongMaterial->Diffuse;
             FbxDouble3 specular       = phongMaterial->Specular;
-            FbxDouble3 ambient        = phongMaterial->Ambient;
             FbxDouble  shininess      = phongMaterial->Shininess;
             FbxDouble  ambientFactor  = phongMaterial->AmbientFactor;
             FbxDouble  diffuseFactor  = phongMaterial->DiffuseFactor;
@@ -391,6 +393,26 @@ void FbxLoader::GetMaterial(std::shared_ptr<SubMesh> subMesh, FbxSurfaceMaterial
             subMesh->material.ambientFactor  = static_cast<float>(ambientFactor);
             subMesh->material.diffuseFactor  = static_cast<float>(diffuseFactor);
             subMesh->material.specularFactor = static_cast<float>(specularFactor);
+        }
+        else if (lambert)
+        {
+            FbxDouble3 ambient       = lambert->Ambient;
+            FbxDouble3 diffuse       = lambert->Diffuse;
+            FbxDouble  ambientFactor = lambert->AmbientFactor;
+            FbxDouble  diffuseFactor = lambert->DiffuseFactor;
+
+            subMesh->material.ambient[0] = static_cast<float>(ambient[0]);
+            subMesh->material.ambient[1] = static_cast<float>(ambient[1]);
+            subMesh->material.ambient[2] = static_cast<float>(ambient[2]);
+            subMesh->material.ambient[3] = 1.f;
+
+            subMesh->material.diffuse[0] = static_cast<float>(diffuse[0]);
+            subMesh->material.diffuse[1] = static_cast<float>(diffuse[1]);
+            subMesh->material.diffuse[2] = static_cast<float>(diffuse[2]);
+            subMesh->material.diffuse[3] = 1.f;
+
+            subMesh->material.ambientFactor = static_cast<float>(ambientFactor);
+            subMesh->material.diffuseFactor = static_cast<float>(diffuseFactor);
         }
     }
 }

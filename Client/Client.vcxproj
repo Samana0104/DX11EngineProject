@@ -150,10 +150,6 @@
     <ClCompile Include="Object\3D\CubeMapObj.cpp" />
     <ClCompile Include="Object\3D\Gardener.cpp" />
     <ClCompile Include="Object\3D\Goose.cpp" />
-    <ClCompile Include="Object\3D\HeightMapObj.cpp" />
-    <ClCompile Include="Object\3D\LineObj.cpp" />
-    <ClCompile Include="Object\3D\QuadTree.cpp" />
-    <ClCompile Include="Object\3D\Static3DObj.cpp" />
     <ClCompile Include="Object\3D\Test3DObj.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -168,10 +164,6 @@
     <ClInclude Include="Object\3D\CubeMapObj.h" />
     <ClInclude Include="Object\3D\Gardener.h" />
     <ClInclude Include="Object\3D\Goose.h" />
-    <ClInclude Include="Object\3D\HeightMapObj.h" />
-    <ClInclude Include="Object\3D\LineObj.h" />
-    <ClInclude Include="Object\3D\QuadTree.h" />
-    <ClInclude Include="Object\3D\Static3DObj.h" />
     <ClInclude Include="Object\3D\Test3DObj.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="SceneGame.h" />

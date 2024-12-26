@@ -52,14 +52,6 @@ QNode* QuadTree::CreateNode(UINT depth, UINT TopLeft, UINT TopRight, UINT Bottom
     node->cornerIdx[2] = BottomLeft;
     node->cornerIdx[3] = BottomRight;
 
-    /*
-    0  1  2  3  4  5
-    6  7  8  9  10 11
-    12 13 14 15 16 17
-    18 19 20 21 22 23
-    24 25 26 27 28 29
-    */
-
     UINT numCol    = TopRight - TopLeft;
     UINT numHeight = m_mapObj->m_mapDesc.numRows;
     UINT numWidth  = m_mapObj->m_mapDesc.numCols;
