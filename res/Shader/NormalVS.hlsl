@@ -8,9 +8,9 @@ date: 2024-12-19
 
 #include "HBStd.hlsli"
 
-NormalGeoInput main(VSInput vsIn)
+NormalGSInput main(VSInput vsIn)
 {
-    NormalGeoInput geoIn;
+    NormalGSInput geoIn;
 
     geoIn.p = float4(vsIn.p, 1.f);
     geoIn.n = vsIn.n;

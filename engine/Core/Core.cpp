@@ -73,6 +73,7 @@ void Core::Render()
 void Core::Release()
 {
     m_sceneMgr.Release();
+    m_sceneMgr.Clear();
 
     ImGui_ImplDX11_Shutdown();
     ImGui_ImplWin32_Shutdown();
@@ -95,6 +96,15 @@ void Core::Run()
         Render();
     }
     Release();
+}
+
+void Core::Start(SCENE_KEY startSceneKey)
+{
+    if (HENGINE == nullptr)
+        return;
+
+    HSCENE.SetCurrentScene(startSceneKey);
+    HENGINE->Run();
 }
 
 void Core::Create(HINSTANCE hInstance, HPoint windowSize)

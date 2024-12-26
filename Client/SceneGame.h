@@ -18,21 +18,24 @@ date: 2024-12-03
 #include "3D/Gardener.h"
 #include "3D/AABBCollider.h"
 #include "GameButton.h"
+#include "3D/DirectionalLight.h"
 
 namespace HBSoft
 {
     class SceneGame : public Scene
     {
     public:
-        GameButton              m_escButton;
-        CubeMapObj              cube;
-        std::shared_ptr<Camera> cameraTest;
-        LineObj                 m_line;
-        QuadTree                m_tree;
-        Goose                   m_goose;
-        Gardener                m_gardener;
-        Test3DObj               m_test;
+        GameButton m_escButton;
+        CubeMapObj cube;
+        LineObj    m_line;
+        QuadTree   m_tree;
+        Goose      m_goose;
+        Gardener   m_gardener;
+        Test3DObj  m_test;
 
+        std::shared_ptr<Camera>           cameraTest;
+        std::shared_ptr<DirectionalLight> lightTest;
+        std::shared_ptr<HeightMapObj>     mapTest;
 
         bool isWire = false;
 

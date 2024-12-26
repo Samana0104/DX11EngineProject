@@ -17,7 +17,7 @@ cbuffer DefaultMat3D : register(b0)
 };
 
 [maxvertexcount(2)]
-void main(point NormalGeoInput input[1], uint primID : SV_PrimitiveID,
+void main(point NormalGSInput input[1], uint primID : SV_PrimitiveID,
                               inout LineStream<LinePsInput> outputStream)
 {
     float4 worldPos;

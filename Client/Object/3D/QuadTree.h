@@ -66,7 +66,9 @@ namespace HBSoft
 
         void BuildTree(QNode* node);
         bool SubDivide(QNode* node);
-        void SetCamera(std::shared_ptr<Camera> camera);
+        void SetHeightMapObj(std::shared_ptr<HeightMapObj> heightMapObj);
+
+        std::shared_ptr<HeightMapObj> GetHeightMapObj();
 
         virtual void Init() override;
         virtual void Release() override;

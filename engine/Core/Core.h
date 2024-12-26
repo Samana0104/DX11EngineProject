@@ -45,8 +45,7 @@ namespace HBSoft
 #ifdef _DEBUG
         bool InitImGui();
 #endif
-
-    protected:
+        void Run();
         void Update();
         void Render();
         void Release();
@@ -56,10 +55,23 @@ namespace HBSoft
         // 접근 지시 제어자가 퍼블릭이라고 해서 코어 또 만들지 않겠지?? 만드는 놈 각오할 것
         // 일반 포인터는 너무 불안해서 일단 스마트 포인터로 코어 만듬
 
-        void Run();
+        template <class SceneType>
+        static void AddScene(SCENE_KEY sceneKey);
+
+        static void Start(SCENE_KEY startSceneKey);
 
         static void Create(HINSTANCE hInstance, HPoint windowSize);
         // 시작 종료 확실하게 하기 스마트포인터로 제작하게 만듬
         static void Delete();
     };
+
+    template <class SceneType>
+    void Core::AddScene(SCENE_KEY sceneKey)
+    {
+        if (HENGINE == nullptr)
+            return;
+
+        std::unique_ptr<Scene> scene = std::make_unique<SceneType>();
+        HSCENE.Add(sceneKey, std::move(scene));
+    }
 }  // namespace HBSoft

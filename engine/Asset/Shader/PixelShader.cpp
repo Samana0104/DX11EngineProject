@@ -10,8 +10,8 @@ date: 2024-11-09
 #include "PixelShader.h"
 using namespace HBSoft;
 
-PixelShader::PixelShader(std::shared_ptr<D3Device> device, const wstringV path, const ShaderType& type)
-    : Shader(path, type)
+PixelShader::PixelShader(std::shared_ptr<D3Device> device, const wstringV path)
+    : Shader(path, ShaderType::PIXEL)
 {
     assert(CreateShader(device));
 }

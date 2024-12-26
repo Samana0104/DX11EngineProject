@@ -17,6 +17,8 @@ namespace HBSoft
     class Object : public Renderable
     {
     public:
+        DefaultVSCB0 m_vsCB0;
+
         EasyRender              m_easyRender;
         std::shared_ptr<Camera> m_camera;
 
@@ -34,5 +36,4 @@ namespace HBSoft
         virtual void Update(const float deltaTime) = 0;
         virtual void Render()                      = 0;
     };
-
 }  // namespace HBSoft

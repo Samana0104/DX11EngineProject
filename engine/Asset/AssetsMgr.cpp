@@ -68,7 +68,13 @@ void AssetsMgr::CreateAsset(const wstringV path)
     else if (ShaderFactory::IsShaderFormat(fileExt))
     {
         SHADER_KEY key = fileName + fileExt;
-        m_shaders.Add(key, ShaderFactory::Create(m_device, path, g_defaultShaders.at(key)));
+        m_shaders.Add(key, ShaderFactory::Create(m_device, path, fileName.at(fileName.size() - 2)));
+        // -2는 쉐이더를 VS GS PS에서 약자로 쉐이더가 뭔지 구분하기 위해 오프셋 -2 위치의 문자를 구함
+    }
+    else if (AnimationFactory::IsAnimationFormat(fileExt))
+    {
+        ANIMATION_KEY key = fileName + fileExt;
+        m_animations.Add(key, AnimationFactory::Create(path));
     }
     else if (AnimationFactory::IsAnimationFormat(fileExt))
     {

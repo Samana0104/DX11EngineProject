@@ -14,11 +14,13 @@ CubeMap::CubeMap(std::shared_ptr<D3Device> device)
 {
     std::shared_ptr<Mesh> box = std::make_shared<Box3D>(device);
 
-    m_vertices  = box->m_vertices;
-    m_subMeshes = box->m_subMeshes;
+    m_vertices      = box->m_vertices;
+    m_subMeshes     = box->m_subMeshes;
+    m_autoCollision = box->m_autoCollision;
 
     assert(CreateVertices(device));
     assert(CreateIndices(device));
+    assert(CreateMaterialBuffer(device));
 }
 
 bool CubeMap::CreateVertices(std::shared_ptr<D3Device> device)

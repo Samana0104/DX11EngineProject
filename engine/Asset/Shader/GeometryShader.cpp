@@ -10,9 +10,8 @@ date: 2024-12-17
 #include "GeometryShader.h"
 using namespace HBSoft;
 
-GeometryShader::GeometryShader(std::shared_ptr<D3Device> device, const wstringV path,
-                               const ShaderType& type)
-    : Shader(path, type)
+GeometryShader::GeometryShader(std::shared_ptr<D3Device> device, const wstringV path)
+    : Shader(path, ShaderType::GEOMETRY)
 {
     assert(CreateShader(device));
 }

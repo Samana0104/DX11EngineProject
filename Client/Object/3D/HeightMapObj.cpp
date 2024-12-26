@@ -22,6 +22,8 @@ HeightMapObj::HeightMapObj()
     m_easyRender.SetPSShader(L"BasicPS.hlsl");
     m_transform.SetScale({1.f, 2.f, 1.f});
     m_transform.SetLocation({0.f, 10.f, 0.f});
+
+    // m_mesh->m_subMeshes[0]->material.diffuse =
 }
 
 void HeightMapObj::CreateMapDesc(const TEXTURE_KEY heightTexKey, float scaleXPerCell,
@@ -129,7 +131,7 @@ float HeightMapObj::GetHeight(vec3 pos)
 
 void HeightMapObj::GenerateVertexNormal()
 {
-    UINT faces = m_mesh->m_subMeshes[0]->indices.size() / 3;
+    UINT faces = (UINT)m_mesh->m_subMeshes[0]->indices.size() / 3;
     m_vertexInfo.resize(m_mesh->m_vertices.size());
 
     for (UINT i = 0; i < faces; i++)

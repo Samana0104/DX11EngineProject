@@ -14,6 +14,7 @@ HeightMap::HeightMap(std::shared_ptr<D3Device> device, const MapDesc& desc)
 {
     assert(CreateVertices(device, desc));
     assert(CreateIndices(device, desc));
+    assert(CreateMaterialBuffer(device));
 }
 
 bool HeightMap::CreateVertices(std::shared_ptr<D3Device> device, const MapDesc& desc)

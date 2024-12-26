@@ -159,6 +159,26 @@ void EasyRender::SetGSShader(const SHADER_KEY shaderKey)
     }
 }
 
+void EasyRender::SetGSShader(const SHADER_KEY shaderKey)
+{
+    m_gsShader      = HASSET->m_shaders[shaderKey];
+    auto&   cbDescs = m_gsShader->GetCBDescs();
+    HRESULT hr;
+
+    m_gsCB.clear();
+
+    for (size_t i = 0; i < cbDescs.size(); i++)
+    {
+        ComPtr<ID3D11Buffer> constantBuffer = nullptr;
+        hr = HDEVICE->m_d3dDevice->CreateBuffer(&cbDescs[i], nullptr, constantBuffer.GetAddressOf());
+
+        if (FAILED(hr))
+            assert(false);
+
+        m_gsCB.push_back(constantBuffer);
+    }
+}
+
 void EasyRender::SetRRS(ERRasterRizerState rrs)
 {
     m_rrs = rrs;
@@ -357,12 +377,17 @@ void EasyRender::DrawMesh()
         for (size_t i = 0; i < m_mesh->m_subMeshes.size(); i++)
         {
             if (m_mesh->m_subMeshes[i]->hasTexture)
-            {
                 HDEVICE->m_context->PSSetShaderResources(
                 0,
                 1,
                 HASSET->m_textures[m_mesh->m_subMeshes[i]->textureName]->GetSRV().GetAddressOf());
-            }
+
+            if (m_mesh->m_subMeshes[i]->materialBuffer != nullptr)
+                HDEVICE->m_context->PSSetConstantBuffers(
+                1,
+                1,
+                m_mesh->m_subMeshes[i]->materialBuffer.GetAddressOf());
+
             HDEVICE->m_context->IASetIndexBuffer(m_mesh->m_subMeshes[i]->indexBuffer.Get(),
                                                  DXGI_FORMAT_R32_UINT,
                                                  0);

@@ -16,6 +16,7 @@ namespace HBSoft
     private:
         bool CreateVertices(std::shared_ptr<D3Device>& device);
         bool CreateIndices(std::shared_ptr<D3Device>& device);
+        void CreateAutoCollision();
 
     public:
         Box2D(std::shared_ptr<D3Device> device);

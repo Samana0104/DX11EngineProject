@@ -10,18 +10,22 @@ date: 2024-11-17
 using namespace HBSoft;
 
 std::shared_ptr<Shader> ShaderFactory::Create(std::shared_ptr<D3Device> device, wstringV path,
-                                              ShaderType type)
+                                              const wchar_t type)
 {
     std::shared_ptr<Shader> shader;
 
     switch (type)
     {
-    case ShaderType::VERTEX:
-        shader = std::make_shared<VertexShader>(device, path, type);
+    case L'V':
+        shader = std::make_shared<VertexShader>(device, path);
         break;
 
-    case ShaderType::PIXEL:
-        shader = std::make_shared<PixelShader>(device, path, type);
+    case L'P':
+        shader = std::make_shared<PixelShader>(device, path);
+        break;
+
+    case L'G':
+        shader = std::make_shared<GeometryShader>(device, path);
         break;
 
     case ShaderType::GEOMETRY:

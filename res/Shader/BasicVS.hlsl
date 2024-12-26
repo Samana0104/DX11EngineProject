@@ -29,9 +29,10 @@ PSInput main(VSInput vsIn)
     float4 normal = mul(normalMat, float4(vsIn.n.xyz, 0));
     
     psIn.p = projPos;
-    psIn.n = float4(normalize(normal.xyz), 0);
+    psIn.n = normalize(normal.xyz);
     psIn.c = vsIn.c;
     psIn.t = vsIn.t;
+    psIn.worldPos = worldPos.xyz;
 
     return psIn;
 }

@@ -19,14 +19,14 @@ void Object2D::UpdateDefaultCB()
         mat3 view(1.f);
         view[2]    = m_camera->GetViewMat()[3];
         view[2][2] = 1.f;
-        m_cb0.view = view;
+        m_vsCB0.view = view;
     }
     else
     {
-        m_cb0.view = mat4(1.0f);
+        m_vsCB0.view = mat4(1.0f);
     }
 
-    m_cb0.world       = m_transform.m_worldMat;
-    m_cb0.normalWorld = 1.f;
-    m_easyRender.UpdateVSCB((void*)&m_cb0, sizeof(m_cb0), 0);
+    m_vsCB0.world       = m_transform.m_worldMat;
+    m_vsCB0.normalWorld = 1.f;
+    m_easyRender.UpdateVSCB((void*)&m_vsCB0, sizeof(m_vsCB0), 0);
 }

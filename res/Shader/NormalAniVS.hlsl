@@ -13,9 +13,9 @@ cbuffer AnimationMat : register(b0)
     matrix m_matBoneWorld[MAX_BONE_MAT];
 };
 
-NormalGeoInput main(AnimationInput vsIn)
+NormalGSInput main(AnimationInput vsIn)
 {
-    NormalGeoInput gsIn;
+    NormalGSInput gsIn;
     
     float4 localPos = float4(vsIn.p.xyz, 1.f);
     float4 vAnimVertex = 0;
@@ -43,7 +43,7 @@ NormalGeoInput main(AnimationInput vsIn)
     }
 
     gsIn.p = float4(vAnimVertex.xyz, 1.f);
-    gsIn.n = normalize(vAnimNormal);
+    gsIn.n = vAnimNormal;
     gsIn.c = float4(1.f, 0.f, 0.f, 1.f);
     return gsIn;
 }

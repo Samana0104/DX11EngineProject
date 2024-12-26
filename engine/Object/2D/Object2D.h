@@ -18,7 +18,6 @@ namespace HBSoft
     {
     protected:
         Transform2D m_transform;
-        DefaultCB0  m_cb0;
 
 
     protected:

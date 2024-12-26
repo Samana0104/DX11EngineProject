@@ -29,7 +29,7 @@ Button::Button()
     m_state   = ButtonState::DEFAULT;
     m_texture = nullptr;
     m_easyRender.SetVSShader(L"2DBasicVS.hlsl");
-    m_easyRender.SetPSShader(L"BasicPS.hlsl");
+    m_easyRender.SetPSShader(L"2DBasicPS.hlsl");
     m_easyRender.SetDSS(ERDepthStencilState::DISABLE);
     m_easyRender.SetMesh(m_boxMesh);
     m_easyRender.SetSS(ERSamplerState::LINEAR);
