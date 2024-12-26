@@ -22,6 +22,8 @@ void Test3DObj::Update(const float deltaTime)
 void Test3DObj::Render()
 {
     m_easyRender.Draw();
+    m_easyRender.SetNormalState();
+    m_easyRender.Draw(false);
 }
 
 void Test3DObj::Init() {}

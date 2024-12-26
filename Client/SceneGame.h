@@ -2,8 +2,8 @@
 author : 변한빛, 정찬빈, 이지혁
 description : 게임 내부 씬을 정의하는 헤더 파일
 
-version: 1.1.0
-date: 2024-12-03
+version: 1.1.1
+date: 2024-12-23
 */
 
 #pragma once
@@ -18,6 +18,8 @@ date: 2024-12-03
 #include "3D/Gardener.h"
 #include "3D/AABBCollider.h"
 #include "GameButton.h"
+#include "3D/Static3DObj.h"
+#include "HBSAutoLoader.h"
 #include "3D/DirectionalLight.h"
 
 namespace HBSoft
@@ -32,6 +34,7 @@ namespace HBSoft
         Goose      m_goose;
         Gardener   m_gardener;
         Test3DObj  m_test;
+        HBSAutoLoader<Static3DObj>           m_staticObjs;
 
         std::shared_ptr<Camera>           cameraTest;
         std::shared_ptr<DirectionalLight> lightTest;

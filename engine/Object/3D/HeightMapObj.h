@@ -51,6 +51,10 @@ namespace HBSoft
             description :
                높이 맵 텍스쳐를 가지고 맵 디스크립터를 만들어준다.
         */
+        float m_x;
+        float m_y;
+        float m_z;
+        float m_scale;
         void CreateMapDesc(const TEXTURE_KEY texKey, float scaleXPerCell, float scaleYPerCell,
                            float scaleZPerCell);
         void GenerateVertexNormal();

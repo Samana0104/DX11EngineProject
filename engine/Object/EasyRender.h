@@ -14,6 +14,7 @@ date: 2024-12-16
 
 namespace HBSoft
 {
+#define MAX_SAMPLER 3
     // 상태 값 모르면 무지성 0번 ㄱㄱㄱㄱ
     enum class ERRasterRizerState
     {
