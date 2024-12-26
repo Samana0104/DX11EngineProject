@@ -33,7 +33,7 @@ SceneGame::SceneGame()
     m_tree.SetHeightMapObj(mapTest);
     m_test.SetLight(lightTest);
 
-    m_staticObjs.LoadFromFolder("D:/My_Projects/DXTeamProject_TeamC/res/Mesh/StaticObj", cameraTest);
+    m_staticObjs.LoadFromFolder("../res/Mesh/StaticObj", cameraTest);
 }
 
 void SceneGame::Update(float deltaTime)

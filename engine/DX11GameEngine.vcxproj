@@ -50,6 +50,7 @@
     <ClCompile Include="Asset\Texture\GeneralTexture.cpp" />
     <ClCompile Include="Asset\Texture\HeightTexture.cpp" />
     <ClCompile Include="Asset\Texture\Texture.cpp" />
+    <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="Core\Core.cpp" />
     <ClCompile Include="Core\D3Device.cpp" />
     <ClCompile Include="Core\EventHandler.cpp" />
@@ -58,6 +59,7 @@
     </ClCompile>
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="DesignPattern\Observer.cpp" />
+    <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="Gui\Button.cpp" />
     <ClCompile Include="Gui\GameButton.cpp" />
     <ClCompile Include="Gui\LobbyButton.cpp" />
@@ -66,11 +68,15 @@
     <ClCompile Include="Object\2D\Transform2D.cpp" />
     <ClCompile Include="Object\3D\AABBCollider.cpp" />
     <ClCompile Include="Object\3D\DirectionalLight.cpp" />
+    <ClCompile Include="Object\3D\HeightMapObj.cpp" />
+    <ClCompile Include="Object\3D\LineObj.cpp" />
     <ClCompile Include="Object\3D\Object3D.cpp" />
+    <ClCompile Include="Object\3D\QuadTree.cpp" />
     <ClCompile Include="Object\3D\Transform3D.cpp" />
     <ClCompile Include="Object\Camera.cpp" />
     <ClCompile Include="Object\EasyRender.cpp" />
     <ClCompile Include="Object\Object.cpp" />
+    <ClCompile Include="QuestGUI.cpp" />
     <ClCompile Include="Scene\SceneMgr.cpp" />
     <ClCompile Include="Timer\SystemTimer.cpp" />
   </ItemGroup>
@@ -104,6 +110,7 @@
     <ClInclude Include="Asset\Texture\GeneralTexture.h" />
     <ClInclude Include="Asset\Texture\HeightTexture.h" />
     <ClInclude Include="Asset\Texture\Texture.h" />
+    <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Core\CoreAPI.h" />
     <ClInclude Include="Core\D3Device.h" />
@@ -115,6 +122,7 @@
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="DesignPattern\Observer.h" />
     <ClInclude Include="DesignPattern\Singleton.h" />
+    <ClInclude Include="Frustum.h" />
     <ClInclude Include="Gui\Button.h" />
     <ClInclude Include="Gui\GameButton.h" />
     <ClInclude Include="Gui\LobbyButton.h" />
@@ -123,13 +131,17 @@
     <ClInclude Include="Object\2D\Transform2D.h" />
     <ClInclude Include="Object\3D\AABBCollider.h" />
     <ClInclude Include="Object\3D\DirectionalLight.h" />
+    <ClInclude Include="Object\3D\HeightMapObj.h" />
+    <ClInclude Include="Object\3D\LineObj.h" />
     <ClInclude Include="Object\3D\Object3D.h" />
+    <ClInclude Include="Object\3D\QuadTree.h" />
     <ClInclude Include="Object\3D\Transform3D.h" />
     <ClInclude Include="Object\Camera.h" />
     <ClInclude Include="Object\Collision.h" />
     <ClInclude Include="Object\EasyRender.h" />
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\Renderable.h" />
+    <ClInclude Include="QuestGUI.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneMgr.h" />
     <ClInclude Include="Timer\SystemTimer.h" />

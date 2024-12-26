@@ -207,6 +207,18 @@
     <ClCompile Include="Object\3D\DirectionalLight.cpp">
       <Filter>Object\3D</Filter>
     </ClCompile>
+    <ClCompile Include="Object\3D\HeightMapObj.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\QuadTree.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\3D\LineObj.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Frustum.cpp" />
+    <ClCompile Include="CollisionComponent.cpp" />
+    <ClCompile Include="QuestGUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -383,6 +395,18 @@
     <ClInclude Include="Object\3D\DirectionalLight.h">
       <Filter>Object\3D</Filter>
     </ClInclude>
+    <ClInclude Include="Object\3D\HeightMapObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\QuadTree.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\LineObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Frustum.h" />
+    <ClInclude Include="CollisionComponent.h" />
+    <ClInclude Include="QuestGUI.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\res\Shader\2DBasicVS.hlsl">
