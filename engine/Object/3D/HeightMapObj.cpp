@@ -19,14 +19,14 @@ HeightMapObj::HeightMapObj()
 
     m_mapTexture = HASSET->m_textures[L"Map512Color.png"];
 
-    //CreateMapDesc(L"Map512.hmp", 2.f, 0.2f, 2.f);
+    // CreateMapDesc(L"Map512.hmp", 2.f, 0.2f, 2.f);
     CreateMapDesc(L"Map512.hmp", 0.06f, 0.003f, 0.06f);
     m_mesh = MeshFactory::CreateHeightMap(HDEVICE, m_mapDesc);
     GenerateVertexNormal();
 
     m_easyRender.SetVSShader(L"BasicVS.hlsl");
     m_easyRender.SetPSShader(L"BasicPS.hlsl");
-    m_transform.SetScale({1.f, 2.f, 1.f});
+    // m_transform.SetScale({1.f, 2.f, 1.f});
     m_transform.SetLocation({0.f, 10.f, 0.f});
 
     // m_mesh->m_subMeshes[0]->material.diffuse =

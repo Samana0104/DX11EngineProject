@@ -69,5 +69,9 @@
     <ClInclude Include="pch.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="HBSAutoLoader.h" />
+    <ClInclude Include="Object\3D\Static3DObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
