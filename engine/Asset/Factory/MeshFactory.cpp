@@ -49,6 +49,10 @@ std::shared_ptr<Mesh> MeshFactory::Create(std::shared_ptr<D3Device> device, cons
         mesh = std::make_shared<CubeMap>(device);
         break;
 
+    case MeshShape::GRID:
+        mesh = std::make_shared<Grid>(device);
+        break;
+
     default:  // 여기다 디폴트 메쉬 추가 안하면 에러 뜨게함
         assert(false);
     }

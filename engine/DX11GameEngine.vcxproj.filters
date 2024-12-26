@@ -219,6 +219,12 @@
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="QuestGUI.cpp" />
+    <ClCompile Include="Asset\Mesh\Grid.cpp">
+      <Filter>Asset\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Ai\Astar.cpp">
+      <Filter>Ai</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -407,6 +413,12 @@
     <ClInclude Include="Frustum.h" />
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="QuestGUI.h" />
+    <ClInclude Include="Asset\Mesh\Grid.h">
+      <Filter>Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Ai\Astar.h">
+      <Filter>Ai</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\res\Shader\2DBasicVS.hlsl">

@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Object\2D\GridMap.cpp" />
     <ClCompile Include="Object\2D\MainTitle.cpp" />
     <ClCompile Include="Object\3D\CubeMapObj.cpp" />
     <ClCompile Include="Object\3D\Gardener.cpp" />
@@ -161,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HBSAutoLoader.h" />
+    <ClInclude Include="Object\2D\GridMap.h" />
     <ClInclude Include="Object\2D\MainTitle.h" />
     <ClInclude Include="Object\3D\CubeMapObj.h" />
     <ClInclude Include="Object\3D\Gardener.h" />

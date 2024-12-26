@@ -3,7 +3,6 @@
 #include "Core.h"
 #include "3D/Object3D.h"
 #include "3D/Transform3D.h"
-#include "Shader/ConstantBuffers.h"
 #include "3D/HeightMapObj.h"
 #include "Sound/HSound.h"
 
@@ -56,8 +55,7 @@ namespace HBSoft
         float GetLocationX();
         float GetLocationZ();
 
-        vec3 GetGooseTransform();
-
+        vec3 GetmPos();
         void SetHeightMap(std::shared_ptr<HeightMapObj> mapObj);
     };
 

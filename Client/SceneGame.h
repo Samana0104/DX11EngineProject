@@ -21,20 +21,21 @@ date: 2024-12-23
 #include "3D/Static3DObj.h"
 #include "HBSAutoLoader.h"
 #include "3D/DirectionalLight.h"
+#include "2D/GridMap.h"
 
 namespace HBSoft
 {
     class SceneGame : public Scene
     {
     public:
-        GameButton m_escButton;
-        CubeMapObj cube;
-        LineObj    m_line;
-        QuadTree   m_tree;
-        Goose      m_goose;
-        Gardener   m_gardener;
-        Test3DObj  m_test;
-        HBSAutoLoader<Static3DObj>           m_staticObjs;
+        GameButton                 m_escButton;
+        CubeMapObj                 cube;
+        LineObj                    m_line;
+        QuadTree                   m_tree;
+        Goose                      m_goose;
+        Gardener                   m_gardener;
+        GridMap                    m_grid;
+        HBSAutoLoader<Static3DObj> m_staticObjs;
 
         std::shared_ptr<Camera>           cameraTest;
         std::shared_ptr<DirectionalLight> lightTest;
