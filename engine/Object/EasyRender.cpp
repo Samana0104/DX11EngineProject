@@ -159,26 +159,6 @@ void EasyRender::SetGSShader(const SHADER_KEY shaderKey)
     }
 }
 
-void EasyRender::SetGSShader(const SHADER_KEY shaderKey)
-{
-    m_gsShader      = HASSET->m_shaders[shaderKey];
-    auto&   cbDescs = m_gsShader->GetCBDescs();
-    HRESULT hr;
-
-    m_gsCB.clear();
-
-    for (size_t i = 0; i < cbDescs.size(); i++)
-    {
-        ComPtr<ID3D11Buffer> constantBuffer = nullptr;
-        hr = HDEVICE->m_d3dDevice->CreateBuffer(&cbDescs[i], nullptr, constantBuffer.GetAddressOf());
-
-        if (FAILED(hr))
-            assert(false);
-
-        m_gsCB.push_back(constantBuffer);
-    }
-}
-
 void EasyRender::SetRRS(ERRasterRizerState rrs)
 {
     m_rrs = rrs;

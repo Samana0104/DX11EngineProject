@@ -28,10 +28,6 @@ std::shared_ptr<Shader> ShaderFactory::Create(std::shared_ptr<D3Device> device, 
         shader = std::make_shared<GeometryShader>(device, path);
         break;
 
-    case ShaderType::GEOMETRY:
-        shader = std::make_shared<GeometryShader>(device, path, type);
-        break;
-
     default:
         assert(false);  // 무슨 쉐이더인지 제대로 기입하시오
     }
