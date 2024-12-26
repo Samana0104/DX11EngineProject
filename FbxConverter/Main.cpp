@@ -1,9 +1,10 @@
 /*
-author : 변한빛
+author : 변한빛, 이지혁
 description : fbx converter 코드 엔트리 포인트
+            : 1.0.6 converter 폴더 파일 정리 및 이동 자동화
 
-version: 1.0.5
-date: 2024-12-11
+version: 1.0.6
+date: 2024-12-26
 */
 
 #include "pch.h"
