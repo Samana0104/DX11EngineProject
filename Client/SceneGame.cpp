@@ -1,9 +1,10 @@
 /*
 author : 변한빛, 정찬빈, 이지혁
 description : 게임 내부 씬을 정의하는 소스 파일
+              v1.1.2 : 하드코딩된 오브젝트 초기화, 업데이트, 렌더 부분 자동화
 
-version: 1.1.0
-date: 2024-11-30
+version: 1.1.2
+date: 2024-12-24
 */
 
 #include "pch.h"
@@ -31,6 +32,8 @@ SceneGame::SceneGame()
 
     m_tree.SetHeightMapObj(mapTest);
     m_test.SetLight(lightTest);
+
+    m_staticObjs.LoadFromFolder("D:/My_Projects/DXTeamProject_TeamC/res/Mesh/StaticObj", cameraTest);
 }
 
 void SceneGame::Update(float deltaTime)
@@ -45,6 +48,11 @@ void SceneGame::Update(float deltaTime)
     m_test.Update(deltaTime);
     m_goose.Update(deltaTime);
     m_tree.Update(deltaTime);
+
+    for (auto& hbsc : m_staticObjs.HBSContainer)
+    {
+        hbsc.Update(deltaTime);
+    }
 }
 
 void SceneGame::Render()
@@ -59,6 +67,11 @@ void SceneGame::Render()
     cube.Render();
     m_tree.Render();
     m_test.Render();
+
+    for (auto& hbsc : m_staticObjs.HBSContainer)
+    {
+        hbsc.Render();
+    }
     EasyRender::End(MultiRT::MAIN);
 
     // 글자 안나오는 이유 상수 버퍼
