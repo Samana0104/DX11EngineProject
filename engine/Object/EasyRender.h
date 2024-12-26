@@ -96,7 +96,6 @@ namespace HBSoft
         EasyRender();
         ~EasyRender() = default;
 
-
         void SetVSShader(const SHADER_KEY shaderKey);
         void SetPSShader(const SHADER_KEY shaderKey);
         void SetGSShader(const SHADER_KEY shaderKey);

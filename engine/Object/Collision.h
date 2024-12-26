@@ -48,10 +48,4 @@ namespace HBSoft
         }
     };
 
-    // struct T_Plane
-    //{
-    //     float a, b, c, d;
-    //     void  Set(T::TVector3 v0, T::TVector3 v1, T::TVector3 v2);
-    //     void  Set(T::TVector3 v0, T::TVector3 vNormal);
-    // };
 }  // namespace HBSoft

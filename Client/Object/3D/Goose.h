@@ -4,7 +4,7 @@
 #include "3D/Object3D.h"
 #include "3D/Transform3D.h"
 #include "Shader/ConstantBuffers.h"
-#include "HeightMapObj.h"
+#include "3D/HeightMapObj.h"
 #include "Sound/HSound.h"
 
 namespace HBSoft
