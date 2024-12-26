@@ -2,8 +2,9 @@
 author : 변한빛, 이지혁
 description : fbx converter 코드 엔트리 포인트
             : 1.0.6 converter 폴더 파일 정리 및 이동 자동화
+            : 1.1.0 material 로딩, skm 로딩 추가
 
-version: 1.0.6
+version: 1.1.0
 date: 2024-12-26
 */
 
