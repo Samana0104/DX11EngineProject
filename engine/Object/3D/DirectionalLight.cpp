@@ -2,8 +2,13 @@
 #include "DirectionalLight.h"
 using namespace HBSoft;
 
-DirectionalLight::DirectionalLight(vec3 dir, float lightStrength)
+DirectionalLight::DirectionalLight(const vec3 dir, float lightPower)
 {
-    m_dir           = glm::normalize(dir);
-    m_lightStrength = glm::clamp<float>(lightStrength, 0.f, 1.f);
+    m_dir        = glm::normalize(dir);
+    m_lightPower = glm::clamp<float>(lightPower, 0.f, 1.f);
+}
+
+void DirectionalLight::SetLightDirection(const vec3 dir)
+{
+    m_dir = glm::normalize(dir);
 }

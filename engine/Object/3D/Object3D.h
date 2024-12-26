@@ -22,8 +22,8 @@ namespace HBSoft
     class Object3D : public Object
     {
     protected:
-        Transform3D m_transform;
-        DefaultCB0  m_cb0;
+        Transform3D  m_transform;
+        DefaultPSCB0 m_psCB0;
 
         std::shared_ptr<DirectionalLight> m_light;
 

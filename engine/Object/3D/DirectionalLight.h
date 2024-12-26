@@ -8,9 +8,11 @@ namespace HBSoft
     {
     public:
         vec3  m_dir;
-        float m_lightStrength;
+        float m_lightPower;
 
     public:
-        DirectionalLight(vec3 dir, float lightStrength);
+        DirectionalLight(const vec3 dir, float lightPower);
+
+        void SetLightDirection(const vec3 dir);
     };
 }  // namespace HBSoft

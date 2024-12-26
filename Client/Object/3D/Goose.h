@@ -5,18 +5,45 @@
 #include "3D/Transform3D.h"
 #include "Shader/ConstantBuffers.h"
 #include "HeightMapObj.h"
+#include "Sound/HSound.h"
 
 namespace HBSoft
 {
+    enum GooseState
+    {
+        fancywalk = 0,
+        gooseGallop,
+        gooseGallopDown,
+        gooseSneakIdle,
+        goose_idle_proud,
+        angryflapping,
+        gooseMouthOpen,
+        gooseHalfFlap,
+        gooseHalfFlapWalking,
+        gooseGallopDownHalfFlap,
+        gooseSneakIdleHalfFlap
+    };
+
     class Goose : public Object3D
     {
     private:
         std::shared_ptr<Mesh>                       m_mesh;
+        std::shared_ptr<HSound>                     m_sound;
         std::vector<std::shared_ptr<AnimationClip>> m_gooseAnis;
 
-        float                         m_speed1 = 0.7f;
-        std::vector<mat4>             anim;
+        float             m_speed1 = 0.7f;
+        std::vector<mat4> anim;
+
+        GooseState                    m_animstate;
         std::shared_ptr<HeightMapObj> m_mapObj;
+
+        float currentFrame = 0.f;
+        int   startFrame   = 0;
+        int   lastFrame    = 0;
+        float speed1       = 30.f;
+
+        int tempStartFrame = 0;
+        int tempLastFrame  = 0;
 
     public:
         Goose();

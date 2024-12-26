@@ -20,15 +20,29 @@ void Object3D::UpdateDefaultCB()
 {
     if (m_camera != nullptr)
     {
-        m_cb0.view = m_camera->GetViewMat();
-        m_cb0.proj = m_camera->GetProjMat();
+        m_vsCB0.view   = m_camera->GetViewMat();
+        m_vsCB0.proj   = m_camera->GetProjMat();
+        m_psCB0.eyePos = m_camera->GetEyePos();
     }
     else
     {
-        m_cb0.view = mat4(1.0f);
-        m_cb0.proj = mat4(1.0f);
+        m_vsCB0.view = mat4(1.0f);
+        m_vsCB0.proj = mat4(1.0f);
     }
-    m_cb0.world       = m_transform.m_worldMat;
-    m_cb0.normalWorld = glm::transpose(glm::inverse(m_transform.m_worldMat));
-    m_easyRender.UpdateVSCB((void*)&m_cb0, sizeof(m_cb0), 0);
+
+    if (m_light != nullptr)
+    {
+        m_psCB0.lightDir   = m_light->m_dir;
+        m_psCB0.lightPower = m_light->m_lightPower;
+    }
+    else
+    {
+        m_psCB0.lightDir   = vec3(0.f);
+        m_psCB0.lightPower = 1.f;
+    }
+
+    m_vsCB0.world       = m_transform.m_worldMat;
+    m_vsCB0.normalWorld = glm::transpose(glm::inverse(m_transform.m_worldMat));
+    m_easyRender.UpdateVSCB((void*)&m_vsCB0, sizeof(m_vsCB0), 0);
+    m_easyRender.UpdatePSCB((void*)&m_psCB0, sizeof(m_psCB0), 0);
 }

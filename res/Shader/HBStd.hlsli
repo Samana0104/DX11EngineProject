@@ -31,7 +31,7 @@ struct PSInput
     float3 n : NORMAL;
     float4 c : COLOR0;
     float2 t : TEXCOORD0;
-    float4 worldP : TEXCOORD1;
+    float3 worldPos : POSITION;
 };
 
 struct LinePsInput
@@ -95,10 +95,10 @@ param : lightDir -> 빛의 방향(물체를 향하는 방향)
 description :
    블린 퐁 모델 계산함
 */
-float3 ComputeBlinnPhong(float3 lightDir, float3 normal, float3 eye, BlinnInfo info)
+float3 ComputeBlinnPhong(float3 lightDir, float3 normal, float3 eyeDir, BlinnInfo info)
 {
     float lDotN = saturate(dot(-lightDir, normal));
-    float3 halfVector = normalize(-eye + -lightDir);
+    float3 halfVector = normalize(-eyeDir + -lightDir);
     float hDotN = saturate(dot(halfVector, normal));
     float specularPower = pow(hDotN, info.shininess);
     

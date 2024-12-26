@@ -71,12 +71,12 @@ namespace HBSoft
 
         Material()
             : ambient(0.3f, 0.3f, 0.3f, 1.f),
-              diffuse(0.f),
-              specular(0.f),
-              shininess(0.f),
+              diffuse(0.3f),
+              specular(0.3f),
+              shininess(20.f),
               ambientFactor(1.f),
-              diffuseFactor(0.f),
-              specularFactor(0.f)
+              diffuseFactor(1.f),
+              specularFactor(1.f)
         {}
     };
 

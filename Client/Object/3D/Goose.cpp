@@ -13,7 +13,8 @@ using namespace HBSoft;
 
 Goose::Goose()
 {
-    m_mesh = HASSET->m_meshes[L"Goose.hbs"];
+    m_mesh  = HASSET->m_meshes[L"Goose.hbs"];
+    m_sound = HASSET->m_sounds[L"goose_honk.wav"];
 
     m_easyRender.SetVSShader(L"BasicAniVS.hlsl");
     m_easyRender.SetPSShader(L"ColorPS.hlsl");
@@ -41,10 +42,7 @@ Goose::Goose()
 
 void Goose::Update(float deltaTime)
 {
-    static float currentFrame = 0.f;
-    static int   startFrame   = 0;
-    static int   lastFrame    = 0;
-    static float speed1       = 30.f;
+
     // static int   selectAnimation = 0;
 
     ImGui::SliderFloat("Speed1", &speed1, 0, 60.f);
@@ -53,10 +51,13 @@ void Goose::Update(float deltaTime)
     startFrame    = m_gooseAnis[0]->GetStartFrame();
     lastFrame     = m_gooseAnis[0]->GetLastFrame();
 
+
     if (currentFrame > lastFrame)
         currentFrame = startFrame;
 
-    anim = m_gooseAnis[4]->GetAnimationMatrix(currentFrame);
+    m_animstate = GooseState::goose_idle_proud;
+
+    /*anim = m_gooseAnis[4]->GetAnimationMatrix(currentFrame);*/
 
 
     ImGui::SliderFloat("Goose speed", &m_speed1, 0.f, 300.f);
@@ -73,7 +74,8 @@ void Goose::Update(float deltaTime)
         isLeftPressed  = true;
         isRightPressed = false;
         moveDirection  = vec3(-1.f, 0.f, 0.f);
-        anim           = m_gooseAnis[0]->GetAnimationMatrix(currentFrame);
+        m_animstate    = GooseState::fancywalk;
+        /* anim           = m_gooseAnis[0]->GetAnimationMatrix(currentFrame);*/
         m_transform.SetRotation(vec3(90.f, -45.f - 22.5f, 0.f));
 
         /* m_transform.AddRotation(vec3(0.f, 1.f, 0.f), glm::radians(90.f));*/
@@ -93,7 +95,8 @@ void Goose::Update(float deltaTime)
         }
         if (HINPUT->IsKeyPressed(16))  // SHIFT키
         {
-            anim           = m_gooseAnis[1]->GetAnimationMatrix(currentFrame);
+            m_animstate = GooseState::gooseGallop;
+            /* anim           = m_gooseAnis[1]->GetAnimationMatrix(currentFrame);*/
             moveDirection += vec3(-1.0f, 0.0f, 0.0f);
 
 
@@ -102,26 +105,31 @@ void Goose::Update(float deltaTime)
 
         if (HINPUT->IsKeyPressed(88))  // X키
         {
-            anim = m_gooseAnis[26]->GetAnimationMatrix(currentFrame);
+            m_animstate = GooseState::gooseHalfFlapWalking;
+            /* anim = m_gooseAnis[26]->GetAnimationMatrix(currentFrame);*/
 
             if (HINPUT->IsKeyPressed(16))
-                anim = m_gooseAnis[7]->GetAnimationMatrix(currentFrame);
+                m_animstate = GooseState::gooseHalfFlap;
+            /* anim = m_gooseAnis[7]->GetAnimationMatrix(currentFrame);*/
         }
 
         if (HINPUT->IsKeyPressed(17))  // Ctrl키
         {
-            anim = m_gooseAnis[2]->GetAnimationMatrix(currentFrame);
+            m_animstate = GooseState::gooseGallopDown;
+            /*anim = m_gooseAnis[2]->GetAnimationMatrix(currentFrame);*/
 
 
             if (HINPUT->IsKeyPressed(16))  // SHIFT키
             {
                 if (HINPUT->IsKeyPressed(88))  // X키
-                    anim = m_gooseAnis[9]->GetAnimationMatrix(currentFrame);
+                    m_animstate = GooseState::gooseGallopDownHalfFlap;
+                /*anim = m_gooseAnis[9]->GetAnimationMatrix(currentFrame);*/
             }
             else
             {
                 if (HINPUT->IsKeyPressed(88))  // X키
-                    anim = m_gooseAnis[9]->GetAnimationMatrix(currentFrame);
+                    m_animstate = GooseState::gooseGallopDownHalfFlap;
+                /*anim = m_gooseAnis[9]->GetAnimationMatrix(currentFrame);*/
             }
         }
     }
@@ -131,7 +139,8 @@ void Goose::Update(float deltaTime)
         isLeftPressed  = false;
         isRightPressed = true;
         moveDirection  = vec3(1.f, 0.f, 0.f);
-        anim           = m_gooseAnis[0]->GetAnimationMatrix(currentFrame);
+        m_animstate    = GooseState::fancywalk;
+        /*anim           = m_gooseAnis[0]->GetAnimationMatrix(currentFrame);*/
         m_transform.SetRotation(vec3(90.f, 45.f + 22.5f, 0.f));
 
         if (HINPUT->IsKeyPressed(40))  // VK_DOWN
@@ -148,7 +157,8 @@ void Goose::Update(float deltaTime)
 
         if (HINPUT->IsKeyPressed(16))  // SHIFT키
         {
-            anim = m_gooseAnis[1]->GetAnimationMatrix(currentFrame);
+            m_animstate = GooseState::gooseGallop;
+            /*anim = m_gooseAnis[1]->GetAnimationMatrix(currentFrame);*/
 
             moveDirection += vec3(1.0f, 0.0f, 0.0f);
 
@@ -157,25 +167,30 @@ void Goose::Update(float deltaTime)
 
         if (HINPUT->IsKeyPressed(88))  // X키
         {
-            anim = m_gooseAnis[8]->GetAnimationMatrix(currentFrame);
+            m_animstate = GooseState::gooseHalfFlapWalking;
+            /*anim = m_gooseAnis[8]->GetAnimationMatrix(currentFrame);*/
 
             if (HINPUT->IsKeyPressed(16))  // SHIFT키
-                anim = m_gooseAnis[7]->GetAnimationMatrix(currentFrame);
+                m_animstate = GooseState::gooseHalfFlap;
+            /*anim = m_gooseAnis[7]->GetAnimationMatrix(currentFrame);*/
         }
 
         if (HINPUT->IsKeyPressed(17))  // Ctrl키
         {
-            anim = m_gooseAnis[2]->GetAnimationMatrix(currentFrame);
+            m_animstate = GooseState::gooseGallopDown;
+            /*anim = m_gooseAnis[2]->GetAnimationMatrix(currentFrame);*/
 
             if (HINPUT->IsKeyPressed(16))  // SHIFT키
             {
                 if (HINPUT->IsKeyPressed(88))  // X키
-                    anim = m_gooseAnis[9]->GetAnimationMatrix(currentFrame);
+                    m_animstate = GooseState::gooseGallopDownHalfFlap;
+                /*anim = m_gooseAnis[9]->GetAnimationMatrix(currentFrame);*/
             }
             else
             {
                 if (HINPUT->IsKeyPressed(88))  // X키
-                    anim = m_gooseAnis[9]->GetAnimationMatrix(currentFrame);
+                    m_animstate = GooseState::gooseGallopDownHalfFlap;
+                /*anim = m_gooseAnis[9]->GetAnimationMatrix(currentFrame);*/
             }
         }
     }
@@ -188,14 +203,13 @@ void Goose::Update(float deltaTime)
         isUpPressed   = false;  // VK_UP 비활성화
         moveDirection = vec3(0.f, 0.f, -1.f);
 
-        anim = m_gooseAnis[0]->GetAnimationMatrix(currentFrame);
+        m_animstate = GooseState::fancywalk;
+        /*anim = m_gooseAnis[0]->GetAnimationMatrix(currentFrame);*/
         m_transform.SetRotation(vec3(90.f, 135.f, 0.f));
         if (HINPUT->IsKeyPressed(37))  // VK_LEFT
         {
 
             m_transform.SetRotation(vec3(90.f, -135.f + 22.5f + 90.f, 0.f));
-            if (HINPUT->IsKeyPressed(32))
-                anim = m_gooseAnis[6]->GetAnimationMatrix(currentFrame);
             moveDirection += vec3(-1.0f, 0.f, 0.f);
         }
 
@@ -208,7 +222,8 @@ void Goose::Update(float deltaTime)
 
         if (HINPUT->IsKeyPressed(16))  // SHIFT키
         {
-            anim = m_gooseAnis[1]->GetAnimationMatrix(currentFrame);
+            m_animstate = GooseState::gooseGallop;
+            /*anim = m_gooseAnis[1]->GetAnimationMatrix(currentFrame);*/
 
             moveDirection += vec3(0.0f, 0.0f, -1.0f);
             /*m_transform.AddLocation(vec3(0.0f, 0.0f, -1.0f) * deltaTime * m_speed1 * 2.0f);*/
@@ -216,26 +231,30 @@ void Goose::Update(float deltaTime)
 
         if (HINPUT->IsKeyPressed(88))  // x키
         {
-
-            anim = m_gooseAnis[8]->GetAnimationMatrix(currentFrame);
+            m_animstate = GooseState::gooseHalfFlapWalking;
+            /*anim = m_gooseAnis[8]->GetAnimationMatrix(currentFrame);*/
 
             if (HINPUT->IsKeyPressed(16))
-                anim = m_gooseAnis[7]->GetAnimationMatrix(currentFrame);
+                m_animstate = GooseState::gooseHalfFlap;
+            /* anim = m_gooseAnis[7]->GetAnimationMatrix(currentFrame);*/
         }
 
         if (HINPUT->IsKeyPressed(17))  // Ctrl키
         {
-            anim = m_gooseAnis[2]->GetAnimationMatrix(currentFrame);
+            m_animstate = GooseState::gooseGallopDown;
+            /*anim = m_gooseAnis[2]->GetAnimationMatrix(currentFrame);*/
 
             if (HINPUT->IsKeyPressed(16))  // SHIFT키
             {
                 if (HINPUT->IsKeyPressed(88))  // x키
-                    anim = m_gooseAnis[9]->GetAnimationMatrix(currentFrame);
+                    m_animstate = GooseState::gooseGallopDownHalfFlap;
+                /*anim = m_gooseAnis[9]->GetAnimationMatrix(currentFrame);*/
             }
             else
             {
                 if (HINPUT->IsKeyPressed(88))  // X키
-                    anim = m_gooseAnis[9]->GetAnimationMatrix(currentFrame);
+                    m_animstate = GooseState::gooseGallopDownHalfFlap;
+                /*anim = m_gooseAnis[9]->GetAnimationMatrix(currentFrame);*/
             }
         }
     }
@@ -246,7 +265,8 @@ void Goose::Update(float deltaTime)
         isDownPressed = false;  // VK_DOWN 비활성화
         moveDirection = vec3(0.f, 0.f, 1.f);
 
-        anim = m_gooseAnis[0]->GetAnimationMatrix(currentFrame);
+        m_animstate = GooseState::fancywalk;
+        /*anim = m_gooseAnis[0]->GetAnimationMatrix(currentFrame);*/
         m_transform.SetRotation(vec3(90.f, 0.f, 0.f));
 
         if (HINPUT->IsKeyPressed(37))  // VK_LEFT
@@ -265,7 +285,8 @@ void Goose::Update(float deltaTime)
 
         if (HINPUT->IsKeyHold(16))  // SHIFT키
         {
-            anim = m_gooseAnis[1]->GetAnimationMatrix(currentFrame);
+            m_animstate = GooseState::gooseGallop;
+            /*anim = m_gooseAnis[1]->GetAnimationMatrix(currentFrame);*/
 
             moveDirection += vec3(0.0f, 0.0f, 1.0f);
             /* m_transform.AddLocation(vec3(0.0f, 0.0f, 1.0f) * deltaTime * m_speed1 * 2.0f);*/
@@ -273,25 +294,30 @@ void Goose::Update(float deltaTime)
 
         if (HINPUT->IsKeyPressed(88))  // X키
         {
-            anim = m_gooseAnis[8]->GetAnimationMatrix(currentFrame);
+            m_animstate = GooseState::gooseHalfFlapWalking;
+            /*anim = m_gooseAnis[8]->GetAnimationMatrix(currentFrame);*/
             if (HINPUT->IsKeyPressed(16))  // SHIFT키
-                anim = m_gooseAnis[7]->GetAnimationMatrix(currentFrame);
+                m_animstate = GooseState::gooseHalfFlap;
+            /*anim = m_gooseAnis[7]->GetAnimationMatrix(currentFrame);*/
         }
 
         if (HINPUT->IsKeyPressed(17))  // Ctrl키
         {
-            anim = m_gooseAnis[2]->GetAnimationMatrix(currentFrame);
+            m_animstate = GooseState::gooseGallopDown;
+            /*anim = m_gooseAnis[2]->GetAnimationMatrix(currentFrame);*/
 
 
             if (HINPUT->IsKeyPressed(16))  // SHIFT키
             {
                 if (HINPUT->IsKeyPressed(88))  // X키
-                    anim = m_gooseAnis[9]->GetAnimationMatrix(currentFrame);
+                    m_animstate = GooseState::gooseGallopDownHalfFlap;
+                /*anim = m_gooseAnis[9]->GetAnimationMatrix(currentFrame);*/
             }
             else
             {
                 if (HINPUT->IsKeyPressed(88))  // X키
-                    anim = m_gooseAnis[9]->GetAnimationMatrix(currentFrame);
+                    m_animstate = GooseState::gooseGallopDownHalfFlap;
+                /*anim = m_gooseAnis[9]->GetAnimationMatrix(currentFrame);*/
             }
         }
     }
@@ -300,22 +326,31 @@ void Goose::Update(float deltaTime)
     if (HINPUT->IsKeyPressed(88) && !isUpPressed && !isDownPressed && !isRightPressed &&
         !isLeftPressed)  // X키
     {
-        anim = m_gooseAnis[5]->GetAnimationMatrix(currentFrame);
+        m_animstate = GooseState::angryflapping;
+        /*anim = m_gooseAnis[5]->GetAnimationMatrix(currentFrame);*/
     }
 
     if (HINPUT->IsKeyPressed(32) && !isUpPressed && !isDownPressed && !isRightPressed &&
         !isLeftPressed)  // Space키
     {
-        anim = m_gooseAnis[6]->GetAnimationMatrix(currentFrame);
+        m_animstate = GooseState::gooseMouthOpen;
+        /*anim = m_gooseAnis[6]->GetAnimationMatrix(currentFrame);*/
+    }
+
+    if (HINPUT->IsKeyDown(32))
+    {
+        m_sound->Play();
     }
 
     if (HINPUT->IsKeyPressed(17) && !isUpPressed && !isDownPressed && !isRightPressed &&
         !isLeftPressed)  // Ctrl키
     {
-        anim = m_gooseAnis[3]->GetAnimationMatrix(currentFrame);
+        m_animstate = GooseState::gooseSneakIdle;
+        /*anim = m_gooseAnis[3]->GetAnimationMatrix(currentFrame);*/
 
         if (HINPUT->IsKeyPressed(88))  // X키
-            anim = m_gooseAnis[10]->GetAnimationMatrix(currentFrame);
+            m_animstate = GooseState::gooseSneakIdleHalfFlap;
+        /*anim = m_gooseAnis[10]->GetAnimationMatrix(currentFrame);*/
     }
 
 
@@ -351,6 +386,8 @@ void Goose::Update(float deltaTime)
 
     m_transform.SetLocation({m_transform.m_pos.x, height, m_transform.m_pos.z});
 
+
+    anim = m_gooseAnis[m_animstate]->GetAnimationMatrix(currentFrame);
     UpdateDefaultCB();
     m_easyRender.UpdateVSCB((void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
 }

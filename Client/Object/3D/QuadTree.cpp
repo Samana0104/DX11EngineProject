@@ -11,11 +11,7 @@ using namespace HBSoft;
 
 QuadTree::QuadTree(UINT depth)
     : m_maxDepth(depth)
-{
-    m_mapObj   = std::make_shared<HeightMapObj>();
-    m_rootNode = MakeRoot();
-    BuildTree(m_rootNode);
-}
+{}
 
 QuadTree::~QuadTree()
 {
@@ -152,9 +148,16 @@ bool QuadTree::SubDivide(QNode* node)
     }
 }
 
-void QuadTree::SetCamera(std::shared_ptr<Camera> camera)
+void QuadTree::SetHeightMapObj(std::shared_ptr<HeightMapObj> heightMapObj)
 {
-    m_mapObj->SetCamera(camera);
+    m_mapObj   = heightMapObj;
+    m_rootNode = MakeRoot();
+    BuildTree(m_rootNode);
+}
+
+std::shared_ptr<HeightMapObj> QuadTree::GetHeightMapObj()
+{
+    return m_mapObj;
 }
 
 void QuadTree::Init() {}
@@ -180,6 +183,10 @@ void QuadTree::Render()
                                            m_mapObj->m_mesh->m_vertexBuffer.GetAddressOf(),
                                            &pStrides,
                                            &pOffsets);
+    HDEVICE->m_context->PSSetConstantBuffers(
+    1,
+    1,
+    m_mapObj->m_mesh->m_subMeshes[0]->materialBuffer.GetAddressOf());
 
     HDEVICE->m_context->IASetIndexBuffer(m_rootNode->indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
     HDEVICE->m_context->DrawIndexed((UINT)m_rootNode->indexList.size(), 0, 0);

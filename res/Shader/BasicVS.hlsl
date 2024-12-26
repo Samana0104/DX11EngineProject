@@ -32,6 +32,7 @@ PSInput main(VSInput vsIn)
     psIn.n = normalize(normal.xyz);
     psIn.c = vsIn.c;
     psIn.t = vsIn.t;
+    psIn.worldPos = worldPos.xyz;
 
     return psIn;
 }

@@ -16,19 +16,23 @@ Mesh::Mesh()
 
 bool Mesh::CreateMaterialBuffer(std::shared_ptr<D3Device> device)
 {
-    HRESULT           hr = S_OK;
-    D3D11_BUFFER_DESC bd;
+    HRESULT                hr = S_OK;
+    D3D11_BUFFER_DESC      bd;
+    D3D11_SUBRESOURCE_DATA ms;
 
     ZeroMemory(&bd, sizeof(D3D11_BUFFER_DESC));
+    ZeroMemory(&ms, sizeof(D3D11_SUBRESOURCE_DATA));
     bd.ByteWidth = sizeof(Material);
     bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 
+
     for (size_t i = 0; i < m_subMeshes.size(); i++)
     {
+        ms.pSysMem = (void*)&m_subMeshes[i]->material;
+
         if (m_subMeshes[i]->materialBuffer == nullptr)
-            hr = device->m_d3dDevice->CreateBuffer(&bd,
-                                                   nullptr,
-                                                   m_subMeshes[i]->materialBuffer.GetAddressOf());
+            hr =
+            device->m_d3dDevice->CreateBuffer(&bd, &ms, m_subMeshes[i]->materialBuffer.GetAddressOf());
 
         if (FAILED(hr))
             return false;
