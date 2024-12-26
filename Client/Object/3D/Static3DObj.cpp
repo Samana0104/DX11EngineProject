@@ -57,8 +57,8 @@ void Static3DObj::Init(const std::wstring& key)
 {
     m_mesh = HASSET->m_meshes[key];
 
-    m_easyRender.SetVSShader(L"VertexShader.hlsl");
-    m_easyRender.SetPSShader(L"ColorPixelShader.hlsl");
+    m_easyRender.SetVSShader(L"BasicVS.hlsl");
+    m_easyRender.SetPSShader(L"ColorPS.hlsl");
     m_easyRender.SetTexture(nullptr);
     m_easyRender.SetMesh(m_mesh);
 }
