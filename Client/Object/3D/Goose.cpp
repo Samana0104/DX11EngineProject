@@ -395,6 +395,8 @@ void Goose::Update(float deltaTime)
 void Goose::Render()
 {
     m_easyRender.Draw();
+    // m_easyRender.SetAnimationNormalState();
+    // m_easyRender.Draw(false);
 }
 
 void Goose::Release() {}
@@ -411,7 +413,7 @@ float HBSoft::Goose::GetLocationZ()
     return -1.f;
 }
 
-vec3 Goose::GetGooseTransform()
+vec3 Goose::GetmPos()
 {
     return m_transform.m_pos;
 }

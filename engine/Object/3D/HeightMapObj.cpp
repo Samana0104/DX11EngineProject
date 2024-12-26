@@ -12,10 +12,10 @@ using namespace HBSoft;
 
 HeightMapObj::HeightMapObj()
 {
-    m_x     = -3.0f;
-    m_y     = -0.93f;
-    m_z     = 2.7f;
-    m_scale = 3.0f;
+    // m_x     = -3.0f;
+    // m_y     = -0.93f;
+    // m_z     = 2.7f;
+    // m_scale = 3.0f;
 
     m_mapTexture = HASSET->m_textures[L"Map512Color.png"];
 
@@ -26,10 +26,9 @@ HeightMapObj::HeightMapObj()
 
     m_easyRender.SetVSShader(L"BasicVS.hlsl");
     m_easyRender.SetPSShader(L"BasicPS.hlsl");
-    // m_transform.SetScale({1.f, 2.f, 1.f});
-    m_transform.SetLocation({0.f, 10.f, 0.f});
 
-    // m_mesh->m_subMeshes[0]->material.diffuse =
+    m_transform.SetScale({1.f, 3.f, 1.f});
+    m_transform.SetLocation({0.f, -0.93f, 0.f});
 }
 
 void HeightMapObj::CreateMapDesc(const TEXTURE_KEY heightTexKey, float scaleXPerCell,
@@ -183,9 +182,6 @@ void HeightMapObj::Update(const float deltaTime)
     ImGui::DragFloat("TerrainX", &m_x, 0.01f, -100.0f, 100.f);
     ImGui::DragFloat("TerrainY", &m_y, 0.01f, -100.0f, 100.f);
     ImGui::DragFloat("TerrainZ", &m_z, 0.01f, -100.0f, 100.f);*/
-
-    m_transform.SetLocation(glm::vec3(m_x, m_y, m_z));
-    m_transform.SetScale(m_scale);
 
     UpdateDefaultCB();
 }

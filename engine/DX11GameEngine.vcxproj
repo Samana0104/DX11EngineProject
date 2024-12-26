@@ -23,6 +23,7 @@
     <None Include="..\res\Shader\HBStd.hlsli" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Ai\Astar.cpp" />
     <ClCompile Include="Asset\AnimationClip.cpp" />
     <ClCompile Include="Asset\AssetsMgr.cpp" />
     <ClCompile Include="Asset\Factory\AnimationFactory.cpp" />
@@ -38,6 +39,7 @@
     <ClCompile Include="Asset\Mesh\Box3D.cpp" />
     <ClCompile Include="Asset\Mesh\Circle.cpp" />
     <ClCompile Include="Asset\Mesh\CubeMap.cpp" />
+    <ClCompile Include="Asset\Mesh\Grid.cpp" />
     <ClCompile Include="Asset\Mesh\HeightMap.cpp" />
     <ClCompile Include="Asset\Mesh\Line.cpp" />
     <ClCompile Include="Asset\Mesh\Mesh.cpp" />
@@ -81,6 +83,7 @@
     <ClCompile Include="Timer\SystemTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ai\Astar.h" />
     <ClInclude Include="Asset\AnimationClip.h" />
     <ClInclude Include="Asset\AssetsMgr.h" />
     <ClInclude Include="Asset\DefaultResource.h" />
@@ -97,6 +100,7 @@
     <ClInclude Include="Asset\Mesh\Box3D.h" />
     <ClInclude Include="Asset\Mesh\Circle.h" />
     <ClInclude Include="Asset\Mesh\CubeMap.h" />
+    <ClInclude Include="Asset\Mesh\Grid.h" />
     <ClInclude Include="Asset\Mesh\HeightMap.h" />
     <ClInclude Include="Asset\Mesh\Line.h" />
     <ClInclude Include="Asset\Mesh\Mesh.h" />

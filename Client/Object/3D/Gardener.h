@@ -1,23 +1,22 @@
 #pragma once
 
 #include "Core.h"
-#include "Shader/ConstantBuffers.h"
-#include "3D/Transform3D.h"
 #include "3D/Object3D.h"
 #include "3D/HeightMapObj.h"
+#include "3D/Goose.h"
+#include "Astar.h"
 
 namespace HBSoft
 {
-
     class Gardener : public Object3D
     {
     private:
-        std::shared_ptr<Mesh>          m_mesh;
-        std::shared_ptr<AnimationClip> m_animation;
+        std::shared_ptr<Mesh> m_mesh;
 
         std::vector<mat4> anim;
 
-        float m_speed2 = 1.0f;
+        float                                       m_speed2 = 1.0f;
+        std::vector<std::shared_ptr<AnimationClip>> m_gardenerAni;
 
     public:
         Gardener();
@@ -26,6 +25,23 @@ namespace HBSoft
         virtual void Render() override;
         virtual void Init();
         virtual void Release();
+
+        Goose m_goose1;
+
+        Transform3D m_trans;
+        Astar       m_astar;
+        int         idx = 0;
+
+        float pathIdx_x  = 0;
+        float pathIdx_z  = 0;
+        float gardener_x = 0;
+        float gardener_z = 0;
+
+        float GetLocationX();
+        float GetLocationZ();
+
+        vec3 GetmPos();
+        void SetmPos(float a, float b);
     };
 
 

@@ -32,11 +32,11 @@ namespace HBSoft
     inline static const std::map<FONT_KEY, FontDesc> g_defaultFonts = {
         {L"DEBUG_FONT",
          {L"malgun",
-         L"ko-kr",
-         20.f,
-         DWRITE_FONT_WEIGHT_THIN,
-         DWRITE_FONT_STYLE_NORMAL,
-         DWRITE_FONT_STRETCH_NORMAL}},
+          L"ko-kr",
+          20.f,
+          DWRITE_FONT_WEIGHT_THIN,
+          DWRITE_FONT_STYLE_NORMAL,
+          DWRITE_FONT_STRETCH_NORMAL}},
     };
 
     /*
@@ -53,7 +53,8 @@ namespace HBSoft
         {  L"BOX3D",   {MeshShape::BOX3D}},
         { L"CIRCLE",  {MeshShape::CIRCLE}},
         {   L"LINE",    {MeshShape::LINE}},
-        {L"CUBEMAP", {MeshShape::CUBEMAP}}
+        {L"CUBEMAP", {MeshShape::CUBEMAP}},
+        {   L"GRID",    {MeshShape::GRID}}
     };
 
     /*
