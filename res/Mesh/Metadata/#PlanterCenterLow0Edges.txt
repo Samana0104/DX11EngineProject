@@ -7577,8 +7577,8 @@ meshName : Scene
 textureName : 
 hasTexture : 0
 
-material(ambient) : 0.3, 0.3, 0.3
-material(diffuse) : 0.3, 0.3, 0.3
+material(ambient) : 0, 0, 0
+material(diffuse) : 0.6, 0.505882, 0.411765
 material(specular) : 0.3, 0.3, 0.3
 material(ambient factor) : 1
 material(diffuse factor) : 1
@@ -7597,8 +7597,8 @@ meshName : Scene
 textureName : 
 hasTexture : 0
 
-material(ambient) : 0.3, 0.3, 0.3
-material(diffuse) : 0.3, 0.3, 0.3
+material(ambient) : 0, 0, 0
+material(diffuse) : 0.606978, 0.830189, 0.66278
 material(specular) : 0.3, 0.3, 0.3
 material(ambient factor) : 1
 material(diffuse factor) : 1
@@ -7617,8 +7617,8 @@ meshName : Scene
 textureName : 
 hasTexture : 0
 
-material(ambient) : 0.3, 0.3, 0.3
-material(diffuse) : 0.3, 0.3, 0.3
+material(ambient) : 0, 0, 0
+material(diffuse) : 0.606978, 0.830189, 0.66278
 material(specular) : 0.3, 0.3, 0.3
 material(ambient factor) : 1
 material(diffuse factor) : 1
@@ -7637,8 +7637,8 @@ meshName : Scene
 textureName : 
 hasTexture : 0
 
-material(ambient) : 0.3, 0.3, 0.3
-material(diffuse) : 0.3, 0.3, 0.3
+material(ambient) : 0, 0, 0
+material(diffuse) : 0.606978, 0.830189, 0.66278
 material(specular) : 0.3, 0.3, 0.3
 material(ambient factor) : 1
 material(diffuse factor) : 1
@@ -7657,8 +7657,8 @@ meshName : Scene
 textureName : 
 hasTexture : 0
 
-material(ambient) : 0.3, 0.3, 0.3
-material(diffuse) : 0.3, 0.3, 0.3
+material(ambient) : 0, 0, 0
+material(diffuse) : 0.6, 0.505882, 0.411765
 material(specular) : 0.3, 0.3, 0.3
 material(ambient factor) : 1
 material(diffuse factor) : 1
@@ -7677,8 +7677,8 @@ meshName : Scene
 textureName : 
 hasTexture : 0
 
-material(ambient) : 0.3, 0.3, 0.3
-material(diffuse) : 0.3, 0.3, 0.3
+material(ambient) : 0, 0, 0
+material(diffuse) : 0.6, 0.505882, 0.411765
 material(specular) : 0.3, 0.3, 0.3
 material(ambient factor) : 1
 material(diffuse factor) : 1
@@ -7697,8 +7697,8 @@ meshName : Scene
 textureName : 
 hasTexture : 0
 
-material(ambient) : 0.3, 0.3, 0.3
-material(diffuse) : 0.3, 0.3, 0.3
+material(ambient) : 0, 0, 0
+material(diffuse) : 0.6, 0.505882, 0.411765
 material(specular) : 0.3, 0.3, 0.3
 material(ambient factor) : 1
 material(diffuse factor) : 1
@@ -7717,8 +7717,8 @@ meshName : Scene
 textureName : 
 hasTexture : 0
 
-material(ambient) : 0.3, 0.3, 0.3
-material(diffuse) : 0.3, 0.3, 0.3
+material(ambient) : 0, 0, 0
+material(diffuse) : 0.6, 0.505882, 0.411765
 material(specular) : 0.3, 0.3, 0.3
 material(ambient factor) : 1
 material(diffuse factor) : 1
@@ -7737,8 +7737,8 @@ meshName : Scene
 textureName : 
 hasTexture : 0
 
-material(ambient) : 0.3, 0.3, 0.3
-material(diffuse) : 0.3, 0.3, 0.3
+material(ambient) : 0, 0, 0
+material(diffuse) : 0.6, 0.505882, 0.411765
 material(specular) : 0.3, 0.3, 0.3
 material(ambient factor) : 1
 material(diffuse factor) : 1
@@ -7757,8 +7757,8 @@ meshName : Scene
 textureName : 
 hasTexture : 0
 
-material(ambient) : 0.3, 0.3, 0.3
-material(diffuse) : 0.3, 0.3, 0.3
+material(ambient) : 0, 0, 0
+material(diffuse) : 0.6, 0.505882, 0.411765
 material(specular) : 0.3, 0.3, 0.3
 material(ambient factor) : 1
 material(diffuse factor) : 1
@@ -7777,8 +7777,8 @@ meshName : Scene
 textureName : 
 hasTexture : 0
 
-material(ambient) : 0.3, 0.3, 0.3
-material(diffuse) : 0.3, 0.3, 0.3
+material(ambient) : 0, 0, 0
+material(diffuse) : 0.6, 0.505882, 0.411765
 material(specular) : 0.3, 0.3, 0.3
 material(ambient factor) : 1
 material(diffuse factor) : 1
@@ -7797,8 +7797,8 @@ meshName : Scene
 textureName : 
 hasTexture : 0
 
-material(ambient) : 0.3, 0.3, 0.3
-material(diffuse) : 0.3, 0.3, 0.3
+material(ambient) : 0, 0, 0
+material(diffuse) : 0.6, 0.505882, 0.411765
 material(specular) : 0.3, 0.3, 0.3
 material(ambient factor) : 1
 material(diffuse factor) : 1

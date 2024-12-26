@@ -17,14 +17,14 @@ namespace HBSoft
         std::vector<T> HBSContainer;  // T 객체를 저장
 
         // 폴더에서 .hbs 파일 읽어와 객체 생성 및 초기화
-        void LoadFromFolder(const std::string& folderPath, std::shared_ptr<Camera> camera);
+        void LoadFromFolder(const std::string& folderPath, std::shared_ptr<Camera> camera, std::shared_ptr<DirectionalLight>);
 
         // 특정 이름으로 객체 검색
         T* FindByName(const std::string& name);
     };
 
     template <typename T>
-    void HBSAutoLoader<T>::LoadFromFolder(const std::string& folderPath, std::shared_ptr<Camera> camera)
+    void HBSAutoLoader<T>::LoadFromFolder(const std::string& folderPath, std::shared_ptr<Camera> camera, std::shared_ptr<DirectionalLight> light)
     {
         namespace fs = std::filesystem;
 
@@ -43,6 +43,7 @@ namespace HBSoft
                         HBSContainer.back().Init(
                         std::wstring().assign(fileName.begin(), fileName.end()));
                         HBSContainer.back().SetCamera(camera);
+                        HBSContainer.back().SetLight(light);
                         if (fileName.find('#') == 0)
                             HBSContainer.back().SetTransType(TransformType::UnityTrans);
                         else
