@@ -2,8 +2,9 @@
 
 #include "pch.h"
 #include "2D/Object2D.h"
-#include "Texture\GeneralTexture.h"
+#include "Texture/GeneralTexture.h"
 #include "Font/Font.h"
+#include "Observer.h"
 
 namespace HBSoft
 {

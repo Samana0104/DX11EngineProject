@@ -26,7 +26,7 @@ void EasyRender::InitShaderState()
     if (m_vsShader != nullptr)
         m_vsShader->SetUpToContext(HDEVICE);
     else
-        HDEVICE->m_context->PSSetShader(NULL, NULL, 0);
+        HDEVICE->m_context->VSSetShader(NULL, NULL, 0);
 
     if (m_psShader != nullptr)
         m_psShader->SetUpToContext(HDEVICE);
@@ -46,6 +46,14 @@ void EasyRender::InitShaderState()
 
     if (buffer.size() > 0)
         HDEVICE->m_context->VSSetConstantBuffers(0, (UINT)buffer.size(), &buffer.at(0));
+
+    buffer.clear();
+
+    for (UINT i = 0; i < m_gsCB.size(); i++)
+        buffer.push_back(m_gsCB[i].Get());
+
+    if (buffer.size() > 0)
+        HDEVICE->m_context->GSSetConstantBuffers(0, (UINT)buffer.size(), &buffer.at(0));
 
     buffer.clear();
 
@@ -105,6 +113,9 @@ void EasyRender::SetVSShader(const SHADER_KEY shaderKey)
     auto&   cbDescs = m_vsShader->GetCBDescs();
     HRESULT hr;
 
+    if (m_vsShader->GetShaderType() != ShaderType::VERTEX)
+        assert(false);
+
     m_vsCB.clear();
 
     for (size_t i = 0; i < cbDescs.size(); i++)
@@ -125,6 +136,9 @@ void EasyRender::SetPSShader(const SHADER_KEY shaderKey)
     auto&   cbDescs = m_psShader->GetCBDescs();
     HRESULT hr;
 
+    if (m_psShader->GetShaderType() != ShaderType::PIXEL)
+        assert(false);
+
     m_psCB.clear();
 
     for (size_t i = 0; i < cbDescs.size(); i++)
@@ -144,6 +158,9 @@ void EasyRender::SetGSShader(const SHADER_KEY shaderKey)
     m_gsShader      = HASSET->m_shaders[shaderKey];
     auto&   cbDescs = m_gsShader->GetCBDescs();
     HRESULT hr;
+
+    if (m_gsShader->GetShaderType() != ShaderType::GEOMETRY)
+        assert(false);
 
     m_gsCB.clear();
 
