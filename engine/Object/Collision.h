@@ -16,6 +16,14 @@ namespace HBSoft
         vec3 min;
         vec3 max;
 
+        void SetCenter(const AABB& aabb)
+        {
+            vec3 center = (aabb.min + aabb.max) * 0.5f;
+
+            min = aabb.min - center;
+            max = aabb.max - center;
+        }
+
         bool IsCollision(const AABB& aabb)
         {
             vec3 colMin, colMax;

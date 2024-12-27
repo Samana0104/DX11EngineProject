@@ -37,8 +37,8 @@ float4 main(PSInput psIn) : SV_Target0
     float4 outputPixel;
     float4 cubePixel = g_textureCube0.Sample(sampler0, reflect(eyeDir, psIn.n));
     float4 texPixel = g_txTexture.Sample(sampler0, psIn.t);
-    cubePixel.rgb *= 0.6f;
-    float4 pixelLerp = lerp(texPixel, cubePixel, 0.2f);
+    cubePixel.rgb *= 0.5f;
+    float4 pixelLerp = lerp(texPixel, cubePixel, 0.1f);
 
 
     BlinnInfo info;
