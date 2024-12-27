@@ -46,6 +46,22 @@ namespace HBSoft
                         HBSContainer.back().SetLight(light);
                         if (fileName.find('#') == 0)
                             HBSContainer.back().SetTransType(TransformType::UnityTrans);
+                        else if (fileName.find('@') == 0)
+                            HBSContainer.back().SetTransType(TransformType::Test);
+                        else if (fileName.find("StoneHouses") == 0)
+                            HBSContainer.back().SetTransType(TransformType::FrontHouse);
+                        else if (fileName.find("store") == 0)
+                            HBSContainer.back().SetTransType(TransformType::Store);
+                        else if (fileName.find("bollard") == 0)
+                            HBSContainer.back().SetTransType(TransformType::Bollard);
+                        else if (fileName.find("parkcube") == 0)
+                            HBSContainer.back().SetTransType(TransformType::Parkcube);
+                        else if (fileName.find("bench") == 0)
+                            HBSContainer.back().SetTransType(TransformType::Bench);
+                        else if (fileName.find("retainer") == 0)
+                            HBSContainer.back().SetTransType(TransformType::PondRetainers);
+                        else if (fileName.find('!') == 0)
+                            HBSContainer.back().SetTransType(TransformType::ConcretePath);
                         else
                             HBSContainer.back().SetTransType(TransformType::GooseGameTrans);
                     }

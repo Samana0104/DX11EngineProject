@@ -16,7 +16,17 @@ namespace HBSoft
     {
         DefaultTrans,
         GooseGameTrans,
-        UnityTrans
+        UnityTrans,
+        BackyardTrans,
+        FrontHouse,
+        Store,
+        Test,
+        Bollard,
+        Parkcube,
+        Bench,
+        PondRetainers,
+        ConcretePath,
+
     };
 
     class Static3DObj : public Object3D
@@ -29,14 +39,24 @@ namespace HBSoft
 
 
     public:
+        float x = -7;
+        float y = 0;
+        float z = -12;
+        float rotX = 1.57;
+        float rotY = 0;
+        float rotZ = 0;
+        float scale = 1;
+
         Static3DObj();
         Static3DObj(const std::string& n)
             : m_name(n) {}
 
         std::string GetName();
         void        SetTransType(TransformType);
+        Transform3D GetTransform();
 
         virtual void Update(const float deltaTime) override;
+        void         UpdateLocation(const float deltaTime, float, float, float);
         virtual void Render() override;
         virtual void Init();
         void         Init(const std::wstring&);

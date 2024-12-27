@@ -35,6 +35,11 @@ namespace HBSoft
         Gardener   m_gardener;
         Test3DObj  m_test;
         HBSAutoLoader<Static3DObj>           m_staticObjs;
+        //Static3DObj                m_test2;
+
+        //float m_x;
+        //float m_y;
+        //float m_z;
 
         std::shared_ptr<Camera>           cameraTest;
         std::shared_ptr<DirectionalLight> lightTest;
