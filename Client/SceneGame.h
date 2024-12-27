@@ -16,7 +16,6 @@ date: 2024-12-23
 #include "3D/Test3DObj.h"
 #include "3D/Goose.h"
 #include "3D/Gardener.h"
-#include "3D/AABBCollider.h"
 #include "GameButton.h"
 #include "3D/Static3DObj.h"
 #include "HBSAutoLoader.h"
@@ -30,7 +29,6 @@ namespace HBSoft
     public:
         GameButton                 m_escButton;
         CubeMapObj                 cube;
-        LineObj                    m_line;
         QuadTree                   m_tree;
         Goose                      m_goose;
         Gardener                   m_gardener;
@@ -40,6 +38,7 @@ namespace HBSoft
         std::shared_ptr<Camera>           cameraTest;
         std::shared_ptr<DirectionalLight> lightTest;
         std::shared_ptr<HeightMapObj>     mapTest;
+        std::shared_ptr<LineObj>          m_line;
 
         bool isWire = false;
 

@@ -39,6 +39,7 @@ namespace HBSoft
     public:
         MapDesc                  m_mapDesc;
         std::shared_ptr<Texture> m_mapTexture;
+        std::shared_ptr<Texture> m_cubeTex;
         std::shared_ptr<Mesh>    m_mesh;
         std::vector<VertexInfo>  m_vertexInfo;
 

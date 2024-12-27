@@ -35,7 +35,7 @@ void FbxLoader::Load(const wstringV filePath, std::shared_ptr<Mesh> loadedMesh,
     ReleaseFbxManager();
     ProcessKeyFrame(loadedAni);
 
-    loadedMesh->m_autoCollision.aabb = m_autoColAABB;
+    loadedMesh->m_autoCollision.aabb.SetCenter(m_autoColAABB);
     loadedMesh->m_autoCollision.sphere.SetRangeFromAABB(m_autoColAABB);
 }
 
