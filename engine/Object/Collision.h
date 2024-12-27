@@ -15,20 +15,37 @@ namespace HBSoft
     {
         vec3 min;
         vec3 max;
+
+        bool IsCollision(const AABB& aabb)
+        {
+            vec3 colMin, colMax;
+            colMin.x = glm::max<float>(min.x, aabb.min.x);
+            colMin.y = glm::max<float>(min.y, aabb.min.y);
+            colMin.z = glm::max<float>(min.z, aabb.min.z);
+
+            colMax.x = glm::min<float>(max.x, aabb.max.x);
+            colMax.y = glm::min<float>(max.y, aabb.max.y);
+            colMax.z = glm::min<float>(max.z, aabb.max.z);
+
+            if (colMax.x >= colMin.x && colMax.y >= colMin.y && colMax.z >= colMin.z)
+                return true;
+            else
+                return false;
+        }
     };
 
-    struct OBB
-    {
-        vec3  center;
-        vec3  axis[3];
-        float distance[3];
-    };
+    // struct OBB
+    //{
+    //     vec3  center;
+    //     vec3  axis[3];
+    //     float distance[3];
+    // };
 
-    struct Box
-    {
-        AABB aabb;
-        OBB  obb;
-    };
+    // struct Box
+    //{
+    //     AABB aabb;
+    //     OBB  obb;
+    // };
 
     struct Sphere
     {

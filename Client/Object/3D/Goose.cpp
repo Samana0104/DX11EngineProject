@@ -12,6 +12,7 @@ date: 2024-11-30
 using namespace HBSoft;
 
 Goose::Goose()
+    : m_component(m_transform)
 {
     m_mesh  = HASSET->m_meshes[L"Goose.hbs"];
     m_sound = HASSET->m_sounds[L"goose_honk.wav"];
@@ -24,7 +25,7 @@ Goose::Goose()
     anim.resize(m_mesh->m_born.bornIndex.size());
 
     m_transform.SetLocation({0.0f, 0.6f, -5.0f});
-    m_transform.m_scale = {0.07f, 0.07f, 0.07f};
+    m_transform.SetScale({0.07f, 0.07f, 0.07f});
     m_transform.SetRotation(vec3(1.0f, 0.f, 0.f), 90.f);
 
     m_gooseAnis.push_back(HASSET->m_animations[L"fancywalk.skm"]);
@@ -38,11 +39,12 @@ Goose::Goose()
     m_gooseAnis.push_back(HASSET->m_animations[L"gooseHalfFlapWalking.skm"]);
     m_gooseAnis.push_back(HASSET->m_animations[L"gooseGallopDownHalfFlap.skm"]);
     m_gooseAnis.push_back(HASSET->m_animations[L"gooseSneakIdleHalfFlap.skm"]);
+
+    m_component.AddAABBRange(m_mesh->m_autoCollision.aabb);
 }
 
 void Goose::Update(float deltaTime)
 {
-
     // static int   selectAnimation = 0;
 
     ImGui::SliderFloat("Speed1", &speed1, 0, 60.f);
@@ -395,8 +397,6 @@ void Goose::Update(float deltaTime)
 void Goose::Render()
 {
     m_easyRender.Draw();
-    // m_easyRender.SetAnimationNormalState();
-    // m_easyRender.Draw(false);
 }
 
 void Goose::Release() {}

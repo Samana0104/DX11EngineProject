@@ -71,9 +71,9 @@ namespace HBSoft
         float specularFactor;
 
         Material()
-            : ambient(0.3f, 0.3f, 0.3f, 1.f),
-              diffuse(0.3f),
-              specular(0.3f),
+            : ambient(0.2f, 0.2f, 0.2f, 1.f),
+              diffuse(0.2f),
+              specular(0.2f),
               shininess(20.f),
               ambientFactor(1.f),
               diffuseFactor(1.f),

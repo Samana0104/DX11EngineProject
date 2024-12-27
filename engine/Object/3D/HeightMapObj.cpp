@@ -18,14 +18,17 @@ HeightMapObj::HeightMapObj()
     // m_scale = 3.0f;
 
     m_mapTexture = HASSET->m_textures[L"Map512Color.png"];
+    m_cubeTex    = HASSET->m_textures[L"cubeTest.dds"];
 
     // CreateMapDesc(L"Map512.hmp", 2.f, 0.2f, 2.f);
-    CreateMapDesc(L"Map512.hmp", 0.06f, 0.003f, 0.06f);
+    CreateMapDesc(L"Map512.hmp", 1.f, 0.003f, 1.f);
     m_mesh = MeshFactory::CreateHeightMap(HDEVICE, m_mapDesc);
     GenerateVertexNormal();
 
     m_easyRender.SetVSShader(L"BasicVS.hlsl");
-    m_easyRender.SetPSShader(L"BasicPS.hlsl");
+    m_easyRender.SetPSShader(L"BasicEnvPS.hlsl");
+    m_easyRender.SetSS(ERSamplerState::LINEAR);
+    m_easyRender.SetTexture(m_mapTexture);
 
     m_transform.SetScale({1.f, 3.f, 1.f});
     m_transform.SetLocation({0.f, -0.93f, 0.f});
@@ -203,5 +206,6 @@ void HeightMapObj::Render()
                                          DXGI_FORMAT_R32_UINT,
                                          0);
     HDEVICE->m_context->PSSetShaderResources(0, 1, m_mapTexture->GetSRV().GetAddressOf());
+    HDEVICE->m_context->PSSetShaderResources(1, 1, m_cubeTex->GetSRV().GetAddressOf());
     HDEVICE->m_context->DrawIndexed((UINT)m_mesh->m_subMeshes[0]->indices.size(), 0, 0);
 }

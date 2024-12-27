@@ -52,7 +52,6 @@
     <ClCompile Include="Asset\Texture\GeneralTexture.cpp" />
     <ClCompile Include="Asset\Texture\HeightTexture.cpp" />
     <ClCompile Include="Asset\Texture\Texture.cpp" />
-    <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="Core\Core.cpp" />
     <ClCompile Include="Core\D3Device.cpp" />
     <ClCompile Include="Core\EventHandler.cpp" />
@@ -68,7 +67,6 @@
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Object\2D\Object2D.cpp" />
     <ClCompile Include="Object\2D\Transform2D.cpp" />
-    <ClCompile Include="Object\3D\AABBCollider.cpp" />
     <ClCompile Include="Object\3D\DirectionalLight.cpp" />
     <ClCompile Include="Object\3D\HeightMapObj.cpp" />
     <ClCompile Include="Object\3D\LineObj.cpp" />
@@ -76,6 +74,7 @@
     <ClCompile Include="Object\3D\QuadTree.cpp" />
     <ClCompile Include="Object\3D\Transform3D.cpp" />
     <ClCompile Include="Object\Camera.cpp" />
+    <ClCompile Include="Object\CollisionComponent.cpp" />
     <ClCompile Include="Object\EasyRender.cpp" />
     <ClCompile Include="Object\Object.cpp" />
     <ClCompile Include="QuestGUI.cpp" />
@@ -114,7 +113,6 @@
     <ClInclude Include="Asset\Texture\GeneralTexture.h" />
     <ClInclude Include="Asset\Texture\HeightTexture.h" />
     <ClInclude Include="Asset\Texture\Texture.h" />
-    <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Core\CoreAPI.h" />
     <ClInclude Include="Core\D3Device.h" />
@@ -133,7 +131,6 @@
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Object\2D\Object2D.h" />
     <ClInclude Include="Object\2D\Transform2D.h" />
-    <ClInclude Include="Object\3D\AABBCollider.h" />
     <ClInclude Include="Object\3D\DirectionalLight.h" />
     <ClInclude Include="Object\3D\HeightMapObj.h" />
     <ClInclude Include="Object\3D\LineObj.h" />
@@ -142,6 +139,7 @@
     <ClInclude Include="Object\3D\Transform3D.h" />
     <ClInclude Include="Object\Camera.h" />
     <ClInclude Include="Object\Collision.h" />
+    <ClInclude Include="Object\CollisionComponent.h" />
     <ClInclude Include="Object\EasyRender.h" />
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\Renderable.h" />
@@ -154,6 +152,8 @@
     <FxCompile Include="..\res\Shader\2DBasicPS.hlsl" />
     <FxCompile Include="..\res\Shader\2DBasicVS.hlsl" />
     <FxCompile Include="..\res\Shader\BasicAniVS.hlsl" />
+    <FxCompile Include="..\res\Shader\BasicEnvPS.hlsl" />
+    <FxCompile Include="..\res\Shader\ColorEnvPS.hlsl" />
     <FxCompile Include="..\res\Shader\ColorPS.hlsl" />
     <FxCompile Include="..\res\Shader\CubePS.hlsl" />
     <FxCompile Include="..\res\Shader\CubeVS.hlsl" />

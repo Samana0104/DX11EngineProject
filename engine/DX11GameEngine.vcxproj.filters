@@ -201,9 +201,6 @@
     <ClCompile Include="Asset\Factory\AnimationFactory.cpp">
       <Filter>Asset\Factory</Filter>
     </ClCompile>
-    <ClCompile Include="Object\3D\AABBCollider.cpp">
-      <Filter>Object\3D</Filter>
-    </ClCompile>
     <ClCompile Include="Object\3D\DirectionalLight.cpp">
       <Filter>Object\3D</Filter>
     </ClCompile>
@@ -217,13 +214,15 @@
       <Filter>Object\3D</Filter>
     </ClCompile>
     <ClCompile Include="Frustum.cpp" />
-    <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="QuestGUI.cpp" />
     <ClCompile Include="Asset\Mesh\Grid.cpp">
       <Filter>Asset\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Ai\Astar.cpp">
       <Filter>Ai</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\CollisionComponent.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -395,9 +394,6 @@
     <ClInclude Include="Asset\Factory\AnimationFactory.h">
       <Filter>Asset\Factory</Filter>
     </ClInclude>
-    <ClInclude Include="Object\3D\AABBCollider.h">
-      <Filter>Object\3D</Filter>
-    </ClInclude>
     <ClInclude Include="Object\3D\DirectionalLight.h">
       <Filter>Object\3D</Filter>
     </ClInclude>
@@ -411,13 +407,15 @@
       <Filter>Object\3D</Filter>
     </ClInclude>
     <ClInclude Include="Frustum.h" />
-    <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="QuestGUI.h" />
     <ClInclude Include="Asset\Mesh\Grid.h">
       <Filter>Asset\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Ai\Astar.h">
       <Filter>Ai</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\CollisionComponent.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -464,6 +462,12 @@
       <Filter>hlsl</Filter>
     </FxCompile>
     <FxCompile Include="..\res\Shader\2DBasicPS.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\ColorEnvPS.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\BasicEnvPS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>

@@ -114,6 +114,7 @@ namespace HBSoft
         void SetNormalState();
         // 반드시 버텍스 쉐이더 0번 상수버퍼가 애니메이션 행렬이여야함
         void SetAnimationNormalState();
+        void SetCollisionAABBState();
 
         void UpdateVSCB(const void* data, const size_t dataSize, const UINT constantIdx);
         void UpdatePSCB(const void* data, const size_t dataSize, const UINT constantIdx);

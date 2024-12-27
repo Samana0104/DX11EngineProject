@@ -9,6 +9,7 @@ date: 2024-12-23
 
 #include "3D/Object3D.h"
 #include "3D/Transform3D.h"
+#include "CollisionComponent.h"
 
 namespace HBSoft
 {
@@ -22,16 +23,23 @@ namespace HBSoft
     class Static3DObj : public Object3D
     {
     private:
-        std::shared_ptr<Mesh> m_mesh;
-        std::vector<mat4>     m_anim;
-        std::string           m_name;
-        TransformType         m_transType = TransformType::DefaultTrans;
+        std::shared_ptr<Mesh>    m_mesh;
+        std::shared_ptr<Texture> m_cubeTex;
+
+        std::vector<mat4> m_anim;
+        std::string       m_name;
+        TransformType     m_transType = TransformType::DefaultTrans;
+
+    public:
+        CollisionComponent m_component;
 
 
     public:
         Static3DObj();
+
         Static3DObj(const std::string& n)
-            : m_name(n) {}
+            : m_name(n), m_component(m_transform)
+        {}
 
         std::string GetName();
         void        SetTransType(TransformType);

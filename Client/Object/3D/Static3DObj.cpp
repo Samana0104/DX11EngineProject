@@ -12,10 +12,13 @@ date: 2024-12-23
 using namespace HBSoft;
 
 Static3DObj::Static3DObj()
+    : m_component(m_transform)
 {
-    m_easyRender.SetVSShader(L"VertexShader.hlsl");
-    m_easyRender.SetPSShader(L"ColorPixelShader.hlsl");
-    m_easyRender.SetTexture(nullptr);
+    m_cubeTex = HASSET->m_textures[L"cubeTest.dds"];
+    m_easyRender.SetVSShader(L"BasicVS.hlsl");
+    m_easyRender.SetPSShader(L"BasicPS.hlsl");
+    m_easyRender.SetTexture(m_cubeTex);
+    m_easyRender.SetSS(ERSamplerState::LINEAR);
     m_easyRender.SetMesh(m_mesh);
 }
 
@@ -48,6 +51,7 @@ void Static3DObj::Update(const float deltaTime)
 
 void Static3DObj::Render()
 {
+    HDEVICE->m_context->PSSetShaderResources(1, 1, m_cubeTex->GetSRV().GetAddressOf());
     m_easyRender.Draw();
 }
 
@@ -57,10 +61,12 @@ void Static3DObj::Init(const std::wstring& key)
 {
     m_mesh = HASSET->m_meshes[key];
 
+    m_cubeTex = HASSET->m_textures[L"cubeTest.dds"];
     m_easyRender.SetVSShader(L"BasicVS.hlsl");
-    m_easyRender.SetPSShader(L"ColorPS.hlsl");
-    m_easyRender.SetTexture(nullptr);
+    m_easyRender.SetPSShader(L"ColorEnvPS.hlsl");
+    m_easyRender.SetTexture(m_cubeTex);
     m_easyRender.SetMesh(m_mesh);
+    m_component.AddAABBRange(m_mesh->m_autoCollision.aabb);
 }
 
 void Static3DObj::Release() {}

@@ -17,9 +17,10 @@ SceneGame::SceneGame()
     cameraTest = std::make_shared<Camera>(glm::radians(90.f), 0.1f, 10000.f);
     lightTest  = std::make_shared<DirectionalLight>(vec3(-1.f, -1.f, 0.f), 1.f);
     mapTest    = std::make_shared<HeightMapObj>();
+    m_line     = std::make_shared<LineObj>();
 
     cameraTest->LookAt({0.f, 3.f, -1.5f}, {0.f, 0.f, 0.f}, {0.f, 1.f, 0.f});
-    m_line.SetCamera(cameraTest);
+    m_line->SetCamera(cameraTest);
     cube.SetCamera(cameraTest);
 
     // m_gardener.SetCamera(cameraTest);
@@ -44,7 +45,8 @@ void SceneGame::Update(float deltaTime)
     ImGui::SliderFloat("light Power", &lightTest->m_lightPower, 0.f, 2.f);
 
     cameraTest->Update(deltaTime);
-    m_line.Update(deltaTime);
+    m_line->Update(deltaTime);
+
     cube.Update(deltaTime);
     m_escButton.Update(deltaTime);
     m_grid.Update(deltaTime);
@@ -62,20 +64,27 @@ void SceneGame::Render()
 {
     EasyRender::Begin(MultiRT::MAIN);
     EasyRender::SetWireFrame(isWire);
-    m_line.Draw({0.f, 0.f, 0.f}, {1000.f, 0.f, 0.f}, {1.f, 0.f, 0.f, 1.f});
-    m_line.Draw({0.f, 0.f, 0.f}, {0.f, 1000.f, 0.f}, {0.f, 1.f, 0.f, 1.f});
-    m_line.Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
 
-    // m_gardener.Render();
-    m_goose.Render();
-    m_grid.Render();
-    cube.Render();
-    m_tree.Render();
 
     for (auto& hbsc : m_staticObjs.HBSContainer)
     {
         hbsc.Render();
+        hbsc.m_component.DrawBoundary(m_line);
+        if (hbsc.m_component.IsCollision(m_goose.m_component))
+            std::cout << "충돌" << std::endl;
     }
+
+    m_line->Draw({0.f, 0.f, 0.f}, {1000.f, 0.f, 0.f}, {1.f, 0.f, 0.f, 1.f});
+    m_line->Draw({0.f, 0.f, 0.f}, {0.f, 1000.f, 0.f}, {0.f, 1.f, 0.f, 1.f});
+    m_line->Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
+
+    // m_gardener.Render();
+    m_goose.Render();
+    m_grid.Render();
+
+    m_tree.Render();
+    cube.Render();
+    m_goose.m_component.DrawBoundary(m_line);
     EasyRender::End(MultiRT::MAIN);
 
     // 글자 안나오는 이유 상수 버퍼

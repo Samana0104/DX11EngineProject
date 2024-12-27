@@ -258,6 +258,7 @@ void Gardener::Update(const float deltaTime)
     std::cout << "------------" << std::endl;
     m_goose1.Update(deltaTime);
     UpdateDefaultCB();
+    m_easyRender.UpdateVSCB((void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
 }
 
 void Gardener::Render()
