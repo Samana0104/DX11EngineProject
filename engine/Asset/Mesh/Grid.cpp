@@ -15,6 +15,7 @@ Grid::Grid(std::shared_ptr<D3Device> device)
 {
     assert(CreateVertices(device));
     assert(CreateIndices(device));
+    assert(CreateMaterialBuffer(device));
 }
 
 bool Grid::CreateVertices(std::shared_ptr<D3Device> device)

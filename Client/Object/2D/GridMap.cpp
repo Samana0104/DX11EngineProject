@@ -16,7 +16,7 @@ GridMap::GridMap()
 {
     m_gridMesh = HASSET->m_meshes[L"GRID"];
     m_easyRender.SetVSShader(L"BasicVS.hlsl");
-    m_easyRender.SetVSShader(L"BasicPS.hlsl");
+    m_easyRender.SetPSShader(L"ColorPS.hlsl");
     m_easyRender.SetMesh(m_gridMesh);
 }
 

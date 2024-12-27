@@ -38,6 +38,7 @@ namespace HBSoft
         Transform2D& SetScale(const vec2 scale);
         Transform2D& SetScale(const float scale);
 
+
         static const HPoint ConvertScreenToNDC(const HPoint& windowSize, const HPoint& pos);
         static const HRect  ConvertScreenToNDC(const HPoint& windowSize, const HRect& rect);
 

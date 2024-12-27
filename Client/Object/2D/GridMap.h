@@ -9,7 +9,6 @@ date: 2024-12-11
 
 #pragma once
 #include "Core.h"
-#include "Object.h"
 #include "3D/Object3D.h"
 #include "Mesh/Grid.h"
 
