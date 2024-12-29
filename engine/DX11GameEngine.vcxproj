@@ -60,10 +60,10 @@
     </ClCompile>
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="DesignPattern\Observer.cpp" />
-    <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="Gui\Button.cpp" />
     <ClCompile Include="Gui\GameButton.cpp" />
     <ClCompile Include="Gui\LobbyButton.cpp" />
+    <ClCompile Include="Gui\QuestGUI.cpp" />
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Object\2D\Object2D.cpp" />
     <ClCompile Include="Object\2D\Transform2D.cpp" />
@@ -74,10 +74,11 @@
     <ClCompile Include="Object\3D\QuadTree.cpp" />
     <ClCompile Include="Object\3D\Transform3D.cpp" />
     <ClCompile Include="Object\Camera.cpp" />
+    <ClCompile Include="Object\Collision.cpp" />
     <ClCompile Include="Object\CollisionComponent.cpp" />
     <ClCompile Include="Object\EasyRender.cpp" />
+    <ClCompile Include="Object\Frustum.cpp" />
     <ClCompile Include="Object\Object.cpp" />
-    <ClCompile Include="QuestGUI.cpp" />
     <ClCompile Include="Scene\SceneMgr.cpp" />
     <ClCompile Include="Timer\SystemTimer.cpp" />
   </ItemGroup>
@@ -124,10 +125,10 @@
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="DesignPattern\Observer.h" />
     <ClInclude Include="DesignPattern\Singleton.h" />
-    <ClInclude Include="Frustum.h" />
     <ClInclude Include="Gui\Button.h" />
     <ClInclude Include="Gui\GameButton.h" />
     <ClInclude Include="Gui\LobbyButton.h" />
+    <ClInclude Include="Gui\QuestGUI.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Object\2D\Object2D.h" />
     <ClInclude Include="Object\2D\Transform2D.h" />
@@ -141,9 +142,9 @@
     <ClInclude Include="Object\Collision.h" />
     <ClInclude Include="Object\CollisionComponent.h" />
     <ClInclude Include="Object\EasyRender.h" />
+    <ClInclude Include="Object\Frustum.h" />
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\Renderable.h" />
-    <ClInclude Include="QuestGUI.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneMgr.h" />
     <ClInclude Include="Timer\SystemTimer.h" />

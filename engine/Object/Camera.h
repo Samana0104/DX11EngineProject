@@ -10,6 +10,7 @@ date: 2024-11-29
 
 #include "Core.h"
 #include "Observer.h"
+#include "Frustum.h"
 #include "3D\Transform3D.h"
 
 namespace HBSoft
@@ -29,11 +30,13 @@ namespace HBSoft
         float m_accel = 10.f;
 
         mat4 m_projMat;
+        mat4 m_viewMat;
 
     public:
         // 설마 카메라에 스케일 값 주는 미친 사람 없겠지?
         // 줌인 줌아웃 따로 만들었으니 스케일 조정하지 마시오
         Transform3D m_transform;
+        Frustum     m_frustum;
 
     private:
         virtual void OnNotice(EventList event, void* entity);

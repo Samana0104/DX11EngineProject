@@ -18,29 +18,6 @@ QuadTree::~QuadTree()
     delete m_rootNode;
 }
 
-QNode* QuadTree::MakeRoot()
-{
-    QNode* node = new QNode();
-
-    node->depth = 0;
-
-    /*
-    0 1
-    2 3
-    코너 기준
-    */
-    node->cornerIdx[0] = 0;
-    node->cornerIdx[1] = m_mapObj->m_mapDesc.numCols;
-    node->cornerIdx[2] = (m_mapObj->m_mapDesc.numRows - 1) * m_mapObj->m_mapDesc.numCols;
-    node->cornerIdx[3] = m_mapObj->m_mapDesc.numRows * m_mapObj->m_mapDesc.numCols - 1;
-
-    // 인덱스 버퍼 강탈
-    node->indexList   = std::move(m_mapObj->m_mesh->m_subMeshes[0]->indices);
-    node->indexBuffer = m_mapObj->m_mesh->m_subMeshes[0]->indexBuffer;
-
-    return node;
-}
-
 QNode* QuadTree::CreateNode(UINT depth, UINT TopLeft, UINT TopRight, UINT BottomLeft, UINT BottomRight)
 {
     QNode* node = new QNode();
@@ -90,6 +67,40 @@ QNode* QuadTree::CreateNode(UINT depth, UINT TopLeft, UINT TopRight, UINT Bottom
 
     assert(HDEVICE->CreateIndexBuffer(node->indexList, node->indexBuffer));
 
+    node->box.aabb.min = {99999.0f, 99999.0f, 99999.0f};
+    node->box.aabb.max = {-99999.0f, -99999.0f, -99999.0f};
+
+    for (size_t i = 0; i < node->indexList.size(); i++)
+    {
+        vec3 v = m_mapObj->m_mesh->m_vertices[node->indexList[i]].p;
+
+        if (v.x > node->box.aabb.max.x)
+            node->box.aabb.max.x = v.x;
+
+        if (v.y > node->box.aabb.max.y)
+            node->box.aabb.max.y = v.y;
+
+        if (v.z > node->box.aabb.max.z)
+            node->box.aabb.max.z = v.z;
+
+        if (v.x < node->box.aabb.min.x)
+            node->box.aabb.min.x = v.x;
+
+        if (v.y < node->box.aabb.min.y)
+            node->box.aabb.min.y = v.y;
+
+        if (v.z < node->box.aabb.min.z)
+            node->box.aabb.min.z = v.z;
+    }
+
+    node->box.obb.center      = (node->box.aabb.max + node->box.aabb.min) * 0.5f;
+    node->box.obb.axis[0]     = {1.0f, 0.0f, 0.0f};
+    node->box.obb.axis[1]     = {0.0f, 1.0f, 0.0f};
+    node->box.obb.axis[2]     = {0.0f, 0.0f, 1.0f};
+    node->box.obb.distance[0] = (node->box.aabb.max.x - node->box.aabb.min.x) * 0.5f;
+    node->box.obb.distance[1] = (node->box.aabb.max.y - node->box.aabb.min.y) * 0.5f;
+    node->box.obb.distance[2] = (node->box.aabb.max.z - node->box.aabb.min.z) * 0.5f;
+
     return node;
 }
 
@@ -105,6 +116,25 @@ void QuadTree::BuildTree(QNode* node)
         for (int i = 0; i < 4; i++)
             BuildTree(node->child[i]);
     }
+}
+
+void QuadTree::FindNode(QNode* node)
+{
+    if (node == nullptr)
+        return;
+
+    if (m_camera->m_frustum.IsFrustumInBox(node->box))
+    {
+        if (node->isLeaf == true)
+            m_renderNode.push_back(node);
+    }
+    else
+    {
+        return;
+    }
+
+    for (int childIdx = 0; childIdx < 4; childIdx++)
+        FindNode(node->child[childIdx]);
 }
 
 bool QuadTree::SubDivide(QNode* node)
@@ -140,10 +170,15 @@ bool QuadTree::SubDivide(QNode* node)
     }
 }
 
-void QuadTree::SetHeightMapObj(std::shared_ptr<HeightMapObj> heightMapObj)
+void QuadTree::SetData(std::shared_ptr<HeightMapObj> heightMapObj, std::shared_ptr<Camera> camera)
 {
     m_mapObj   = heightMapObj;
-    m_rootNode = MakeRoot();
+    m_camera   = camera;
+    m_rootNode = CreateNode(0,
+                            0,
+                            m_mapObj->m_mapDesc.numCols - 1,
+                            (m_mapObj->m_mapDesc.numRows - 1) * m_mapObj->m_mapDesc.numCols,
+                            m_mapObj->m_mapDesc.numRows * m_mapObj->m_mapDesc.numCols - 1);
     BuildTree(m_rootNode);
 }
 
@@ -159,6 +194,8 @@ void QuadTree::Release() {}
 void QuadTree::Update(const float deltaTime)
 {
     m_mapObj->Update(deltaTime);
+    m_renderNode.clear();
+    FindNode(m_rootNode);
 }
 
 void QuadTree::Render()
@@ -180,8 +217,13 @@ void QuadTree::Render()
     1,
     m_mapObj->m_mesh->m_subMeshes[0]->materialBuffer.GetAddressOf());
 
-    HDEVICE->m_context->IASetIndexBuffer(m_rootNode->indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-    HDEVICE->m_context->DrawIndexed((UINT)m_rootNode->indexList.size(), 0, 0);
+    for (size_t i = 0; i < m_renderNode.size(); i++)
+    {
+        HDEVICE->m_context->IASetIndexBuffer(m_renderNode[i]->indexBuffer.Get(),
+                                             DXGI_FORMAT_R32_UINT,
+                                             0);
+        HDEVICE->m_context->DrawIndexed((UINT)m_renderNode[i]->indexList.size(), 0, 0);
+    }
     // m_mapObj->m_easyRender.SetNormalState();
     // HDEVICE->m_context->DrawIndexed((UINT)m_rootNode->indexList.size(), 0, 0);
 }

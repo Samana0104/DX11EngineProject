@@ -16,6 +16,7 @@ Camera::Camera(float fov, float projNear, float projFar)
     HPoint windowSize = HWINDOW->GetWindowSize();
     // z 0 ~ 1 원근 행렬을 만들어주는 함수
     m_projMat = glm::perspectiveFovLH_ZO(fov, windowSize.x, windowSize.y, projNear, projFar);
+    m_viewMat = mat4(1.f);
 
     m_side = vec3(1.f, 0.f, 0.f);
     m_up   = vec3(0.f, 1.f, 0.f);
@@ -31,7 +32,7 @@ Camera::~Camera()
 
 const mat4 Camera::GetViewMat() const
 {
-    return glm::inverse(m_transform.m_worldMat);
+    return m_viewMat;
 }
 
 const mat4 Camera::GetProjMat() const
@@ -92,6 +93,9 @@ void Camera::Update(const float deltaTime)
         m_up   = m_transform.m_worldMat[1];
         m_look = m_transform.m_worldMat[2];
     }
+
+    m_viewMat = glm::inverse(m_transform.m_worldMat);
+    m_frustum.Set(m_viewMat, m_projMat);
 }
 
 void Camera::OnNotice(EventList event, void* entity) {}

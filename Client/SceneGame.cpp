@@ -12,7 +12,7 @@ date: 2024-12-24
 using namespace HBSoft;
 
 SceneGame::SceneGame()
-    : m_tree(5)
+    : m_tree(3)
 {
     cameraTest = std::make_shared<Camera>(glm::radians(90.f), 0.1f, 10000.f);
     lightTest  = std::make_shared<DirectionalLight>(vec3(-1.f, -1.f, -1.f), 1.f);
@@ -33,7 +33,7 @@ SceneGame::SceneGame()
     mapTest->SetCamera(cameraTest);
     mapTest->SetLight(lightTest);
 
-    m_tree.SetHeightMapObj(mapTest);
+    m_tree.SetData(mapTest, cameraTest);
 
     m_grid.SetCamera(cameraTest);
     m_staticObjs.LoadFromFolder("../res/Mesh/StaticObj", cameraTest, lightTest);

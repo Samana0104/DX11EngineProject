@@ -42,18 +42,25 @@ namespace HBSoft
         }
     };
 
-    // struct OBB
-    //{
-    //     vec3  center;
-    //     vec3  axis[3];
-    //     float distance[3];
-    // };
+    struct OBB
+    {
+        vec3  center;
+        vec3  axis[3];
+        float distance[3];
+    };
 
-    // struct Box
-    //{
-    //     AABB aabb;
-    //     OBB  obb;
-    // };
+    struct Box
+    {
+        AABB aabb;
+        OBB  obb;
+    };
+
+    struct Plane
+    {
+        float a, b, c, d;
+        void  Set(vec3 v0, vec3 v1, vec3 v2);
+        void  Set(vec3 v0, vec3 vNormal);
+    };
 
     struct Sphere
     {

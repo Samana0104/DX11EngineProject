@@ -213,8 +213,6 @@
     <ClCompile Include="Object\3D\LineObj.cpp">
       <Filter>Object\3D</Filter>
     </ClCompile>
-    <ClCompile Include="Frustum.cpp" />
-    <ClCompile Include="QuestGUI.cpp" />
     <ClCompile Include="Asset\Mesh\Grid.cpp">
       <Filter>Asset\Mesh</Filter>
     </ClCompile>
@@ -223,6 +221,15 @@
     </ClCompile>
     <ClCompile Include="Object\CollisionComponent.cpp">
       <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Collision.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Frustum.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\QuestGUI.cpp">
+      <Filter>Gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -406,8 +413,6 @@
     <ClInclude Include="Object\3D\LineObj.h">
       <Filter>Object\3D</Filter>
     </ClInclude>
-    <ClInclude Include="Frustum.h" />
-    <ClInclude Include="QuestGUI.h" />
     <ClInclude Include="Asset\Mesh\Grid.h">
       <Filter>Asset\Mesh</Filter>
     </ClInclude>
@@ -416,6 +421,12 @@
     </ClInclude>
     <ClInclude Include="Object\CollisionComponent.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Frustum.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\QuestGUI.h">
+      <Filter>Gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
