@@ -76,6 +76,7 @@
     <ClCompile Include="Object\3D\Transform3D.cpp" />
     <ClCompile Include="Object\Camera\Camera.cpp" />
     <ClCompile Include="Object\Camera\Frustum.cpp" />
+    <ClCompile Include="Object\Camera\GooseCamera.cpp" />
     <ClCompile Include="Object\Collision.cpp" />
     <ClCompile Include="Object\CollisionComponent.cpp" />
     <ClCompile Include="Object\EasyRender.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="Object\3D\Transform3D.h" />
     <ClInclude Include="Object\Camera\Camera.h" />
     <ClInclude Include="Object\Camera\Frustum.h" />
+    <ClInclude Include="Object\Camera\GooseCamera.h" />
     <ClInclude Include="Object\Collision.h" />
     <ClInclude Include="Object\CollisionComponent.h" />
     <ClInclude Include="Object\EasyRender.h" />

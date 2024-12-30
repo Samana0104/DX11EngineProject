@@ -12,7 +12,7 @@ date: 2024-12-12
 #include "Core.h"
 #include "Mesh/Grid.h"
 
-#define GRID_OFFSET (20)  // 음수 좌표를 보정하기 위한 오프셋
+  // 음수 좌표를 보정하기 위한 오프셋
 #define GRID_SIZE   (40)  // (-50 ~ 50 범위 지원)
 
 #define INFINITY_DISTANCE (9999)
@@ -58,6 +58,7 @@ namespace HBSoft
                                                  const std::shared_ptr<Node>&                     goal,
                                                  std::vector<std::vector<std::shared_ptr<Node>>>& grid);
 
+        int GRID_OFFSET = 20;
         /*  void aStarMain();*/
 
 

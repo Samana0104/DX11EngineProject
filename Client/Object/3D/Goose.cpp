@@ -377,7 +377,6 @@ void Goose::Update(float deltaTime)
     {
         isUpPressed = false;
     }
-    float height = m_mapObj->GetHeight(m_transform.m_pos);
 
     m_transform.AddLocation(moveDirection * deltaTime * m_speed1);
 
@@ -385,9 +384,6 @@ void Goose::Update(float deltaTime)
     {
         m_transform.AddLocation(moveDirection * deltaTime * m_speed1 * 1.5f);
     }
-
-    m_transform.SetLocation({m_transform.m_pos.x, height, m_transform.m_pos.z});
-
 
     anim = m_gooseAnis[m_animstate]->GetAnimationMatrix(currentFrame);
     UpdateDefaultCB();

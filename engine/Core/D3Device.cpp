@@ -16,8 +16,7 @@ D3Device::D3Device(const std::shared_ptr<Window> window)
 #ifdef _DEBUG
     assert(CreateDevice());
 #else
-    if (!CreateDevice())
-        MessageBoxA(nullptr, "Error", "device not created", MB_OK);
+    CreateDevice();
 #endif
     EventHandler::GetInstance().AddEvent(EventList::WINDOW_RESIZE, this);
 }
@@ -50,28 +49,52 @@ bool D3Device::CreateIndexBuffer(std::vector<UINT>& indices, ComPtr<ID3D11Buffer
 bool D3Device::CreateDevice()
 {
     if (!CreateDeviceAndSwapChain())
+    {
+        MessageBoxA(nullptr, "Error", "Device Error", MB_OK);
         return false;
+    }
 
     if (!CreateRenderTarget())
+    {
+        MessageBoxA(nullptr, "Error", "RT", MB_OK);
         return false;
+    }
 
     if (!Create2DRenderTarget())
+    {
+        MessageBoxA(nullptr, "Error", "2dRT", MB_OK);
         return false;
+    }
 
     if (!CreateSamplerState())
+    {
+        MessageBoxA(nullptr, "Error", "SS", MB_OK);
         return false;
+    }
 
     if (!CreateDepthStencilState())
+    {
+        MessageBoxA(nullptr, "Error", "DSS", MB_OK);
         return false;
+    }
 
     if (!CreateDepthStencilView())
+    {
+        MessageBoxA(nullptr, "Error", "DSV", MB_OK);
         return false;
+    }
 
     if (!CreateRSState())
+    {
+        MessageBoxA(nullptr, "Error", "RSS", MB_OK);
         return false;
+    }
 
     if (!CreateBlendingState())
+    {
+        MessageBoxA(nullptr, "Error", "BS", MB_OK);
         return false;
+    }
 
     CreateViewport();
     return true;

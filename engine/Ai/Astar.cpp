@@ -4,7 +4,7 @@ using namespace HBSoft;
 
 float Astar::heuristic(const std::shared_ptr<Node>& a, const std::shared_ptr<Node>& b)
 {
-    return std::abs(a->x - b->x) + std::abs(a->y - b->y);  // Manhattan distance
+    return std::abs(abs(a->x) - abs(b->x)) + std::abs(abs(a->y) - abs(b->y));  // Manhattan distance
 }
 
 float Astar::distance(const std::shared_ptr<Node>& a, const std::shared_ptr<Node>& b)
@@ -28,9 +28,9 @@ const std::shared_ptr<Node>& node, std::vector<std::vector<std::shared_ptr<Node>
         int nx = node->x + dx[i];
         int ny = node->y + dy[i];
 
-        if (nx >= 0 && nx < cols && ny >= 0 && ny < rows)
+        if (nx >= -20 && ny >= -20 && nx < cols - 20 && ny < rows - 20)
         {
-            auto neighbor = grid[nx][ny];
+            auto neighbor = grid[nx + 20][ny + 20];
             if (!neighbor->isObstacle)
             {  // 장애물이 아닌 경우만 추가
                 neighbors.push_back(neighbor);
@@ -87,48 +87,3 @@ std::vector<std::shared_ptr<Node>> Astar::aStar(const std::shared_ptr<Node>&    
 
     return {};
 }
-
-// void Astar::aStarMain()
-//{
-//     //int                                             rows = 5;
-//     //int                                             cols = 5;
-//     //std::vector<std::vector<std::shared_ptr<Node>>> grid(rows,
-//     std::vector<std::shared_ptr<Node>>(cols));
-//
-//     //// 2D 그리드 초기화
-//     //for (int y = 0; y < rows; ++y)
-//     //{
-//     //    for (int x = 0; x < cols; ++x)
-//     //    {
-//     //        grid[y][x] = std::make_shared<Node>(x, y);  // make_shared 사용
-//     //    }
-//     //}
-//
-//     //// 장애물 설정 (예: 좌표 (2,2), (2,3), (3,2)을 장애물로 설정)
-//     //grid[2][2]->isObstacle = true;
-//     //grid[2][3]->isObstacle = true;
-//     //grid[3][2]->isObstacle = true;
-//
-//     // 시작점과 목표점 설정
-//     //auto start = grid[(int)(m_gardener1.GetmPos().x / 1.536f)]
-//     //                 [(int)(m_gardener1.GetmPos().z / 1.536f)];  // 가드너 움직이는 거에 따른 좌표
-//     //auto goal = grid[(int)(m_goose1.GetmPos().x / 1.536f)]
-//     //                [(int)(m_goose1.GetmPos().z / 1.536f)];  // 거위 움직이는 거에 따른 좌표
-//
-//     //// A* 알고리즘 실행
-//     //auto path = aStar(start, goal, grid);
-//     // 결과 출력
-//     if (!path.empty())
-//     {
-//         std::cout << "Path found:\n";
-//         for (const auto& node : path)
-//         {
-//             std::cout << "(" << node->x << ", " << node->y << ") ";
-//         }
-//         std::cout << std::endl;
-//     }
-//     else
-//     {
-//         std::cout << "No path found." << std::endl;
-//     }
-// }
