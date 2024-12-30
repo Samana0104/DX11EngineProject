@@ -29,6 +29,7 @@ namespace HBSoft
         ConcretePath,
         Concrete22,
         Bridge,
+        DirtRightLow1,
 
     };
 
@@ -63,7 +64,7 @@ namespace HBSoft
         void         UpdateLocation(const float deltaTime, float, float, float);
         virtual void Render() override;
         virtual void Init();
-        void         Init(const std::wstring&);
+        void         Init(const std::string&);
         virtual void Release();
     };
 }  // namespace HBSoft
