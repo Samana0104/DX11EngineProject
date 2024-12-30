@@ -60,11 +60,11 @@ namespace HBSoft
         void        SetTransType(TransformType);
         Transform3D GetTransform();
 
+        virtual void Init();
+        void         Init(const std::string&);
         virtual void Update(const float deltaTime) override;
         void         UpdateLocation(const float deltaTime, float, float, float);
         virtual void Render() override;
-        virtual void Init();
-        void         Init(const std::string&);
         virtual void Release();
     };
 }  // namespace HBSoft

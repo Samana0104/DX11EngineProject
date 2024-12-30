@@ -34,6 +34,54 @@ Transform3D HBSoft::Static3DObj::GetTransform()
     return m_transform;
 }
 
+void Static3DObj::Init() {}
+
+void Static3DObj::Init(const std::string& key)
+{
+    m_easyRender.SetVSShader(L"BasicVS.hlsl");
+    m_easyRender.SetPSShader(L"ColorPS.hlsl");
+    m_easyRender.SetTexture(nullptr);
+
+    if (key.find('#') == 0)
+        SetTransType(TransformType::CMTrans);
+    else if (key.find('@') == 0)
+        SetTransType(TransformType::Test);
+    else if (key.find('_') == 0)
+        SetTransType(TransformType::UnityTrans);
+    else if (key.find("StoneHouses") == 0)
+        SetTransType(TransformType::FrontHouse);
+    else if (key.find("store") == 0)
+        SetTransType(TransformType::Store);
+    else if (key.find("bollard") == 0)
+        SetTransType(TransformType::Bollard);
+    else if (key.find("parkcube") == 0)
+        SetTransType(TransformType::Parkcube);
+    else if (key.find("bench") == 0)
+        SetTransType(TransformType::Bench);
+    else if (key.find("retainer") == 0)
+        SetTransType(TransformType::PondRetainers);
+    else if (key.find('!') == 0)
+        SetTransType(TransformType::ConcretePath);
+    else if (key.find("singleconcreteblock22") == 0)
+        SetTransType(TransformType::Concrete22);
+    else if (key.find("bridge") == 0)
+        SetTransType(TransformType::Bridge);
+    else if (key == "PanterDirltRightLow1.hbs")
+        SetTransType(TransformType::DirtRightLow1);
+    else
+        SetTransType(TransformType::GooseGameTrans);
+
+    if (key == "_picnicrug.hbs")
+    {
+        m_easyRender.SetPSShader(L"BasicPS.hlsl");
+        m_picnicRugTexture = HASSET->m_textures[L"PicnicRugPattern.png"];
+        m_easyRender.SetTexture(m_picnicRugTexture);
+    }
+
+    m_mesh = HASSET->m_meshes[std::wstring().assign(key.begin(), key.end())];
+    m_easyRender.SetMesh(m_mesh);
+}
+
 void Static3DObj::Update(const float deltaTime)
 {
     if (m_transType == TransformType::GooseGameTrans)
@@ -120,7 +168,6 @@ void Static3DObj::Update(const float deltaTime)
         m_transform.SetRotation(glm::vec3(rotX, rotY, rotZ));
         m_transform.SetLocation(glm::vec3(x, y, z));
         m_transform.SetScale(scale);
-       // m_transform.SetLocation(glm::vec3(-7, 0.5, -12));
     }
 
     UpdateDefaultCB();
@@ -136,54 +183,6 @@ void HBSoft::Static3DObj::UpdateLocation(const float deltaTime, float x, float y
 void Static3DObj::Render()
 {
     m_easyRender.Draw();
-}
-
-void Static3DObj::Init() {}
-
-void Static3DObj::Init(const std::string& key)
-{
-    m_easyRender.SetVSShader(L"BasicVS.hlsl");
-    m_easyRender.SetPSShader(L"ColorPS.hlsl");
-    m_easyRender.SetTexture(nullptr);
-
-    if (key.find('#') == 0)
-        SetTransType(TransformType::CMTrans);
-    else if (key.find('@') == 0)
-        SetTransType(TransformType::Test);
-    else if (key.find('_') == 0)
-        SetTransType(TransformType::UnityTrans);
-    else if (key.find("StoneHouses") == 0)
-        SetTransType(TransformType::FrontHouse);
-    else if (key.find("store") == 0)
-        SetTransType(TransformType::Store);
-    else if (key.find("bollard") == 0)
-        SetTransType(TransformType::Bollard);
-    else if (key.find("parkcube") == 0)
-        SetTransType(TransformType::Parkcube);
-    else if (key.find("bench") == 0)
-        SetTransType(TransformType::Bench);
-    else if (key.find("retainer") == 0)
-        SetTransType(TransformType::PondRetainers);
-    else if (key.find('!') == 0)
-        SetTransType(TransformType::ConcretePath);
-    else if (key.find("singleconcreteblock22") == 0)
-        SetTransType(TransformType::Concrete22);
-    else if (key.find("bridge") == 0)
-        SetTransType(TransformType::Bridge);
-    else if (key == "PanterDirltRightLow1.hbs")
-        SetTransType(TransformType::DirtRightLow1);
-    else
-        SetTransType(TransformType::GooseGameTrans);
-
-    if (key == "_picnicrug.hbs")
-    {
-        m_easyRender.SetPSShader(L"BasicPS.hlsl");
-        m_picnicRugTexture = HASSET->m_textures[L"PicnicRugPattern.png"];
-        m_easyRender.SetTexture(m_picnicRugTexture);
-    }
-
-    m_mesh = HASSET->m_meshes[std::wstring().assign(key.begin(), key.end())];
-    m_easyRender.SetMesh(m_mesh);
 }
 
 void Static3DObj::Release() {}
