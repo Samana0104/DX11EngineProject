@@ -10,7 +10,7 @@ date: 2024-12-11
 #pragma once
 #include "Core.h"
 #include "3D/Object3D.h"
-#include "Mesh/Grid.h"
+#include "GridMap.h"
 
 namespace HBSoft
 {

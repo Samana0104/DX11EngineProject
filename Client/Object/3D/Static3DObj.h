@@ -9,7 +9,6 @@ date: 2024-12-23
 
 #include "3D/Object3D.h"
 #include "3D/Transform3D.h"
-#include "CollisionComponent.h"
 
 namespace HBSoft
 {

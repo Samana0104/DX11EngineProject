@@ -5,7 +5,6 @@
 #include "3D/Transform3D.h"
 #include "3D/HeightMapObj.h"
 #include "Sound/HSound.h"
-#include "CollisionComponent.h"
 
 namespace HBSoft
 {
@@ -44,9 +43,6 @@ namespace HBSoft
 
         int tempStartFrame = 0;
         int tempLastFrame  = 0;
-
-    public:
-        CollisionComponent m_component;
 
     public:
         Goose();

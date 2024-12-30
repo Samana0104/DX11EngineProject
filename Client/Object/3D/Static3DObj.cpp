@@ -12,7 +12,6 @@ date: 2024-12-23
 using namespace HBSoft;
 
 Static3DObj::Static3DObj()
-    : m_component(m_transform)
 {
     m_easyRender.SetVSShader(L"BasicVS.hlsl");
     m_easyRender.SetPSShader(L"ColorPS.hlsl");
@@ -130,7 +129,6 @@ void HBSoft::Static3DObj::UpdateLocation(const float deltaTime, float x, float y
 
 void Static3DObj::Render()
 {
-    HDEVICE->m_context->PSSetShaderResources(1, 1, m_cubeTex->GetSRV().GetAddressOf());
     m_easyRender.Draw();
 }
 
@@ -140,7 +138,6 @@ void Static3DObj::Init(const std::wstring& key)
 {
     m_mesh = HASSET->m_meshes[key];
 
-    m_cubeTex = HASSET->m_textures[L"cubeTest.dds"];
     m_easyRender.SetVSShader(L"BasicVS.hlsl");
     m_easyRender.SetPSShader(L"ColorPS.hlsl");
     m_easyRender.SetTexture(nullptr);
