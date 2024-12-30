@@ -9,7 +9,8 @@ date: 2024-12-23
 #pragma once
 #include "pch.h"
 
-#include "Camera/Camera.h"
+#include "Camera/DebugCamera.h"
+#include "Camera/GooseCamera.h"
 #include "3D/LineObj.h"
 #include "3D/CubeMapObj.h"
 #include "3D/QuadTree.h"
@@ -35,7 +36,11 @@ namespace HBSoft
         GridMap                    m_grid;
         HBSAutoLoader<Static3DObj> m_staticObjs;
 
-        std::shared_ptr<Camera>           cameraTest;
+#ifdef _DEBUG
+        std::shared_ptr<DebugCamera> cameraTest;
+#else
+        std::shared_ptr<GooseCamera> cameraTest;
+#endif
         std::shared_ptr<DirectionalLight> lightTest;
         std::shared_ptr<HeightMapObj>     mapTest;
         std::shared_ptr<LineObj>          m_line;
@@ -44,7 +49,6 @@ namespace HBSoft
 
     public:
         SceneGame();
-
 
         virtual void Update(float deltaTime) override;
         virtual void Render() override;

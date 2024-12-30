@@ -31,7 +31,7 @@ namespace HBSoft
         std::shared_ptr<HSound>                     m_sound;
         std::vector<std::shared_ptr<AnimationClip>> m_gooseAnis;
 
-        float             m_speed1 = 0.7f;
+        float             m_speed1 = 1.f;
         std::vector<mat4> anim;
 
         GooseState                    m_animstate;

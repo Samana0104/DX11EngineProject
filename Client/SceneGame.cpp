@@ -14,19 +14,28 @@ using namespace HBSoft;
 SceneGame::SceneGame()
     : m_tree(2)
 {
-    cameraTest = std::make_shared<Camera>();
-    lightTest  = std::make_shared<DirectionalLight>(vec3(-1.f, -1.f, -1.f), 1.f);
-    mapTest    = std::make_shared<HeightMapObj>();
-    m_line     = std::make_shared<LineObj>();
+#ifdef _DEBUG
+    cameraTest = std::make_shared<DebugCamera>();
+#else
+    cameraTest = std::make_shared<GooseCamera>();
+#endif
 
-    cameraTest->CreatePerspective(glm::radians(90.f), 0.5f, 10000.f);
-    cameraTest->LookAt({0.f, 3.f, -1.5f}, {0.f, 0.f, 0.f}, {0.f, 1.f, 0.f});
+    lightTest = std::make_shared<DirectionalLight>(vec3(-1.f, -1.f, -1.f), 1.f);
+    mapTest   = std::make_shared<HeightMapObj>();
+    m_line    = std::make_shared<LineObj>();
+
+    cameraTest->SetPerspective(glm::radians(90.f), 0.5f, 10000.f);
+    cameraTest->LookAt({m_goose.m_transform.m_pos[0],
+                        m_goose.m_transform.m_pos[1] + 2.0f,
+                        m_goose.m_transform.m_pos[2] - 0.9f},
+                       m_goose.m_transform.m_pos,
+                       {0.f, 0.f, 1.f});
 
     m_line->SetCamera(cameraTest);
     cube.SetCamera(cameraTest);
 
-    m_gardener.SetCamera(cameraTest);
-    m_gardener.SetLight(lightTest);
+    // m_gardener.SetCamera(cameraTest);
+    // m_gardener.SetLight(lightTest);
 
     m_goose.SetCamera(cameraTest);
     m_goose.SetHeightMap(mapTest);
@@ -54,7 +63,7 @@ void SceneGame::Update(float deltaTime)
     cube.Update(deltaTime);
     m_escButton.Update(deltaTime);
     m_grid.Update(deltaTime);
-    m_gardener.Update(deltaTime);
+    // m_gardener.Update(deltaTime);
     m_goose.Update(deltaTime);
     m_tree.Update(deltaTime);
 
@@ -84,7 +93,7 @@ void SceneGame::Render()
     m_line->Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
 #endif
 
-    m_gardener.Render();
+    // m_gardener.Render();
     m_goose.Render();
     m_grid.Render();
 

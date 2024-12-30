@@ -48,11 +48,13 @@ void Gardener::Update(const float deltaTime)
     static float currentFrame = 0.f;
     static int   startFrame   = 0;
     static int   lastFrame    = 0;
-    static float speed        = 30.f;
+    static float speed        = 14.f;
     // static int   selectAnimation = 0;
 
-
+#ifdef _DEBUG
     ImGui::SliderFloat("Speed", &speed, 0, 30.f);
+    ImGui::SliderFloat("Gardener speed", &m_speed2, 0.f, 50.f);
+#endif
 
     currentFrame += deltaTime * speed;
     startFrame    = m_gardenerAni[0]->GetStartFrame();
@@ -63,7 +65,6 @@ void Gardener::Update(const float deltaTime)
 
     anim = m_gardenerAni[0]->GetAnimationMatrix(currentFrame);
 
-    ImGui::SliderFloat("Gardener speed", &m_speed2, 0.f, 50.f);
 
     static bool isDownPressed  = false;  // VK_DOWN 상태 추적
     static bool isUpPressed    = false;  // VK_UP 상태 추적
@@ -263,9 +264,6 @@ void Gardener::Update(const float deltaTime)
         }
         else
         {
-
-            std::cout << path[idx + 1]->GetLocationX() << " " << path[idx + 1]->GetLocationY()
-                      << std::endl;
             if (path[idx]->GetLocationX() - path[idx + 1]->GetLocationX() > 0 &&
                 path[idx]->GetLocationY() - path[idx + 1]->GetLocationY() > 0)
             {

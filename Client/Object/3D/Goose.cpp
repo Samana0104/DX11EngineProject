@@ -24,7 +24,7 @@ Goose::Goose()
 
     anim.resize(m_mesh->m_born.bornIndex.size());
 
-    m_transform.SetLocation({0.0f, 0.6f, -5.0f});
+    m_transform.SetLocation({8.0f, 0.6f, 4.0f});
     m_transform.SetScale({0.07f, 0.07f, 0.07f});
     m_transform.SetRotation(vec3(1.0f, 0.f, 0.f), 90.f);
 
@@ -382,10 +382,14 @@ void Goose::Update(float deltaTime)
 
     if (HINPUT->IsKeyPressed(16))  // SHIFTŰ
     {
-        m_transform.AddLocation(moveDirection * deltaTime * m_speed1 * 1.5f);
+        m_transform.AddLocation(moveDirection * deltaTime * m_speed1 * 0.3f);
     }
 
     anim = m_gooseAnis[m_animstate]->GetAnimationMatrix(currentFrame);
+
+#ifndef _DEBUG
+    m_camera->Move({m_transform.m_pos[0], m_transform.m_pos[1] + 3.f, m_transform.m_pos[2] - 0.9f});
+#endif
     UpdateDefaultCB();
     m_easyRender.UpdateVSCB((void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
 }
