@@ -52,7 +52,6 @@ namespace HBSoft
     {
     private:
         std::shared_ptr<HeightMapObj> m_mapObj;
-        std::shared_ptr<Camera>       m_camera;
         std::vector<QNode*>           m_renderNode;
 
         QNode* m_rootNode;
@@ -71,7 +70,6 @@ namespace HBSoft
         QNode* CreateNode(UINT depth, UINT TopLeft, UINT TopRight, UINT BottomLeft, UINT BottomRight);
 
         void SetMapObj(std::shared_ptr<HeightMapObj> heightMapObj);
-        void SetCamera(std::shared_ptr<Camera> camera);
 
         std::shared_ptr<HeightMapObj> GetHeightMapObj();
 

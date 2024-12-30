@@ -123,7 +123,7 @@ void QuadTree::FindNode(QNode* node)
     if (node == nullptr)
         return;
 
-    if (m_camera->m_frustum.IsFrustumInBox(node->box))
+    if (m_mapObj->m_camera->m_frustum.IsFrustumInBox(node->box))
     {
         if (node->isLeaf == true)
             m_renderNode.push_back(node);
@@ -179,11 +179,6 @@ void QuadTree::SetMapObj(std::shared_ptr<HeightMapObj> heightMapObj)
                             (m_mapObj->m_mapDesc.numRows - 1) * m_mapObj->m_mapDesc.numCols,
                             m_mapObj->m_mapDesc.numRows * m_mapObj->m_mapDesc.numCols - 1);
     BuildTree(m_rootNode);
-}
-
-void QuadTree::SetCamera(std::shared_ptr<Camera> camera)
-{
-    m_camera = camera;
 }
 
 std::shared_ptr<HeightMapObj> QuadTree::GetHeightMapObj()
