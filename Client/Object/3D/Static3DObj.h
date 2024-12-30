@@ -29,7 +29,6 @@ namespace HBSoft
         ConcretePath,
         Concrete22,
         Bridge,
-        Picnicrug,
 
     };
 

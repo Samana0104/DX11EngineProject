@@ -68,8 +68,6 @@ namespace HBSoft
                             HBSContainer.back().SetTransType(TransformType::Concrete22);
                         else if (fileName.find("bridge") == 0)
                             HBSContainer.back().SetTransType(TransformType::Bridge);
-                        else if (fileName.find("picnicruggg") == 0)
-                            HBSContainer.back().SetTransType(TransformType::Picnicrug);
                         else
                             HBSContainer.back().SetTransType(TransformType::GooseGameTrans);
                     }

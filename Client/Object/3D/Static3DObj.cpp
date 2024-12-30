@@ -101,12 +101,6 @@ void Static3DObj::Update(const float deltaTime)
         m_transform.SetLocation(glm::vec3(-4.86, 0.26, -8.42));
         m_transform.SetScale(0.86);
     }
-    else if (m_transType == TransformType::Picnicrug)
-    {
-       /* m_transform.SetRotation(glm::vec3(1.57, 0.21, 0));
-        m_transform.SetLocation(glm::vec3(0.37, 0.2, -11.59));
-        m_transform.SetScale(0.85);*/
-    }
 
     else if (m_transType == TransformType::Test)
     {
