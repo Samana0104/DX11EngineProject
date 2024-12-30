@@ -15,10 +15,6 @@ date: 2024-11-29
 
 namespace HBSoft
 {
-    class Camera;
-
-    class AABBCollider;
-
     class Object3D : public Object
     {
     protected:
