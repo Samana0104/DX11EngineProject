@@ -20,8 +20,6 @@ namespace HBSoft
 
     public:
         void Set(const mat4& viewMat, const mat4& projMat);
-
-    public:
         bool IsFrustumInBox(const Box& box);
     };
 }  // namespace HBSoft
