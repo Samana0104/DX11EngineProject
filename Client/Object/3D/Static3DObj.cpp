@@ -68,6 +68,14 @@ void Static3DObj::Init(const std::string& key)
         SetTransType(TransformType::Bridge);
     else if (key == "PanterDirltRightLow1.hbs")
         SetTransType(TransformType::DirtRightLow1);
+    else if (key == "cabbage0.hbs")
+        SetTransType(TransformType::Cabbage0);
+    else if (key == "cabbage1.hbs")
+        SetTransType(TransformType::Cabbage1);
+    else if (key == "cabbage2.hbs")
+        SetTransType(TransformType::Cabbage2);
+    else if (key == "cabbage3.hbs")
+        SetTransType(TransformType::Cabbage3);
     else
         SetTransType(TransformType::GooseGameTrans);
 
@@ -154,6 +162,30 @@ void Static3DObj::Update(const float deltaTime)
         m_transform.SetRotation(glm::vec3(1.57, 0, 0));
         m_transform.SetLocation(glm::vec3(-6.7f, 0.0f, -12.0f));
         m_transform.SetScale(glm::vec3(1.8, 1, 1));
+    }
+    else if (m_transType == TransformType::Cabbage0)
+    {
+        m_transform.SetRotation(glm::vec3(0, 0, 0));
+        m_transform.SetLocation(glm::vec3(5.09f, 1.03f, -1.3f));
+        m_transform.SetScale(0.22f);
+    }
+    else if (m_transType == TransformType::Cabbage1)
+    {
+        m_transform.SetRotation(glm::vec3(0, 0, 0));
+        m_transform.SetLocation(glm::vec3(4.570f, 1.03f, -0.600f));
+        m_transform.SetScale(0.22f);
+    }
+    else if (m_transType == TransformType::Cabbage2)
+    {
+        m_transform.SetRotation(glm::vec3(0, 0, 0));
+        m_transform.SetLocation(glm::vec3(3.010f, 1.03f, -0.630f));
+        m_transform.SetScale(0.22f);
+    }
+    else if (m_transType == TransformType::Cabbage3)
+    {
+        m_transform.SetRotation(glm::vec3(0, 0, 0));
+        m_transform.SetLocation(glm::vec3(3.270f, 1.03f, -1.630f));
+        m_transform.SetScale(0.22f);
     }
 
     else if (m_transType == TransformType::Test)

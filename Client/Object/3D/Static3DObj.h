@@ -30,6 +30,10 @@ namespace HBSoft
         Concrete22,
         Bridge,
         DirtRightLow1,
+        Cabbage0,
+        Cabbage1,
+        Cabbage2,
+        Cabbage3,
 
     };
 
