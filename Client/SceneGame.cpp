@@ -34,8 +34,8 @@ SceneGame::SceneGame()
     m_line->SetCamera(cameraTest);
     cube.SetCamera(cameraTest);
 
-    m_gardener.SetCamera(cameraTest);
-    m_gardener.SetLight(lightTest);
+    // m_gardener.SetCamera(cameraTest);
+    // m_gardener.SetLight(lightTest);
 
     m_goose.SetCamera(cameraTest);
     m_goose.SetHeightMap(mapTest);
