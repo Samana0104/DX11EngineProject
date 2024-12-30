@@ -48,7 +48,29 @@ namespace HBSoft
                         HBSContainer.back().SetCamera(camera);
                         HBSContainer.back().SetLight(light);
                         if (fileName.find('#') == 0)
+                            HBSContainer.back().SetTransType(TransformType::CMTrans);
+                        else if (fileName.find('@') == 0)
+                            HBSContainer.back().SetTransType(TransformType::Test);
+                        else if (fileName.find('_') == 0)
                             HBSContainer.back().SetTransType(TransformType::UnityTrans);
+                        else if (fileName.find("StoneHouses") == 0)
+                            HBSContainer.back().SetTransType(TransformType::FrontHouse);
+                        else if (fileName.find("store") == 0)
+                            HBSContainer.back().SetTransType(TransformType::Store);
+                        else if (fileName.find("bollard") == 0)
+                            HBSContainer.back().SetTransType(TransformType::Bollard);
+                        else if (fileName.find("parkcube") == 0)
+                            HBSContainer.back().SetTransType(TransformType::Parkcube);
+                        else if (fileName.find("bench") == 0)
+                            HBSContainer.back().SetTransType(TransformType::Bench);
+                        else if (fileName.find("retainer") == 0)
+                            HBSContainer.back().SetTransType(TransformType::PondRetainers);
+                        else if (fileName.find('!') == 0)
+                            HBSContainer.back().SetTransType(TransformType::ConcretePath);
+                        else if (fileName.find("singleconcreteblock22") == 0)
+                            HBSContainer.back().SetTransType(TransformType::Concrete22);
+                        else if (fileName.find("bridge") == 0)
+                            HBSContainer.back().SetTransType(TransformType::Bridge);
                         else
                             HBSContainer.back().SetTransType(TransformType::GooseGameTrans);
                     }
