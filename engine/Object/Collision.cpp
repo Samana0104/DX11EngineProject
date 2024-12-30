@@ -1,3 +1,10 @@
+/*
+author : 변한빛
+description : Collision 모음 소스파일
+
+version: 1.0.0
+date: 2024-12-29
+*/
 #include "pch.h"
 #include "Collision.h"
 using namespace HBSoft;

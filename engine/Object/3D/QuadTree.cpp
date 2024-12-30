@@ -170,16 +170,20 @@ bool QuadTree::SubDivide(QNode* node)
     }
 }
 
-void QuadTree::SetData(std::shared_ptr<HeightMapObj> heightMapObj, std::shared_ptr<Camera> camera)
+void QuadTree::SetMapObj(std::shared_ptr<HeightMapObj> heightMapObj)
 {
     m_mapObj   = heightMapObj;
-    m_camera   = camera;
     m_rootNode = CreateNode(0,
                             0,
                             m_mapObj->m_mapDesc.numCols - 1,
                             (m_mapObj->m_mapDesc.numRows - 1) * m_mapObj->m_mapDesc.numCols,
                             m_mapObj->m_mapDesc.numRows * m_mapObj->m_mapDesc.numCols - 1);
     BuildTree(m_rootNode);
+}
+
+void QuadTree::SetCamera(std::shared_ptr<Camera> camera)
+{
+    m_camera = camera;
 }
 
 std::shared_ptr<HeightMapObj> QuadTree::GetHeightMapObj()

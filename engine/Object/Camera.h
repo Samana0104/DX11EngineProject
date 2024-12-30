@@ -47,12 +47,15 @@ namespace HBSoft
             param : fov -> fov angle(radian) | projNear -> 최소 거리 | projFar -> 최대 거리
             description : fov값 라디안임 주의
         */
-        Camera(float fov, float projNear, float projFar);
+        Camera();
         ~Camera();
 
         const mat4 GetViewMat() const;
         const mat4 GetProjMat() const;
         const vec3 GetEyePos() const;
+
+        void CreatePerspective(float fov, float projNear, float projFar);
+        void CreateOrtho(float projNear, float projFar);
 
         void ZoomIn(const float scale);
         void ZoomOut(const float scale);

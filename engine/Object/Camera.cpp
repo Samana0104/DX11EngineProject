@@ -10,18 +10,8 @@ date: 2024-11-29
 #include "Camera.h"
 using namespace HBSoft;
 
-Camera::Camera(float fov, float projNear, float projFar)
-    : m_fov(fov), m_projNear(projNear), m_projFar(projFar)
+Camera::Camera()
 {
-    HPoint windowSize = HWINDOW->GetWindowSize();
-    // z 0 ~ 1 원근 행렬을 만들어주는 함수
-    m_projMat = glm::perspectiveFovLH_ZO(fov, windowSize.x, windowSize.y, projNear, projFar);
-    m_viewMat = mat4(1.f);
-
-    m_side = vec3(1.f, 0.f, 0.f);
-    m_up   = vec3(0.f, 1.f, 0.f);
-    m_look = vec3(0.f, 0.f, 1.f);
-
     EventHandler::GetInstance().AddEvent(EventList::DEVICE_CHANGE, this);
 }
 
@@ -43,6 +33,41 @@ const mat4 Camera::GetProjMat() const
 const vec3 Camera::GetEyePos() const
 {
     return m_transform.m_pos;
+}
+
+void Camera::CreatePerspective(float fov, float projNear, float projFar)
+{
+    m_fov      = fov;
+    m_projNear = projNear;
+    m_projFar  = projFar;
+
+    HPoint windowSize = HWINDOW->GetWindowSize();
+    // z 0 ~ 1 원근 행렬을 만들어주는 함수
+    m_projMat = glm::perspectiveFovLH_ZO(fov, windowSize.x, windowSize.y, projNear, projFar);
+    m_viewMat = mat4(1.f);
+
+    m_side = vec3(1.f, 0.f, 0.f);
+    m_up   = vec3(0.f, 1.f, 0.f);
+    m_look = vec3(0.f, 0.f, 1.f);
+}
+
+void Camera::CreateOrtho(float projNear, float projFar)
+{
+    HPoint windowSize = HWINDOW->GetWindowSize();
+    m_projNear        = projNear;
+    m_projFar         = projFar;
+
+    m_projMat = glm::orthoLH_ZO(-windowSize.x * 0.5f,
+                                windowSize.x * 0.5f,
+                                -windowSize.y * 0.5f,
+                                windowSize.y * 0.5f,
+                                projNear,
+                                projFar);
+
+    m_viewMat = mat4(1.f);
+    m_side    = vec3(1.f, 0.f, 0.f);
+    m_up      = vec3(0.f, 1.f, 0.f);
+    m_look    = vec3(0.f, 0.f, 1.f);
 }
 
 void Camera::ZoomIn(const float scale)

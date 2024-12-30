@@ -1,3 +1,10 @@
+/*
+author : 변한빛
+description : view frustum culling을 위한 frustum클래스 헤더파일
+
+version: 1.0.0
+date: 2024-12-29
+*/
 #pragma once
 
 #include "pch.h"
