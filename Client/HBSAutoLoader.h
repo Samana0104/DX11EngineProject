@@ -45,9 +45,11 @@ namespace HBSoft
                         HBSContainer.back().SetCamera(camera);
                         HBSContainer.back().SetLight(light);
                         if (fileName.find('#') == 0)
-                            HBSContainer.back().SetTransType(TransformType::UnityTrans);
+                            HBSContainer.back().SetTransType(TransformType::CMTrans);
                         else if (fileName.find('@') == 0)
                             HBSContainer.back().SetTransType(TransformType::Test);
+                        else if (fileName.find('_') == 0)
+                            HBSContainer.back().SetTransType(TransformType::UnityTrans);
                         else if (fileName.find("StoneHouses") == 0)
                             HBSContainer.back().SetTransType(TransformType::FrontHouse);
                         else if (fileName.find("store") == 0)
@@ -62,6 +64,10 @@ namespace HBSoft
                             HBSContainer.back().SetTransType(TransformType::PondRetainers);
                         else if (fileName.find('!') == 0)
                             HBSContainer.back().SetTransType(TransformType::ConcretePath);
+                        else if (fileName.find("singleconcreteblock22") == 0)
+                            HBSContainer.back().SetTransType(TransformType::Concrete22);
+                        else if (fileName.find("picnicruggg") == 0)
+                            HBSContainer.back().SetTransType(TransformType::Picnicrug);
                         else
                             HBSContainer.back().SetTransType(TransformType::GooseGameTrans);
                     }

@@ -16,6 +16,7 @@ namespace HBSoft
     {
         DefaultTrans,
         GooseGameTrans,
+        CMTrans,
         UnityTrans,
         BackyardTrans,
         FrontHouse,
@@ -26,6 +27,9 @@ namespace HBSoft
         Bench,
         PondRetainers,
         ConcretePath,
+        Concrete22,
+        Bridge,
+        Picnicrug,
 
     };
 
@@ -35,6 +39,7 @@ namespace HBSoft
         std::shared_ptr<Mesh> m_mesh;
         std::vector<mat4>     m_anim;
         std::string           m_name;
+        std::shared_ptr<Texture> m_picnicRugTexture;
         TransformType         m_transType = TransformType::DefaultTrans;
 
 

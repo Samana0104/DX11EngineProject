@@ -41,11 +41,17 @@ void Static3DObj::Update(const float deltaTime)
         m_transform.SetRotation(glm::vec3(1.57, 0, 0));
         m_transform.SetLocation(glm::vec3(-7, 0, -12));
     }
-    else if (m_transType == TransformType::UnityTrans)
+    else if (m_transType == TransformType::CMTrans)
     {
         m_transform.SetRotation(glm::vec3(1.57, 0, 0));
         m_transform.SetLocation(glm::vec3(-7.0f, 0.0f, -12.0f));
         m_transform.SetScale({1 / 100.0f, 1 / 100.0f, 1 / 100.0f});
+    }
+    else if (m_transType == TransformType::UnityTrans)
+    {
+        m_transform.SetRotation(glm::vec3(1.57, 0, 0));
+        m_transform.SetLocation(glm::vec3(12.28f, 0.48f, 11.71f));
+        m_transform.SetScale(0.0015);
     }
     else if (m_transType == TransformType::ConcretePath)
     {
@@ -82,6 +88,24 @@ void Static3DObj::Update(const float deltaTime)
         m_transform.SetRotation(glm::vec3(1.57, -0.03, 0));
         m_transform.SetLocation(glm::vec3(-4.2, 0, -7.39));
         m_transform.SetScale(0.83);
+    }
+    else if (m_transType == TransformType::Concrete22)
+    {
+        m_transform.SetRotation(glm::vec3(1.57, 0.26, 0));
+        m_transform.SetLocation(glm::vec3(0.37, 0.32, -10.11));
+        m_transform.SetScale(0.845);
+    }
+    else if (m_transType == TransformType::Bridge)
+    {
+        m_transform.SetRotation(glm::vec3(1.57, 0, 0));
+        m_transform.SetLocation(glm::vec3(-4.86, 0.26, -8.42));
+        m_transform.SetScale(0.86);
+    }
+    else if (m_transType == TransformType::Picnicrug)
+    {
+       /* m_transform.SetRotation(glm::vec3(1.57, 0.21, 0));
+        m_transform.SetLocation(glm::vec3(0.37, 0.2, -11.59));
+        m_transform.SetScale(0.85);*/
     }
 
     else if (m_transType == TransformType::Test)
@@ -123,6 +147,12 @@ void Static3DObj::Init(const std::wstring& key)
     m_easyRender.SetVSShader(L"BasicVS.hlsl");
     m_easyRender.SetPSShader(L"ColorPS.hlsl");
     m_easyRender.SetTexture(nullptr);
+    if (key == L"_picnicruggg.hbs")
+    {
+        m_easyRender.SetPSShader(L"BasicPS.hlsl");
+        m_picnicRugTexture = HASSET->m_textures[L"PicnicRugPattern.png"];
+        m_easyRender.SetTexture(m_picnicRugTexture);
+    }
     m_easyRender.SetMesh(m_mesh);
 }
 
