@@ -67,7 +67,6 @@ void CollisionComponent::DrawBoundary(std::shared_ptr<LineObj> line)
     {
         AABB colRange = m_colRanges[i];
         vec3 line1, line2;
-        AABB colRange    = m_colRanges[i];
         colRange.min[0] *= glm::abs(m_transform.m_scale[0]);
         colRange.min[1] *= glm::abs(m_transform.m_scale[1]);
         colRange.min[2] *= glm::abs(m_transform.m_scale[2]);
