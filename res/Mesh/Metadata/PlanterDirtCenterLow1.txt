@@ -6,8 +6,8 @@ hbs bornObject : 2
 hbs born : 0
 
 < auto collision >
-aabb min : 6.9642, -14.3871, 0.591338
-aabb max : 8.57712, -13.1914, 0.921711
+aabb min : -0.806457, -0.597827, -0.165187
+aabb max : 0.806458, 0.597827, 0.165187
 sphere center : 7.77066, -13.7893, 0.756525
 sphere radius : 0.806457
 Vertex[index : 0]

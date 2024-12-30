@@ -6,8 +6,8 @@ hbs bornObject : 6
 hbs born : 0
 
 < auto collision >
-aabb min : 10.7619, -16.964, 0.771764
-aabb max : 13.6083, -13.1492, 1.2893
+aabb min : -1.4232, -1.90739, -0.258768
+aabb max : 1.4232, 1.90739, 0.258768
 sphere center : 12.1851, -15.0566, 1.03053
 sphere radius : 1.90739
 Vertex[index : 0]
@@ -21582,7 +21582,7 @@ hasTexture : 0
 
 material(ambient) : 0, 0, 0
 material(diffuse) : 1, 1, 1
-material(specular) : 0.3, 0.3, 0.3
+material(specular) : 0.2, 0.2, 0.2
 material(ambient factor) : 1
 material(diffuse factor) : 1
 material(specular factor) : 1
@@ -21602,7 +21602,7 @@ hasTexture : 0
 
 material(ambient) : 0, 0, 0
 material(diffuse) : 0.906332, 0.634878, 0.501773
-material(specular) : 0.3, 0.3, 0.3
+material(specular) : 0.2, 0.2, 0.2
 material(ambient factor) : 1
 material(diffuse factor) : 1
 material(specular factor) : 1
@@ -21622,7 +21622,7 @@ hasTexture : 0
 
 material(ambient) : 0, 0, 0
 material(diffuse) : 0.906332, 0.634878, 0.501773
-material(specular) : 0.3, 0.3, 0.3
+material(specular) : 0.2, 0.2, 0.2
 material(ambient factor) : 1
 material(diffuse factor) : 1
 material(specular factor) : 1
@@ -21642,7 +21642,7 @@ hasTexture : 0
 
 material(ambient) : 0, 0, 0
 material(diffuse) : 0.906332, 0.634878, 0.501773
-material(specular) : 0.3, 0.3, 0.3
+material(specular) : 0.2, 0.2, 0.2
 material(ambient factor) : 1
 material(diffuse factor) : 1
 material(specular factor) : 1
@@ -21662,7 +21662,7 @@ hasTexture : 0
 
 material(ambient) : 0, 0, 0
 material(diffuse) : 1, 1, 1
-material(specular) : 0.3, 0.3, 0.3
+material(specular) : 0.2, 0.2, 0.2
 material(ambient factor) : 1
 material(diffuse factor) : 1
 material(specular factor) : 1

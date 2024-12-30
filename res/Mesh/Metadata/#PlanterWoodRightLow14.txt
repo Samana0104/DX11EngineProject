@@ -6,8 +6,8 @@ hbs bornObject : 2
 hbs born : 0
 
 < auto collision >
-aabb min : 694.73, -2118.99, 64.9694
-aabb max : 817.043, -2103.8, 95.5861
+aabb min : -61.1567, -7.59204, -15.3083
+aabb max : 61.1567, 7.5918, 15.3083
 sphere center : 755.887, -2111.4, 80.2778
 sphere radius : 61.1567
 Vertex[index : 0]
@@ -550,7 +550,7 @@ hasTexture : 0
 
 material(ambient) : 0, 0, 0
 material(diffuse) : 0.6, 0.505882, 0.411765
-material(specular) : 0.3, 0.3, 0.3
+material(specular) : 0.2, 0.2, 0.2
 material(ambient factor) : 1
 material(diffuse factor) : 1
 material(specular factor) : 1
