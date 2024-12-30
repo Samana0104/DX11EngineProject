@@ -9,14 +9,16 @@ date: 2024-11-05
 #pragma once
 #include <Windows.h>
 #include "HPoint.h"
-#include "imgui/imgui_impl_win32.h"
 
+#ifdef _DEBUG
+    #include "imgui/imgui_impl_win32.h"
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam,
                                                              LPARAM lParam);
+#endif
 
 namespace HBSoft
 {
-#define WINDOW_NAME       L"HBSoft"
+#define WINDOW_NAME       L"Untitled Goose Game"
 #define WINDOW_CLASS_NAME L"HBSOFT_WINDOW"
 
     class Window

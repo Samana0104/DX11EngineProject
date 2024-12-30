@@ -65,7 +65,7 @@ QNode* QuadTree::CreateNode(UINT depth, UINT TopLeft, UINT TopRight, UINT Bottom
         }
     }
 
-    assert(HDEVICE->CreateIndexBuffer(node->indexList, node->indexBuffer));
+    HDEVICE->CreateIndexBuffer(node->indexList, node->indexBuffer);
 
     node->box.aabb.min = {99999.0f, 99999.0f, 99999.0f};
     node->box.aabb.max = {-99999.0f, -99999.0f, -99999.0f};

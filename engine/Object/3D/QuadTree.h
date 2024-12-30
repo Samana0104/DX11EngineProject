@@ -11,7 +11,7 @@ date: 2024-12-13
 #include "3D\HeightMapObj.h"
 #include "Collision.h"
 #include "Renderable.h"
-#include "Camera.h"
+#include "Camera/Camera.h"
 
 namespace HBSoft
 {

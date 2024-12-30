@@ -7,7 +7,7 @@ date: 2024-12-23
 */
 #include "pch.h"
 #include "Static3DObj.h"
-#include "Camera.h"
+#include "Camera/Camera.h"
 
 using namespace HBSoft;
 

@@ -111,7 +111,7 @@ namespace HBSoft
         ComPtr<ID3D11Buffer> m_vertexBuffer;
 
     public:
-        Mesh();
+        Mesh()  = default;
         ~Mesh() = default;
 
         bool CreateMaterialBuffer(std::shared_ptr<D3Device> device);

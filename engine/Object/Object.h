@@ -8,7 +8,7 @@ date: 2024-12-13
 
 #pragma once
 
-#include "Camera.h"
+#include "Camera/Camera.h"
 #include "Renderable.h"
 #include "EasyRender.h"
 

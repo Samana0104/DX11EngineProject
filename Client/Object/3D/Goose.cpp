@@ -47,7 +47,10 @@ void Goose::Update(float deltaTime)
 {
     // static int   selectAnimation = 0;
 
+#ifdef _DEBUG
     ImGui::SliderFloat("Speed1", &speed1, 0, 60.f);
+    ImGui::SliderFloat("Goose speed", &m_speed1, 0.f, 300.f);
+#endif
 
     currentFrame += deltaTime * speed1;
     startFrame    = m_gooseAnis[0]->GetStartFrame();
@@ -60,9 +63,6 @@ void Goose::Update(float deltaTime)
     m_animstate = GooseState::goose_idle_proud;
 
     /*anim = m_gooseAnis[4]->GetAnimationMatrix(currentFrame);*/
-
-
-    ImGui::SliderFloat("Goose speed", &m_speed1, 0.f, 300.f);
 
     static bool isDownPressed  = false;  // VK_DOWN 상태 추적
     static bool isUpPressed    = false;  // VK_UP 상태 추적

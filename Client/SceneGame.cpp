@@ -43,8 +43,10 @@ SceneGame::SceneGame()
 
 void SceneGame::Update(float deltaTime)
 {
+#ifdef _DEBUG
     ImGui::Checkbox("wireframe : ", &isWire);
     ImGui::SliderFloat("light Power", &lightTest->m_lightPower, 0.f, 2.f);
+#endif
 
     cameraTest->Update(deltaTime);
     m_line->Update(deltaTime);
@@ -76,9 +78,11 @@ void SceneGame::Render()
         //     std::cout << "Ãæµ¹" << std::endl;
     }
 
+#ifdef _DEBUG
     m_line->Draw({0.f, 0.f, 0.f}, {1000.f, 0.f, 0.f}, {1.f, 0.f, 0.f, 1.f});
     m_line->Draw({0.f, 0.f, 0.f}, {0.f, 1000.f, 0.f}, {0.f, 1.f, 0.f, 1.f});
     m_line->Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
+#endif
 
     // m_gardener.Render();
     m_goose.Render();

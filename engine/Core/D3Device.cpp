@@ -13,7 +13,12 @@ using namespace HBSoft;
 D3Device::D3Device(const std::shared_ptr<Window> window)
     : m_window(window)
 {
+#ifdef _DEBUG
     assert(CreateDevice());
+#else
+    if (!CreateDevice())
+        MessageBoxA(nullptr, "Error", "device not created", MB_OK);
+#endif
     EventHandler::GetInstance().AddEvent(EventList::WINDOW_RESIZE, this);
 }
 
@@ -77,21 +82,20 @@ bool D3Device::CreateDeviceAndSwapChain()
     HRESULT hr;
     HPoint  windowSize = m_window->GetWindowSize();
 
-    CONST D3D_FEATURE_LEVEL pFeatureLevels = D3D_FEATURE_LEVEL_11_0;
+    CONST D3D_FEATURE_LEVEL pFeatureLevels = D3D_FEATURE_LEVEL_11_1;
 
     ZeroMemory(&m_swapChainDesc, sizeof(m_swapChainDesc));
-    {
-        m_swapChainDesc.BufferDesc.Width                   = (UINT)windowSize.x;
-        m_swapChainDesc.BufferDesc.Height                  = (UINT)windowSize.y;
-        m_swapChainDesc.BufferDesc.RefreshRate.Numerator   = 60;
-        m_swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
-        m_swapChainDesc.BufferDesc.Format                  = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-        m_swapChainDesc.BufferUsage                        = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-        m_swapChainDesc.BufferCount                        = 1;
-        m_swapChainDesc.OutputWindow                       = m_window->GetHandle();
-        m_swapChainDesc.Windowed                           = true;
-        m_swapChainDesc.SampleDesc.Count                   = 1;
-    }
+    m_swapChainDesc.BufferDesc.Width                   = (UINT)windowSize.x;
+    m_swapChainDesc.BufferDesc.Height                  = (UINT)windowSize.y;
+    m_swapChainDesc.BufferDesc.RefreshRate.Numerator   = 60;
+    m_swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
+    m_swapChainDesc.BufferDesc.Format                  = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+    m_swapChainDesc.BufferUsage                        = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+    m_swapChainDesc.BufferCount                        = 1;
+    m_swapChainDesc.OutputWindow                       = m_window->GetHandle();
+    m_swapChainDesc.Windowed                           = true;
+    m_swapChainDesc.SampleDesc.Count                   = 1;
+
 
     hr = D3D11CreateDeviceAndSwapChain(nullptr,
                                        D3D_DRIVER_TYPE_HARDWARE,

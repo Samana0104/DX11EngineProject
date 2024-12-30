@@ -13,9 +13,15 @@ using namespace HBSoft;
 
 Grid::Grid(std::shared_ptr<D3Device> device)
 {
+#ifdef _DEBUG
     assert(CreateVertices(device));
     assert(CreateIndices(device));
     assert(CreateMaterialBuffer(device));
+#else
+    CreateVertices(device);
+    CreateIndices(device);
+    CreateMaterialBuffer(device);
+#endif
 }
 
 bool Grid::CreateVertices(std::shared_ptr<D3Device> device)
@@ -44,8 +50,6 @@ bool Grid::CreateVertices(std::shared_ptr<D3Device> device)
             m_vertices.push_back(v);
         }
     }
-    std::cout << m_vertices.size() << std::endl;
-
     return device->CreateVertexBuffer(m_vertices, m_vertexBuffer);
 }
 
@@ -79,7 +83,7 @@ bool Grid::CreateIndices(std::shared_ptr<D3Device> device)
 
     subMesh->hasTexture = false;
 
-    assert(device->CreateIndexBuffer(subMesh->indices, subMesh->indexBuffer));
+    device->CreateIndexBuffer(subMesh->indices, subMesh->indexBuffer);
     m_subMeshes.push_back(subMesh);
 
     return true;

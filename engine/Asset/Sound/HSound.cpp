@@ -13,7 +13,14 @@ using namespace HBSoft;
 HSound::HSound(FMOD_SYS* fmodSys, const wstringV filePath)
     : m_fmodSys(fmodSys), m_soundPath(filePath)
 {
+    m_sound        = nullptr;
+    m_soundChannel = nullptr;
+#ifdef _DEBUG
     assert(CreateSound(filePath));
+#else
+    CreateSound(filePath);
+#endif
+
     InitSound();
 }
 

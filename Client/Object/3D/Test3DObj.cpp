@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Test3DObj.h"
-#include "Camera.h"
+#include "Camera/Camera.h"
 
 using namespace HBSoft;
 

@@ -10,10 +10,6 @@ date: 2024-11-08
 #include "Mesh.h"
 using namespace HBSoft;
 
-Mesh::Mesh()
-    : m_vertexBuffer(nullptr)
-{}
-
 bool Mesh::CreateMaterialBuffer(std::shared_ptr<D3Device> device)
 {
     HRESULT                hr = S_OK;

@@ -19,7 +19,11 @@ LayoutFont::LayoutFont(std::shared_ptr<D3Device> device, const FontDesc& desc)
     m_textPos     = HPoint(0.f, 0.f);
     m_isUnderline = false;
 
+#ifdef _DEBUG
     assert(CreateLayout());
+#else
+    CreateLayout();
+#endif
 }
 
 void LayoutFont::OnNotice(EventList event, void* entity)
@@ -62,7 +66,7 @@ bool LayoutFont::CreateLayout()
 void LayoutFont::SetText(const wstringV text)
 {
     m_text = text;
-    assert(CreateLayout());
+    CreateLayout();
 }
 
 void LayoutFont::SetRect(const HRect& rect)

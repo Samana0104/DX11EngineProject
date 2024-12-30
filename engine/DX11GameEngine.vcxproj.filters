@@ -61,6 +61,9 @@
     <Filter Include="Ai">
       <UniqueIdentifier>{bbeeaafd-9274-4c85-b07f-a3eb3b81a06a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Camera">
+      <UniqueIdentifier>{e66dd716-3f0e-4e1e-a4d6-4681e4e134a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\D3Device.cpp">
@@ -171,9 +174,6 @@
     <ClCompile Include="Scene\SceneMgr.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Camera.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Object\Object.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -225,11 +225,14 @@
     <ClCompile Include="Object\Collision.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Frustum.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Gui\QuestGUI.cpp">
       <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Camera\Camera.cpp">
+      <Filter>Object\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Camera\Frustum.cpp">
+      <Filter>Object\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -365,9 +368,6 @@
     <ClInclude Include="Scene\Scene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Camera.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="Object\Object.h">
       <Filter>Object</Filter>
     </ClInclude>
@@ -422,11 +422,17 @@
     <ClInclude Include="Object\CollisionComponent.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Frustum.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="Gui\QuestGUI.h">
       <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Camera\Frustum.h">
+      <Filter>Object\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Camera\Camera.h">
+      <Filter>Object\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Debug.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

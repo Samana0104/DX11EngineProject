@@ -13,7 +13,11 @@ using namespace HBSoft;
 VertexShader::VertexShader(std::shared_ptr<D3Device> device, const wstringV path)
     : Shader(path, ShaderType::VERTEX)
 {
+#ifdef _DEBUG
     assert(CreateShader(device));
+#else
+    CreateShader(device);
+#endif
 }
 
 void VertexShader::SetUpToContext(std::shared_ptr<D3Device> device)

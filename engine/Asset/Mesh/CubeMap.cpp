@@ -18,9 +18,15 @@ CubeMap::CubeMap(std::shared_ptr<D3Device> device)
     m_subMeshes     = box->m_subMeshes;
     m_autoCollision = box->m_autoCollision;
 
+#ifdef _DEBUG
     assert(CreateVertices(device));
     assert(CreateIndices(device));
     assert(CreateMaterialBuffer(device));
+#else
+    CreateVertices(device);
+    CreateIndices(device);
+    CreateMaterialBuffer(device);
+#endif
 }
 
 bool CubeMap::CreateVertices(std::shared_ptr<D3Device> device)

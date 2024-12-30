@@ -8,7 +8,7 @@ date: 2024-11-29
 
 #include "pch.h"
 #include "Object3D.h"
-#include "Camera.h"
+#include "Camera/Camera.h"
 using namespace HBSoft;
 
 void Object3D::SetLight(std::shared_ptr<DirectionalLight> light)

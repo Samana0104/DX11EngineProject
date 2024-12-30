@@ -12,7 +12,12 @@ using namespace HBSoft;
 HeightTexture::HeightTexture(std::shared_ptr<D3Device> device, const wstringV filePath)
     : Texture(filePath)
 {
+#ifdef _DEBUG
     assert(CreateTexture(device));
+#else
+    CreateTexture(device);
+#endif
+
     LoadTextureDesc();
 }
 

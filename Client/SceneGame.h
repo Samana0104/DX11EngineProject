@@ -9,7 +9,7 @@ date: 2024-12-23
 #pragma once
 #include "pch.h"
 
-#include "Camera.h"
+#include "Camera/Camera.h"
 #include "3D/LineObj.h"
 #include "3D/CubeMapObj.h"
 #include "3D/QuadTree.h"

@@ -12,8 +12,13 @@ using namespace HBSoft;
 
 Line::Line(std::shared_ptr<D3Device> device)
 {
+#ifdef _DEBUG
     assert(CreateVertices(device));
     assert(CreateIndices(device));
+#else
+    CreateVertices(device);
+    CreateIndices(device);
+#endif
 }
 
 bool Line::CreateVertices(std::shared_ptr<D3Device> device)
@@ -42,7 +47,7 @@ bool Line::CreateIndices(std::shared_ptr<D3Device> device)
     subMesh->indices.push_back(0);
     subMesh->indices.push_back(1);
 
-    assert(device->CreateIndexBuffer(subMesh->indices, subMesh->indexBuffer));
+    device->CreateIndexBuffer(subMesh->indices, subMesh->indexBuffer);
     m_subMeshes.push_back(subMesh);
 
     return true;

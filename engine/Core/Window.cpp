@@ -15,7 +15,11 @@ Window::Window(HINSTANCE hinstance, HPoint windowSize)
     m_windowSize = windowSize;
 
     CreateRegisterClass();
+#ifdef _DEBUG
     assert(Create());
+#else
+    Create();
+#endif
 }
 
 void Window::CreateRegisterClass()
@@ -103,7 +107,9 @@ HINSTANCE Window::GetInstance() const
 
 LRESULT Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+#ifdef _DEBUG
     ImGui_ImplWin32_WndProcHandler(hwnd, uMsg, wParam, lParam);
+#endif
 
     switch (uMsg)
     {
