@@ -9,8 +9,9 @@ date: 2024-12-13
 
 #include "3D\LineObj.h"
 #include "3D\HeightMapObj.h"
+#include "Collision.h"
 #include "Renderable.h"
-#include "Camera.h"
+#include "Camera/Camera.h"
 
 namespace HBSoft
 {
@@ -20,6 +21,7 @@ namespace HBSoft
         UINT cornerIdx[4];
 
         QNode* child[4];
+        Box    box;
 
         std::vector<UINT>    indexList;
         ComPtr<ID3D11Buffer> indexBuffer;
@@ -50,12 +52,15 @@ namespace HBSoft
     {
     private:
         std::shared_ptr<HeightMapObj> m_mapObj;
+        std::vector<QNode*>           m_renderNode;
 
         QNode* m_rootNode;
         UINT   m_maxDepth;
 
     private:
-        QNode* MakeRoot();
+        bool SubDivide(QNode* node);
+        void BuildTree(QNode* node);
+        void FindNode(QNode* node);
 
     public:
         QuadTree(UINT depth);
@@ -64,9 +69,7 @@ namespace HBSoft
         std::shared_ptr<HeightMapObj> GetMapObj();
         QNode* CreateNode(UINT depth, UINT TopLeft, UINT TopRight, UINT BottomLeft, UINT BottomRight);
 
-        void BuildTree(QNode* node);
-        bool SubDivide(QNode* node);
-        void SetHeightMapObj(std::shared_ptr<HeightMapObj> heightMapObj);
+        void SetMapObj(std::shared_ptr<HeightMapObj> heightMapObj);
 
         std::shared_ptr<HeightMapObj> GetHeightMapObj();
 

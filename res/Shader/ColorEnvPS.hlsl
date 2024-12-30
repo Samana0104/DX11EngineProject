@@ -35,7 +35,7 @@ float4 main(PSInput psIn) : SV_Target0
     float3 eyeDir = psIn.worldPos - eyePos;
     float4 outputPixel;
     float4 pixel = g_textureCube0.Sample(sampler0, reflect(eyeDir, psIn.n));
-    pixel *= 0.6f;
+    pixel *= 0.5f;
 
     BlinnInfo info;
     info.ambientColor = ambient.xyz;
@@ -49,7 +49,7 @@ float4 main(PSInput psIn) : SV_Target0
     float4 lightColor = float4(ComputeBlinnPhong(lightDir, psIn.n, eyeDir, info), 1.f);
     outputPixel = psIn.c * lightColor;
     outputPixel = saturate(float4(outputPixel.rgb * lightPower, outputPixel.a));
-    outputPixel.rgb = lerp(outputPixel.rgb, pixel.rgb, 0.2f);
+    outputPixel.rgb = lerp(outputPixel.rgb, pixel.rgb, 0.1f);
  
     return outputPixel;
 }

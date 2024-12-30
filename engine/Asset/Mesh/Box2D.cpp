@@ -12,8 +12,13 @@ using namespace HBSoft;
 
 Box2D::Box2D(std::shared_ptr<D3Device> device)
 {
+#ifdef _DEBUG
     assert(CreateVertices(device));
     assert(CreateIndices(device));
+#else
+    CreateVertices(device);
+    CreateIndices(device);
+#endif
 }
 
 bool Box2D::CreateVertices(std::shared_ptr<D3Device>& device)
@@ -50,7 +55,7 @@ bool Box2D::CreateIndices(std::shared_ptr<D3Device>& device)
 
     subMesh->hasTexture = false;
 
-    assert(device->CreateIndexBuffer(subMesh->indices, subMesh->indexBuffer));
+    device->CreateIndexBuffer(subMesh->indices, subMesh->indexBuffer);
     m_subMeshes.push_back(subMesh);
 
     return true;

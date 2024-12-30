@@ -14,7 +14,9 @@ SceneLobby::SceneLobby() {}
 
 void SceneLobby::Update(float deltaTime)
 {
+#ifdef _DEBUG
     ImGui::Checkbox("wireframe : ", &isWire);
+#endif
 
     m_title.Update(deltaTime);
 

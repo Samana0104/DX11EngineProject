@@ -71,7 +71,7 @@ namespace HBSoft
         float specularFactor;
 
         Material()
-            : ambient(0.2f, 0.2f, 0.2f, 1.f),
+            : ambient(0.3f, 0.3f, 0.3f, 1.f),
               diffuse(0.2f),
               specular(0.2f),
               shininess(20.f),
@@ -111,7 +111,7 @@ namespace HBSoft
         ComPtr<ID3D11Buffer> m_vertexBuffer;
 
     public:
-        Mesh();
+        Mesh()  = default;
         ~Mesh() = default;
 
         bool CreateMaterialBuffer(std::shared_ptr<D3Device> device);

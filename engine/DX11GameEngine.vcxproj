@@ -57,13 +57,14 @@
     <ClCompile Include="Core\EventHandler.cpp" />
     <ClCompile Include="Core\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="DesignPattern\Observer.cpp" />
-    <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="Gui\Button.cpp" />
     <ClCompile Include="Gui\GameButton.cpp" />
     <ClCompile Include="Gui\LobbyButton.cpp" />
+    <ClCompile Include="Gui\QuestGUI.cpp" />
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Object\2D\Object2D.cpp" />
     <ClCompile Include="Object\2D\Transform2D.cpp" />
@@ -73,11 +74,13 @@
     <ClCompile Include="Object\3D\Object3D.cpp" />
     <ClCompile Include="Object\3D\QuadTree.cpp" />
     <ClCompile Include="Object\3D\Transform3D.cpp" />
-    <ClCompile Include="Object\Camera.cpp" />
+    <ClCompile Include="Object\Camera\Camera.cpp" />
+    <ClCompile Include="Object\Camera\Frustum.cpp" />
+    <ClCompile Include="Object\Camera\GooseCamera.cpp" />
+    <ClCompile Include="Object\Collision.cpp" />
     <ClCompile Include="Object\CollisionComponent.cpp" />
     <ClCompile Include="Object\EasyRender.cpp" />
     <ClCompile Include="Object\Object.cpp" />
-    <ClCompile Include="QuestGUI.cpp" />
     <ClCompile Include="Scene\SceneMgr.cpp" />
     <ClCompile Include="Timer\SystemTimer.cpp" />
   </ItemGroup>
@@ -116,6 +119,7 @@
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Core\CoreAPI.h" />
     <ClInclude Include="Core\D3Device.h" />
+    <ClInclude Include="Core\Debug.h" />
     <ClInclude Include="Core\EventHandler.h" />
     <ClInclude Include="Core\HPoint.h" />
     <ClInclude Include="Core\HRect.h" />
@@ -124,10 +128,10 @@
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="DesignPattern\Observer.h" />
     <ClInclude Include="DesignPattern\Singleton.h" />
-    <ClInclude Include="Frustum.h" />
     <ClInclude Include="Gui\Button.h" />
     <ClInclude Include="Gui\GameButton.h" />
     <ClInclude Include="Gui\LobbyButton.h" />
+    <ClInclude Include="Gui\QuestGUI.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Object\2D\Object2D.h" />
     <ClInclude Include="Object\2D\Transform2D.h" />
@@ -137,13 +141,14 @@
     <ClInclude Include="Object\3D\Object3D.h" />
     <ClInclude Include="Object\3D\QuadTree.h" />
     <ClInclude Include="Object\3D\Transform3D.h" />
-    <ClInclude Include="Object\Camera.h" />
+    <ClInclude Include="Object\Camera\Camera.h" />
+    <ClInclude Include="Object\Camera\Frustum.h" />
+    <ClInclude Include="Object\Camera\GooseCamera.h" />
     <ClInclude Include="Object\Collision.h" />
     <ClInclude Include="Object\CollisionComponent.h" />
     <ClInclude Include="Object\EasyRender.h" />
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Object\Renderable.h" />
-    <ClInclude Include="QuestGUI.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneMgr.h" />
     <ClInclude Include="Timer\SystemTimer.h" />
@@ -232,13 +237,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)exe\debug\</OutDir>
-    <IntDir>$(SolutionDir)exe\debug\bin\</IntDir>
+    <IntDir>$(SolutionDir)exe\debug\$(ProjectName)</IntDir>
     <TargetName>DX11EngineLib_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)exe\release\</OutDir>
-    <IntDir>$(SolutionDir)exe\release\bin\</IntDir>
+    <IntDir>$(SolutionDir)exe\release\$(ProjectName)</IntDir>
     <TargetName>DX11EngineLib_r</TargetName>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
@@ -327,6 +332,8 @@ copy $(SolutionDir)exe\Debug\DX11EngineLib_d.lib $(SolutionDir)extern\lib\debug\
       <PrecompiledHeader>Use</PrecompiledHeader>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)Ai\;$(ProjectDir)Core\;$(ProjectDir)Gui\;$(ProjectDir)DesignPattern\;$(ProjectDir)Input\;$(ProjectDir)Object\;$(ProjectDir)Timer\;$(ProjectDir)Scene\;$(ProjectDir)Asset\;$(SolutionDir)extern\inc\;$(SolutionDir)res\Shader\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -340,6 +347,12 @@ copy $(SolutionDir)exe\Debug\DX11EngineLib_d.lib $(SolutionDir)extern\lib\debug\
       <ShaderType>Effect</ShaderType>
       <ShaderModel>5.0</ShaderModel>
     </FxCompile>
+    <PostBuildEvent>
+      <Command>rmdir /S /Q $(SolutionDir)extern\inc\engine\
+xcopy $(ProjectDir)*.h $(SolutionDir)extern\inc\engine\ /E /Y
+if not exist $(SolutionDir)extern\lib\release\engine mkdir $(SolutionDir)extern\lib\release\engine
+copy $(SolutionDir)exe\Release\DX11EngineLib_r.lib $(SolutionDir)extern\lib\release\engine\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

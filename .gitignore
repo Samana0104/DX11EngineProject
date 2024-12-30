@@ -9,12 +9,16 @@
 /exe/debug/*.exe
 /exe/debug/*.lib
 /exe/debug/*.idb
+/exe/debug/Client
+/exe/debug/DX11GameEngine
 /exe/release/bin
 /exe/release/*.pdb
 /exe/release/*.cso
 /exe/release/*.exe
 /exe/release/*.lib
 /exe/release/*.idb
+/exe/release/Client
+/exe/release/DX11GameEngine
 extern/
 
 /exe/debug/DX11EngineLib_d.idb

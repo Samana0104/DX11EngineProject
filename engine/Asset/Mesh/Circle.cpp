@@ -12,8 +12,13 @@ using namespace HBSoft;
 
 Circle::Circle(std::shared_ptr<D3Device> device)
 {
+#ifdef _DEBUG
     assert(CreateVertices(device));
     assert(CreateIndices(device));
+#else
+    CreateVertices(device);
+    CreateIndices(device);
+#endif
 }
 
 bool Circle::CreateVertices(std::shared_ptr<D3Device> device)
@@ -54,7 +59,7 @@ bool Circle::CreateIndices(std::shared_ptr<D3Device> device)
 
     subMesh->hasTexture = false;
 
-    assert(device->CreateIndexBuffer(subMesh->indices, subMesh->indexBuffer));
+    device->CreateIndexBuffer(subMesh->indices, subMesh->indexBuffer);
     m_subMeshes.push_back(subMesh);
 
     return true;

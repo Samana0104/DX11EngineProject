@@ -27,6 +27,7 @@ date: 2024-12-11
 #include <wrl.h>
 #include <d3d11.h>
 #include <d3dcompiler.h>
+#include <d3d11shader.h>
 #include <d2d1.h>
 #include <d2d1helper.h>
 #include <dwrite.h>
@@ -84,12 +85,13 @@ date: 2024-12-11
 //			  Library load
 // ---------------------------------------
 
-#pragma comment(lib, "d3dcompiler.lib")
+#pragma comment(lib, "D3DCompiler.lib")
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "dwrite.lib")
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "windowscodecs.lib")
+#pragma comment(lib, "dxguid.lib")
 
 #ifdef _DEBUG
     #pragma comment(lib, "debug/DirectXTK/DirectXTK_d.lib")

@@ -12,9 +12,15 @@ using namespace HBSoft;
 
 HeightMap::HeightMap(std::shared_ptr<D3Device> device, const MapDesc& desc)
 {
+#ifdef _DEBUG
     assert(CreateVertices(device, desc));
     assert(CreateIndices(device, desc));
     assert(CreateMaterialBuffer(device));
+#else
+    CreateVertices(device, desc);
+    CreateIndices(device, desc);
+    CreateMaterialBuffer(device);
+#endif
 }
 
 bool HeightMap::CreateVertices(std::shared_ptr<D3Device> device, const MapDesc& desc)
@@ -80,7 +86,7 @@ bool HeightMap::CreateIndices(std::shared_ptr<D3Device> device, const MapDesc& d
         }
     }
 
-    assert(device->CreateIndexBuffer(subMesh->indices, subMesh->indexBuffer));
+    device->CreateIndexBuffer(subMesh->indices, subMesh->indexBuffer);
     m_subMeshes.push_back(subMesh);
 
     return true;

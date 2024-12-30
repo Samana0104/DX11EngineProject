@@ -18,9 +18,17 @@ Core::Core(HINSTANCE hInstance, HPoint windowSize)
     m_assets = std::make_unique<AssetsMgr>(m_device);
     m_timer.Reset();
 
+#ifdef _DEBUG
     assert(InitImGui());
+#endif
 }
 
+Core::~Core()
+{
+    Delete();
+}
+
+#ifdef _DEBUG
 bool Core::InitImGui()
 {
     // 환경설정
@@ -44,29 +52,40 @@ bool Core::InitImGui()
 
     return true;
 }
+#endif
 
 void Core::Update()
 {
+#ifdef _DEBUG
     ImGui_ImplWin32_NewFrame();
     ImGui_ImplDX11_NewFrame();
     ImGui::NewFrame();
 
     ImGui::Begin("HBSoft");
+#endif
 
     m_timer.Update();
     m_input->Update();
     m_assets->Update();
     m_sceneMgr.Update(m_timer.GetDeltaTime());
 
+#ifdef _DEBUG
     ImGui::End();
+#endif
 }
 
 void Core::Render()
 {
+#ifdef _DEBUG
     HASSET->m_fonts[L"DEBUG_FONT"]->DrawMsg(HTIMER.m_csBuffer);
+#endif
+
     m_sceneMgr.Render();
+
+#ifdef _DEBUG
     ImGui::Render();
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+#endif
     m_device->m_swapChain->Present(0, 0);
 }
 
@@ -75,9 +94,11 @@ void Core::Release()
     m_sceneMgr.Release();
     m_sceneMgr.Clear();
 
+#ifdef _DEBUG
     ImGui_ImplDX11_Shutdown();
     ImGui_ImplWin32_Shutdown();
     ImGui::DestroyContext();
+#endif
 }
 
 void Core::Run()

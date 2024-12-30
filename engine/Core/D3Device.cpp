@@ -13,7 +13,11 @@ using namespace HBSoft;
 D3Device::D3Device(const std::shared_ptr<Window> window)
     : m_window(window)
 {
+#ifdef _DEBUG
     assert(CreateDevice());
+#else
+    CreateDevice();
+#endif
     EventHandler::GetInstance().AddEvent(EventList::WINDOW_RESIZE, this);
 }
 
@@ -45,28 +49,52 @@ bool D3Device::CreateIndexBuffer(std::vector<UINT>& indices, ComPtr<ID3D11Buffer
 bool D3Device::CreateDevice()
 {
     if (!CreateDeviceAndSwapChain())
+    {
+        MessageBoxA(nullptr, "Error", "Device Error", MB_OK);
         return false;
+    }
 
     if (!CreateRenderTarget())
+    {
+        MessageBoxA(nullptr, "Error", "RT", MB_OK);
         return false;
+    }
 
     if (!Create2DRenderTarget())
+    {
+        MessageBoxA(nullptr, "Error", "2dRT", MB_OK);
         return false;
+    }
 
     if (!CreateSamplerState())
+    {
+        MessageBoxA(nullptr, "Error", "SS", MB_OK);
         return false;
+    }
 
     if (!CreateDepthStencilState())
+    {
+        MessageBoxA(nullptr, "Error", "DSS", MB_OK);
         return false;
+    }
 
     if (!CreateDepthStencilView())
+    {
+        MessageBoxA(nullptr, "Error", "DSV", MB_OK);
         return false;
+    }
 
     if (!CreateRSState())
+    {
+        MessageBoxA(nullptr, "Error", "RSS", MB_OK);
         return false;
+    }
 
     if (!CreateBlendingState())
+    {
+        MessageBoxA(nullptr, "Error", "BS", MB_OK);
         return false;
+    }
 
     CreateViewport();
     return true;
@@ -77,21 +105,20 @@ bool D3Device::CreateDeviceAndSwapChain()
     HRESULT hr;
     HPoint  windowSize = m_window->GetWindowSize();
 
-    CONST D3D_FEATURE_LEVEL pFeatureLevels = D3D_FEATURE_LEVEL_11_0;
+    CONST D3D_FEATURE_LEVEL pFeatureLevels = D3D_FEATURE_LEVEL_11_1;
 
     ZeroMemory(&m_swapChainDesc, sizeof(m_swapChainDesc));
-    {
-        m_swapChainDesc.BufferDesc.Width                   = (UINT)windowSize.x;
-        m_swapChainDesc.BufferDesc.Height                  = (UINT)windowSize.y;
-        m_swapChainDesc.BufferDesc.RefreshRate.Numerator   = 60;
-        m_swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
-        m_swapChainDesc.BufferDesc.Format                  = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-        m_swapChainDesc.BufferUsage                        = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-        m_swapChainDesc.BufferCount                        = 1;
-        m_swapChainDesc.OutputWindow                       = m_window->GetHandle();
-        m_swapChainDesc.Windowed                           = true;
-        m_swapChainDesc.SampleDesc.Count                   = 1;
-    }
+    m_swapChainDesc.BufferDesc.Width                   = (UINT)windowSize.x;
+    m_swapChainDesc.BufferDesc.Height                  = (UINT)windowSize.y;
+    m_swapChainDesc.BufferDesc.RefreshRate.Numerator   = 60;
+    m_swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
+    m_swapChainDesc.BufferDesc.Format                  = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+    m_swapChainDesc.BufferUsage                        = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+    m_swapChainDesc.BufferCount                        = 1;
+    m_swapChainDesc.OutputWindow                       = m_window->GetHandle();
+    m_swapChainDesc.Windowed                           = true;
+    m_swapChainDesc.SampleDesc.Count                   = 1;
+
 
     hr = D3D11CreateDeviceAndSwapChain(nullptr,
                                        D3D_DRIVER_TYPE_HARDWARE,

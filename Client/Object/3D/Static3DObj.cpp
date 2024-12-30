@@ -7,7 +7,7 @@ date: 2024-12-23
 */
 #include "pch.h"
 #include "Static3DObj.h"
-#include "Camera.h"
+#include "Camera/Camera.h"
 
 using namespace HBSoft;
 
@@ -16,7 +16,7 @@ Static3DObj::Static3DObj()
 {
     m_cubeTex = HASSET->m_textures[L"cubeTest.dds"];
     m_easyRender.SetVSShader(L"BasicVS.hlsl");
-    m_easyRender.SetPSShader(L"BasicPS.hlsl");
+    m_easyRender.SetPSShader(L"ColorEnvPS.hlsl");
     m_easyRender.SetTexture(m_cubeTex);
     m_easyRender.SetSS(ERSamplerState::LINEAR);
     m_easyRender.SetMesh(m_mesh);

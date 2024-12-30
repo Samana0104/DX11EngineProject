@@ -13,7 +13,11 @@ using namespace HBSoft;
 PixelShader::PixelShader(std::shared_ptr<D3Device> device, const wstringV path)
     : Shader(path, ShaderType::PIXEL)
 {
+#ifdef _DEBUG
     assert(CreateShader(device));
+#else
+    CreateShader(device);
+#endif
 }
 
 void PixelShader::SetUpToContext(std::shared_ptr<D3Device> device)

@@ -18,7 +18,12 @@ Font::Font(std::shared_ptr<D3Device> device, const FontDesc& desc)
     m_color           = {1.f, 1.f, 1.f, 1.f};
     m_textRect        = {0.f, 0.f, FLT_MAX, FLT_MAX};
 
+#ifdef _DEBUG
     assert(CreateComponent(device.get()));
+#else
+    CreateComponent(device.get());
+#endif
+
     EventHandler::GetInstance().AddEvent(EventList::DEVICE_CHANGE, this);
 }
 
@@ -116,7 +121,11 @@ void Font::ResetComponent(const D3Device* device)
     if (m_brush)
         m_brush->Release();
 
+#ifdef _DEBUG
     assert(CreateComponent(device));
+#else
+    CreateComponent(device);
+#endif
 }
 
 void Font::SetHorizontalAlignment(DWRITE_PARAGRAPH_ALIGNMENT horizontalAlign)

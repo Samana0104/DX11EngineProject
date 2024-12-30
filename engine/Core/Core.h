@@ -51,6 +51,7 @@ namespace HBSoft
         void Release();
 
     public:
+        ~Core();
         Core(HINSTANCE hInstance, HPoint windowSize);
         // 접근 지시 제어자가 퍼블릭이라고 해서 코어 또 만들지 않겠지?? 만드는 놈 각오할 것
         // 일반 포인터는 너무 불안해서 일단 스마트 포인터로 코어 만듬

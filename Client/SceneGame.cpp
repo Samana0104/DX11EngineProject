@@ -12,19 +12,21 @@ date: 2024-12-24
 using namespace HBSoft;
 
 SceneGame::SceneGame()
-    : m_tree(5)
+    : m_tree(2)
 {
-    cameraTest = std::make_shared<Camera>(glm::radians(90.f), 0.1f, 10000.f);
-    lightTest  = std::make_shared<DirectionalLight>(vec3(-1.f, -1.f, 0.f), 1.f);
+    cameraTest = std::make_shared<Camera>();
+    lightTest  = std::make_shared<DirectionalLight>(vec3(-1.f, -1.f, -1.f), 1.f);
     mapTest    = std::make_shared<HeightMapObj>();
     m_line     = std::make_shared<LineObj>();
 
+    cameraTest->CreatePerspective(glm::radians(90.f), 0.5f, 10000.f);
     cameraTest->LookAt({0.f, 3.f, -1.5f}, {0.f, 0.f, 0.f}, {0.f, 1.f, 0.f});
+
     m_line->SetCamera(cameraTest);
     cube.SetCamera(cameraTest);
 
-    // m_gardener.SetCamera(cameraTest);
-    // m_gardener.SetLight(lightTest);
+    m_gardener.SetCamera(cameraTest);
+    m_gardener.SetLight(lightTest);
 
     m_goose.SetCamera(cameraTest);
     m_goose.SetHeightMap(mapTest);
@@ -33,7 +35,7 @@ SceneGame::SceneGame()
     mapTest->SetCamera(cameraTest);
     mapTest->SetLight(lightTest);
 
-    m_tree.SetHeightMapObj(mapTest);
+    m_tree.SetMapObj(mapTest);
 
     m_grid.SetCamera(cameraTest);
     m_staticObjs.LoadFromFolder("../res/Mesh/StaticObj", cameraTest, lightTest);
@@ -41,8 +43,10 @@ SceneGame::SceneGame()
 
 void SceneGame::Update(float deltaTime)
 {
+#ifdef _DEBUG
     ImGui::Checkbox("wireframe : ", &isWire);
     ImGui::SliderFloat("light Power", &lightTest->m_lightPower, 0.f, 2.f);
+#endif
 
     cameraTest->Update(deltaTime);
     m_line->Update(deltaTime);
@@ -50,7 +54,7 @@ void SceneGame::Update(float deltaTime)
     cube.Update(deltaTime);
     m_escButton.Update(deltaTime);
     m_grid.Update(deltaTime);
-    // m_gardener.Update(deltaTime);
+    m_gardener.Update(deltaTime);
     m_goose.Update(deltaTime);
     m_tree.Update(deltaTime);
 
@@ -69,22 +73,24 @@ void SceneGame::Render()
     for (auto& hbsc : m_staticObjs.HBSContainer)
     {
         hbsc.Render();
-        hbsc.m_component.DrawBoundary(m_line);
-        if (hbsc.m_component.IsCollision(m_goose.m_component))
-            std::cout << "충돌" << std::endl;
+        // hbsc.m_component.DrawBoundary(m_line);
+        // if (hbsc.m_component.IsCollision(m_goose.m_component))
+        //     std::cout << "충돌" << std::endl;
     }
 
+#ifdef _DEBUG
     m_line->Draw({0.f, 0.f, 0.f}, {1000.f, 0.f, 0.f}, {1.f, 0.f, 0.f, 1.f});
     m_line->Draw({0.f, 0.f, 0.f}, {0.f, 1000.f, 0.f}, {0.f, 1.f, 0.f, 1.f});
     m_line->Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
+#endif
 
-    // m_gardener.Render();
+    m_gardener.Render();
     m_goose.Render();
     m_grid.Render();
 
     m_tree.Render();
     cube.Render();
-    m_goose.m_component.DrawBoundary(m_line);
+    // m_goose.m_component.DrawBoundary(m_line);
     EasyRender::End(MultiRT::MAIN);
 
     // 글자 안나오는 이유 상수 버퍼
@@ -97,6 +103,7 @@ void SceneGame::Render()
     {
         EasyRender::SaveScreenShot(MultiRT::GUI, L"Gui");
         EasyRender::SaveScreenShot(MultiRT::MAIN, L"Test");
+        EasyRender::SaveScreenShot(MultiRT::SUB1, L"SUB1");
     }
 
     EasyRender::MergeRenderTarget(MultiRT::MAIN, MultiRT::GUI);
