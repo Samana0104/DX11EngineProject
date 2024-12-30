@@ -14,8 +14,8 @@ namespace HBSoft
         std::shared_ptr<Mesh> m_mesh;
 
         std::vector<mat4> anim;
+        float             m_speed2 = 1.5f;
 
-        float                                       m_speed2 = 0.5f;
         std::vector<std::shared_ptr<AnimationClip>> m_gardenerAni;
 
     public:
@@ -43,7 +43,7 @@ namespace HBSoft
         float GetLocationX();
         float GetLocationZ();
 
-        int GRID_OFFSET = 20;
+        int  GRID_OFFSET = 20;
         vec3 GetmPos();
         void SetmPos(float a, float b);
     };

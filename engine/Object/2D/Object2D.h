@@ -16,7 +16,7 @@ namespace HBSoft
 {
     class Object2D : public Object
     {
-    protected:
+    public:
         Transform2D m_transform;
 
 

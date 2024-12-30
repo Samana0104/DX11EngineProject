@@ -237,6 +237,9 @@
     <ClCompile Include="Object\Camera\GooseCamera.cpp">
       <Filter>Object\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Camera\DebugCamera.cpp">
+      <Filter>Object\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -438,6 +441,9 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Object\Camera\GooseCamera.h">
+      <Filter>Object\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Camera\DebugCamera.h">
       <Filter>Object\Camera</Filter>
     </ClInclude>
   </ItemGroup>

@@ -15,9 +15,16 @@ date: 2024-11-29
 
 namespace HBSoft
 {
+    enum ProjMode
+    {
+        PERSPECTIVE = 0,
+        ORTHO       = 1,
+        NOT         = 2
+    };
+
     class Camera : public Observer
     {
-    private:
+    protected:
         float m_fov;  // radian angle
         float m_projNear;
         float m_projFar;
@@ -26,17 +33,20 @@ namespace HBSoft
         vec3 m_up;    // y
         vec3 m_look;  // z
 
-        float m_speed = 10.f;
-        float m_accel = 10.f;
+        float m_yaw;
+        float m_pitch;
+        float m_roll;
 
         mat4 m_projMat;
         mat4 m_viewMat;
 
-    public:
+        ProjMode m_projMode;
         // 설마 카메라에 스케일 값 주는 미친 사람 없겠지?
         // 줌인 줌아웃 따로 만들었으니 스케일 조정하지 마시오
         Transform3D m_transform;
-        Frustum     m_frustum;
+
+    public:
+        Frustum m_frustum;
 
     private:
         virtual void OnNotice(EventList event, void* entity);
@@ -54,13 +64,16 @@ namespace HBSoft
         const mat4 GetProjMat() const;
         const vec3 GetEyePos() const;
 
-        void CreatePerspective(float fov, float projNear, float projFar);
-        void CreateOrtho(float projNear, float projFar);
+        void SetPerspective(float fov, float projNear, float projFar);
+        void SetOrtho(float projNear, float projFar);
 
-        void ZoomIn(const float scale);
-        void ZoomOut(const float scale);
+        void SetZoom(const float fov);
+        void ZoomIn(const float fov);
+        void ZoomOut(const float fov);
 
         void LookAt(const vec3 eye, const vec3 target, const vec3 up);
-        void Update(const float deltaTime);
+
+        virtual void Move(const vec3 pos)          = 0;
+        virtual void Update(const float deltaTime) = 0;
     };
 }  // namespace HBSoft

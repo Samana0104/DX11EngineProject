@@ -12,7 +12,17 @@ using namespace HBSoft;
 
 Camera::Camera()
 {
+    m_projMode = ProjMode::NOT;
     EventHandler::GetInstance().AddEvent(EventList::DEVICE_CHANGE, this);
+
+    m_viewMat = mat4(1.f);
+    m_side    = vec3(1.f, 0.f, 0.f);
+    m_up      = vec3(0.f, 1.f, 0.f);
+    m_look    = vec3(0.f, 0.f, 1.f);
+
+    m_yaw   = 0.f;
+    m_pitch = 0.f;
+    m_roll  = 0.f;
 }
 
 Camera::~Camera()
@@ -35,7 +45,7 @@ const vec3 Camera::GetEyePos() const
     return m_transform.m_pos;
 }
 
-void Camera::CreatePerspective(float fov, float projNear, float projFar)
+void Camera::SetPerspective(float fov, float projNear, float projFar)
 {
     m_fov      = fov;
     m_projNear = projNear;
@@ -43,15 +53,11 @@ void Camera::CreatePerspective(float fov, float projNear, float projFar)
 
     HPoint windowSize = HWINDOW->GetWindowSize();
     // z 0 ~ 1 원근 행렬을 만들어주는 함수
-    m_projMat = glm::perspectiveFovLH_ZO(fov, windowSize.x, windowSize.y, projNear, projFar);
-    m_viewMat = mat4(1.f);
-
-    m_side = vec3(1.f, 0.f, 0.f);
-    m_up   = vec3(0.f, 1.f, 0.f);
-    m_look = vec3(0.f, 0.f, 1.f);
+    m_projMat  = glm::perspectiveFovLH_ZO(fov, windowSize.x, windowSize.y, projNear, projFar);
+    m_projMode = ProjMode::PERSPECTIVE;
 }
 
-void Camera::CreateOrtho(float projNear, float projFar)
+void Camera::SetOrtho(float projNear, float projFar)
 {
     HPoint windowSize = HWINDOW->GetWindowSize();
     m_projNear        = projNear;
@@ -63,66 +69,46 @@ void Camera::CreateOrtho(float projNear, float projFar)
                                 windowSize.y * 0.5f,
                                 projNear,
                                 projFar);
-
-    m_viewMat = mat4(1.f);
-    m_side    = vec3(1.f, 0.f, 0.f);
-    m_up      = vec3(0.f, 1.f, 0.f);
-    m_look    = vec3(0.f, 0.f, 1.f);
 }
 
-void Camera::ZoomIn(const float scale)
+void Camera::SetZoom(const float fov)
 {
     HPoint windowSize = HWINDOW->GetWindowSize();
-    m_fov             = glm::radians(scale);
+    m_fov             = glm::radians(fov);
 
     m_projMat = glm::perspectiveFovLH_ZO(m_fov, windowSize.x, windowSize.y, m_projNear, m_projFar);
 }
 
-void Camera::ZoomOut(const float scale) {}
+void Camera::ZoomIn(const float fov)
+{
+    HPoint windowSize  = HWINDOW->GetWindowSize();
+    m_fov             += glm::radians(fov);
+
+    m_projMat = glm::perspectiveFovLH_ZO(m_fov, windowSize.x, windowSize.y, m_projNear, m_projFar);
+}
+
+void Camera::ZoomOut(const float fov)
+{
+    HPoint windowSize  = HWINDOW->GetWindowSize();
+    m_fov             -= glm::radians(fov);
+
+    m_projMat = glm::perspectiveFovLH_ZO(m_fov, windowSize.x, windowSize.y, m_projNear, m_projFar);
+}
 
 void Camera::LookAt(const vec3 eye, const vec3 target, const vec3 up)
 {
     m_transform.m_worldMat = glm::lookAtLH(eye, target, up);
-
-    m_side = m_transform.m_worldMat[0];
-    m_up   = m_transform.m_worldMat[1];
-    m_look = m_transform.m_worldMat[2];
-
+    glm::extractEulerAngleXZY(m_transform.m_worldMat, m_pitch, m_roll, m_yaw);
     m_transform.SetLocation(eye);
+    m_transform.SetRotation({m_pitch, m_roll, m_yaw});
+
+    m_side = m_viewMat[0];
+    m_up   = m_viewMat[1];
+    m_look = m_viewMat[2];
 }
 
-void Camera::Update(const float deltaTime)
+void Camera::OnNotice(EventList event, void* entity)
 {
-#ifdef _DEBUG
-    ImGui::SliderFloat("Camera speed", &m_speed, 0.f, 300.f);
-#endif
-
-    if (HINPUT->IsKeyPressed(87))  // W
-        m_transform.AddLocation(m_look * m_speed * deltaTime);
-
-    if (HINPUT->IsKeyPressed(83))  // S
-        m_transform.AddLocation(-m_look * m_speed * deltaTime);
-
-    if (HINPUT->IsKeyPressed(68))  // D
-        m_transform.AddLocation(m_side * m_speed * deltaTime);
-
-    if (HINPUT->IsKeyPressed(65))  // A
-        m_transform.AddLocation(-m_side * m_speed * deltaTime);
-
-
-    if (HINPUT->IsKeyPressed(VK_RBUTTON))
-    {
-        HPoint ndc = HINPUT->GetNDCMousePos();
-
-        m_transform.SetRotation({ndc.y * glm::pi<float>(), -ndc.x * glm::two_pi<float>(), 0.f});
-
-        m_side = m_transform.m_worldMat[0];
-        m_up   = m_transform.m_worldMat[1];
-        m_look = m_transform.m_worldMat[2];
-    }
-
-    m_viewMat = glm::inverse(m_transform.m_worldMat);
-    m_frustum.Set(m_viewMat, m_projMat);
+    if (m_projMode == ProjMode::PERSPECTIVE)
+        SetPerspective(m_fov, m_projNear, m_projFar);
 }
-
-void Camera::OnNotice(EventList event, void* entity) {}
