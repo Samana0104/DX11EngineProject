@@ -141,7 +141,7 @@ void Static3DObj::Init(const std::wstring& key)
     m_easyRender.SetVSShader(L"BasicVS.hlsl");
     m_easyRender.SetPSShader(L"ColorPS.hlsl");
     m_easyRender.SetTexture(nullptr);
-    if (key == L"_picnicruggg.hbs")
+    if (key == L"_picnicrug.hbs")
     {
         m_easyRender.SetPSShader(L"BasicPS.hlsl");
         m_picnicRugTexture = HASSET->m_textures[L"PicnicRugPattern.png"];
