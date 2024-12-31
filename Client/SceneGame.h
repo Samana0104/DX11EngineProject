@@ -17,6 +17,7 @@ date: 2024-12-23
 #include "3D/Test3DObj.h"
 #include "3D/Goose.h"
 #include "3D/Gardener.h"
+#include "3D/CollisionObj.h"
 #include "GameButton.h"
 #include "3D/Static3DObj.h"
 #include "HBSAutoLoader.h"
@@ -28,13 +29,14 @@ namespace HBSoft
     class SceneGame : public Scene
     {
     public:
-        GameButton                 m_escButton;
-        CubeMapObj                 cube;
-        QuadTree                   m_tree;
-        Goose                      m_goose;
-        Gardener                   m_gardener;
-        GridMap                    m_grid;
-        HBSAutoLoader<Static3DObj> m_staticObjs;
+        GameButton                    m_escButton;
+        CubeMapObj                    cube;
+        QuadTree                      m_tree;
+        Goose                         m_goose;
+        Gardener                      m_gardener;
+        GridMap                       m_grid;
+        std::shared_ptr<CollisionObj> m_colObjs;
+        HBSAutoLoader<Static3DObj>    m_staticObjs;
 
 #ifdef _DEBUG
         std::shared_ptr<DebugCamera> cameraTest;

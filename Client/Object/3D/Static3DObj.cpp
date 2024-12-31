@@ -110,6 +110,7 @@ void Static3DObj::Update(const float deltaTime)
 
     else if (m_transType == TransformType::Test)
     {
+#ifdef _DEBUG
         ImGui::DragFloat("x ", &x, 0.01f);
         ImGui::DragFloat("y ", &y, 0.01f);
         ImGui::DragFloat("z ", &z, 0.01f);
@@ -117,10 +118,11 @@ void Static3DObj::Update(const float deltaTime)
         ImGui::DragFloat("rotY ", &rotY, 0.01f);
         ImGui::DragFloat("rotZ ", &rotZ, 0.01f);
         ImGui::DragFloat("scale ", &scale, 0.01f);
+#endif
         m_transform.SetRotation(glm::vec3(rotX, rotY, rotZ));
         m_transform.SetLocation(glm::vec3(x, y, z));
         m_transform.SetScale(scale);
-       // m_transform.SetLocation(glm::vec3(-7, 0.5, -12));
+        // m_transform.SetLocation(glm::vec3(-7, 0.5, -12));
     }
 
     UpdateDefaultCB();
@@ -135,6 +137,7 @@ void HBSoft::Static3DObj::UpdateLocation(const float deltaTime, float x, float y
 
 void Static3DObj::Render()
 {
+    HDEVICE->m_context->PSSetShaderResources(1, 1, m_cubeTex->GetSRV().GetAddressOf());
     m_easyRender.Draw();
 }
 
@@ -143,7 +146,7 @@ void Static3DObj::Init() {}
 void Static3DObj::Init(const std::string& key)
 {
     m_easyRender.SetVSShader(L"BasicVS.hlsl");
-    m_easyRender.SetPSShader(L"ColorPS.hlsl");
+    m_easyRender.SetPSShader(L"ColorEnvPS.hlsl");
     m_easyRender.SetTexture(nullptr);
 
     if (key.find('#') == 0)
@@ -182,7 +185,8 @@ void Static3DObj::Init(const std::string& key)
         m_easyRender.SetTexture(m_picnicRugTexture);
     }
 
-    m_mesh = HASSET->m_meshes[std::wstring().assign(key.begin(), key.end())];
+    m_mesh    = HASSET->m_meshes[std::wstring().assign(key.begin(), key.end())];
+    m_cubeTex = HASSET->m_textures[L"cubeTest.dds"];
     m_easyRender.SetMesh(m_mesh);
 }
 

@@ -240,6 +240,9 @@
     <ClCompile Include="Object\Camera\DebugCamera.cpp">
       <Filter>Object\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Object\3D\CollisionObj.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -445,6 +448,9 @@
     </ClInclude>
     <ClInclude Include="Object\Camera\DebugCamera.h">
       <Filter>Object\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\CollisionObj.h">
+      <Filter>Object\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -23,13 +23,14 @@ SceneGame::SceneGame()
     lightTest = std::make_shared<DirectionalLight>(vec3(-1.f, -1.f, -1.f), 1.f);
     mapTest   = std::make_shared<HeightMapObj>();
     m_line    = std::make_shared<LineObj>();
+    m_colObjs = std::make_shared<CollisionObj>();
 
-    cameraTest->SetPerspective(glm::radians(90.f), 0.5f, 10000.f);
-    cameraTest->LookAt({m_goose.m_transform.m_pos[0],
-                        m_goose.m_transform.m_pos[1] + 2.0f,
-                        m_goose.m_transform.m_pos[2] - 0.9f},
+    cameraTest->SetPerspective(glm::radians(90.f), 1.f, 10000.f);
+    cameraTest->LookAt({m_goose.m_transform.m_pos[0] + 0.9f,
+                        m_goose.m_transform.m_pos[1] + 3.0f,
+                        m_goose.m_transform.m_pos[2]},
                        m_goose.m_transform.m_pos,
-                       {0.f, 0.f, 1.f});
+                       {0.f, 1.f, 0.f});
 
     m_line->SetCamera(cameraTest);
     cube.SetCamera(cameraTest);
@@ -48,6 +49,8 @@ SceneGame::SceneGame()
 
     m_grid.SetCamera(cameraTest);
     m_staticObjs.LoadFromFolder("../res/Mesh/StaticObj", cameraTest, lightTest);
+    m_colObjs->LoadRange("../res/collision.txt");
+    // m_colObjs.SaveRange("../res/collision.txt");
 }
 
 void SceneGame::Update(float deltaTime)
@@ -71,13 +74,16 @@ void SceneGame::Update(float deltaTime)
     m_goose.Update(deltaTime);
     m_tree.Update(deltaTime);
 
-    //m_test2.GetTransform().SetLocation(glm::vec3(m_x, m_y, m_z));
+    m_colObjs->Update(deltaTime);
+    // m_test2.GetTransform().SetLocation(glm::vec3(m_x, m_y, m_z));
 
     for (auto& hbsc : m_staticObjs.HBSContainer)
     {
-        //if (hbsc.GetName() != m_test2.GetName())
-            hbsc.Update(deltaTime);
+        // if (hbsc.GetName() != m_test2.GetName())
+        hbsc.Update(deltaTime);
     }
+
+    m_goose.ProcessCollision(m_colObjs);
 }
 
 void SceneGame::Render()
@@ -89,9 +95,6 @@ void SceneGame::Render()
     for (auto& hbsc : m_staticObjs.HBSContainer)
     {
         hbsc.Render();
-        // hbsc.m_component.DrawBoundary(m_line);
-        // if (hbsc.m_component.IsCollision(m_goose.m_component))
-        //     std::cout << "충돌" << std::endl;
     }
 
 #ifdef _DEBUG
@@ -107,6 +110,8 @@ void SceneGame::Render()
     m_tree.Render();
     cube.Render();
     // m_goose.m_component.DrawBoundary(m_line);
+    m_goose.m_component.DrawBoundary(m_line);
+    m_colObjs->m_component.DrawBoundary(m_line);
     EasyRender::End(MultiRT::MAIN);
 
     // 글자 안나오는 이유 상수 버퍼
@@ -119,7 +124,6 @@ void SceneGame::Render()
     {
         EasyRender::SaveScreenShot(MultiRT::GUI, L"Gui");
         EasyRender::SaveScreenShot(MultiRT::MAIN, L"Test");
-        EasyRender::SaveScreenShot(MultiRT::SUB1, L"SUB1");
     }
 
     EasyRender::MergeRenderTarget(MultiRT::MAIN, MultiRT::GUI);

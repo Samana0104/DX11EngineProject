@@ -206,6 +206,7 @@ void QuadTree::Render()
     // DXGI_FORMAT_R32_UINT는 인덱스 버퍼의 타입이 UINT라 그럼
 
     HDEVICE->m_context->PSSetShaderResources(0, 1, m_mapObj->m_mapTexture->GetSRV().GetAddressOf());
+    HDEVICE->m_context->PSSetShaderResources(1, 1, m_mapObj->m_cubeTex->GetSRV().GetAddressOf());
     HDEVICE->m_context->IASetVertexBuffers(0,
                                            1,
                                            m_mapObj->m_mesh->m_vertexBuffer.GetAddressOf(),

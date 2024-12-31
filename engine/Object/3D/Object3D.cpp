@@ -11,6 +11,10 @@ date: 2024-11-29
 #include "Camera/Camera.h"
 using namespace HBSoft;
 
+Object3D::Object3D()
+    : m_component(m_transform)
+{}
+
 void Object3D::SetLight(std::shared_ptr<DirectionalLight> light)
 {
     m_light = light;
@@ -45,4 +49,11 @@ void Object3D::UpdateDefaultCB()
     m_vsCB0.normalWorld = glm::transpose(glm::inverse(m_transform.m_worldMat));
     m_easyRender.UpdateVSCB((void*)&m_vsCB0, sizeof(m_vsCB0), 0);
     m_easyRender.UpdatePSCB((void*)&m_psCB0, sizeof(m_psCB0), 0);
+}
+
+void Object3D::ProcessCollision(std::shared_ptr<Object3D> obj)
+{
+    if (m_component.IsCollision(obj->m_component))
+    {
+    }
 }

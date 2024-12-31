@@ -44,7 +44,7 @@ bool Grid::CreateVertices(std::shared_ptr<D3Device> device)
             v.p = stackStartPoint + vec3(dx * i, 0.0f, 0.0f);
 
             v.n = vec3(0.0f, 0.0f, 0.0f);
-            v.c = vec4(0.0f, 0.0f, 1.0f, 1.0f);
+            v.c = vec4(1.0f, 0.0f, 0.0f, 1.0f);
             v.t = vec2(float(i) / numSlices, 1.0f - float(j) / numStacks);  // uv °ª
 
             m_vertices.push_back(v);

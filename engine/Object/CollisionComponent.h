@@ -1,12 +1,13 @@
 #pragma once
 
 #include "pch.h"
-#include "3D/LineObj.h"
 #include "3D/Transform3D.h"
 #include "Collision.h"
 
 namespace HBSoft
 {
+    class LineObj;
+
     class CollisionComponent
     {
     private:
@@ -18,9 +19,10 @@ namespace HBSoft
         bool m_isCollision;
 
     public:
-        CollisionComponent(Transform3D& transform, bool isCollision = false);
+        CollisionComponent(Transform3D& transform, bool isCollision = true);
 
         void AddAABBRange(const AABB& aabb);
+        void SetAABBRange(const AABB& aabb, size_t idx);
         bool IsCollision(const AABB& aabb);
         bool IsCollision(const CollisionComponent& component);
 
