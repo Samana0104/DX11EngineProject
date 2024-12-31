@@ -26,6 +26,7 @@ void HBSoft::GardenerFSM::onEvent(Event event)
         }
         else if (event == Event::GooseStoleItem)
         {
+
             // 여기다 행동
             currentState = State::Chasing;
         }
