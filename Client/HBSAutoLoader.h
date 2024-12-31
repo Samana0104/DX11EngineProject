@@ -43,14 +43,9 @@ namespace HBSoft
                     {
                         std::string fileName = entry.path().filename().string();
                         HBSContainer.emplace_back(fileName);  // T °´Ã¼ Ãß°¡
-                        HBSContainer.back().Init(
-                        std::wstring().assign(fileName.begin(), fileName.end()));
+                        HBSContainer.back().Init(fileName);
                         HBSContainer.back().SetCamera(camera);
                         HBSContainer.back().SetLight(light);
-                        if (fileName.find('#') == 0)
-                            HBSContainer.back().SetTransType(TransformType::UnityTrans);
-                        else
-                            HBSContainer.back().SetTransType(TransformType::GooseGameTrans);
                     }
                 }
             }

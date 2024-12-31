@@ -57,6 +57,10 @@ void SceneGame::Update(float deltaTime)
     ImGui::SliderFloat("light Power", &lightTest->m_lightPower, 0.f, 2.f);
 #endif
 
+    /*ImGui::DragFloat("X: ", &m_x, 0.1f);
+    ImGui::DragFloat("Y: ", &m_y, 0.1f);
+    ImGui::DragFloat("Z: ", &m_z, 0.1f);*/
+
     cameraTest->Update(deltaTime);
     m_line->Update(deltaTime);
 
@@ -67,9 +71,12 @@ void SceneGame::Update(float deltaTime)
     m_goose.Update(deltaTime);
     m_tree.Update(deltaTime);
 
+    //m_test2.GetTransform().SetLocation(glm::vec3(m_x, m_y, m_z));
+
     for (auto& hbsc : m_staticObjs.HBSContainer)
     {
-        hbsc.Update(deltaTime);
+        //if (hbsc.GetName() != m_test2.GetName())
+            hbsc.Update(deltaTime);
     }
 }
 

@@ -11,6 +11,7 @@
 /exe/debug/*.idb
 /exe/debug/Client
 /exe/debug/DX11GameEngine
+/exe/debug/FbxConverter
 /exe/release/bin
 /exe/release/*.pdb
 /exe/release/*.cso
@@ -19,6 +20,7 @@
 /exe/release/*.idb
 /exe/release/Client
 /exe/release/DX11GameEngine
+/exe/release/FbxConverter
 extern/
 
 /exe/debug/DX11EngineLib_d.idb

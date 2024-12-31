@@ -18,6 +18,7 @@ GridMap::GridMap()
     m_easyRender.SetVSShader(L"BasicVS.hlsl");
     m_easyRender.SetPSShader(L"ColorPS.hlsl");
     m_easyRender.SetMesh(m_gridMesh);
+    m_transform.SetLocation(vec3(-3.15, 0, 3.15));
 }
 
 void GridMap::Update(const float deltaTime)

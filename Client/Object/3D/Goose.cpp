@@ -12,7 +12,6 @@ date: 2024-11-30
 using namespace HBSoft;
 
 Goose::Goose()
-    : m_component(m_transform)
 {
     m_mesh  = HASSET->m_meshes[L"Goose.hbs"];
     m_sound = HASSET->m_sounds[L"goose_honk.wav"];
@@ -40,7 +39,6 @@ Goose::Goose()
     m_gooseAnis.push_back(HASSET->m_animations[L"gooseGallopDownHalfFlap.skm"]);
     m_gooseAnis.push_back(HASSET->m_animations[L"gooseSneakIdleHalfFlap.skm"]);
 
-    m_component.AddAABBRange(m_mesh->m_autoCollision.aabb);
 }
 
 void Goose::Update(float deltaTime)

@@ -79,5 +79,4 @@ namespace HBSoft
             center = (aabbCollision.max + aabbCollision.min) * 0.5f;
         }
     };
-
 }  // namespace HBSoft
