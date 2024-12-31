@@ -15,7 +15,7 @@ SceneGame::SceneGame()
     : m_tree(2)
 {
     cameraTest = std::make_shared<Camera>();
-    lightTest  = std::make_shared<DirectionalLight>(vec3(-1.f, -1.f, 0.f), 1.f);
+    lightTest  = std::make_shared<DirectionalLight>(vec3(-1.f, -1.f, 0.f), 1.4f);
     mapTest    = std::make_shared<HeightMapObj>();
     m_line     = std::make_shared<LineObj>();
 
