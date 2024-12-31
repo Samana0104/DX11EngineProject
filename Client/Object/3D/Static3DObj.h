@@ -40,26 +40,28 @@ namespace HBSoft
     class Static3DObj : public Object3D
     {
     private:
-        std::shared_ptr<Mesh> m_mesh;
-        std::vector<mat4>     m_anim;
-        std::string           m_name;
+        std::shared_ptr<Mesh>    m_mesh;
+        std::vector<mat4>        m_anim;
+        std::string              m_name;
         std::shared_ptr<Texture> m_picnicRugTexture;
-        std::shared_ptr<Texture> m_texCube1;
-        TransformType         m_transType = TransformType::DefaultTrans;
+        std::shared_ptr<Texture> m_cubeTex;
+        TransformType            m_transType = TransformType::DefaultTrans;
 
 
     public:
-        float x = -7;
-        float y = 0;
-        float z = -12;
-        float rotX = 1.57;
-        float rotY = 0;
-        float rotZ = 0;
+        float x     = -7;
+        float y     = 0;
+        float z     = -12;
+        float rotX  = 1.57;
+        float rotY  = 0;
+        float rotZ  = 0;
         float scale = 1;
 
         Static3DObj();
+
         Static3DObj(const std::string& n)
-            : m_name(n) {}
+            : m_name(n)
+        {}
 
         std::string GetName();
         void        SetTransType(TransformType);

@@ -4,6 +4,7 @@
 #include "3D/Object3D.h"
 #include "3D/Transform3D.h"
 #include "3D/HeightMapObj.h"
+#include "CollisionComponent.h"
 #include "Sound/HSound.h"
 
 namespace HBSoft
@@ -41,8 +42,10 @@ namespace HBSoft
         int   lastFrame    = 0;
         float speed1       = 30.f;
 
-        int tempStartFrame = 0;
-        int tempLastFrame  = 0;
+        int  tempStartFrame = 0;
+        int  tempLastFrame  = 0;
+        vec3 moveDirection;
+        vec3 moveVec;
 
     public:
         Goose();
@@ -57,6 +60,8 @@ namespace HBSoft
 
         vec3 GetmPos();
         void SetHeightMap(std::shared_ptr<HeightMapObj> mapObj);
+
+        virtual void ProcessCollision(std::shared_ptr<Object3D> obj) override;
     };
 
 

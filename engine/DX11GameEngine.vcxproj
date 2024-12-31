@@ -68,6 +68,7 @@
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Object\2D\Object2D.cpp" />
     <ClCompile Include="Object\2D\Transform2D.cpp" />
+    <ClCompile Include="Object\3D\CollisionObj.cpp" />
     <ClCompile Include="Object\3D\DirectionalLight.cpp" />
     <ClCompile Include="Object\3D\HeightMapObj.cpp" />
     <ClCompile Include="Object\3D\LineObj.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Object\2D\Object2D.h" />
     <ClInclude Include="Object\2D\Transform2D.h" />
+    <ClInclude Include="Object\3D\CollisionObj.h" />
     <ClInclude Include="Object\3D\DirectionalLight.h" />
     <ClInclude Include="Object\3D\HeightMapObj.h" />
     <ClInclude Include="Object\3D\LineObj.h" />

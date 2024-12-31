@@ -35,7 +35,7 @@ float4 main(PSInput psIn) : SV_Target0
     float3 eyeDir = psIn.worldPos - eyePos;
     float4 outputPixel;
     float4 pixel = g_textureCube0.Sample(sampler0, reflect(eyeDir, psIn.n));
-    pixel *= 0.5f;
+    pixel *= 0.7f;
 
     BlinnInfo info;
     info.ambientColor = ambient.xyz;

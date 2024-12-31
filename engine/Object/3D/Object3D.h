@@ -11,6 +11,7 @@ date: 2024-11-29
 #include "Object.h"
 #include "Transform3D.h"
 #include "Shader/ConstantBuffers.h"
+#include "CollisionComponent.h"
 #include "3D/DirectionalLight.h"
 
 namespace HBSoft
@@ -22,18 +23,19 @@ namespace HBSoft
 
         std::shared_ptr<DirectionalLight> m_light;
 
-    protected:
-        Object3D()  = default;
-        ~Object3D() = default;
-
     public:
-        Transform3D m_transform;
+        CollisionComponent m_component;
+        Transform3D        m_transform;
+
+    protected:
+        Object3D();
+        ~Object3D() = default;
 
     public:
         void SetLight(std::shared_ptr<DirectionalLight> light);
 
+        virtual void ProcessCollision(std::shared_ptr<Object3D> obj);
         virtual void UpdateDefaultCB() override;
-
         virtual void Init()                        = 0;
         virtual void Release()                     = 0;
         virtual void Update(const float deltaTime) = 0;

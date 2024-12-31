@@ -17,6 +17,7 @@ date: 2024-12-23
 #include "3D/Test3DObj.h"
 #include "3D/Goose.h"
 #include "3D/Gardener.h"
+#include "3D/CollisionObj.h"
 #include "GameButton.h"
 #include "3D/Static3DObj.h"
 #include "HBSAutoLoader.h"
@@ -25,35 +26,37 @@ date: 2024-12-23
 
 namespace HBSoft
 {
-    class SceneGame : public Scene
-    {
-    public:
-        GameButton                 m_escButton;
-        CubeMapObj                 cube;
-        QuadTree                   m_tree;
-        Goose                      m_goose;
-        Gardener                   m_gardener;
-        GridMap                    m_grid;
-        HBSAutoLoader<std::shared_ptr<Static3DObj>> m_staticObjs;
+	class SceneGame : public Scene
+	{
+	public:
+		GameButton                    m_escButton;
+		CubeMapObj                    cube;
+		QuadTree                      m_tree;
+		Goose                         m_goose;
+		Gardener                      m_gardener;
+		GridMap                       m_grid;
+		std::shared_ptr<CollisionObj> m_colObjs;
+
+		HBSAutoLoader<std::shared_ptr<Static3DObj>> m_staticObjs;
 
 #ifdef _DEBUG
-        std::shared_ptr<DebugCamera> cameraTest;
+		std::shared_ptr<DebugCamera> cameraTest;
 #else
-        std::shared_ptr<GooseCamera> cameraTest;
+		std::shared_ptr<GooseCamera> cameraTest;
 #endif
-        std::shared_ptr<DirectionalLight> lightTest;
-        std::shared_ptr<HeightMapObj>     mapTest;
-        std::shared_ptr<LineObj>          m_line;
+		std::shared_ptr<DirectionalLight> lightTest;
+		std::shared_ptr<HeightMapObj>     mapTest;
+		std::shared_ptr<LineObj>          m_line;
 
-        bool isWire = false;
+		bool isWire = false;
 
-    public:
-        SceneGame();
+	public:
+		SceneGame();
 
-        virtual void Update(float deltaTime) override;
-        virtual void Render() override;
-        virtual void Release() override;
-        virtual void Start() override;
-        virtual void End() override;
-    };
+		virtual void Update(float deltaTime) override;
+		virtual void Render() override;
+		virtual void Release() override;
+		virtual void Start() override;
+		virtual void End() override;
+	};
 }  // namespace HBSoft

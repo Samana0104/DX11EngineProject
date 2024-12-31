@@ -97,14 +97,21 @@ void Camera::ZoomOut(const float fov)
 
 void Camera::LookAt(const vec3 eye, const vec3 target, const vec3 up)
 {
-    m_transform.m_worldMat = glm::lookAtLH(eye, target, up);
+    vec3 lookVec = glm::normalize(target - eye);
+    vec3 sideVec = -glm::normalize(glm::cross(lookVec, up));
+    vec3 upVec   = glm::normalize(glm::cross(lookVec, sideVec));
+
+    m_transform.m_worldMat[0] = vec4(sideVec, 0.f);
+    m_transform.m_worldMat[1] = vec4(upVec, 0.f);
+    m_transform.m_worldMat[2] = vec4(lookVec, 0.f);
+
     glm::extractEulerAngleXZY(m_transform.m_worldMat, m_pitch, m_roll, m_yaw);
     m_transform.SetLocation(eye);
-    m_transform.SetRotation({m_pitch, m_roll, m_yaw});
+    m_transform.SetRotation({-m_roll, -m_yaw, m_pitch});
 
-    m_side = m_viewMat[0];
-    m_up   = m_viewMat[1];
-    m_look = m_viewMat[2];
+    m_side = sideVec;
+    m_up   = upVec;
+    m_look = lookVec;
 }
 
 void Camera::OnNotice(EventList event, void* entity)
