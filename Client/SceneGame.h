@@ -33,7 +33,7 @@ namespace HBSoft
         Goose                      m_goose;
         Gardener                   m_gardener;
         GridMap                    m_grid;
-        HBSAutoLoader<Static3DObj> m_staticObjs;
+        HBSAutoLoader<std::shared_ptr<Static3DObj>> m_staticObjs;
 
         std::shared_ptr<Camera>           cameraTest;
         std::shared_ptr<DirectionalLight> lightTest;

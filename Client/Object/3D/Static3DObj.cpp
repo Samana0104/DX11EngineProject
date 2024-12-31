@@ -13,8 +13,8 @@ using namespace HBSoft;
 
 Static3DObj::Static3DObj()
 {
-    m_easyRender.SetVSShader(L"BasicVS.hlsl");
-    m_easyRender.SetPSShader(L"ColorPS.hlsl");
+    m_easyRender.SetVSShader(L"CartoonEnvVS.hlsl");
+    m_easyRender.SetPSShader(L"CartoonEnvPS.hlsl");
     m_easyRender.SetTexture(nullptr);
     m_easyRender.SetMesh(m_mesh);
 }
@@ -38,8 +38,8 @@ void Static3DObj::Init() {}
 
 void Static3DObj::Init(const std::string& key)
 {
-    m_easyRender.SetVSShader(L"BasicVS.hlsl");
-    m_easyRender.SetPSShader(L"ColorPS.hlsl");
+    m_easyRender.SetVSShader(L"CartoonEnvVS.hlsl");
+    m_easyRender.SetPSShader(L"CartoonEnvPS.hlsl");
     m_easyRender.SetTexture(nullptr);
 
     if (key.find('#') == 0)
@@ -87,6 +87,7 @@ void Static3DObj::Init(const std::string& key)
     }
 
     m_mesh = HASSET->m_meshes[std::wstring().assign(key.begin(), key.end())];
+    m_texCube1 = HASSET->m_textures[L"cubeTest.dds"];
     m_easyRender.SetMesh(m_mesh);
 }
 
@@ -214,6 +215,7 @@ void HBSoft::Static3DObj::UpdateLocation(const float deltaTime, float x, float y
 
 void Static3DObj::Render()
 {
+    HDEVICE->m_context->PSSetShaderResources(1, 1, m_texCube1->GetSRV().GetAddressOf());
     m_easyRender.Draw();
 }
 

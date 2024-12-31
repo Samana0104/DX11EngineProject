@@ -157,7 +157,9 @@
     <FxCompile Include="..\res\Shader\2DBasicPS.hlsl" />
     <FxCompile Include="..\res\Shader\2DBasicVS.hlsl" />
     <FxCompile Include="..\res\Shader\BasicAniVS.hlsl" />
+    <FxCompile Include="..\res\Shader\CartoonEnvPS.hlsl" />
     <FxCompile Include="..\res\Shader\BasicEnvPS.hlsl" />
+    <FxCompile Include="..\res\Shader\CartoonEnvVS.hlsl" />
     <FxCompile Include="..\res\Shader\ColorEnvPS.hlsl" />
     <FxCompile Include="..\res\Shader\ColorPS.hlsl" />
     <FxCompile Include="..\res\Shader\CubePS.hlsl" />
