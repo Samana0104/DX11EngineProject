@@ -8,6 +8,7 @@ void HBSoft::GardenerFSM::onEvent(Event event)
     case State::Idle:
         if (event == Event::GooseClose)
         {
+
             // 여기다 행동
             currentState = State::Pushing;
         }
