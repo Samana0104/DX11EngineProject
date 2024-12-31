@@ -8,7 +8,6 @@ void HBSoft::GardenerFSM::onEvent(Event event)
     case State::Idle:
         if (event == Event::GooseClose)
         {
-
             // 여기다 행동
             currentState = State::Pushing;
         }
@@ -28,6 +27,7 @@ void HBSoft::GardenerFSM::onEvent(Event event)
         else if (event == Event::GooseStoleItem)
         {
             // 여기다 행동
+
             currentState = State::Chasing;
         }
         break;
