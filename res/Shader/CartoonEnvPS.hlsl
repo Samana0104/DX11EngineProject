@@ -60,7 +60,7 @@ float4 main(PSInput psIn) : SV_Target0
     float3 cartoonColor = psIn.c.rgb * lightColor * toonShade;
 
     // 카툰 색상과 환경 매핑 혼합
-    float3 finalColor = lerp(cartoonColor, envColor.rgb, 0.2); // 환경 매핑 혼합 비율 20%
+    float3 finalColor = lerp(cartoonColor, envColor.rgb, 0.1); // 환경 매핑 혼합 비율 10%
 
     // 경계선 효과
     float edge = saturate(1 - abs(dot(normal, eyeDir)) * 2);
