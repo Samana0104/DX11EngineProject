@@ -32,9 +32,6 @@ namespace HBSoft
         ~Object3D() = default;
 
     public:
-        Transform3D m_transform;
-
-    public:
         void SetLight(std::shared_ptr<DirectionalLight> light);
 
         virtual void ProcessCollision(std::shared_ptr<Object3D> obj);
