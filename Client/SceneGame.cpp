@@ -23,8 +23,8 @@ SceneGame::SceneGame()
     m_line->SetCamera(cameraTest);
     cube.SetCamera(cameraTest);
 
-    // m_gardener.SetCamera(cameraTest);
-    // m_gardener.SetLight(lightTest);
+    m_gardener.SetCamera(cameraTest);
+    m_gardener.SetLight(lightTest);
 
     m_goose.SetCamera(cameraTest);
     m_goose.SetHeightMap(mapTest);
@@ -50,7 +50,7 @@ void SceneGame::Update(float deltaTime)
     cube.Update(deltaTime);
     m_escButton.Update(deltaTime);
     m_grid.Update(deltaTime);
-    // m_gardener.Update(deltaTime);
+    m_gardener.Update(deltaTime);
     m_goose.Update(deltaTime);
     m_tree.Update(deltaTime);
 
@@ -69,22 +69,18 @@ void SceneGame::Render()
     for (auto& hbsc : m_staticObjs.HBSContainer)
     {
         hbsc.Render();
-        hbsc.m_component.DrawBoundary(m_line);
-        if (hbsc.m_component.IsCollision(m_goose.m_component))
-            std::cout << "충돌" << std::endl;
     }
 
     m_line->Draw({0.f, 0.f, 0.f}, {1000.f, 0.f, 0.f}, {1.f, 0.f, 0.f, 1.f});
     m_line->Draw({0.f, 0.f, 0.f}, {0.f, 1000.f, 0.f}, {0.f, 1.f, 0.f, 1.f});
     m_line->Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
 
-    // m_gardener.Render();
+    m_gardener.Render();
     m_goose.Render();
     m_grid.Render();
 
     m_tree.Render();
     cube.Render();
-    m_goose.m_component.DrawBoundary(m_line);
     EasyRender::End(MultiRT::MAIN);
 
     // 글자 안나오는 이유 상수 버퍼

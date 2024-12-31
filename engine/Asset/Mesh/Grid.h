@@ -14,8 +14,8 @@ namespace HBSoft
 
         float width     = 61.44f;
         float height    = 61.44f;
-        int   numSlices = 20;
-        int   numStacks = 20;
+        int   numSlices = 40;
+        int   numStacks = 40;
 
 
     public:

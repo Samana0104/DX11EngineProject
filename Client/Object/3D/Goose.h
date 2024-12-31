@@ -6,6 +6,7 @@
 #include "3D/HeightMapObj.h"
 #include "Sound/HSound.h"
 #include "CollisionComponent.h"
+#include "Astar.h"
 
 namespace HBSoft
 {
@@ -31,7 +32,7 @@ namespace HBSoft
         std::shared_ptr<HSound>                     m_sound;
         std::vector<std::shared_ptr<AnimationClip>> m_gooseAnis;
 
-        float             m_speed1 = 0.7f;
+        float             m_speed1 = 0.2f;
         std::vector<mat4> anim;
 
         GooseState                    m_animstate;
@@ -44,6 +45,11 @@ namespace HBSoft
 
         int tempStartFrame = 0;
         int tempLastFrame  = 0;
+
+        int GRID_OFFSET = 20;
+
+        float gridLength = 61.44f;
+        int   gridNum    = 40;
 
     public:
         CollisionComponent m_component;

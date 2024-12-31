@@ -12,8 +12,8 @@ date: 2024-12-12
 #include "Core.h"
 #include "Mesh/Grid.h"
 
-#define GRID_OFFSET (20)  // 음수 좌표를 보정하기 위한 오프셋
-#define GRID_SIZE   (40)  // (-50 ~ 50 범위 지원)
+// 음수 좌표를 보정하기 위한 오프셋
+#define GRID_SIZE (40)  // (-50 ~ 50 범위 지원)
 
 #define INFINITY_DISTANCE (9999)
 
@@ -49,7 +49,7 @@ namespace HBSoft
         Astar()  = default;
         ~Astar() = default;
 
-        void  InitGrid();
+        std::vector<std::vector<std::shared_ptr<Node>>> InitGrid();
         float heuristic(const std::shared_ptr<Node>& a, const std::shared_ptr<Node>& b);
         float distance(const std::shared_ptr<Node>& a, const std::shared_ptr<Node>& b);
         std::vector<std::shared_ptr<Node>> getNeighbors(
@@ -58,6 +58,17 @@ namespace HBSoft
                                                  const std::shared_ptr<Node>&                     goal,
                                                  std::vector<std::vector<std::shared_ptr<Node>>>& grid);
 
+
+        float gridLength = 61.44f;
+        int   gridNum    = 40;
+
+        float GetGridLength();
+        int   GetGridNum();
+
+        int GRID_OFFSET = 20;
+
+        int rows = 20;
+        int cols = 20;
         /*  void aStarMain();*/
 
 

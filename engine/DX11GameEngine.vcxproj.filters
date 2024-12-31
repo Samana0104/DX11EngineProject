@@ -224,6 +224,9 @@
     <ClCompile Include="Object\CollisionComponent.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Ai\GardenerFSM.cpp">
+      <Filter>Ai</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -416,6 +419,9 @@
     </ClInclude>
     <ClInclude Include="Object\CollisionComponent.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Ai\GardenerFSM.h">
+      <Filter>Ai</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

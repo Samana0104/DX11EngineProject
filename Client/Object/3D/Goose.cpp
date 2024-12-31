@@ -24,7 +24,7 @@ Goose::Goose()
 
     anim.resize(m_mesh->m_born.bornIndex.size());
 
-    m_transform.SetLocation({0.0f, 0.6f, -5.0f});
+    m_transform.SetLocation({-1.0f, 0.6f, -1.0f});
     m_transform.SetScale({0.07f, 0.07f, 0.07f});
     m_transform.SetRotation(vec3(1.0f, 0.f, 0.f), 90.f);
 
@@ -69,6 +69,23 @@ void Goose::Update(float deltaTime)
     static bool isRightPressed = false;
     static bool isLeftPressed  = false;
     vec3        moveDirection  = vec3(0.f, 0.f, 0.f);
+
+    int                                             rows = 40;
+    int                                             cols = 40;
+    std::vector<std::vector<std::shared_ptr<Node>>> grid(rows, std::vector<std::shared_ptr<Node>>(cols));
+
+    // 2D 그리드 초기화
+    for (int y = -GRID_OFFSET; y < GRID_OFFSET; ++y)
+    {
+        for (int x = -GRID_OFFSET; x < GRID_OFFSET; ++x)
+        {
+            grid[x + GRID_OFFSET][y + GRID_OFFSET] = std::make_shared<Node>(x, y);  // make_shared 사용
+        }
+    }
+
+    grid[4 + GRID_OFFSET][1 + GRID_OFFSET]->isObstacle = true;
+    grid[4 + GRID_OFFSET][2 + GRID_OFFSET]->isObstacle = true;
+    grid[4 + GRID_OFFSET][3 + GRID_OFFSET]->isObstacle = true;
 
 
     if (HINPUT->IsKeyPressed(37) && !isRightPressed)  // VK_LEFT
@@ -134,6 +151,15 @@ void Goose::Update(float deltaTime)
                 /*anim = m_gooseAnis[9]->GetAnimationMatrix(currentFrame);*/
             }
         }
+
+        // if (grid[(int)(m_transform.m_pos[0] / (gridLength / gridNum))]
+        //         [(int)(m_transform.m_pos[2] / (gridLength / gridNum))]
+        //         ->isObstacle == true)
+        //{
+        //     m_transform.AddLocation(vec3(1.f, 0.f, 0.f));
+
+        //    /*m_transform.AddLocation(vec3(m_transform.m_pos[0] / (gridLength / gridNum)))*/
+        //}
     }
 
     if (HINPUT->IsKeyPressed(39) && !isLeftPressed)  // VK_RIGHT
@@ -377,7 +403,7 @@ void Goose::Update(float deltaTime)
     {
         isUpPressed = false;
     }
-    float height = m_mapObj->GetHeight(m_transform.m_pos);
+    /*float height = m_mapObj->GetHeight(m_transform.m_pos);*/
 
     m_transform.AddLocation(moveDirection * deltaTime * m_speed1);
 
@@ -386,8 +412,13 @@ void Goose::Update(float deltaTime)
         m_transform.AddLocation(moveDirection * deltaTime * m_speed1 * 1.5f);
     }
 
-    m_transform.SetLocation({m_transform.m_pos.x, height, m_transform.m_pos.z});
-
+    ///*m_transform.SetLocation({m_transform.m_pos.x, height, m_transform.m_pos.z});*/
+    if (grid[(int)(m_transform.m_pos[0] / (gridLength / gridNum)) + 20]
+            [(int)(m_transform.m_pos[2] / (gridLength / gridNum)) + 20]
+            ->isObstacle == true)
+    {
+        m_transform.AddLocation(vec3(-1.f, 0.f, -1.f));
+    }
 
     anim = m_gooseAnis[m_animstate]->GetAnimationMatrix(currentFrame);
     UpdateDefaultCB();

@@ -24,6 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Ai\Astar.cpp" />
+    <ClCompile Include="Ai\GardenerFSM.cpp" />
     <ClCompile Include="Asset\AnimationClip.cpp" />
     <ClCompile Include="Asset\AssetsMgr.cpp" />
     <ClCompile Include="Asset\Factory\AnimationFactory.cpp" />
@@ -83,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ai\Astar.h" />
+    <ClInclude Include="Ai\GardenerFSM.h" />
     <ClInclude Include="Asset\AnimationClip.h" />
     <ClInclude Include="Asset\AssetsMgr.h" />
     <ClInclude Include="Asset\DefaultResource.h" />
