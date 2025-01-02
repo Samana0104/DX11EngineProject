@@ -34,6 +34,7 @@ namespace HBSoft
         Cabbage1,
         Cabbage2,
         Cabbage3,
+        pumpkinLeavesL,
 
     };
 
@@ -43,10 +44,10 @@ namespace HBSoft
         std::shared_ptr<Mesh> m_mesh;
         std::vector<mat4>     m_anim;
         std::string           m_name;
+        std::string           m_key;
         std::shared_ptr<Texture> m_picnicRugTexture;
         std::shared_ptr<Texture> m_texCube1;
         TransformType         m_transType = TransformType::DefaultTrans;
-
 
     public:
         float x = -7;
@@ -60,6 +61,15 @@ namespace HBSoft
         Static3DObj();
         Static3DObj(const std::string& n)
             : m_name(n) {}
+
+        float generateRandomValue(float min, float max)
+        {
+            // Random number generator
+            std::random_device                    rd;
+            std::mt19937                          gen(rd());
+            std::uniform_real_distribution<float> dist(min, max);
+            return dist(gen);
+        }
 
         std::string GetName();
         void        SetTransType(TransformType);
