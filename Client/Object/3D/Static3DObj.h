@@ -30,6 +30,11 @@ namespace HBSoft
         Concrete22,
         Bridge,
         DirtRightLow1,
+        Cabbage0,
+        Cabbage1,
+        Cabbage2,
+        Cabbage3,
+
     };
 
     class Static3DObj : public Object3D
@@ -39,8 +44,8 @@ namespace HBSoft
         std::vector<mat4>        m_anim;
         std::string              m_name;
         std::shared_ptr<Texture> m_picnicRugTexture;
-        std::shared_ptr<Texture> m_cubeTex;
-        TransformType            m_transType = TransformType::DefaultTrans;
+        std::shared_ptr<Texture> m_texCube1;
+        TransformType         m_transType = TransformType::DefaultTrans;
 
 
     public:
@@ -62,11 +67,11 @@ namespace HBSoft
         void        SetTransType(TransformType);
         Transform3D GetTransform();
 
+        virtual void Init();
+        void         Init(const std::string&);
         virtual void Update(const float deltaTime) override;
         void         UpdateLocation(const float deltaTime, float, float, float);
         virtual void Render() override;
-        virtual void Init();
-        void         Init(const std::string&);
         virtual void Release();
     };
 }  // namespace HBSoft

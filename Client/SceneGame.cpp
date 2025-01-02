@@ -19,7 +19,13 @@ SceneGame::SceneGame()
 #else
     cameraTest = std::make_shared<GooseCamera>();
 #endif
+    cameraTest = std::make_shared<Camera>();
+    lightTest  = std::make_shared<DirectionalLight>(vec3(-1.f, -1.f, 0.f), 1.4f);
+    mapTest    = std::make_shared<HeightMapObj>();
+    m_line     = std::make_shared<LineObj>();
 
+    cameraTest->CreatePerspective(glm::radians(90.f), 1.f, 10000.f);
+    cameraTest->LookAt({0.f, 3.f, -1.5f}, {0.f, 0.f, 0.f}, {0.f, 1.f, 0.f});
     lightTest = std::make_shared<DirectionalLight>(vec3(-1.f, -1.f, -1.f), 1.f);
     mapTest   = std::make_shared<HeightMapObj>();
     m_line    = std::make_shared<LineObj>();
@@ -57,7 +63,7 @@ void SceneGame::Update(float deltaTime)
 {
 #ifdef _DEBUG
     ImGui::Checkbox("wireframe : ", &isWire);
-    ImGui::SliderFloat("light Power", &lightTest->m_lightPower, 0.f, 2.f);
+    ImGui::SliderFloat("light Power", &lightTest->m_lightPower, 0.f, 5.f);
 #endif
 
     /*ImGui::DragFloat("X: ", &m_x, 0.1f);

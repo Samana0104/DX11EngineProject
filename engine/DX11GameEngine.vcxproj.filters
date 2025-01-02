@@ -505,5 +505,11 @@
     <FxCompile Include="..\res\Shader\BasicEnvPS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
+    <FxCompile Include="..\res\Shader\CartoonEnvPS.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\res\Shader\CartoonEnvVS.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

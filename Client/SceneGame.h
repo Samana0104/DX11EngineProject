@@ -37,6 +37,13 @@ namespace HBSoft
         GridMap                       m_grid;
         std::shared_ptr<CollisionObj> m_colObjs;
         HBSAutoLoader<Static3DObj>    m_staticObjs;
+        GameButton                 m_escButton;
+        CubeMapObj                 cube;
+        QuadTree                   m_tree;
+        Goose                      m_goose;
+        Gardener                   m_gardener;
+        GridMap                    m_grid;
+        HBSAutoLoader<std::shared_ptr<Static3DObj>> m_staticObjs;
 
 #ifdef _DEBUG
         std::shared_ptr<DebugCamera> cameraTest;
