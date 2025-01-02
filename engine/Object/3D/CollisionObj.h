@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : collision 오브젝트 표기용 헤더파일
+
+version: 1.0.0
+date: 2025-01-02
+*/
+
 #pragma once
 
 #include "3D/Object3D.h"

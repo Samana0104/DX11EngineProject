@@ -49,12 +49,12 @@ PSInput main(AnimationInput vsIn)
         vAnimVertex += mul(matBone, localPos) * fWeight;
         vAnimNormal += mul((float3x3) matBone, vsIn.n) * fWeight;
     }
-
+    
     float4 worldPos = mul(worldMat, vAnimVertex);
     float4 viewPos = mul(viewMat, worldPos);
     float4 projPos = mul(projMat, viewPos);
 
-    float4 normal = mul(normalMat, float4(vsIn.n.xyz, 0));
+    float4 normal = mul(normalMat, float4(normalize(vAnimNormal), 0));
     
     psIn.p = projPos;
     psIn.n = normalize(normal.xyz);

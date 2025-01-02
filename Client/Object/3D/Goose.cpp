@@ -39,7 +39,10 @@ Goose::Goose()
     m_gooseAnis.push_back(HASSET->m_animations[L"gooseGallopDownHalfFlap.skm"]);
     m_gooseAnis.push_back(HASSET->m_animations[L"gooseSneakIdleHalfFlap.skm"]);
 
-    m_component.AddAABBRange(m_mesh->m_autoCollision.aabb);
+    AABB gooseCol;
+    gooseCol.min = {-3.f, 0.f, -2.9f};
+    gooseCol.max = {3.f, 10.f, 2.9f};
+    m_component.AddAABBRange(gooseCol);
 }
 
 void Goose::Update(float deltaTime)
@@ -332,13 +335,10 @@ void Goose::Update(float deltaTime)
 
     anim = m_gooseAnis[m_animstate]->GetAnimationMatrix(currentFrame);
     m_transform.AddLocation(moveVec);
-    m_transform.SetLocation(
-    {m_transform.m_pos[0], m_mapObj->GetHeight(m_transform.m_pos), m_transform.m_pos[2]});
 
 #ifndef _DEBUG
     m_camera->Move({m_transform.m_pos[0] + 0.9f, m_transform.m_pos[1] + 3.f, m_transform.m_pos[2]});
 #endif
-    UpdateDefaultCB();
     m_easyRender.UpdateVSCB((void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
 }
 
@@ -377,6 +377,32 @@ void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
     {
         // vec3 normal     = m_component.m_collidedArea.ComputeNormal(moveVec, m_transform.m_pos);
         // vec3 reflectVec = glm::reflect(moveVec, normal);
-        m_transform.AddLocation(-moveVec);
+
+        float colMaxY = -9999.f;
+        for (size_t i = 0; i < m_component.m_collidedAreas.size(); i++)
+        {
+            if (m_component.m_collidedAreas[i].max.y > colMaxY)
+                colMaxY = m_component.m_collidedAreas[i].max.y;
+        }
+
+        if (glm::abs(m_transform.m_pos.y - colMaxY) < 0.3f)
+        {
+            m_transform.SetLocation({m_transform.m_pos.x, colMaxY, m_transform.m_pos.z});
+        }
+        else
+        {
+            m_transform.AddLocation(-moveVec);
+        }
     }
+    else
+    {
+        m_transform.AddLocation({0.f, -0.2f, 0.f});
+    }
+
+    float height = m_mapObj->GetHeight(m_transform.m_pos);
+    if (m_transform.m_pos.y < height)
+        m_transform.SetLocation(
+        {m_transform.m_pos[0], m_mapObj->GetHeight(m_transform.m_pos), m_transform.m_pos[2]});
+
+    UpdateDefaultCB();
 }

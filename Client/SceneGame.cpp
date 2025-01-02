@@ -60,14 +60,17 @@ void SceneGame::Update(float deltaTime)
 #endif
 
     cameraTest->Update(deltaTime);
-    m_line->Update(deltaTime);
+
+    m_escButton.Update(deltaTime);
+    m_questGUI.Update(deltaTime);
 
     cube.Update(deltaTime);
-    m_escButton.Update(deltaTime);
     m_grid.Update(deltaTime);
     // m_gardener.Update(deltaTime);
     m_goose.Update(deltaTime);
     m_tree.Update(deltaTime);
+
+    m_line->Update(deltaTime);
 
     m_colObjs->Update(deltaTime);
     // m_test2.GetTransform().SetLocation(glm::vec3(m_x, m_y, m_z));
@@ -109,6 +112,7 @@ void SceneGame::Render()
     // 글자 안나오는 이유 상수 버퍼
     // 프레임 떨어지는 이유 폰트로
     EasyRender::Begin(MultiRT::GUI);
+    m_questGUI.Render();
     m_escButton.Render();
     EasyRender::End(MultiRT::GUI);
 
