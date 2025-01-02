@@ -14,6 +14,7 @@ using namespace HBSoft;
 
 Gardener::Gardener()
 {
+
     m_mesh = HASSET->m_meshes[L"Walking.hbs"];
     m_easyRender.SetMesh(m_mesh);
     m_easyRender.SetVSShader(L"BasicAniVS.hlsl");
