@@ -19,11 +19,10 @@ SceneGame::SceneGame()
 #else
     cameraTest = std::make_shared<GooseCamera>();
 #endif
-    cameraTest = std::make_shared<DebugCamera>();
-    lightTest  = std::make_shared<DirectionalLight>(vec3(-1.f, -1.f, 0.f), 1.4f);
-    mapTest    = std::make_shared<HeightMapObj>();
-    m_line     = std::make_shared<LineObj>();
-    m_colObjs  = std::make_shared<CollisionObj>();
+    lightTest = std::make_shared<DirectionalLight>(vec3(-1.f, -1.f, 0.f), 1.4f);
+    mapTest   = std::make_shared<HeightMapObj>();
+    m_line    = std::make_shared<LineObj>();
+    m_colObjs = std::make_shared<CollisionObj>();
 
     cameraTest->SetPerspective(glm::radians(90.f), 1.f, 10000.f);
     cameraTest->LookAt({m_goose.m_transform.m_pos[0] + 0.9f,
