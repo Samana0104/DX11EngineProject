@@ -397,8 +397,6 @@ void Goose::Update(float deltaTime)
 
     anim = m_gooseAnis[m_animstate]->GetAnimationMatrix(currentFrame);
     m_transform.AddLocation(moveVec);
-    m_transform.SetLocation(
-    {m_transform.m_pos[0], m_mapObj->GetHeight(m_transform.m_pos), m_transform.m_pos[2]});
 
     if (m_socketObj)
     {
