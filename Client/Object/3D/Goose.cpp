@@ -373,6 +373,8 @@ void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
 {
     if (m_component.IsCollision(obj->m_component))
     {
+        // vec3 normal     = m_component.m_collidedArea.ComputeNormal(moveVec, m_transform.m_pos);
+        // vec3 reflectVec = glm::reflect(moveVec, normal);
         m_transform.AddLocation(-moveVec);
     }
 }

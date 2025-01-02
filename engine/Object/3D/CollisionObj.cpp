@@ -77,13 +77,12 @@ void CollisionObj::Release() {}
 
 void CollisionObj::Update(const float deltaTime)
 {
-    static int   item_current = 0;
-    static AABB  aabbTarget;
-    static float imguiMinVec3[3];
-    static float imguiMaxVec3[3];
-
-    const char* items[100];
-    int         idx = 0;
+    static int         item_current = 0;
+    static AABB        aabbTarget;
+    static float       imguiMinVec3[3];
+    static float       imguiMaxVec3[3];
+    static const char* items[150];
+    int                idx = 0;
 
     for (auto& item : m_colIdList)
         items[idx++] = item.first.c_str();
@@ -102,8 +101,58 @@ void CollisionObj::Update(const float deltaTime)
             imguiMinVec3[i] = aabbTarget.min[i];
             imguiMaxVec3[i] = aabbTarget.max[i];
         }
+
         ImGui::InputFloat3("AABB Min", imguiMinVec3);
         ImGui::InputFloat3("AABB Max", imguiMaxVec3);
+
+        for (int i = 0; i < 3; i++)
+        {
+            aabbTarget.min[i] = imguiMinVec3[i];
+            aabbTarget.max[i] = imguiMaxVec3[i];
+        }
+
+        m_colIdList[items[item_current]] = aabbTarget;
+        m_component.SetAABBRange(aabbTarget, item_current);
+    }
+
+    if (ImGui::Button("Add"))
+    {
+        AABB addAABB;
+        m_colIdList[std::to_string(m_colIdList.size())] = addAABB;
+        m_component.AddAABBRange(addAABB);
+
+        idx = 0;
+        for (auto& item : m_colIdList)
+        {
+            aabbTarget = m_colIdList[item.first];
+            m_component.SetAABBRange(aabbTarget, idx);
+            idx++;
+        }
+
+        item_current = 0;
+    }
+    ImGui::SameLine(0.f, 20.f);
+
+    if (ImGui::Button("Delete"))
+    {
+        m_colIdList.erase(items[item_current]);
+        m_component.DeleteAABBRange((size_t)item_current);
+
+        idx = 0;
+        for (auto& item : m_colIdList)
+        {
+            aabbTarget = m_colIdList[item.first];
+            m_component.SetAABBRange(aabbTarget, idx);
+            idx++;
+        }
+
+        item_current = 0;
+    }
+
+    ImGui::SameLine(0.f, 20.f);
+    if (ImGui::Button("Save"))
+    {
+        SaveRange("../res/collision.txt");
     }
 }
 

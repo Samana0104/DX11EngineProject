@@ -5,11 +5,22 @@ using namespace HBSoft;
 
 CollisionComponent::CollisionComponent(Transform3D& transform, bool isCollision)
     : m_transform(transform), m_isCollision(isCollision)
-{}
+{
+    m_collidedArea.min = vec3(0.f);
+    m_collidedArea.max = vec3(0.f);
+}
 
 void CollisionComponent::AddAABBRange(const AABB& aabb)
 {
     m_colRanges.push_back(aabb);
+}
+
+void CollisionComponent::DeleteAABBRange(size_t idx)
+{
+    if (idx >= m_colRanges.size())
+        return;
+
+    m_colRanges.erase(m_colRanges.begin() + idx);
 }
 
 void CollisionComponent::SetAABBRange(const AABB& aabb, size_t idx)
@@ -39,7 +50,10 @@ bool CollisionComponent::IsCollision(const AABB& aabb)
         colRange.max    += m_transform.m_pos;
 
         if (colRange.IsCollision(aabb))
+        {
+            m_collidedArea = colRange.GetCollisionArea(aabb);
             return true;
+        }
     }
 
     return false;
