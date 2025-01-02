@@ -19,8 +19,7 @@ SceneGame::SceneGame()
 #else
     cameraTest = std::make_shared<GooseCamera>();
 #endif
-
-    lightTest = std::make_shared<DirectionalLight>(vec3(-1.f, -1.f, -1.f), 1.f);
+    lightTest = std::make_shared<DirectionalLight>(vec3(-1.f, -1.f, 0.f), 1.4f);
     mapTest   = std::make_shared<HeightMapObj>();
     m_line    = std::make_shared<LineObj>();
     m_colObjs = std::make_shared<CollisionObj>();

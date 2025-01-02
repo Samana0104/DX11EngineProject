@@ -77,6 +77,7 @@ void CollisionObj::Release() {}
 
 void CollisionObj::Update(const float deltaTime)
 {
+#ifdef _DEBUG
     static int         item_current = 0;
     static AABB        aabbTarget;
     static float       imguiMinVec3[3];
@@ -154,6 +155,7 @@ void CollisionObj::Update(const float deltaTime)
     {
         SaveRange("../res/collision.txt");
     }
+#endif
 }
 
 void CollisionObj::Render() {}
