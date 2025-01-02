@@ -39,7 +39,10 @@ Goose::Goose()
     m_gooseAnis.push_back(HASSET->m_animations[L"gooseGallopDownHalfFlap.skm"]);
     m_gooseAnis.push_back(HASSET->m_animations[L"gooseSneakIdleHalfFlap.skm"]);
 
-    m_component.AddAABBRange(m_mesh->m_autoCollision.aabb);
+    AABB gooseCol;
+    gooseCol.min = {-3.f, 0.f, -2.9f};
+    gooseCol.max = {3.f, 10.f, 2.9f};
+    m_component.AddAABBRange(gooseCol);
 }
 
 void Goose::Update(float deltaTime)
