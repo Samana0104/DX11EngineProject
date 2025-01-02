@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : collision component 소스파일
+
+version: 1.0.5
+date: 2025-01-02
+*/
+
 #include "pch.h"
 #include "CollisionComponent.h"
 #include "3D/LineObj.h"
@@ -6,8 +14,7 @@ using namespace HBSoft;
 CollisionComponent::CollisionComponent(Transform3D& transform, bool isCollision)
     : m_transform(transform), m_isCollision(isCollision)
 {
-    m_collidedArea.min = vec3(0.f);
-    m_collidedArea.max = vec3(0.f);
+    m_collidedAreas.resize(10);
 }
 
 void CollisionComponent::AddAABBRange(const AABB& aabb)
@@ -51,7 +58,6 @@ bool CollisionComponent::IsCollision(const AABB& aabb)
 
         if (colRange.IsCollision(aabb))
         {
-            m_collidedArea = colRange.GetCollisionArea(aabb);
             return true;
         }
     }
@@ -64,6 +70,7 @@ bool CollisionComponent::IsCollision(const CollisionComponent& component)
     if (!m_isCollision)
         return false;
 
+    m_collidedAreas.clear();
     for (size_t i = 0; i < component.m_colRanges.size(); i++)
     {
         AABB colRange    = component.m_colRanges[i];
@@ -78,8 +85,11 @@ bool CollisionComponent::IsCollision(const CollisionComponent& component)
         colRange.max    += component.m_transform.m_pos;
 
         if (IsCollision(colRange))
-            return true;
+            m_collidedAreas.push_back(colRange);
     }
+
+    if (m_collidedAreas.size() >= 1)
+        return true;
 
     return false;
 }

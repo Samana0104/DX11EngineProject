@@ -1,9 +1,9 @@
 /*
 author : 변한빛
-description : collision 모음
+description : 기본 collision 모음
 
-version: 1.0.0
-date: 2024-12-24
+version: 1.0.5
+date: 2025-01-02
 */
 #pragma once
 

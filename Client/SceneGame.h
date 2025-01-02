@@ -11,6 +11,7 @@ date: 2024-12-23
 
 #include "Camera/DebugCamera.h"
 #include "Camera/GooseCamera.h"
+#include "2D/GridMap.h"
 #include "3D/LineObj.h"
 #include "3D/CubeMapObj.h"
 #include "3D/QuadTree.h"
@@ -18,26 +19,27 @@ date: 2024-12-23
 #include "3D/Goose.h"
 #include "3D/Gardener.h"
 #include "3D/CollisionObj.h"
-#include "GameButton.h"
 #include "3D/Static3DObj.h"
-#include "HBSAutoLoader.h"
 #include "3D/DirectionalLight.h"
-#include "2D/GridMap.h"
+#include "HBSAutoLoader.h"
+#include "GameButton.h"
+#include "QuestGUI.h"
 
 namespace HBSoft
 {
-	class SceneGame : public Scene
-	{
-	public:
-		GameButton                    m_escButton;
-		CubeMapObj                    cube;
-		QuadTree                      m_tree;
-		Goose                         m_goose;
-		Gardener                      m_gardener;
-		GridMap                       m_grid;
-		std::shared_ptr<CollisionObj> m_colObjs;
+    class SceneGame : public Scene
+    {
+    public:
+        GameButton                    m_escButton;
+        QuestGUI                      m_questGUI;
+        CubeMapObj                    cube;
+        QuadTree                      m_tree;
+        Goose                         m_goose;
+        Gardener                      m_gardener;
+        GridMap                       m_grid;
+        std::shared_ptr<CollisionObj> m_colObjs;
 
-		HBSAutoLoader<std::shared_ptr<Static3DObj>> m_staticObjs;
+        HBSAutoLoader<std::shared_ptr<Static3DObj>> m_staticObjs;
 
 #ifdef _DEBUG
 		std::shared_ptr<DebugCamera> cameraTest;
@@ -48,10 +50,10 @@ namespace HBSoft
 		std::shared_ptr<HeightMapObj>     mapTest;
 		std::shared_ptr<LineObj>          m_line;
 
-		bool isWire = false;
+        bool isWire = false;
 
-	public:
-		SceneGame();
+    public:
+        SceneGame();
 
 		virtual void Update(float deltaTime) override;
 		virtual void Render() override;

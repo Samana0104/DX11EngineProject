@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : collision component 헤더파일
+
+version: 1.0.5
+date: 2025-01-02
+*/
+
 #pragma once
 
 #include "pch.h"
@@ -16,7 +24,7 @@ namespace HBSoft
     public:
         std::vector<AABB> m_colRanges;
 
-        AABB m_collidedArea;  // IsCollision에서 충돌나면 충돌 영역 저장하는 함수
+        std::vector<AABB> m_collidedAreas;  // IsCollision에서 충돌나면 충돌 영역 저장하는 함수
         bool m_isCollision;
 
     public:

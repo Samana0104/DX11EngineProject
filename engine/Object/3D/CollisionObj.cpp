@@ -1,3 +1,11 @@
+/*
+author : 변한빛
+description : collision 오브젝트 표기용 소스파일
+
+version: 1.0.0
+date: 2025-01-02
+*/
+
 #include "pch.h"
 #include "CollisionObj.h"
 using namespace HBSoft;
@@ -121,7 +129,7 @@ void CollisionObj::Update(const float deltaTime)
     if (ImGui::Button("Add"))
     {
         AABB addAABB;
-        m_colIdList[std::to_string(m_colIdList.size())] = addAABB;
+        m_colIdList[std::to_string(m_colIdList.size() + 1)] = addAABB;
         m_component.AddAABBRange(addAABB);
 
         idx = 0;
