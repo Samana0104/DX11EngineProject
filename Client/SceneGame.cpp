@@ -100,7 +100,7 @@ void SceneGame::Render()
 
     // m_gardener.Render();
     m_goose.Render();
-    m_grid.Render();
+    //m_grid.Render();
 
     m_tree.Render();
     cube.Render();

@@ -111,8 +111,10 @@ void CollisionObj::Update(const float deltaTime)
             imguiMaxVec3[i] = aabbTarget.max[i];
         }
 
-        ImGui::InputFloat3("AABB Min", imguiMinVec3);
-        ImGui::InputFloat3("AABB Max", imguiMaxVec3);
+        //ImGui::InputFloat3("AABB Min", imguiMinVec3);
+        //ImGui::InputFloat3("AABB Max", imguiMaxVec3);
+        ImGui::DragFloat3("AABB Min", imguiMinVec3, 0.01f);
+        ImGui::DragFloat3("AABB Max", imguiMaxVec3, 0.01f);
 
         for (int i = 0; i < 3; i++)
         {
