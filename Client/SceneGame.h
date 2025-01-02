@@ -29,20 +29,13 @@ namespace HBSoft
     class SceneGame : public Scene
     {
     public:
-        GameButton                    m_escButton;
-        CubeMapObj                    cube;
-        QuadTree                      m_tree;
-        Goose                         m_goose;
-        Gardener                      m_gardener;
-        GridMap                       m_grid;
-        std::shared_ptr<CollisionObj> m_colObjs;
-        HBSAutoLoader<Static3DObj>    m_staticObjs;
-        GameButton                 m_escButton;
-        CubeMapObj                 cube;
-        QuadTree                   m_tree;
-        Goose                      m_goose;
-        Gardener                   m_gardener;
-        GridMap                    m_grid;
+        GameButton                                  m_escButton;
+        CubeMapObj                                  cube;
+        QuadTree                                    m_tree;
+        Goose                                       m_goose;
+        Gardener                                    m_gardener;
+        GridMap                                     m_grid;
+        std::shared_ptr<CollisionObj>               m_colObjs;
         HBSAutoLoader<std::shared_ptr<Static3DObj>> m_staticObjs;
 
 #ifdef _DEBUG
