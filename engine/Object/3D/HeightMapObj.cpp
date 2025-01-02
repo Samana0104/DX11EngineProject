@@ -25,7 +25,7 @@ HeightMapObj::HeightMapObj()
     GenerateVertexNormal();
 
     m_easyRender.SetVSShader(L"BasicVS.hlsl");
-    m_easyRender.SetPSShader(L"BasicEnvPS.hlsl");
+    m_easyRender.SetPSShader(L"BasicPS.hlsl");
     m_easyRender.SetSS(ERSamplerState::LINEAR);
     m_easyRender.SetTexture(m_mapTexture);
 
@@ -84,8 +84,10 @@ void HeightMapObj::CreateMapDesc(const TEXTURE_KEY heightTexKey, float scaleXPer
 
 float HeightMapObj::GetHeight(vec3 pos)
 {
-    float cellX = (float)(m_mapDesc.numCols - 1) * 0.5f + pos.x / m_mapDesc.scaleXPerCell;
-    float cellZ = (float)(m_mapDesc.numRows - 1) * 0.5f - pos.z / m_mapDesc.scaleZPerCell;
+    float cellX =
+    (float)(m_mapDesc.numCols - 1) * 0.5f + (pos.x - m_transform.m_pos.x) / m_mapDesc.scaleXPerCell;
+    float cellZ =
+    (float)(m_mapDesc.numRows - 1) * 0.5f - (pos.z - m_transform.m_pos.z) / m_mapDesc.scaleZPerCell;
 
     float floorCellX = glm::floor(cellX);
     float floorCellZ = glm::floor(cellZ);

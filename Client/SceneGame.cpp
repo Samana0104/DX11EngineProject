@@ -75,8 +75,7 @@ void SceneGame::Update(float deltaTime)
 
     for (auto& hbsc : m_staticObjs.HBSContainer)
     {
-        //if (hbsc.GetName() != m_test2.GetName())
-            hbsc->Update(deltaTime);
+        hbsc->Update(deltaTime);
     }
 
     m_goose.ProcessCollision(m_colObjs);
@@ -89,12 +88,7 @@ void SceneGame::Render()
 
 
     for (auto& hbsc : m_staticObjs.HBSContainer)
-    {
         hbsc->Render();
-        // hbsc.m_component.DrawBoundary(m_line);
-        // if (hbsc.m_component.IsCollision(m_goose.m_component))
-        //     std::cout << "Ãæµ¹" << std::endl;
-    }
 
 #ifdef _DEBUG
     m_line->Draw({0.f, 0.f, 0.f}, {1000.f, 0.f, 0.f}, {1.f, 0.f, 0.f, 1.f});
