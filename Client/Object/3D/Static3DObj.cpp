@@ -38,16 +38,21 @@ void Static3DObj::Init() {}
 
 void Static3DObj::Init(const std::string& key)
 {
+    m_key = key;
     m_easyRender.SetVSShader(L"CartoonEnvVS.hlsl");
     m_easyRender.SetPSShader(L"CartoonEnvPS.hlsl");
     m_easyRender.SetTexture(nullptr);
-
-    if (key.find('#') == 0)
+    
+    if (key.find('~') == 0)
+        SetTransType(TransformType::DefaultTrans);
+    else if (key.find('#') == 0)
         SetTransType(TransformType::CMTrans);
     else if (key.find('@') == 0)
         SetTransType(TransformType::Test);
     else if (key.find('_') == 0)
         SetTransType(TransformType::UnityTrans);
+    else if (key.find('!') == 0)
+        SetTransType(TransformType::ConcretePath);
     else if (key.find("StoneHouses") == 0)
         SetTransType(TransformType::FrontHouse);
     else if (key.find("store") == 0)
@@ -60,8 +65,6 @@ void Static3DObj::Init(const std::string& key)
         SetTransType(TransformType::Bench);
     else if (key.find("retainer") == 0)
         SetTransType(TransformType::PondRetainers);
-    else if (key.find('!') == 0)
-        SetTransType(TransformType::ConcretePath);
     else if (key.find("singleconcreteblock22") == 0)
         SetTransType(TransformType::Concrete22);
     else if (key.find("bridge") == 0)
@@ -79,11 +82,79 @@ void Static3DObj::Init(const std::string& key)
     else
         SetTransType(TransformType::GooseGameTrans);
 
+    static int flagSeed = 0;
+    static int flagCarrotL = 0;
+    static int flagCarrotR = 0;
+
     if (key == "_picnicrug.hbs")
     {
         m_easyRender.SetPSShader(L"BasicPS.hlsl");
         m_picnicRugTexture = HASSET->m_textures[L"PicnicRugPattern.png"];
         m_easyRender.SetTexture(m_picnicRugTexture);
+    }
+    else if (m_key.find("seedling") != std::string::npos)
+    {
+        m_transform.SetRotation(glm::vec3(0, generateRandomValue(0, 6.28), 0));
+        m_transform.SetLocation(
+        glm::vec3(5.01f - 0.55f * flagSeed, generateRandomValue(0.92, 0.98), 9.82f));
+        m_transform.SetScale(0.09f);
+        flagSeed++;
+    }
+    else if (m_key.find("carrotL") != std::string::npos)
+    {
+        m_transform.SetRotation(glm::vec3(0, 0, 0));
+        m_transform.SetLocation(glm::vec3(3.91f - 0.3f * flagCarrotL, 0.78, 3.81));
+        m_transform.SetScale(0.3);
+        flagCarrotL++;
+    }
+    else if (m_key.find("carrotR") != std::string::npos)
+    {
+        m_transform.SetRotation(glm::vec3(0, 0, 0));
+        m_transform.SetLocation(glm::vec3(3.91f - 0.3f * flagCarrotR, 0.78, 4.31));
+        m_transform.SetScale(0.3);
+        flagCarrotR++;
+    }
+    else if (m_key.find("pumpkinLeavesL_") != std::string::npos)
+    {
+        m_transform.SetRotation(glm::vec3(-0.35f, 1.09f, -0.06f));
+        m_transform.SetLocation(glm::vec3(1.68f, 0.98f, -1.05f));
+        m_transform.SetScale(0.21f);
+    }
+    else if (m_key.find("pumpkinLeavesR_") != std::string::npos)
+    {
+        m_transform.SetRotation(glm::vec3(-0.32f, -2.15f, 0.07f));
+        m_transform.SetLocation(glm::vec3(-0.25f, 1.02f, -1.19f));
+        m_transform.SetScale(0.19f);
+    }
+    else if (m_key.find("pumpkin0") != std::string::npos)
+    {
+        m_transform.SetRotation(glm::vec3(0, 0, 0));
+        m_transform.SetLocation(glm::vec3(2.08, 0.78, -1.8));
+        m_transform.SetScale(0.25);
+    }
+    else if (m_key.find("pumpkin1") != std::string::npos)
+    {
+        m_transform.SetRotation(glm::vec3(0, 0, 0));
+        m_transform.SetLocation(glm::vec3(1.55, 0.78, -0.63));
+        m_transform.SetScale(0.18);
+    }
+    else if (m_key.find("pumpkin2") != std::string::npos)
+    {
+        m_transform.SetRotation(glm::vec3(0, 0, 0));
+        m_transform.SetLocation(glm::vec3(-0.120, 0.78, -1.800));
+        m_transform.SetScale(0.310);
+    }
+    else if (m_key.find("pumpkin3") != std::string::npos)
+    {
+        m_transform.SetRotation(glm::vec3(0, 0, 0));
+        m_transform.SetLocation(glm::vec3(-0.550, 0.78, -0.950));
+        m_transform.SetScale(0.240);
+    }
+    else if (m_key.find("tulipBig") != std::string::npos)
+    {
+        m_transform.SetRotation(glm::vec3(0, 1.57, 0));
+        m_transform.SetLocation(glm::vec3(0.75, 0.87, 1.83));
+        m_transform.SetScale(0.14);
     }
 
     m_mesh     = HASSET->m_meshes[std::wstring().assign(key.begin(), key.end())];
@@ -188,16 +259,15 @@ void Static3DObj::Update(const float deltaTime)
         m_transform.SetLocation(glm::vec3(3.270f, 1.03f, -1.630f));
         m_transform.SetScale(0.22f);
     }
-
     else if (m_transType == TransformType::Test)
     {
 #ifdef _DEBUG
-        ImGui::DragFloat("x ", &x, 0.01f);
-        ImGui::DragFloat("y ", &y, 0.01f);
-        ImGui::DragFloat("z ", &z, 0.01f);
         ImGui::DragFloat("rotX ", &rotX, 0.01f);
         ImGui::DragFloat("rotY ", &rotY, 0.01f);
         ImGui::DragFloat("rotZ ", &rotZ, 0.01f);
+        ImGui::DragFloat("x ", &x, 0.01f);
+        ImGui::DragFloat("y ", &y, 0.01f);
+        ImGui::DragFloat("z ", &z, 0.01f);
         ImGui::DragFloat("scale ", &scale, 0.01f);
 #endif
         m_transform.SetRotation(glm::vec3(rotX, rotY, rotZ));

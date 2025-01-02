@@ -95,6 +95,7 @@ Transform3D& Transform3D::SetScale(const vec3 scale)
 Transform3D& Transform3D::SetScale(const float scale)
 {
     m_scale = vec3(scale, scale, scale);
+    CalculateWorldMat();
     return *this;
 }
 
