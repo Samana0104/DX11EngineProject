@@ -86,7 +86,7 @@ void Static3DObj::Init(const std::string& key)
         m_easyRender.SetTexture(m_picnicRugTexture);
     }
 
-    m_mesh = HASSET->m_meshes[std::wstring().assign(key.begin(), key.end())];
+    m_mesh     = HASSET->m_meshes[std::wstring().assign(key.begin(), key.end())];
     m_texCube1 = HASSET->m_textures[L"cubeTest.dds"];
     m_easyRender.SetMesh(m_mesh);
 }

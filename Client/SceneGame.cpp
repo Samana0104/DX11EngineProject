@@ -59,10 +59,6 @@ void SceneGame::Update(float deltaTime)
     ImGui::SliderFloat("light Power", &lightTest->m_lightPower, 0.f, 5.f);
 #endif
 
-    /*ImGui::DragFloat("X: ", &m_x, 0.1f);
-    ImGui::DragFloat("Y: ", &m_y, 0.1f);
-    ImGui::DragFloat("Z: ", &m_z, 0.1f);*/
-
     cameraTest->Update(deltaTime);
     m_line->Update(deltaTime);
 

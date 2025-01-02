@@ -26,17 +26,18 @@ date: 2024-12-23
 
 namespace HBSoft
 {
-    class SceneGame : public Scene
-    {
-    public:
-        GameButton                                  m_escButton;
-        CubeMapObj                                  cube;
-        QuadTree                                    m_tree;
-        Goose                                       m_goose;
-        Gardener                                    m_gardener;
-        GridMap                                     m_grid;
-        std::shared_ptr<CollisionObj>               m_colObjs;
-        HBSAutoLoader<std::shared_ptr<Static3DObj>> m_staticObjs;
+	class SceneGame : public Scene
+	{
+	public:
+		GameButton                    m_escButton;
+		CubeMapObj                    cube;
+		QuadTree                      m_tree;
+		Goose                         m_goose;
+		Gardener                      m_gardener;
+		GridMap                       m_grid;
+		std::shared_ptr<CollisionObj> m_colObjs;
+
+		HBSAutoLoader<std::shared_ptr<Static3DObj>> m_staticObjs;
 
 #ifdef _DEBUG
         std::shared_ptr<DebugCamera> cameraTest;
@@ -47,10 +48,10 @@ namespace HBSoft
         std::shared_ptr<HeightMapObj>     mapTest;
         std::shared_ptr<LineObj>          m_line;
 
-        bool isWire = false;
+		bool isWire = false;
 
-    public:
-        SceneGame();
+	public:
+		SceneGame();
 
         virtual void Update(float deltaTime) override;
         virtual void Render() override;
