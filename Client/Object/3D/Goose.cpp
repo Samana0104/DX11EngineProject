@@ -23,7 +23,6 @@ Goose::Goose()
 
     anim.resize(m_mesh->m_born.bornIndex.size());
 
-    m_transform.SetLocation({8.0f, 0.6f, 4.0f});
     m_transform.SetScale({0.07f, 0.07f, 0.07f});
     m_transform.SetRotation(vec3(1.0f, 0.f, 0.f), 0.65f * glm::pi<float>());
 
@@ -39,10 +38,11 @@ Goose::Goose()
     m_gooseAnis.push_back(HASSET->m_animations[L"gooseGallopDownHalfFlap.skm"]);
     m_gooseAnis.push_back(HASSET->m_animations[L"gooseSneakIdleHalfFlap.skm"]);
 
-    AABB gooseCol;
-    gooseCol.min = {-3.f, 0.f, -2.9f};
-    gooseCol.max = {3.f, 10.f, 2.9f};
-    m_component.AddAABBRange(gooseCol);
+    m_gooseStand.min      = {-3.f, 0.f, -2.9f};
+    m_gooseStand.max      = {3.f, 10.f, 2.9f};
+    m_gooseCrounching.min = {-3.f, 0.f, -2.9f};
+    m_gooseCrounching.max = {3.f, 5.f, 2.9f};
+    m_component.AddAABBRange(m_gooseStand, "Goose");
 }
 
 void Goose::Update(float deltaTime)
@@ -337,7 +337,7 @@ void Goose::Update(float deltaTime)
     m_transform.AddLocation(moveVec);
 
 #ifndef _DEBUG
-    m_camera->Move({m_transform.m_pos[0] + 0.9f, m_transform.m_pos[1] + 3.f, m_transform.m_pos[2]});
+    m_camera->Move({m_transform.m_pos[0] + 1.1f, m_transform.m_pos[1] + 2.4f, m_transform.m_pos[2]});
 #endif
     m_easyRender.UpdateVSCB((void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
 }
@@ -361,7 +361,7 @@ float Goose::GetLocationZ()
     return -1.f;
 }
 
-vec3 Goose::GetmPos()
+vec3 Goose::GetPos()
 {
     return m_transform.m_pos;
 }
@@ -375,9 +375,6 @@ void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
 {
     if (m_component.IsCollision(obj->m_component))
     {
-        // vec3 normal     = m_component.m_collidedArea.ComputeNormal(moveVec, m_transform.m_pos);
-        // vec3 reflectVec = glm::reflect(moveVec, normal);
-
         float colMaxY = -9999.f;
         for (size_t i = 0; i < m_component.m_collidedAreas.size(); i++)
         {
@@ -391,7 +388,17 @@ void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
         }
         else
         {
-            m_transform.AddLocation(-moveVec);
+            vec3 normal =
+            m_component.GetTransformedBound(0).ComputeNormal(m_component.m_collidedAreas[0]);
+            vec3 reflectVec;
+
+
+            if (glm::dot(normal, -moveVec) >= 0.f)
+                reflectVec = glm::proj<vec3>(-moveVec, normal);
+            else
+                reflectVec = moveVec;
+
+            m_transform.AddLocation(reflectVec);
         }
     }
     else

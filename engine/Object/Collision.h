@@ -3,7 +3,7 @@ author : 변한빛
 description : 기본 collision 모음
 
 version: 1.0.5
-date: 2025-01-02
+date: 2025-01-03
 */
 #pragma once
 
@@ -47,7 +47,7 @@ namespace HBSoft
                 return false;
         }
 
-        AABB GetCollisionArea(const AABB& aabb)
+        AABB GetIntersectArea(const AABB& aabb)
         {
             AABB colAABB;
             vec3 colMin, colMax;
@@ -70,30 +70,24 @@ namespace HBSoft
             return colAABB;
         }
 
-        vec3 ComputeNormal(const vec3& moveVec, const vec3& pos)
+        vec3 ComputeNormal(const AABB& box1)
         {
-            float dx1 = std::fabs(pos.x - min.x);
-            float dx2 = std::fabs(pos.x - max.x);
-            float dy1 = std::fabs(pos.y - min.y);
-            float dy2 = std::fabs(pos.y - max.y);
-            float dz1 = std::fabs(pos.z - min.z);
-            float dz2 = std::fabs(pos.z - max.z);
+            float overlapX = glm::min(box1.max.x, max.x) - glm::max(box1.min.x, min.x);
+            float overlapY = glm::min(box1.max.y, max.y) - glm::max(box1.min.y, min.y);
+            float overlapZ = glm::min(box1.max.z, max.z) - glm::max(box1.min.z, min.z);
 
-            // Determine closest face
-            float minDist = std::min({dx1, dx2, dy1, dy2, dz1, dz2});
-            if (minDist == dx1)
-                return {-1, 0, 0};  // Left
-            if (minDist == dx2)
-                return {1, 0, 0};  // Right
-            if (minDist == dy1)
-                return {0, -1, 0};  // Bottom
-            if (minDist == dy2)
-                return {0, 1, 0};  // Top
-            if (minDist == dz1)
-                return {0, 0, -1};  // Front
-            if (minDist == dz2)
-                return {0, 0, 1};  // Back
-            return {0, 0, 0};
+            if (overlapX < overlapY && overlapX < overlapZ)
+            {
+                return {box1.max.x > max.x ? -1.0f : 1.0f, 0.0f, 0.0f};  // X축 노말
+            }
+            else if (overlapY < overlapX && overlapY < overlapZ)
+            {
+                return {0.0f, box1.max.y > max.y ? -1.0f : 1.0f, 0.0f};  // Y축 노말
+            }
+            else
+            {
+                return {0.0f, 0.0f, box1.max.z > max.z ? -1.0f : 1.0f};  // Z축 노말
+            }
         }
     };
 
@@ -113,8 +107,28 @@ namespace HBSoft
     struct Plane
     {
         float a, b, c, d;
-        void  Set(vec3 v0, vec3 v1, vec3 v2);
-        void  Set(vec3 v0, vec3 vNormal);
+
+        void Set(vec3 v0, vec3 v1, vec3 v2)
+        {
+            vec3 e0 = v1 - v0;
+            vec3 e1 = v2 - v0;
+            vec3 normal;
+            normal = glm::cross(e0, e1);
+            normal = glm::normalize(normal);
+
+            a = normal.x;
+            b = normal.y;
+            c = normal.z;
+            d = -glm::dot(normal, v0);
+        }
+
+        void Set(vec3 v0, vec3 normal)
+        {
+            a = normal.x;
+            b = normal.y;
+            c = normal.z;
+            d = -glm::dot(normal, v0);
+        }
     };
 
     struct Sphere

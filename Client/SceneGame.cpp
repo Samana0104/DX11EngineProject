@@ -23,23 +23,19 @@ SceneGame::SceneGame()
     mapTest   = std::make_shared<HeightMapObj>();
     m_line    = std::make_shared<LineObj>();
     m_colObjs = std::make_shared<CollisionObj>();
+    m_goose   = std::make_shared<Goose>();
 
-    cameraTest->SetPerspective(glm::radians(90.f), 1.f, 10000.f);
-    cameraTest->LookAt({m_goose.m_transform.m_pos[0] + 0.9f,
-                        m_goose.m_transform.m_pos[1] + 3.0f,
-                        m_goose.m_transform.m_pos[2]},
-                       m_goose.m_transform.m_pos,
-                       {0.f, 1.f, 0.f});
 
     m_line->SetCamera(cameraTest);
     cube.SetCamera(cameraTest);
 
     m_gardener.SetCamera(cameraTest);
     m_gardener.SetLight(lightTest);
+    m_gardener.SetGooseObj(m_goose);
 
-    m_goose.SetCamera(cameraTest);
-    m_goose.SetHeightMap(mapTest);
-    m_goose.SetLight(lightTest);
+    m_goose->SetCamera(cameraTest);
+    m_goose->SetHeightMap(mapTest);
+    m_goose->SetLight(lightTest);
 
     mapTest->SetCamera(cameraTest);
     mapTest->SetLight(lightTest);
@@ -65,8 +61,8 @@ void SceneGame::Update(float deltaTime)
 
     cube.Update(deltaTime);
     m_grid.Update(deltaTime);
-    // m_gardener.Update(deltaTime);
-    m_goose.Update(deltaTime);
+    m_goose->Update(deltaTime);
+    m_gardener.Update(deltaTime);
     m_tree.Update(deltaTime);
 
     m_line->Update(deltaTime);
@@ -78,8 +74,7 @@ void SceneGame::Update(float deltaTime)
     {
         hbsc->Update(deltaTime);
     }
-
-    m_goose.ProcessCollision(m_colObjs);
+    m_goose->ProcessCollision(m_colObjs);
 }
 
 void SceneGame::Render()
@@ -97,14 +92,13 @@ void SceneGame::Render()
     m_line->Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
 #endif
 
-    // m_gardener.Render();
-    m_goose.Render();
-    // m_grid.Render();
+    m_gardener.Render();
+    m_goose->Render();
+    m_grid.Render();
 
     m_tree.Render();
     cube.Render();
-    // m_goose.m_component.DrawBoundary(m_line);
-    m_goose.m_component.DrawBoundary(m_line);
+    m_goose->m_component.DrawBoundary(m_line);
     m_colObjs->m_component.DrawBoundary(m_line);
     EasyRender::End(MultiRT::MAIN);
 
@@ -126,6 +120,22 @@ void SceneGame::Render()
 
 void SceneGame::Release() {}
 
-void SceneGame::Start() {}
+void SceneGame::Start()
+{
+#ifdef _DEBUG
+    m_goose->m_transform.SetLocation({8.0f, 0.4f, 4.0f});
+#else
+    m_goose->m_transform.SetLocation({23.5f, 0.625f, -4.5f});
+#endif
+    m_gardener.m_transform.SetLocation({3.f, 0.6f, 4.f});
+    cameraTest->SetPerspective(glm::radians(90.f), 0.5f, 10000.f);
+    cameraTest->LookAt({m_goose->m_transform.m_pos[0] + 0.9f,
+                        m_goose->m_transform.m_pos[1] + 2.6f,
+                        m_goose->m_transform.m_pos[2]},
+                       m_goose->m_transform.m_pos,
+                       {0.f, 1.f, 0.f});
+
+    m_questGUI.Init();
+}
 
 void SceneGame::End() {}

@@ -73,7 +73,7 @@ void CollisionObj::LoadRange(const stringV filePath)
         aabbCol.max.y >> aabbCol.max.z;
 
         m_colIdList[objId] = aabbCol;
-        m_component.AddAABBRange(aabbCol);
+        m_component.AddAABBRange(aabbCol, objId);
     }
 
     m_inputFile.close();
@@ -111,8 +111,8 @@ void CollisionObj::Update(const float deltaTime)
             imguiMaxVec3[i] = aabbTarget.max[i];
         }
 
-        //ImGui::InputFloat3("AABB Min", imguiMinVec3);
-        //ImGui::InputFloat3("AABB Max", imguiMaxVec3);
+        // ImGui::InputFloat3("AABB Min", imguiMinVec3);
+        // ImGui::InputFloat3("AABB Max", imguiMaxVec3);
         ImGui::DragFloat3("AABB Min", imguiMinVec3, 0.01f);
         ImGui::DragFloat3("AABB Max", imguiMaxVec3, 0.01f);
 
@@ -128,9 +128,11 @@ void CollisionObj::Update(const float deltaTime)
 
     if (ImGui::Button("Add"))
     {
-        AABB addAABB;
-        m_colIdList[std::to_string(m_colIdList.size() + 1)] = addAABB;
-        m_component.AddAABBRange(addAABB);
+        AABB        addAABB;
+        std::string colId = std::to_string(m_colIdList.size() + 1);
+
+        m_colIdList[colId] = addAABB;
+        m_component.AddAABBRange(addAABB, colId);
 
         idx = 0;
         for (auto& item : m_colIdList)

@@ -20,22 +20,27 @@ namespace HBSoft
     {
     private:
         Transform3D& m_transform;
+        bool         m_isCollision;  // 콜리젼 할건지 말건지
+
+        std::vector<std::string> m_colNames;
+        std::vector<AABB>        m_colAreas;
 
     public:
-        std::vector<AABB> m_colRanges;
-
-        std::vector<AABB> m_collidedAreas;  // IsCollision에서 충돌나면 충돌 영역 저장하는 함수
-        bool m_isCollision;
+        std::vector<std::string> m_collidedAreaNames;
+        // IsCollision에서 충돌나면 충돌체 이름 구하는 변수
+        std::vector<AABB> m_collidedAreas;  // IsCollision에서 충돌나면 충돌 영역 저장하는 변수
+        vec3 m_collidedNormal;              // IsCollision에서 충돌나면 노말값 구하는 변수
 
     public:
         CollisionComponent(Transform3D& transform, bool isCollision = true);
 
-        void AddAABBRange(const AABB& aabb);
+        void AddAABBRange(const AABB& colArea, const stringV colName);
         void DeleteAABBRange(size_t idx);
         void SetAABBRange(const AABB& aabb, size_t idx);
         bool IsCollision(const AABB& aabb);
         bool IsCollision(const CollisionComponent& component);
 
+        AABB GetTransformedBound(size_t idx) const;
         /*
         Debug용도
         */
