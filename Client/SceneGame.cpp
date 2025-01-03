@@ -34,8 +34,8 @@ SceneGame::SceneGame()
     m_line->SetCamera(cameraTest);
     cube.SetCamera(cameraTest);
 
-    // m_gardener.SetCamera(cameraTest);
-    // m_gardener.SetLight(lightTest);
+    m_gardener.SetCamera(cameraTest);
+    m_gardener.SetLight(lightTest);
 
     m_goose.SetCamera(cameraTest);
     m_goose.SetHeightMap(mapTest);
@@ -49,7 +49,6 @@ SceneGame::SceneGame()
     m_grid.SetCamera(cameraTest);
     m_staticObjs.LoadFromFolder("../res/Mesh/StaticObj", cameraTest, lightTest);
     m_colObjs->LoadRange("../res/collision.txt");
-    // m_colObjs.SaveRange("../res/collision.txt");
 }
 
 void SceneGame::Update(float deltaTime)
@@ -100,7 +99,7 @@ void SceneGame::Render()
 
     // m_gardener.Render();
     m_goose.Render();
-    //m_grid.Render();
+    // m_grid.Render();
 
     m_tree.Render();
     cube.Render();
