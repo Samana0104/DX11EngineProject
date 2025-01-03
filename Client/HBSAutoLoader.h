@@ -58,8 +58,7 @@ namespace HBSoft
                     {
                         std::string fileName = entry.path().filename().string();
                         HBSContainer.push_back(std::make_shared<Static3DObj>(fileName));  // T °´Ã¼ Ãß°¡
-                        HBSContainer.back()->Init(
-                        std::wstring().assign(fileName.begin(), fileName.end()));
+                        HBSContainer.back()->Init(std::wstring().assign(fileName.begin(), fileName.end()));
                         HBSContainer.back()->SetCamera(camera);
                     }
                 }
