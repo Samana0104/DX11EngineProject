@@ -42,7 +42,7 @@ namespace HBSoft
                     if (entry.is_regular_file() && entry.path().extension() == ".hbs")
                     {
                         std::string fileName = entry.path().filename().string();
-                        HBSContainer.emplace_back(std::make_shared<Static3DObj>(fileName));  // T °´Ã¼ Ãß°¡
+                        HBSContainer.push_back(std::make_shared<Static3DObj>(fileName));  // T °´Ã¼ Ãß°¡
                         HBSContainer.back()->Init(fileName);
                         HBSContainer.back()->SetCamera(camera);
                         HBSContainer.back()->SetLight(light);
@@ -56,7 +56,7 @@ namespace HBSoft
                     if (entry.is_regular_file() && entry.path().extension() == ".hbs")
                     {
                         std::string fileName = entry.path().filename().string();
-                        HBSContainer.emplace_back(std::make_shared<Static3DObj>(fileName));  // T °´Ã¼ Ãß°¡
+                        HBSContainer.push_back(std::make_shared<Static3DObj>(fileName));  // T °´Ã¼ Ãß°¡
                         HBSContainer.back()->Init(std::wstring().assign(fileName.begin(), fileName.end()));
                         HBSContainer.back()->SetCamera(camera);
                     }

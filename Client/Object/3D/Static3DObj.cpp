@@ -94,23 +94,23 @@ void Static3DObj::Init(const std::string& key)
     }
     else if (m_key.find("seedling") != std::string::npos)
     {
-        m_transform.SetRotation(glm::vec3(0, generateRandomValue(0, 6.28), 0));
+        m_transform.SetRotation(glm::vec3(0.0f, generateRandomValue(0.0f, 6.28f), 0.0f));
         m_transform.SetLocation(
-        glm::vec3(5.01f - 0.55f * flagSeed, generateRandomValue(0.92, 0.98), 9.82f));
+        glm::vec3(5.01f - 0.55f * flagSeed, generateRandomValue(0.92f, 0.98f), 9.82f));
         m_transform.SetScale(0.09f);
         flagSeed++;
     }
     else if (m_key.find("carrotL") != std::string::npos)
     {
-        m_transform.SetRotation(glm::vec3(0, 0, 0));
-        m_transform.SetLocation(glm::vec3(3.91f - 0.3f * flagCarrotL, 0.78, 3.81));
-        m_transform.SetScale(0.3);
+        m_transform.SetRotation(glm::vec3(0.0f, 0.0f, 0.0f));
+        m_transform.SetLocation(glm::vec3(3.91f - 0.3f * flagCarrotL, 0.78f, 3.81f));
+        m_transform.SetScale(0.3f);
         flagCarrotL++;
     }
     else if (m_key.find("carrotR") != std::string::npos)
     {
-        m_transform.SetRotation(glm::vec3(0, 0, 0));
-        m_transform.SetLocation(glm::vec3(3.91f - 0.3f * flagCarrotR, 0.78, 4.31));
+        m_transform.SetRotation(glm::vec3(0.0f, 0.0f, 0.0f));
+        m_transform.SetLocation(glm::vec3(3.91f - 0.3f * flagCarrotR, 0.78f, 4.31f));
         m_transform.SetScale(0.3);
         flagCarrotR++;
     }
@@ -128,33 +128,33 @@ void Static3DObj::Init(const std::string& key)
     }
     else if (m_key.find("pumpkin0") != std::string::npos)
     {
-        m_transform.SetRotation(glm::vec3(0, 0, 0));
+        m_transform.SetRotation(glm::vec3(0.0f, 0.0f, 0.0f));
         m_transform.SetLocation(glm::vec3(2.08, 0.78, -1.8));
-        m_transform.SetScale(0.25);
+        m_transform.SetScale(0.25f);
     }
     else if (m_key.find("pumpkin1") != std::string::npos)
     {
-        m_transform.SetRotation(glm::vec3(0, 0, 0));
-        m_transform.SetLocation(glm::vec3(1.55, 0.78, -0.63));
-        m_transform.SetScale(0.18);
+        m_transform.SetRotation(glm::vec3(0.0f, 0.0f, 0.0f));
+        m_transform.SetLocation(glm::vec3(1.55f, 0.78f, -0.63f));
+        m_transform.SetScale(0.18f);
     }
     else if (m_key.find("pumpkin2") != std::string::npos)
     {
-        m_transform.SetRotation(glm::vec3(0, 0, 0));
-        m_transform.SetLocation(glm::vec3(-0.120, 0.78, -1.800));
-        m_transform.SetScale(0.310);
+        m_transform.SetRotation(glm::vec3(0.0f, 0.0f, 0.0f));
+        m_transform.SetLocation(glm::vec3(-0.120f, 0.78f, -1.800f));
+        m_transform.SetScale(0.310f);
     }
     else if (m_key.find("pumpkin3") != std::string::npos)
     {
-        m_transform.SetRotation(glm::vec3(0, 0, 0));
-        m_transform.SetLocation(glm::vec3(-0.550, 0.78, -0.950));
-        m_transform.SetScale(0.240);
+        m_transform.SetRotation(glm::vec3(0.0f, 0.0f, 0.0f));
+        m_transform.SetLocation(glm::vec3(-0.550f, 0.78f, -0.950f));
+        m_transform.SetScale(0.240f);
     }
     else if (m_key.find("tulipBig") != std::string::npos)
     {
-        m_transform.SetRotation(glm::vec3(0, 1.57, 0));
-        m_transform.SetLocation(glm::vec3(0.75, 0.87, 1.83));
-        m_transform.SetScale(0.14);
+        m_transform.SetRotation(glm::vec3(0.0f, 1.57f, 0.0f));
+        m_transform.SetLocation(glm::vec3(0.75f, 0.87f, 1.83f));
+        m_transform.SetScale(0.14f);
     }
 
     m_mesh     = HASSET->m_meshes[std::wstring().assign(key.begin(), key.end())];
@@ -166,96 +166,96 @@ void Static3DObj::Update(const float deltaTime)
 {
     if (m_transType == TransformType::GooseGameTrans)
     {
-        m_transform.SetRotation(glm::vec3(1.57, 0, 0));
-        m_transform.SetLocation(glm::vec3(-7, 0, -12));
+        m_transform.SetRotation(glm::vec3(1.57f, 0.0f, 0.0f));
+        m_transform.SetLocation(glm::vec3(-7.0f, 0.0f, -12.0f));
     }
     else if (m_transType == TransformType::CMTrans)
     {
-        m_transform.SetRotation(glm::vec3(1.57, 0, 0));
+        m_transform.SetRotation(glm::vec3(1.57f, 0.0f, 0.0f));
         m_transform.SetLocation(glm::vec3(-7.0f, 0.0f, -12.0f));
         m_transform.SetScale({1 / 100.0f, 1 / 100.0f, 1 / 100.0f});
     }
     else if (m_transType == TransformType::UnityTrans)
     {
-        m_transform.SetRotation(glm::vec3(1.57, 0, 0));
+        m_transform.SetRotation(glm::vec3(1.57f, 0.0f, 0.0f));
         m_transform.SetLocation(glm::vec3(12.28f, 0.48f, 11.71f));
-        m_transform.SetScale(0.0015);
+        m_transform.SetScale(0.0015f);
     }
     else if (m_transType == TransformType::ConcretePath)
     {
-        m_transform.SetRotation(glm::vec3(1.57, 0, 0));
-        m_transform.SetLocation(glm::vec3(-4.85, 0.26, -8.41));
-        m_transform.SetScale(0.86);
+        m_transform.SetRotation(glm::vec3(1.57f, 0.0f, 0.0f));
+        m_transform.SetLocation(glm::vec3(-4.85f, 0.26f, -8.41f));
+        m_transform.SetScale(0.86f);
     }
     else if (m_transType == TransformType::FrontHouse)
     {
-        m_transform.SetRotation(glm::vec3(1.57, -0.25, 0));
-        m_transform.SetLocation(glm::vec3(4.9, 0, 13.5));
-        m_transform.SetScale(1);
+        m_transform.SetRotation(glm::vec3(1.57f, -0.25f, 0.0f));
+        m_transform.SetLocation(glm::vec3(4.9f, 0.0f, 13.5f));
+        m_transform.SetScale(1.0f);
     }
     else if (m_transType == TransformType::Store)
     {
-        m_transform.SetRotation(glm::vec3(1.57, 0.35, 0));
-        m_transform.SetLocation(glm::vec3(-14.2, -1.8, -12.65));
+        m_transform.SetRotation(glm::vec3(1.57f, 0.35f, 0.0f));
+        m_transform.SetLocation(glm::vec3(-14.2f, -1.8f, -12.65f));
         m_transform.SetScale(1);
     }
     else if (m_transType == TransformType::Bollard || m_transType == TransformType::Parkcube)
     {
-        m_transform.SetRotation(glm::vec3(1.57, -0.1, 0));
-        m_transform.SetLocation(glm::vec3(-5.3, 0.1, -6.5));
-        m_transform.SetScale(0.85);
+        m_transform.SetRotation(glm::vec3(1.57f, -0.1f, 0.0f));
+        m_transform.SetLocation(glm::vec3(-5.3f, 0.1f, -6.5f));
+        m_transform.SetScale(0.85f);
     }
     else if (m_transType == TransformType::Bench)
     {
-        m_transform.SetRotation(glm::vec3(1.57, 0.05, 0));
-        m_transform.SetLocation(glm::vec3(-3.55, 0.4, -8.6));
-        m_transform.SetScale(0.85);
+        m_transform.SetRotation(glm::vec3(1.57f, 0.05f, 0.0f));
+        m_transform.SetLocation(glm::vec3(-3.55f, 0.4f, -8.6f));
+        m_transform.SetScale(0.85f);
     }
     else if (m_transType == TransformType::PondRetainers)
     {
-        m_transform.SetRotation(glm::vec3(1.57, -0.03, 0));
-        m_transform.SetLocation(glm::vec3(-4.2, 0, -7.39));
-        m_transform.SetScale(0.83);
+        m_transform.SetRotation(glm::vec3(1.57f, -0.03f, 0.0f));
+        m_transform.SetLocation(glm::vec3(-4.2f, 0.0f, -7.39f));
+        m_transform.SetScale(0.83f);
     }
     else if (m_transType == TransformType::Concrete22)
     {
-        m_transform.SetRotation(glm::vec3(1.57, 0.26, 0));
-        m_transform.SetLocation(glm::vec3(0.37, 0.32, -10.11));
-        m_transform.SetScale(0.845);
+        m_transform.SetRotation(glm::vec3(1.57f, 0.26f, 0.0f));
+        m_transform.SetLocation(glm::vec3(0.37f, 0.32f, -10.11f));
+        m_transform.SetScale(0.845f);
     }
     else if (m_transType == TransformType::Bridge)
     {
-        m_transform.SetRotation(glm::vec3(1.57, 0, 0));
-        m_transform.SetLocation(glm::vec3(-4.86, 0.26, -8.42));
-        m_transform.SetScale(0.86);
+        m_transform.SetRotation(glm::vec3(1.57f, 0.0f, 0.0f));
+        m_transform.SetLocation(glm::vec3(-4.86f, 0.26f, -8.42f));
+        m_transform.SetScale(0.86f);
     }
     else if (m_transType == TransformType::DirtRightLow1)
     {
-        m_transform.SetRotation(glm::vec3(1.57, 0, 0));
+        m_transform.SetRotation(glm::vec3(1.57f, 0.0f, 0.0f));
         m_transform.SetLocation(glm::vec3(-6.7f, 0.0f, -12.0f));
-        m_transform.SetScale(glm::vec3(1.8, 1, 1));
+        m_transform.SetScale(glm::vec3(1.8f, 1.0f, 1.0f));
     }
     else if (m_transType == TransformType::Cabbage0)
     {
-        m_transform.SetRotation(glm::vec3(0, 0, 0));
+        m_transform.SetRotation(glm::vec3(0.0f, 0.0f, 0.0f));
         m_transform.SetLocation(glm::vec3(5.09f, 1.03f, -1.3f));
         m_transform.SetScale(0.22f);
     }
     else if (m_transType == TransformType::Cabbage1)
     {
-        m_transform.SetRotation(glm::vec3(0, 0, 0));
+        m_transform.SetRotation(glm::vec3(0.0f, 0.0f, 0.0f));
         m_transform.SetLocation(glm::vec3(4.570f, 1.03f, -0.600f));
         m_transform.SetScale(0.22f);
     }
     else if (m_transType == TransformType::Cabbage2)
     {
-        m_transform.SetRotation(glm::vec3(0, 0, 0));
+        m_transform.SetRotation(glm::vec3(0.0f, 0.0f, 0.0f));
         m_transform.SetLocation(glm::vec3(3.010f, 1.03f, -0.630f));
         m_transform.SetScale(0.22f);
     }
     else if (m_transType == TransformType::Cabbage3)
     {
-        m_transform.SetRotation(glm::vec3(0, 0, 0));
+        m_transform.SetRotation(glm::vec3(0.0f, 0.0f, 0.0f));
         m_transform.SetLocation(glm::vec3(3.270f, 1.03f, -1.630f));
         m_transform.SetScale(0.22f);
     }
