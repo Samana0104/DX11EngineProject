@@ -75,6 +75,22 @@ void SceneGame::Update(float deltaTime)
         hbsc->Update(deltaTime);
     }
     m_goose->ProcessCollision(m_colObjs);
+
+    for (auto& hbsc : m_staticObjs.HBSContainer)
+    {
+        static auto it = std::find(m_colObjs->m_component.m_collidedAreaNames.begin(),
+                                     m_colObjs->m_component.m_collidedAreaNames.end(),
+                                     hbsc->GetKey());
+
+        if (it != m_colObjs->m_component.m_collidedAreaNames.end()) // collision detecting 된 오브젝트를 찾았을때
+        {
+            if (hbsc->GetKey().find("drinkingFountain") != std::string::npos ||
+                hbsc->GetKey().find("drinkingFountain") != std::string::npos) // 찾은 오브젝트 key 값이 carrotL or carrotR 일때
+            {
+                hbsc->m_transform.SetLocation(m_goose->m_transform.m_pos); // 충돌한 오브젝트의 좌표를 Goose 의 좌표와 동기화
+            }
+        }
+    }
 }
 
 void SceneGame::Render()

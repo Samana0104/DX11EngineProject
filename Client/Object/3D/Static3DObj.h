@@ -72,6 +72,7 @@ namespace HBSoft
         }
 
         std::string GetName();
+        std::string GetKey();
         void        SetTransType(TransformType);
         Transform3D GetTransform();
 

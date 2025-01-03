@@ -89,7 +89,7 @@ bool CollisionComponent::IsCollision(const CollisionComponent& component)
 
         if (IsCollision(colArea))
         {
-            // std::cout << component.m_colNames[i] << std::endl;
+            std::cout << component.m_colNames[i] << std::endl;
             m_collidedAreaNames.push_back(component.m_colNames[i]);
             m_collidedAreas.push_back(colArea);
         }
