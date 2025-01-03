@@ -24,6 +24,11 @@ std::string HBSoft::Static3DObj::GetName()
     return m_name;
 }
 
+std::string HBSoft::Static3DObj::GetKey()
+{
+    return m_key;
+}
+
 void HBSoft::Static3DObj::SetTransType(TransformType transType)
 {
     m_transType = transType;
