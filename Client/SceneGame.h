@@ -41,27 +41,24 @@ namespace HBSoft
         HBSAutoLoader<std::shared_ptr<Static3DObj>> m_staticObjs;
 
 #ifdef _DEBUG
-		std::shared_ptr<DebugCamera> cameraTest;
+        std::shared_ptr<DebugCamera> cameraTest;
 #else
-		std::shared_ptr<GooseCamera> cameraTest;
+        std::shared_ptr<GooseCamera> cameraTest;
 #endif
         std::shared_ptr<DirectionalLight> lightTest;
         std::shared_ptr<HeightMapObj>     mapTest;
         std::shared_ptr<LineObj>          m_line;
         std::shared_ptr<Goose>            m_goose;
-		std::shared_ptr<DirectionalLight> lightTest;
-		std::shared_ptr<HeightMapObj>     mapTest;
-		std::shared_ptr<LineObj>          m_line;
 
         bool isWire = false;
 
     public:
         SceneGame();
 
-		virtual void Update(float deltaTime) override;
-		virtual void Render() override;
-		virtual void Release() override;
-		virtual void Start() override;
-		virtual void End() override;
-	};
+        virtual void Update(float deltaTime) override;
+        virtual void Render() override;
+        virtual void Release() override;
+        virtual void Start() override;
+        virtual void End() override;
+    };
 }  // namespace HBSoft
