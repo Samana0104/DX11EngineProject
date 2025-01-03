@@ -47,6 +47,9 @@ namespace HBSoft
         vec3 moveDirection;
         vec3 moveVec;
 
+        AABB m_gooseStand;
+        AABB m_gooseCrounching;
+
     public:
         Goose();
 
@@ -58,7 +61,7 @@ namespace HBSoft
         float GetLocationX();
         float GetLocationZ();
 
-        vec3 GetmPos();
+        vec3 GetPos();
         void SetHeightMap(std::shared_ptr<HeightMapObj> mapObj);
 
         virtual void ProcessCollision(std::shared_ptr<Object3D> obj) override;

@@ -34,7 +34,6 @@ namespace HBSoft
         QuestGUI                      m_questGUI;
         CubeMapObj                    cube;
         QuadTree                      m_tree;
-        Goose                         m_goose;
         Gardener                      m_gardener;
         GridMap                       m_grid;
         std::shared_ptr<CollisionObj> m_colObjs;
@@ -46,6 +45,10 @@ namespace HBSoft
 #else
 		std::shared_ptr<GooseCamera> cameraTest;
 #endif
+        std::shared_ptr<DirectionalLight> lightTest;
+        std::shared_ptr<HeightMapObj>     mapTest;
+        std::shared_ptr<LineObj>          m_line;
+        std::shared_ptr<Goose>            m_goose;
 		std::shared_ptr<DirectionalLight> lightTest;
 		std::shared_ptr<HeightMapObj>     mapTest;
 		std::shared_ptr<LineObj>          m_line;

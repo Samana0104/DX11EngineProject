@@ -222,9 +222,6 @@
     <ClCompile Include="Object\CollisionComponent.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Collision.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Gui\QuestGUI.cpp">
       <Filter>Gui</Filter>
     </ClCompile>

@@ -34,11 +34,11 @@ date: 2024-12-11
 #include <tchar.h>
 #include <atlconv.h>
 
-#ifdef _DEBUG
-// 콘솔창 만들기 위해 설정해둔 커멘드
-    #pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
-    #include <iostream>
-#endif
+// #ifdef _DEBUG
+//  콘솔창 만들기 위해 설정해둔 커멘드
+#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+#include <iostream>
+// #endif
 
 // ---------------------------------------
 //			    WinCodec

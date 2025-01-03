@@ -79,7 +79,6 @@
     <ClCompile Include="Object\Camera\DebugCamera.cpp" />
     <ClCompile Include="Object\Camera\Frustum.cpp" />
     <ClCompile Include="Object\Camera\GooseCamera.cpp" />
-    <ClCompile Include="Object\Collision.cpp" />
     <ClCompile Include="Object\CollisionComponent.cpp" />
     <ClCompile Include="Object\EasyRender.cpp" />
     <ClCompile Include="Object\Object.cpp" />

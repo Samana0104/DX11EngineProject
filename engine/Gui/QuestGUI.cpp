@@ -30,7 +30,14 @@ QuestGUI::QuestGUI()
 
 void QuestGUI::OnNotice(EventList event, void* entity) {}
 
-void QuestGUI::Init() {}
+void QuestGUI::Init()
+{
+    m_isTab     = false;
+    m_isEsc     = false;
+    m_isWorking = false;
+
+    m_openTimer = 0.f;
+}
 
 void QuestGUI::Update(const float deltaTime)
 {

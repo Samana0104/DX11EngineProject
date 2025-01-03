@@ -12,11 +12,6 @@ date: 2024-12-12
 #include "Core.h"
 #include "Mesh/Grid.h"
 
-  // 음수 좌표를 보정하기 위한 오프셋
-#define GRID_SIZE   (40)  // (-50 ~ 50 범위 지원)
-
-#define INFINITY_DISTANCE (9999)
-
 namespace HBSoft
 {
     struct Node
@@ -26,6 +21,10 @@ namespace HBSoft
         std::shared_ptr<Node> parent;
         bool                  isObstacle;  // 장애물 여부
 
+        // Node()
+        //     : x(0), y(0), gCost(99999.f), hCost(0.f), isObstacle(false), parent(nullptr)
+        //{}
+
         Node(int x, int y)
             : x(x),
               y(y),
@@ -34,6 +33,8 @@ namespace HBSoft
               isObstacle(false),
               parent(nullptr)
         {}
+
+        Node(const Node& copy) { std::cout << "node copy" << std::endl; }
 
     public:
         bool operator>(const Node& other) const { return (gCost + hCost) > (other.gCost + other.hCost); }
@@ -50,15 +51,15 @@ namespace HBSoft
         ~Astar() = default;
 
         void  InitGrid();
-        float heuristic(const std::shared_ptr<Node>& a, const std::shared_ptr<Node>& b);
-        float distance(const std::shared_ptr<Node>& a, const std::shared_ptr<Node>& b);
+        float heuristic(const std::shared_ptr<Node> a, const std::shared_ptr<Node> b);
+        float distance(const std::shared_ptr<Node> a, const std::shared_ptr<Node> b);
         std::vector<std::shared_ptr<Node>> getNeighbors(
-        const std::shared_ptr<Node>& node, std::vector<std::vector<std::shared_ptr<Node>>>& grid);
-        std::vector<std::shared_ptr<Node>> aStar(const std::shared_ptr<Node>&                     start,
-                                                 const std::shared_ptr<Node>&                     goal,
+        const std::shared_ptr<Node> node, std::vector<std::vector<std::shared_ptr<Node>>>& grid);
+        std::vector<std::shared_ptr<Node>> aStar(const std::shared_ptr<Node>                      start,
+                                                 const std::shared_ptr<Node>                      goal,
                                                  std::vector<std::vector<std::shared_ptr<Node>>>& grid);
 
-        int GRID_OFFSET = 20;
+        int GRID_OFFSET = 80;
         /*  void aStarMain();*/
 
 
