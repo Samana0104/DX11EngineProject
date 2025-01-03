@@ -11,6 +11,13 @@ date: 2025-01-02
 #include "3D/LineObj.h"
 using namespace HBSoft;
 
+void CollisionComponent::Init()
+{
+    m_collidedNormal = vec3(0.f);
+    m_collidedAreas.clear();
+    m_collidedAreaNames.clear();
+}
+
 CollisionComponent::CollisionComponent(Transform3D& transform, bool isCollision)
     : m_transform(transform), m_isCollision(isCollision)
 {
@@ -42,7 +49,7 @@ void CollisionComponent::SetAABBRange(const AABB& aabb, size_t idx)
     m_colAreas[idx] = aabb;
 }
 
-bool CollisionComponent::IsCollision(const AABB& aabb)
+bool CollisionComponent::IsCollided(const AABB& aabb, CollisionComponent& component)
 {
     if (!m_isCollision)
         return false;
@@ -61,19 +68,23 @@ bool CollisionComponent::IsCollision(const AABB& aabb)
         colArea.max    += m_transform.m_pos;
 
         if (colArea.IsCollision(aabb))
+        {
+            m_collidedNormal += colArea.ComputeNormal(aabb);
+            component.m_collidedAreas.push_back(colArea);
+            component.m_collidedAreaNames.push_back(m_colNames[i]);
             return true;
+        }
     }
-
     return false;
 }
 
-bool CollisionComponent::IsCollision(const CollisionComponent& component)
+bool CollisionComponent::IsCollision(CollisionComponent& component)
 {
     if (!m_isCollision)
         return false;
 
-    m_collidedAreas.clear();
-    m_collidedAreaNames.clear();
+    Init();
+
     for (size_t i = 0; i < component.m_colAreas.size(); i++)
     {
         AABB colArea    = component.m_colAreas[i];
@@ -87,16 +98,18 @@ bool CollisionComponent::IsCollision(const CollisionComponent& component)
         colArea.max[2] *= glm::abs(component.m_transform.m_scale[2]);
         colArea.max    += component.m_transform.m_pos;
 
-        if (IsCollision(colArea))
+        if (IsCollided(colArea, component))
         {
-            // std::cout << component.m_colNames[i] << std::endl;
             m_collidedAreaNames.push_back(component.m_colNames[i]);
             m_collidedAreas.push_back(colArea);
         }
     }
 
     if (m_collidedAreas.size() >= 1)
+    {
+        m_collidedNormal = glm::normalize(m_collidedNormal);
         return true;
+    }
 
     return false;
 }

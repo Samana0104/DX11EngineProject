@@ -42,7 +42,7 @@ void Static3DObj::Init(const std::string& key)
     m_easyRender.SetVSShader(L"CartoonEnvVS.hlsl");
     m_easyRender.SetPSShader(L"CartoonEnvPS.hlsl");
     m_easyRender.SetTexture(nullptr);
-    
+
     if (key.find('~') == 0)
         SetTransType(TransformType::DefaultTrans);
     else if (key.find('#') == 0)
@@ -82,7 +82,7 @@ void Static3DObj::Init(const std::string& key)
     else
         SetTransType(TransformType::GooseGameTrans);
 
-    static int flagSeed = 0;
+    static int flagSeed    = 0;
     static int flagCarrotL = 0;
     static int flagCarrotR = 0;
 

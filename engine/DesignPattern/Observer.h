@@ -15,6 +15,7 @@ namespace HBSoft
         MOUSE_MOVE    = 0,  // 마우스 움직이면 발생하는 이벤트 entity로 nullptr
         WINDOW_RESIZE = 1,  // 윈도우 리사이즈 이벤트 entity로 nullptr
         DEVICE_CHANGE = 2,  // 디바이스 관련된 건 여기다 추가할 것 entity로 디바이스 넘어감
+        QUEST_CLEAR = 3  // 퀘스트 다 깨면 발생하는 이벤트
     };
 
     class Observer

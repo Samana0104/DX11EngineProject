@@ -45,6 +45,8 @@ SceneGame::SceneGame()
     m_grid.SetCamera(cameraTest);
     m_staticObjs.LoadFromFolder("../res/Mesh/StaticObj", cameraTest, lightTest);
     m_colObjs->LoadRange("../res/collision.txt");
+
+    EventHandler::GetInstance().AddEvent(EventList::QUEST_CLEAR, this);
 }
 
 void SceneGame::Update(float deltaTime)
@@ -118,7 +120,10 @@ void SceneGame::Render()
     EasyRender::MergeRenderTarget(MultiRT::MAIN, MultiRT::GUI);
 }
 
-void SceneGame::Release() {}
+void SceneGame::Release()
+{
+    EventHandler::GetInstance().DeleteEvent(EventList::QUEST_CLEAR, this);
+}
 
 void SceneGame::Start()
 {
@@ -139,3 +144,11 @@ void SceneGame::Start()
 }
 
 void SceneGame::End() {}
+
+void SceneGame::OnNotice(EventList event, void* entity)
+{
+    if (event == EventList::QUEST_CLEAR)
+    {
+        HSCENE.SetCurrentScene(L"Lobby");
+    }
+}

@@ -153,9 +153,6 @@
     <ClCompile Include="Asset\Texture\GeneralTexture.cpp">
       <Filter>Asset\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="DesignPattern\Observer.cpp">
-      <Filter>DesignPattern</Filter>
-    </ClCompile>
     <ClCompile Include="Gui\GameButton.cpp">
       <Filter>Gui</Filter>
     </ClCompile>

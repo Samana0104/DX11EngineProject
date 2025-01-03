@@ -31,15 +31,19 @@ namespace HBSoft
         std::vector<AABB> m_collidedAreas;  // IsCollision에서 충돌나면 충돌 영역 저장하는 변수
         vec3 m_collidedNormal;              // IsCollision에서 충돌나면 노말값 구하는 변수
 
+    private:
+        bool IsCollided(const AABB& aabb, CollisionComponent& component);
+
     public:
+        void Init();
+
         CollisionComponent(Transform3D& transform, bool isCollision = true);
 
         void AddAABBRange(const AABB& colArea, const stringV colName);
         void DeleteAABBRange(size_t idx);
         void SetAABBRange(const AABB& aabb, size_t idx);
-        bool IsCollision(const AABB& aabb);
-        bool IsCollision(const CollisionComponent& component);
 
+        bool IsCollision(CollisionComponent& component);
         AABB GetTransformedBound(size_t idx) const;
         /*
         Debug용도
