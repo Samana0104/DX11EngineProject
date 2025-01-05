@@ -20,8 +20,10 @@ namespace HBSoft
         std::vector<std::shared_ptr<AnimationClip>>     m_gardenerAni;
         std::shared_ptr<Goose>                          m_goose1;
 
-        inline static const UINT GRID_ROW = 160;
-        inline static const UINT GRID_COL = 160;
+        /*inline static const UINT GRID_ROW = 160;
+        inline static const UINT GRID_COL = 160;*/
+        inline static const UINT GRID_ROW = 81;
+        inline static const UINT GRID_COL = 81;
 
     public:
         Transform3D m_trans;
@@ -33,9 +35,11 @@ namespace HBSoft
         float gardener_x = 0;
         float gardener_z = 0;
 
-        float gridLength  = 92.160003584f;
-        int   gridNum     = 160;
-        int   GRID_OFFSET = 80;
+        float gridLength = 92.16f;
+        /*int   gridNum     = 160;
+        int   GRID_OFFSET = 80;*/
+        int gridNum     = 80;
+        int GRID_OFFSET = 40;
 
     public:
         Gardener();

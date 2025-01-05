@@ -23,30 +23,26 @@ Gardener::Gardener()
     anim.resize(m_mesh->m_born.bornIndex.size());
 
     m_transform.SetScale({0.2f, 0.2f, 0.2f});
+    m_transform.SetLocation({3.f, 0.6f, 4.f});
 
-    // 2D 그리드 초기화
-    // int rows = 160;
-    // int cols = 160;
-    // grid =
-    // std::vector<std::vector<std::shared_ptr<Node>>>(rows, std::vector<std::shared_ptr<Node>>(cols));
 
-    // for (int y = -GRID_OFFSET; y < GRID_OFFSET; ++y)
-    //{
-    //     for (int x = -GRID_OFFSET; x < GRID_OFFSET; ++x)
-    //     {
-    //         grid[x + GRID_OFFSET][y + GRID_OFFSET] = std::make_shared<Node>(x, y);  // make_shared
-    //         사용
-    //     }
-    // }
-    for (int y = -GRID_OFFSET; y < GRID_OFFSET; ++y)
+    for (int y = 0; y <= GRID_OFFSET * 2; ++y)
     {
-        for (int x = -GRID_OFFSET; x < GRID_OFFSET; ++x)
+        for (int x = 0; x <= GRID_OFFSET * 2; ++x)
         {
-            m_grid[x + GRID_OFFSET][y + GRID_OFFSET] = std::make_shared<Node>(x, y);  // make_shared 사용
+            m_grid[y][x] = std::make_shared<Node>(x, y);  // make_shared 사용
         }
     }
-    m_grid[10 + GRID_OFFSET][-4 + GRID_OFFSET]->isObstacle = true;
-    m_grid[10 + GRID_OFFSET][-3 + GRID_OFFSET]->isObstacle = true;
+    // 왼쪽문
+    m_grid[5 + GRID_OFFSET][-2 + GRID_OFFSET]->isObstacle = true;
+    m_grid[5 + GRID_OFFSET][-1 + GRID_OFFSET]->isObstacle = true;
+    m_grid[5 + GRID_OFFSET][GRID_OFFSET]->isObstacle      = true;
+    m_grid[5 + GRID_OFFSET][1 + GRID_OFFSET]->isObstacle  = true;
+    m_grid[5 + GRID_OFFSET][2 + GRID_OFFSET]->isObstacle  = true;
+    m_grid[5 + GRID_OFFSET][3 + GRID_OFFSET]->isObstacle  = true;
+    m_grid[5 + GRID_OFFSET][4 + GRID_OFFSET]->isObstacle  = true;
+
+    /*m_grid[10 + GRID_OFFSET][-3 + GRID_OFFSET]->isObstacle = true;
     m_grid[10 + GRID_OFFSET][-2 + GRID_OFFSET]->isObstacle = true;
     m_grid[10 + GRID_OFFSET][-1 + GRID_OFFSET]->isObstacle = true;
     m_grid[10 + GRID_OFFSET][GRID_OFFSET + 1]->isObstacle  = true;
@@ -56,6 +52,31 @@ Gardener::Gardener()
     m_grid[10 + GRID_OFFSET][GRID_OFFSET + 5]->isObstacle  = true;
     m_grid[10 + GRID_OFFSET][GRID_OFFSET + 6]->isObstacle  = true;
     m_grid[10 + GRID_OFFSET][GRID_OFFSET + 7]->isObstacle  = true;
+
+    m_grid[4 + GRID_OFFSET][GRID_OFFSET + 11]->isObstacle = true;
+    m_grid[5 + GRID_OFFSET][GRID_OFFSET + 11]->isObstacle = true;
+    m_grid[6 + GRID_OFFSET][GRID_OFFSET + 11]->isObstacle = true;
+    m_grid[4 + GRID_OFFSET][GRID_OFFSET + 12]->isObstacle = true;
+    m_grid[5 + GRID_OFFSET][GRID_OFFSET + 12]->isObstacle = true;
+    m_grid[6 + GRID_OFFSET][GRID_OFFSET + 12]->isObstacle = true;
+
+    m_grid[0 + GRID_OFFSET][GRID_OFFSET + 11]->isObstacle = true;
+    m_grid[0 + GRID_OFFSET][GRID_OFFSET + 12]->isObstacle = true;
+    m_grid[1 + GRID_OFFSET][GRID_OFFSET + 11]->isObstacle = true;
+    m_grid[1 + GRID_OFFSET][GRID_OFFSET + 12]->isObstacle = true;
+
+    m_grid[-7 + GRID_OFFSET][GRID_OFFSET + 11]->isObstacle = true;
+    m_grid[-7 + GRID_OFFSET][GRID_OFFSET + 12]->isObstacle = true;
+    m_grid[-6 + GRID_OFFSET][GRID_OFFSET + 11]->isObstacle = true;
+    m_grid[-6 + GRID_OFFSET][GRID_OFFSET + 12]->isObstacle = true;
+    m_grid[-5 + GRID_OFFSET][GRID_OFFSET + 11]->isObstacle = true;
+    m_grid[-5 + GRID_OFFSET][GRID_OFFSET + 12]->isObstacle = true;
+    m_grid[-4 + GRID_OFFSET][GRID_OFFSET + 11]->isObstacle = true;
+    m_grid[-4 + GRID_OFFSET][GRID_OFFSET + 12]->isObstacle = true;
+    m_grid[-3 + GRID_OFFSET][GRID_OFFSET + 11]->isObstacle = true;
+    m_grid[-3 + GRID_OFFSET][GRID_OFFSET + 12]->isObstacle = true;
+    m_grid[-2 + GRID_OFFSET][GRID_OFFSET + 11]->isObstacle = true;
+    m_grid[-2 + GRID_OFFSET][GRID_OFFSET + 12]->isObstacle = true;*/
     /*m_transform.SetScale({0.2f, 0.2f, 0.2f});*/
     /* m_heightmap = std::make_shared<HeightMapObj>();*/
     m_gardenerAni.push_back(HASSET->m_animations[L"walking.skm"]);
@@ -97,34 +118,40 @@ void Gardener::Update(const float deltaTime)
 
 
     // 2D 그리드 초기화
-
-    // for (int y = -GRID_OFFSET; y < GRID_OFFSET; ++y)
-    //{
-    //     for (int x = -GRID_OFFSET; x < GRID_OFFSET; ++x)
-    //     {
-    //         m_grid[x + GRID_OFFSET][y + GRID_OFFSET]->gCost  = 99999.f;
-    //         m_grid[x + GRID_OFFSET][y + GRID_OFFSET]->hCost  = 0.f;
-    //         m_grid[x + GRID_OFFSET][y + GRID_OFFSET]->parent = nullptr;
-    //     }
-    // }
+    for (int y = 0; y <= GRID_OFFSET * 2; ++y)
+    {
+        for (int x = 0; x <= GRID_OFFSET * 2; ++x)
+        {
+            m_grid[y][x]->gCost  = 99999.f;
+            m_grid[y][x]->hCost  = 0.f;
+            m_grid[y][x]->parent = nullptr;
+        }
+    }
     //    장애물 설정 (예: 좌표 (2,2), (2,3), (3,2)을 장애물로 설정)
 
     // 시작점과 목표점 설정
-    auto start = m_grid[((int)(m_transform.m_pos[0] / (gridLength / gridNum))) + GRID_OFFSET]
-                       [((int)(m_transform.m_pos[2] / (gridLength / gridNum))) +
-                        GRID_OFFSET];  // 가드너 움직이는 거에 따른 좌표
-    auto goal = m_grid[((int)(m_goose1->GetPos().x / (gridLength / gridNum))) + GRID_OFFSET]
-                      [((int)(m_goose1->GetPos().z / (gridLength / gridNum))) +
-                       GRID_OFFSET];  // 거위 움직이는 거에 따른 좌표
+    int gardenerX = GRID_OFFSET + glm::floor(m_transform.m_pos.x * ((float)gridNum / gridLength));
+    int gardenerZ = GRID_OFFSET - glm::floor(m_transform.m_pos.z * ((float)gridNum / gridLength));
+    int gooseX    = GRID_OFFSET + glm::floor(m_goose1->GetPos().x * ((float)gridNum / gridLength));
+    int gooseZ    = GRID_OFFSET - glm::floor(m_goose1->GetPos().z * ((float)gridNum / gridLength));
+
+    auto start = m_grid[gardenerZ][gardenerX];  // 가드너 움직이는 거에 따른 좌표
+    auto goal  = m_grid[gooseZ][gooseX];        // 거위 움직이는 거에 따른 좌표
 
     // A* 알고리즘 실행
 
-    // std::cout << ((int)(m_goose1->GetPos().x / (gridLength / gridNum))) + GRID_OFFSET << " "
-    //           << ((int)(m_goose1->GetPos().z / (gridLength / gridNum))) + GRID_OFFSET << std::endl;
+    if (goal->isObstacle)
+    {
+        if (!m_grid[gooseZ][gooseX + 1]->isObstacle)
+            goal = m_grid[gooseZ][gooseX + 1];
+        else if (!m_grid[gooseZ][gooseX - 1]->isObstacle)
+            goal = m_grid[gooseZ][gooseX - 1];
+        else if (!m_grid[gooseZ - 1][gooseX]->isObstacle)
+            goal = m_grid[gooseZ - 1][gooseX];
+        else if (!m_grid[gooseZ + 1][gooseX]->isObstacle)
+            goal = m_grid[gooseZ + 1][gooseX];
+    }
 
-    /* std::cout << m_goose1->GetPos().x << " " << m_goose1->GetPos().z << std::endl;*/
-    /*(int)m_transform.m_pos[0] / 3.072f == path[idx + 1]->GetLocationX() &&
-            (int)m_transform.m_pos[2] / 3.072f == path[idx + 1]->GetLocationY()*/
     auto path = std::move(m_astar.aStar(start, goal, m_grid));
 
     if (idx + 1 < path.size())
@@ -185,8 +212,7 @@ void Gardener::Update(const float deltaTime)
             }
 
             m_transform.AddLocation(
-            glm::normalize(vec3(-(gardener_x - pathIdx_x), 0.f, -(gardener_z - pathIdx_z))) * deltaTime *
-            1.8f);
+            glm::normalize(vec3(-(gardener_x - pathIdx_x), 0.f, -(gardener_z - pathIdx_z))) * deltaTime);
         }
     }
     /*std::cout << "------------" << std::endl;*/
