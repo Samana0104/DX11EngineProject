@@ -23,39 +23,27 @@ Gardener::Gardener()
     anim.resize(m_mesh->m_born.bornIndex.size());
 
     m_transform.SetScale({0.2f, 0.2f, 0.2f});
+    m_transform.SetLocation({3.f, 0.6f, 4.f});
 
-    // 2D 그리드 초기화
-    // int rows = 160;
-    // int cols = 160;
-    // grid =
-    // std::vector<std::vector<std::shared_ptr<Node>>>(rows, std::vector<std::shared_ptr<Node>>(cols));
+    currentState = State::Idle;
 
-    // for (int y = -GRID_OFFSET; y < GRID_OFFSET; ++y)
-    //{
-    //     for (int x = -GRID_OFFSET; x < GRID_OFFSET; ++x)
-    //     {
-    //         grid[x + GRID_OFFSET][y + GRID_OFFSET] = std::make_shared<Node>(x, y);  // make_shared
-    //         사용
-    //     }
-    // }
-    for (int y = -GRID_OFFSET; y < GRID_OFFSET; ++y)
+    for (int x = -GRID_OFFSET; x <= GRID_OFFSET; ++x)
     {
-        for (int x = -GRID_OFFSET; x < GRID_OFFSET; ++x)
+        for (int y = -GRID_OFFSET; y <= GRID_OFFSET; ++y)
         {
             m_grid[x + GRID_OFFSET][y + GRID_OFFSET] = std::make_shared<Node>(x, y);  // make_shared 사용
         }
     }
-    m_grid[10 + GRID_OFFSET][-4 + GRID_OFFSET]->isObstacle = true;
-    m_grid[10 + GRID_OFFSET][-3 + GRID_OFFSET]->isObstacle = true;
-    m_grid[10 + GRID_OFFSET][-2 + GRID_OFFSET]->isObstacle = true;
-    m_grid[10 + GRID_OFFSET][-1 + GRID_OFFSET]->isObstacle = true;
-    m_grid[10 + GRID_OFFSET][GRID_OFFSET + 1]->isObstacle  = true;
-    m_grid[10 + GRID_OFFSET][GRID_OFFSET + 2]->isObstacle  = true;
-    m_grid[10 + GRID_OFFSET][GRID_OFFSET + 3]->isObstacle  = true;
-    m_grid[10 + GRID_OFFSET][GRID_OFFSET + 4]->isObstacle  = true;
-    m_grid[10 + GRID_OFFSET][GRID_OFFSET + 5]->isObstacle  = true;
-    m_grid[10 + GRID_OFFSET][GRID_OFFSET + 6]->isObstacle  = true;
-    m_grid[10 + GRID_OFFSET][GRID_OFFSET + 7]->isObstacle  = true;
+    // 왼쪽문
+    m_grid[5 + GRID_OFFSET][-2 + GRID_OFFSET]->isObstacle = true;
+    m_grid[5 + GRID_OFFSET][-1 + GRID_OFFSET]->isObstacle = true;
+    m_grid[5 + GRID_OFFSET][GRID_OFFSET]->isObstacle      = true;
+    m_grid[5 + GRID_OFFSET][1 + GRID_OFFSET]->isObstacle  = true;
+    m_grid[5 + GRID_OFFSET][2 + GRID_OFFSET]->isObstacle  = true;
+    m_grid[5 + GRID_OFFSET][3 + GRID_OFFSET]->isObstacle  = true;
+    m_grid[5 + GRID_OFFSET][4 + GRID_OFFSET]->isObstacle  = true;
+
+
     /*m_transform.SetScale({0.2f, 0.2f, 0.2f});*/
     /* m_heightmap = std::make_shared<HeightMapObj>();*/
     m_gardenerAni.push_back(HASSET->m_animations[L"walking.skm"]);
@@ -96,100 +84,25 @@ void Gardener::Update(const float deltaTime)
     anim = m_gardenerAni[0]->GetAnimationMatrix(currentFrame);
 
 
-    // 2D 그리드 초기화
+    dx       = m_goose1->GetPos().x - m_transform.m_pos[0];
+    dz       = m_goose1->GetPos().z - m_transform.m_pos[2];
+    distance = sqrt(dx * dx + dz * dz);
 
-    // for (int y = -GRID_OFFSET; y < GRID_OFFSET; ++y)
-    //{
-    //     for (int x = -GRID_OFFSET; x < GRID_OFFSET; ++x)
-    //     {
-    //         m_grid[x + GRID_OFFSET][y + GRID_OFFSET]->gCost  = 99999.f;
-    //         m_grid[x + GRID_OFFSET][y + GRID_OFFSET]->hCost  = 0.f;
-    //         m_grid[x + GRID_OFFSET][y + GRID_OFFSET]->parent = nullptr;
-    //     }
-    // }
-    //    장애물 설정 (예: 좌표 (2,2), (2,3), (3,2)을 장애물로 설정)
+    /// IDLE
 
-    // 시작점과 목표점 설정
-    auto start = m_grid[((int)(m_transform.m_pos[0] / (gridLength / gridNum))) + GRID_OFFSET]
-                       [((int)(m_transform.m_pos[2] / (gridLength / gridNum))) +
-                        GRID_OFFSET];  // 가드너 움직이는 거에 따른 좌표
-    auto goal = m_grid[((int)(m_goose1->GetPos().x / (gridLength / gridNum))) + GRID_OFFSET]
-                      [((int)(m_goose1->GetPos().z / (gridLength / gridNum))) +
-                       GRID_OFFSET];  // 거위 움직이는 거에 따른 좌표
+    /*onEvent(Event::maintain, deltaTime);*/
 
-    // A* 알고리즘 실행
 
-    // std::cout << ((int)(m_goose1->GetPos().x / (gridLength / gridNum))) + GRID_OFFSET << " "
-    //           << ((int)(m_goose1->GetPos().z / (gridLength / gridNum))) + GRID_OFFSET << std::endl;
+    /// 물건 훔쳐가면
+    onEvent(Event::GooseStoleItem, deltaTime);
 
-    /* std::cout << m_goose1->GetPos().x << " " << m_goose1->GetPos().z << std::endl;*/
-    /*(int)m_transform.m_pos[0] / 3.072f == path[idx + 1]->GetLocationX() &&
-            (int)m_transform.m_pos[2] / 3.072f == path[idx + 1]->GetLocationY()*/
-    auto path = std::move(m_astar.aStar(start, goal, m_grid));
-
-    if (idx + 1 < path.size())
+    if (distance < 1.2f)
     {
-        pathIdx_x = path[idx + 1]->GetLocationX() * (gridLength / gridNum) +
-                    (gridLength / gridNum / 2);  // path의 월드위치
-        pathIdx_z = path[idx + 1]->GetLocationY() * (gridLength / gridNum) +
-                    (gridLength / gridNum / 2);  // path의 월드위치
-
-        gardener_x = m_transform.m_pos[0];  // 가드너의 현재위치
-        gardener_z = m_transform.m_pos[2];  // 가드너의 현재위치
-
-        if (glm::abs(gardener_x - pathIdx_x) < 0.5f && glm::abs(gardener_z - pathIdx_z) < 0.5f)
-        {
-            idx++;
-        }
-        else
-        {
-            if (path[idx]->GetLocationX() - path[idx + 1]->GetLocationX() > 0 &&
-                path[idx]->GetLocationY() - path[idx + 1]->GetLocationY() > 0)
-            {
-                m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(-45.f));
-            }
-            else if (path[idx]->GetLocationX() - path[idx + 1]->GetLocationX() > 0 &&
-                     path[idx]->GetLocationY() - path[idx + 1]->GetLocationY() < 0)
-            {
-                m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(-135.f));
-            }
-            else if (path[idx]->GetLocationX() - path[idx + 1]->GetLocationX() < 0 &&
-                     path[idx]->GetLocationY() - path[idx + 1]->GetLocationY() > 0)
-            {
-                m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(45.f));
-            }
-            else if (path[idx]->GetLocationX() - path[idx + 1]->GetLocationX() < 0 &&
-                     path[idx]->GetLocationY() - path[idx + 1]->GetLocationY() < 0)
-            {
-                m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(135.f));
-            }
-            else if (path[idx]->GetLocationX() - path[idx + 1]->GetLocationX() == 0 &&
-                     path[idx]->GetLocationY() - path[idx + 1]->GetLocationY() > 0)
-            {
-                m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(0.f));
-            }
-            else if (path[idx]->GetLocationX() - path[idx + 1]->GetLocationX() == 0 &&
-                     path[idx]->GetLocationY() - path[idx + 1]->GetLocationY() < 0)
-            {
-                m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(180.f));
-            }
-            else if (path[idx]->GetLocationX() - path[idx + 1]->GetLocationX() > 0 &&
-                     path[idx]->GetLocationY() - path[idx + 1]->GetLocationY() == 0)
-            {
-                m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(-90.f));
-            }
-            else if (path[idx]->GetLocationX() - path[idx + 1]->GetLocationX() < 0 &&
-                     path[idx]->GetLocationY() - path[idx + 1]->GetLocationY() == 0)
-            {
-                m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(90.f));
-            }
-
-            m_transform.AddLocation(
-            glm::normalize(vec3(-(gardener_x - pathIdx_x), 0.f, -(gardener_z - pathIdx_z))) * deltaTime *
-            1.8f);
-        }
+        /*m_goose1->AddLoc(glm::normalize(vec3(dx / distance, 0.f, dz / distance)) * deltaTime *
+         * 100.f);*/
+        onEvent(Event::GooseClose, deltaTime);
     }
-    /*std::cout << "------------" << std::endl;*/
+
     UpdateDefaultCB();
     m_easyRender.UpdateVSCB((void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
 }
@@ -228,4 +141,188 @@ void HBSoft::Gardener::SetPos(float a, float b)
 void Gardener::SetGooseObj(std::shared_ptr<Goose> gooseObj)
 {
     m_goose1 = gooseObj;
+}
+
+void Gardener::onEvent(Event event, float deltaTime)
+{
+    switch (currentState)
+    {
+    case State::Idle:  //(gridLength / gridNum) + (gridLength / gridNum / 2)
+
+        // 여기 Idle 행동
+        forward = true;  // 경로 진행 방향
+        if (forward)
+        {
+            if (idlePathIdx < idlePath.size() - 1)
+            {
+                idlePathX =
+                (idlePath[idlePathIdx + 1].first - idlePath[idlePathIdx].first) * (gridLength / gridNum);
+
+                idlePathZ = (idlePath[idlePathIdx + 1].second - idlePath[idlePathIdx].second) *
+                            (gridLength / gridNum);
+
+                m_transform.AddLocation(glm::normalize(vec3(idlePathX, 0.f, idlePathZ)) * deltaTime *
+                                        10.f);
+
+                idlePathIdx++;
+            }
+            else
+            {
+                forward = false;  // 역방향으로 전환
+            }
+        }
+        else
+        {
+            if (idlePathIdx > 0)
+            {
+                idlePathX =
+                (idlePath[idlePathIdx - 1].first - idlePath[idlePathIdx].first) * (gridLength / gridNum);
+
+                idlePathZ = (idlePath[idlePathIdx - 1].second - idlePath[idlePathIdx].second) *
+                            (gridLength / gridNum);
+
+                m_transform.AddLocation(glm::normalize(vec3(idlePathX, 0.f, idlePathZ)) * deltaTime *
+                                        10.f);
+
+                idlePathIdx--;
+            }
+            else
+            {
+                forward = true;  // 순방향으로 전환
+            }
+        }
+        /*  if (idlePathIdx == idlePath.size() - 1)
+          {
+              std::reverse(idlePath.begin(), idlePath.end());
+              idlePathIdx = 0;
+          }*/
+
+        std::cout << "현재상태 : IDLE" << std::endl;
+        if (event == Event::GooseClose)
+        {
+            vec3 pushForce  = glm::normalize(vec3(dx / distance, 0.f, dz / distance)) * 4.f;
+            velocity        = pushForce;
+            velocity       *= 0.9f;
+            /*std::cout << "IDLE : 정원사가 거위를 밀기 시작합니다.\n";*/
+            m_goose1->m_transform.AddLocation(velocity * deltaTime);
+            /*std::cout << velocity << std::endl;*/
+        }
+        else if (event == Event::GooseStoleItem)
+        {
+
+            //  std::cout << "정원사가 거위를 쫓기 시작합니다.\n";
+            currentState = State::Chasing;
+        }
+        else if (event == Event::maintain)
+        {
+        }
+        break;
+
+    case State::Chasing:
+        // 시작점과 목표점 설정
+        int gardenerX = GRID_OFFSET + glm::floor(m_transform.m_pos.x * ((float)gridNum / gridLength));
+        int gardenerZ = glm::floor(m_transform.m_pos.z * ((float)gridNum / gridLength)) + GRID_OFFSET;
+        int gooseX    = GRID_OFFSET + glm::floor(m_goose1->GetPos().x * ((float)gridNum / gridLength));
+        int gooseZ    = glm::floor(m_goose1->GetPos().z * ((float)gridNum / gridLength)) + GRID_OFFSET;
+
+
+        auto start = m_grid[gardenerX][gardenerZ];  // 가드너 움직이는 거에 따른 좌표
+        auto goal  = m_grid[gooseX][gooseZ];        // 거위 움직이는 거에 따른 좌표
+
+        // A* 알고리즘 실행
+
+        if (goal->isObstacle)
+        {
+            if (!m_grid[gooseX][gooseZ + 1]->isObstacle)
+                goal = m_grid[gooseX][gooseZ + 1];
+            else if (!m_grid[gooseX][gooseZ - 1]->isObstacle)
+                goal = m_grid[gooseX][gooseZ - 1];
+            else if (!m_grid[gooseX - 1][gooseZ]->isObstacle)
+                goal = m_grid[gooseX - 1][gooseZ];
+            else if (!m_grid[gooseX + 1][gooseZ]->isObstacle)
+                goal = m_grid[gooseX + 1][gooseZ];
+        }
+
+        auto path = std::move(m_astar.aStar(start, goal, m_grid));
+
+
+        if (idx + 1 < path.size())
+        {
+            pathIdx_x = path[idx + 1]->GetLocationX() * (gridLength / gridNum) +
+                        (gridLength / gridNum / 2);  // path의 월드위치
+            pathIdx_z = path[idx + 1]->GetLocationY() * (gridLength / gridNum) +
+                        (gridLength / gridNum / 2);  // path의 월드위치
+
+            gardener_x = m_transform.m_pos[0];  // 가드너의 현재위치
+            gardener_z = m_transform.m_pos[2];  // 가드너의 현재위치
+
+            if (glm::abs(gardener_x - pathIdx_x) < 0.5f && glm::abs(gardener_z - pathIdx_z) < 0.5f)
+            {
+                idx++;
+            }
+            else
+            {
+                if (path[idx]->GetLocationX() - path[idx + 1]->GetLocationX() > 0 &&
+                    path[idx]->GetLocationY() - path[idx + 1]->GetLocationY() > 0)
+                {
+                    m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(-45.f));
+                }
+                else if (path[idx]->GetLocationX() - path[idx + 1]->GetLocationX() > 0 &&
+                         path[idx]->GetLocationY() - path[idx + 1]->GetLocationY() < 0)
+                {
+                    m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(-135.f));
+                }
+                else if (path[idx]->GetLocationX() - path[idx + 1]->GetLocationX() < 0 &&
+                         path[idx]->GetLocationY() - path[idx + 1]->GetLocationY() > 0)
+                {
+                    m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(45.f));
+                }
+                else if (path[idx]->GetLocationX() - path[idx + 1]->GetLocationX() < 0 &&
+                         path[idx]->GetLocationY() - path[idx + 1]->GetLocationY() < 0)
+                {
+                    m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(135.f));
+                }
+                else if (path[idx]->GetLocationX() - path[idx + 1]->GetLocationX() == 0 &&
+                         path[idx]->GetLocationY() - path[idx + 1]->GetLocationY() > 0)
+                {
+                    m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(0.f));
+                }
+                else if (path[idx]->GetLocationX() - path[idx + 1]->GetLocationX() == 0 &&
+                         path[idx]->GetLocationY() - path[idx + 1]->GetLocationY() < 0)
+                {
+                    m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(180.f));
+                }
+                else if (path[idx]->GetLocationX() - path[idx + 1]->GetLocationX() > 0 &&
+                         path[idx]->GetLocationY() - path[idx + 1]->GetLocationY() == 0)
+                {
+                    m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(-90.f));
+                }
+                else if (path[idx]->GetLocationX() - path[idx + 1]->GetLocationX() < 0 &&
+                         path[idx]->GetLocationY() - path[idx + 1]->GetLocationY() == 0)
+                {
+                    m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(90.f));
+                }
+
+                m_transform.AddLocation(
+                glm::normalize(vec3(-(gardener_x - pathIdx_x), 0.f, -(gardener_z - pathIdx_z))) *
+                deltaTime);
+            }
+        }
+        if (event == Event::GooseFar)
+        {
+            std::cout << "정원사가 평상시 걷는 상태로 돌아갑니다.\n";
+            currentState = State::Idle;
+        }
+        else if (event == Event::GooseClose)
+        {
+            vec3 pushForce  = glm::normalize(vec3(dx / distance, 0.f, dz / distance)) * 4.f;
+            velocity        = pushForce;
+            velocity       *= 0.9f;
+
+            m_goose1->m_transform.AddLocation(velocity * deltaTime);
+            std::cout << velocity << std::endl;
+            /*std::cout << "CHASING : 정원사가 거위를 밀기 시작합니다.\n";*/
+        }
+        break;
+    }
 }

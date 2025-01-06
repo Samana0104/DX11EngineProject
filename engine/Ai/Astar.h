@@ -51,7 +51,7 @@ namespace HBSoft
         ~Astar() = default;
 
         void  InitGrid();
-        float heuristic(const std::shared_ptr<Node> a, const std::shared_ptr<Node> b);
+        int   heuristic(const std::shared_ptr<Node> a, const std::shared_ptr<Node> b);
         float distance(const std::shared_ptr<Node> a, const std::shared_ptr<Node> b);
         std::vector<std::shared_ptr<Node>> getNeighbors(
         const std::shared_ptr<Node> node, std::vector<std::vector<std::shared_ptr<Node>>>& grid);
@@ -59,7 +59,8 @@ namespace HBSoft
                                                  const std::shared_ptr<Node>                      goal,
                                                  std::vector<std::vector<std::shared_ptr<Node>>>& grid);
 
-        int GRID_OFFSET = 80;
+        /*int GRID_OFFSET = 80;*/
+        int GRID_OFFSET = 40;
         /*  void aStarMain();*/
 
 

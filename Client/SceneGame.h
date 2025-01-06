@@ -9,6 +9,7 @@ date: 2024-12-23
 #pragma once
 #include "pch.h"
 
+#include "EventHandler.h"
 #include "Camera/DebugCamera.h"
 #include "Camera/GooseCamera.h"
 #include "2D/GridMap.h"
@@ -27,7 +28,7 @@ date: 2024-12-23
 
 namespace HBSoft
 {
-    class SceneGame : public Scene
+    class SceneGame : public Scene, Observer
     {
     public:
         GameButton                    m_escButton;
@@ -60,5 +61,7 @@ namespace HBSoft
         virtual void Release() override;
         virtual void Start() override;
         virtual void End() override;
+
+        virtual void OnNotice(EventList event, void* entity);
     };
 }  // namespace HBSoft

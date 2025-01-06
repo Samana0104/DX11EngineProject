@@ -45,6 +45,8 @@ SceneGame::SceneGame()
     m_grid.SetCamera(cameraTest);
     m_staticObjs.LoadFromFolder("../res/Mesh/StaticObj", cameraTest, lightTest);
     m_colObjs->LoadRange("../res/collision.txt");
+
+    EventHandler::GetInstance().AddEvent(EventList::QUEST_CLEAR, this);
 }
 
 void SceneGame::Update(float deltaTime)
@@ -61,8 +63,8 @@ void SceneGame::Update(float deltaTime)
 
     cube.Update(deltaTime);
     m_grid.Update(deltaTime);
-    m_goose->Update(deltaTime);
     m_gardener.Update(deltaTime);
+    m_goose->Update(deltaTime);
     m_tree.Update(deltaTime);
 
     m_line->Update(deltaTime);
@@ -112,7 +114,7 @@ void SceneGame::Render()
     m_goose->Render();
     m_grid.Render();
 
-    m_tree.Render();
+    // m_tree.Render();
     cube.Render();
     m_goose->m_component.DrawBoundary(m_line);
     m_colObjs->m_component.DrawBoundary(m_line);
@@ -134,7 +136,10 @@ void SceneGame::Render()
     EasyRender::MergeRenderTarget(MultiRT::MAIN, MultiRT::GUI);
 }
 
-void SceneGame::Release() {}
+void SceneGame::Release()
+{
+    EventHandler::GetInstance().DeleteEvent(EventList::QUEST_CLEAR, this);
+}
 
 void SceneGame::Start()
 {
@@ -155,3 +160,11 @@ void SceneGame::Start()
 }
 
 void SceneGame::End() {}
+
+void SceneGame::OnNotice(EventList event, void* entity)
+{
+    if (event == EventList::QUEST_CLEAR)
+    {
+        HSCENE.SetCurrentScene(L"Lobby");
+    }
+}
