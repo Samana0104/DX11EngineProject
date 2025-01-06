@@ -21,6 +21,7 @@ date: 2024-12-23
 #include "3D/Gardener.h"
 #include "3D/CollisionObj.h"
 #include "3D/Static3DObj.h"
+#include "3D/Dynamic3DObj.h"
 #include "3D/DirectionalLight.h"
 #include "HBSAutoLoader.h"
 #include "GameButton.h"
@@ -40,6 +41,7 @@ namespace HBSoft
         std::shared_ptr<CollisionObj> m_colObjs;
 
         HBSAutoLoader<std::shared_ptr<Static3DObj>> m_staticObjs;
+        HBSAutoLoader<std::shared_ptr<Dynamic3DObj>> m_dynamicObjs;
 
 #ifdef _DEBUG
         std::shared_ptr<DebugCamera> cameraTest;
