@@ -64,7 +64,7 @@ void SceneGame::Update(float deltaTime)
 
     cube.Update(deltaTime);
     m_grid.Update(deltaTime);
-    m_gardener.Update(deltaTime);
+    //m_gardener.Update(deltaTime);
     m_goose->Update(deltaTime);
     m_tree.Update(deltaTime);
 
@@ -83,30 +83,38 @@ void SceneGame::Update(float deltaTime)
     }
     m_goose->ProcessCollision(m_colObjs);
 
-    //for (auto& hbsc : m_staticObjs.HBSContainer)
-    //{
-    //    static auto it = std::find(m_colObjs->m_component.m_collidedAreaNames.begin(),
-    //                                 m_colObjs->m_component.m_collidedAreaNames.end(),
-    //                                 hbsc->GetKey());
+    std::string temp;
 
-    //    if (it != m_colObjs->m_component.m_collidedAreaNames.end()) // collision detecting 된 오브젝트를 찾았을때
-    //    {
-    //        if (hbsc->GetKey().find("drinkingFountain") != std::string::npos ||
-    //            hbsc->GetKey().find("drinkingFountain") != std::string::npos) // 찾은 오브젝트 key 값이 carrotL or carrotR 일때
-    //        {
-    //            hbsc->m_transform.SetLocation(m_goose->m_transform.m_pos); // 충돌한 오브젝트의 좌표를 Goose 의 좌표와 동기화
-    //        }
-    //    }
-    //}
-
-    if (m_goose->m_component.m_collidedAreaNames.contains("drinkingFountain.hbs"))  // collision detecting 된 충돌 객체의 이름 판별
+    for (int i = 0; i < 4; i++)  // "~pumpkin0.hbs" ~ "~pumpkin3.hbs"
     {
-        for (auto& hbdc : m_staticObjs.HBSContainer)
+        temp = "~pumpkin" + std::to_string(i) + ".hbs";
+
+        if (m_goose->m_component.m_collidedAreaNames.contains(temp))
         {
-            if (hbdc->GetKey().find("drinkingFountain") != std::string::npos)
-                hbdc->m_transform.SetLocation(m_goose->m_transform.m_pos);  // 충돌한 오브젝트의 좌표를 Goose 의 좌표와 동기화
+            m_dynamicObjs.FindByName(temp)->get()->GetKey();  // GetKey 부분 대신에 TODO 로 조작
         }
     }
+
+    for (int i = 0; i < 6; i++) // "~carrotL0.hbs" ~ "~carrotL5.hbs"
+    {
+        temp = "~carrotL" + std::to_string(i) + ".hbs";
+
+        if (m_goose->m_component.m_collidedAreaNames.contains(temp))
+        {
+            m_dynamicObjs.FindByName(temp)->get()->GetKey(); // GetKey 부분 대신에 TODO 로 조작
+        }
+    }
+
+    for (int i = 0; i < 4; i++)  // "~carrotR0.hbs" ~ "~carrotR3.hbs"
+    {
+        temp = "~carrotR" + std::to_string(i) + ".hbs";
+
+        if (m_goose->m_component.m_collidedAreaNames.contains(temp))
+        {
+            m_dynamicObjs.FindByName(temp)->get()->GetKey();  // GetKey 부분 대신에 TODO 로 조작
+        }
+    }
+
 }
 
 void SceneGame::Render()
@@ -127,7 +135,7 @@ void SceneGame::Render()
     m_line->Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
 #endif
 
-    m_gardener.Render();
+    //m_gardener.Render();
     m_goose->Render();
     // m_grid.Render();
 

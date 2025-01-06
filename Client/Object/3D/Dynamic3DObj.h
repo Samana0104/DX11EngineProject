@@ -23,12 +23,11 @@ namespace HBSoft
     class Dynamic3DObj : public Object3D
     {
     private:
-        std::shared_ptr<Mesh> m_mesh;
-        std::vector<mat4>     m_anim;
-        std::string           m_name;
-        std::string           m_key;
-        std::shared_ptr<Texture> m_picnicRugTexture;
-        std::shared_ptr<Texture> m_texCube1;
+        std::shared_ptr<Mesh>           m_mesh;
+        std::vector<mat4>               m_anim;
+        std::string                     m_name;
+        std::string                     m_key;
+        std::shared_ptr<Texture>        m_texCube1;
         DynamicTransformType            m_transType = DynamicTransformType::DefaultTrans;
 
     public:
