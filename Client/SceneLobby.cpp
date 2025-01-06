@@ -1,8 +1,9 @@
 /*
-author : º¯ÇÑºû
+author : º¯ÇÑºû, ÀÌÁöÇõ
 description : °ÔÀÓ Å¸ÀÌÆ² ¾À ¼Ò½º ÆÄÀÏ
+              v1.0.1 : BGM Ãß°¡ (ÀÌÁöÇõ)
 
-version: 1.0.0
+version: 1.0.1
 date: 2024-11-30
 */
 #include "pch.h"
@@ -10,7 +11,10 @@ date: 2024-11-30
 
 using namespace HBSoft;
 
-SceneLobby::SceneLobby() {}
+SceneLobby::SceneLobby()
+{
+    m_lobbyBGM = HASSET->m_sounds[L"lobbyBGM.mp3"];
+}
 
 void SceneLobby::Update(float deltaTime)
 {
@@ -50,6 +54,12 @@ void SceneLobby::Render()
 
 void SceneLobby::Release() {}
 
-void SceneLobby::Start() {}
+void SceneLobby::Start()
+{
+    m_lobbyBGM->Play();
+}
 
-void SceneLobby::End() {}
+void SceneLobby::End()
+{
+    m_lobbyBGM->Stop();
+}

@@ -2,8 +2,9 @@
 author : 변한빛, 정찬빈, 이지혁
 description : 게임 내부 씬을 정의하는 소스 파일
               v1.1.2 : 하드코딩된 오브젝트 초기화, 업데이트, 렌더 부분 자동화
+              v1.1.3 : BGM 추가 (이지혁)
 
-version: 1.1.2
+version: 1.1.3
 date: 2024-12-24
 */
 
@@ -14,6 +15,8 @@ using namespace HBSoft;
 SceneGame::SceneGame()
     : m_tree(2)
 {
+    m_ingameBGM = HASSET->m_sounds[L"ingameBGM.mp3"];
+    
 #ifdef _DEBUG
     cameraTest = std::make_shared<DebugCamera>();
 #else
@@ -168,6 +171,8 @@ void SceneGame::Release()
 
 void SceneGame::Start()
 {
+    m_ingameBGM->Play();
+
 #ifdef _DEBUG
     m_goose->m_transform.SetLocation({8.0f, 0.4f, 4.0f});
 #else
@@ -184,7 +189,10 @@ void SceneGame::Start()
     m_questGUI.Init();
 }
 
-void SceneGame::End() {}
+void SceneGame::End()
+{
+    m_ingameBGM->Stop();
+}
 
 void SceneGame::OnNotice(EventList event, void* entity)
 {
