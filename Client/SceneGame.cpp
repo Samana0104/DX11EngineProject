@@ -64,14 +64,13 @@ void SceneGame::Update(float deltaTime)
 
     cube.Update(deltaTime);
     m_grid.Update(deltaTime);
-    //m_gardener.Update(deltaTime);
+    // m_gardener.Update(deltaTime);
     m_goose->Update(deltaTime);
     m_tree.Update(deltaTime);
 
     m_line->Update(deltaTime);
 
     m_colObjs->Update(deltaTime);
-    // m_test2.GetTransform().SetLocation(glm::vec3(m_x, m_y, m_z));
 
     for (auto& hbsc : m_staticObjs.HBSContainer)
     {
@@ -91,17 +90,16 @@ void SceneGame::Update(float deltaTime)
 
         if (m_goose->m_component.m_collidedAreaNames.contains(temp))
         {
-            m_dynamicObjs.FindByName(temp)->get()->GetKey();  // GetKey 부분 대신에 TODO 로 조작
         }
     }
 
-    for (int i = 0; i < 6; i++) // "~carrotL0.hbs" ~ "~carrotL5.hbs"
+    for (int i = 0; i < 6; i++)  // "~carrotL0.hbs" ~ "~carrotL5.hbs"
     {
         temp = "~carrotL" + std::to_string(i) + ".hbs";
 
         if (m_goose->m_component.m_collidedAreaNames.contains(temp))
         {
-            m_dynamicObjs.FindByName(temp)->get()->GetKey(); // GetKey 부분 대신에 TODO 로 조작
+            // m_dynamicObjs.FindByName(temp)->get()->GetKey();  // GetKey 부분 대신에 TODO 로 조작
         }
     }
 
@@ -111,10 +109,9 @@ void SceneGame::Update(float deltaTime)
 
         if (m_goose->m_component.m_collidedAreaNames.contains(temp))
         {
-            m_dynamicObjs.FindByName(temp)->get()->GetKey();  // GetKey 부분 대신에 TODO 로 조작
+            // m_dynamicObjs.FindByName(temp)->get()->GetKey();  // GetKey 부분 대신에 TODO 로 조작
         }
     }
-
 }
 
 void SceneGame::Render()
@@ -135,7 +132,7 @@ void SceneGame::Render()
     m_line->Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
 #endif
 
-    //m_gardener.Render();
+    // m_gardener.Render();
     m_goose->Render();
     //m_grid.Render();
 
@@ -181,6 +178,7 @@ void SceneGame::Start()
                        m_goose->m_transform.m_pos,
                        {0.f, 1.f, 0.f});
 
+    m_goose->Init();
     m_questGUI.Init();
 }
 

@@ -74,6 +74,13 @@ Transform3D& Transform3D::SetRotation(const vec3& eulerAngle)
     return *this;
 }
 
+Transform3D& Transform3D::SetRotation(const quat& rot)
+{
+    m_rotator = rot;
+    CalculateWorldMat();
+    return *this;
+}
+
 Transform3D& Transform3D::AddScale(const vec3 scale)
 {
     return SetScale(m_scale + scale);

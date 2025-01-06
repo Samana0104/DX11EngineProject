@@ -40,6 +40,7 @@ namespace HBSoft
         */
         Transform3D& SetRotation(const vec3& axis, const float radian);
         Transform3D& SetRotation(const vec3& eulerAngle);
+        Transform3D& SetRotation(const quat& rot);
 
         Transform3D& AddScale(const vec3 scale);
         Transform3D& AddScale(const float scale);
