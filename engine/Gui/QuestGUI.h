@@ -24,7 +24,6 @@ namespace HBSoft
     };
 
     class QuestGUI : public Object2D, Observer
-
     {
     private:
         std::shared_ptr<Mesh>    m_squaredMesh;
@@ -34,6 +33,9 @@ namespace HBSoft
         std::shared_ptr<HSound>  m_paperSound;
 
         HRect m_textRect;
+
+        bool m_isQuest1Clear;
+        bool m_isQuest2Clear;
 
         bool m_isQuest1Clear;
         bool m_isQuest2Clear;

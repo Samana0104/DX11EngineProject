@@ -125,24 +125,6 @@ void Dynamic3DObj::Init(const std::string& key)
 
 void Dynamic3DObj::Update(const float deltaTime)
 {
-    if (m_transType == DynamicTransformType::GooseGameTrans)
-    {
-        m_transform.SetRotation(glm::vec3(1.57f, 0.0f, 0.0f));
-        m_transform.SetLocation(glm::vec3(-7.0f, 0.0f, -12.0f));
-    }
-    else if (m_transType == DynamicTransformType::CMTrans)
-    {
-        m_transform.SetRotation(glm::vec3(1.57f, 0.0f, 0.0f));
-        m_transform.SetLocation(glm::vec3(-7.0f, 0.0f, -12.0f));
-        m_transform.SetScale({1 / 100.0f, 1 / 100.0f, 1 / 100.0f});
-    }
-    else if (m_transType == DynamicTransformType::UnityTrans)
-    {
-        m_transform.SetRotation(glm::vec3(1.57f, 0.0f, 0.0f));
-        m_transform.SetLocation(glm::vec3(12.28f, 0.48f, 11.71f));
-        m_transform.SetScale(0.0015f);
-    }
-
     UpdateDefaultCB();
 }
 
