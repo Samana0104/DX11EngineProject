@@ -53,6 +53,8 @@ void Goose::Update(float deltaTime)
     ImGui::SliderFloat("Speed1", &speed1, 0, 60.f);
     ImGui::SliderFloat("Goose speed", &m_speed1, 0.f, 300.f);
 #endif
+    m_isInit  = false;
+    m_isInit2 = false;
 
     currentFrame += deltaTime * speed1;
     startFrame    = m_gooseAnis[0]->GetStartFrame();
@@ -349,10 +351,12 @@ void Goose::Update(float deltaTime)
         quat rot;
         vec3 dummy1;
         vec4 dummy2;
+
         glm::decompose(offsetMat, scale, rot, pos, dummy1, dummy2);
 
+        pos.y -= 0.2f;
         m_socketObj->m_transform.SetLocation(pos + m_moveDirection * 0.15f);
-        m_socketObj->m_transform.SetRotation(rot);
+        // m_socketObj->m_transform.SetRotation(rot);
     }
 
 
@@ -373,6 +377,8 @@ void Goose::Init()
 {
     m_transform.SetScale({0.07f, 0.07f, 0.07f});
     m_transform.SetRotation(vec3(1.0f, 0.f, 0.f), 0.65f * glm::pi<float>());
+    m_isInit  = false;
+    m_isInit2 = false;
 }
 
 float Goose::GetLocationX()
@@ -399,22 +405,47 @@ void Goose::SetSocket(std::shared_ptr<Object3D> socketObj)
 {
     m_socketObj = socketObj;
     m_socketObj->m_transform.SetLocation({0.f, 0.f, 0.f});
-    m_socketObj->m_transform.SetRotation({0.f, 0.f, 0.f});
+    // m_socketObj->m_transform.SetRotation({0.f, 0.f, 0.f});
+}
+
+bool Goose::HasSocket() const
+{
+    if (m_socketObj)
+        return true;
+    else
+        return false;
 }
 
 void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
 {
-    bool isSocket = false;
-    if (HINPUT->IsKeyDown(0x5A))
+    bool isSocket  = false;
+    bool isKeyDown = false;
+
+    if (obj == m_socketObj)
+        return;
+
+    if (HINPUT->IsKeyDown(0x5A) && !m_isInit)
     {
         if (m_socketObj)
+        {
             isSocket = true;
-        else
-            SetSocket(obj);
+        }
+
+        isKeyDown = true;
     }
 
     if (m_component.IsCollision(obj->m_component))
     {
+        if (isKeyDown)
+        {
+            std::shared_ptr<Dynamic3DObj> dynamicObj = std::dynamic_pointer_cast<Dynamic3DObj>(obj);
+            if (dynamicObj)
+            {
+                SetSocket(obj);
+                m_isInit = true;
+            }
+        }
+
         float colMaxY = -9999.f;
         for (size_t i = 0; i < m_component.m_collidedAreas.size(); i++)
         {
@@ -438,10 +469,16 @@ void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
 
             m_transform.AddLocation(reflectVec);
         }
+
+        m_isInit2 = true;
     }
     else
     {
-        m_transform.AddLocation({0.f, -0.2f, 0.f});
+        if (!m_isInit2)
+        {
+            m_transform.AddLocation({0.f, -0.1f, 0.f});
+            m_isInit2 = true;
+        }
     }
 
     float height = m_mapObj->GetHeight(m_transform.m_pos);
@@ -454,8 +491,9 @@ void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
     {
         m_socketObj->m_transform.SetLocation(
         vec3(m_transform.m_pos.x, m_transform.m_pos.y + 0.3f, m_transform.m_pos.z) +
-        m_moveDirection * 0.2f);
+        m_moveDirection * 0.3f);
         m_socketObj = nullptr;
+        m_isInit    = true;
     }
 
     UpdateDefaultCB();

@@ -4,6 +4,7 @@
 #include "3D/Object3D.h"
 #include "3D/Transform3D.h"
 #include "3D/HeightMapObj.h"
+#include "3D/Dynamic3DObj.h"
 #include "Test3DObj.h"
 #include "CollisionComponent.h"
 #include "Sound/HSound.h"
@@ -54,6 +55,9 @@ namespace HBSoft
         AABB m_gooseStand;
         AABB m_gooseCrounching;
 
+        bool m_isInit;
+        bool m_isInit2;
+
     public:
         Goose();
 
@@ -68,6 +72,8 @@ namespace HBSoft
         vec3 GetPos();
         void SetHeightMap(std::shared_ptr<HeightMapObj> mapObj);
         void SetSocket(std::shared_ptr<Object3D> socketObj);
+
+        bool HasSocket() const;
 
         virtual void ProcessCollision(std::shared_ptr<Object3D> obj) override;
     };
