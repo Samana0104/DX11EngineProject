@@ -388,13 +388,13 @@ void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
         }
         else
         {
-            vec3 normal =
-            m_component.GetTransformedBound(0).ComputeNormal(m_component.m_collidedAreas[0]);
+            // vec3 normal =
+            // m_component.GetTransformedBound(0).ComputeNormal(m_component.m_collidedAreas[0]);
             vec3 reflectVec;
 
 
-            if (glm::dot(normal, -moveVec) >= 0.f)
-                reflectVec = glm::proj<vec3>(-moveVec, normal);
+            if (glm::dot(m_component.m_collidedNormal, -moveVec) >= 0.f)
+                reflectVec = glm::proj<vec3>(-moveVec, m_component.m_collidedNormal);
             else
                 reflectVec = moveVec;
 

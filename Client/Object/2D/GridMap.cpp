@@ -18,12 +18,11 @@ GridMap::GridMap()
     m_easyRender.SetVSShader(L"BasicVS.hlsl");
     m_easyRender.SetPSShader(L"ColorPS.hlsl");
     m_easyRender.SetMesh(m_gridMesh);
-    m_transform.SetLocation(vec3(-3.15, 0, 3.15));
+    m_transform.SetRotation(vec3(1.f, 0.f, 0.f), glm::radians(-90.f));
 }
 
 void GridMap::Update(const float deltaTime)
 {
-    m_transform.SetRotation(vec3(1.f, 0.f, 0.f), glm::radians(90.f));
     UpdateDefaultCB();
 }
 
