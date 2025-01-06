@@ -386,7 +386,8 @@ void Goose::SetHeightMap(std::shared_ptr<HeightMapObj> mapObj)
 void Goose::SetSocket(std::shared_ptr<Object3D> socketObj)
 {
     m_socketObj = socketObj;
-    m_socketObj->m_transform.InitTransform();
+    m_socketObj->m_transform.SetLocation({0.f, 0.f, 0.f});
+    m_socketObj->m_transform.SetRotation({0.f, 0.f, 0.f});
 }
 
 void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
