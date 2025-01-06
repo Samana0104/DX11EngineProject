@@ -26,7 +26,7 @@ namespace HBSoft
         std::vector<AABB>        m_colAreas;
 
     public:
-        std::vector<std::string> m_collidedAreaNames;
+        std::set<std::string> m_collidedAreaNames;
         // IsCollision에서 충돌나면 충돌체 이름 구하는 변수
         std::vector<AABB> m_collidedAreas;  // IsCollision에서 충돌나면 충돌 영역 저장하는 변수
         vec3 m_collidedNormal;              // IsCollision에서 충돌나면 노말값 구하는 변수

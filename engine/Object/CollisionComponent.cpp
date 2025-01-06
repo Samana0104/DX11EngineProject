@@ -22,7 +22,6 @@ CollisionComponent::CollisionComponent(Transform3D& transform, bool isCollision)
     : m_transform(transform), m_isCollision(isCollision)
 {
     m_collidedAreas.reserve(10);
-    m_collidedAreaNames.reserve(10);
     m_colNames.reserve(10);
     m_colAreas.reserve(10);
 }
@@ -71,7 +70,7 @@ bool CollisionComponent::IsCollided(const AABB& aabb, CollisionComponent& compon
         {
             m_collidedNormal += colArea.ComputeNormal(aabb);
             component.m_collidedAreas.push_back(colArea);
-            component.m_collidedAreaNames.push_back(m_colNames[i]);
+            component.m_collidedAreaNames.insert(m_colNames[i]);
             return true;
         }
     }
@@ -83,7 +82,11 @@ bool CollisionComponent::IsCollision(CollisionComponent& component)
     if (!m_isCollision)
         return false;
 
-    Init();
+    m_collidedNormal = vec3(0.f);
+    m_collidedAreas.clear();
+    m_collidedAreaNames.clear();
+    component.m_collidedAreas.clear();
+    component.m_collidedAreaNames.clear();
 
     for (size_t i = 0; i < component.m_colAreas.size(); i++)
     {
@@ -100,7 +103,7 @@ bool CollisionComponent::IsCollision(CollisionComponent& component)
 
         if (IsCollided(colArea, component))
         {
-            m_collidedAreaNames.push_back(component.m_colNames[i]);
+            m_collidedAreaNames.insert(component.m_colNames[i]);
             m_collidedAreas.push_back(colArea);
         }
     }

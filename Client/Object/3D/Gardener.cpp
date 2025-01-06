@@ -135,22 +135,23 @@ void Gardener::Update(const float deltaTime)
     int gooseX    = GRID_OFFSET + glm::floor(m_goose1->GetPos().x * ((float)gridNum / gridLength));
     int gooseZ    = GRID_OFFSET - glm::floor(m_goose1->GetPos().z * ((float)gridNum / gridLength));
 
+    std::cout << "gooseX : " << gooseX << ", gooseZ : " << gooseZ << std::endl;
     auto start = m_grid[gardenerZ][gardenerX];  // 가드너 움직이는 거에 따른 좌표
     auto goal  = m_grid[gooseZ][gooseX];        // 거위 움직이는 거에 따른 좌표
 
     // A* 알고리즘 실행
 
-    if (goal->isObstacle)
-    {
-        if (!m_grid[gooseZ][gooseX + 1]->isObstacle)
-            goal = m_grid[gooseZ][gooseX + 1];
-        else if (!m_grid[gooseZ][gooseX - 1]->isObstacle)
-            goal = m_grid[gooseZ][gooseX - 1];
-        else if (!m_grid[gooseZ - 1][gooseX]->isObstacle)
-            goal = m_grid[gooseZ - 1][gooseX];
-        else if (!m_grid[gooseZ + 1][gooseX]->isObstacle)
-            goal = m_grid[gooseZ + 1][gooseX];
-    }
+    // if (goal->isObstacle)
+    //{
+    //     if (!m_grid[gooseZ][gooseX + 1]->isObstacle)
+    //         goal = m_grid[gooseZ][gooseX + 1];
+    //     else if (!m_grid[gooseZ][gooseX - 1]->isObstacle)
+    //         goal = m_grid[gooseZ][gooseX - 1];
+    //     else if (!m_grid[gooseZ - 1][gooseX]->isObstacle)
+    //         goal = m_grid[gooseZ - 1][gooseX];
+    //     else if (!m_grid[gooseZ + 1][gooseX]->isObstacle)
+    //         goal = m_grid[gooseZ + 1][gooseX];
+    // }
 
     auto path = std::move(m_astar.aStar(start, goal, m_grid));
 
