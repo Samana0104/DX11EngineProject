@@ -24,6 +24,7 @@ namespace HBSoft
     };
 
     class QuestGUI : public Object2D, Observer
+
     {
     private:
         std::shared_ptr<Mesh>    m_squaredMesh;
@@ -54,6 +55,8 @@ namespace HBSoft
     public:
         QuestGUI();
         ~QuestGUI();
+
+        void AddQuest(std::wstring questMsg);
 
         virtual void Update(const float deltaTime) override;
         virtual void Render() override;
