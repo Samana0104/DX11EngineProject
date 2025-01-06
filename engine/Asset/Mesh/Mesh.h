@@ -58,6 +58,7 @@ namespace HBSoft
         std::map<std::string, int> objectIndex;  // 오브젝트(뼈 포함)인덱스
         std::map<std::string, int> parentIndex;  // 오브젝트(뼈 포함)부모 인덱스
         std::map<std::string, int> bornIndex;
+        std::vector<mat4>          bindPoseInvMat;
     };
 
     struct Material

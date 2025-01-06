@@ -43,6 +43,9 @@ Goose::Goose()
     m_gooseCrounching.min = {-3.f, 0.f, -2.9f};
     m_gooseCrounching.max = {3.f, 5.f, 2.9f};
     m_component.AddAABBRange(m_gooseStand, "Goose");
+
+    m_socketObj     = nullptr;
+    m_socketBornIdx = m_mesh->m_born.objectIndex["beaklower"];
 }
 
 void Goose::Update(float deltaTime)
@@ -336,6 +339,15 @@ void Goose::Update(float deltaTime)
     anim = m_gooseAnis[m_animstate]->GetAnimationMatrix(currentFrame);
     m_transform.AddLocation(moveVec);
 
+    if (m_socketObj)
+    {
+        mat4 offsetMat   = anim[m_socketBornIdx] * m_mesh->m_born.bindPoseInvMat[m_socketBornIdx];
+        offsetMat[3][2] -= 1.f;
+
+        m_socketObj->m_transform.m_worldMat = m_transform.m_worldMat * offsetMat;
+    }
+
+
 #ifndef _DEBUG
     m_camera->Move({m_transform.m_pos[0] + 1.1f, m_transform.m_pos[1] + 2.4f, m_transform.m_pos[2]});
 #endif
@@ -371,10 +383,28 @@ void Goose::SetHeightMap(std::shared_ptr<HeightMapObj> mapObj)
     m_mapObj = mapObj;
 }
 
+void Goose::SetSocket(std::shared_ptr<Object3D> socketObj)
+{
+    m_socketObj = socketObj;
+    m_socketObj->m_transform.InitTransform();
+}
+
 void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
 {
     if (m_component.IsCollision(obj->m_component))
     {
+        // if (HINPUT->IsKeyDown(0x5A))  // zŰ
+        //{
+        //     if (m_socketObj == nullptr)
+        //     {
+        //         SetSocket(obj);
+        //     }
+        //     else
+        //     {
+        //     }
+        //     return;
+        // }
+
         float colMaxY = -9999.f;
         for (size_t i = 0; i < m_component.m_collidedAreas.size(); i++)
         {

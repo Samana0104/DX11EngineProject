@@ -6,8 +6,9 @@ using namespace HBSoft;
 
 Test3DObj::Test3DObj()
 {
-    m_mesh = HASSET->m_meshes[L"Walking.hbs"];
+    m_mesh = HASSET->m_meshes[L"BOX3D"];
 
+    m_transform.SetScale(100.f);
     m_easyRender.SetVSShader(L"BasicVS.hlsl");
     m_easyRender.SetPSShader(L"ColorPS.hlsl");
     m_easyRender.SetTexture(nullptr);

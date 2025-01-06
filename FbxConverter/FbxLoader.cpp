@@ -27,6 +27,7 @@ void FbxLoader::Load(const wstringV filePath, std::shared_ptr<Mesh> loadedMesh,
     fbxRootNode = m_fbxScene->GetRootNode();
 
     ProcessNode(fbxRootNode, loadedMesh, 0, -1);
+    loadedMesh->m_born.bindPoseInvMat.resize(loadedMesh->m_born.objectIndex.size());
     LoadAnimation(loadedMesh, loadedAni);
 
     for (size_t i = 0; i < m_fbxMeshes.size(); i++)
@@ -141,6 +142,7 @@ bool FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
     FbxAMatrix  globalInitPosMat;
     FbxAMatrix  bindPoseMat;
     FbxAMatrix  offsetMat;
+    mat4        offsetGlmMat;
 
     int     deformerCount;
     int     clusterCount;
@@ -174,13 +176,15 @@ bool FbxLoader::ProcessBorn(FbxMesh* fMesh, std::shared_ptr<Mesh> mesh)
             fCluster->GetTransformLinkMatrix(bindPoseMat);
             fCluster->GetTransformMatrix(globalInitPosMat);
 
-            offsetMat = bindPoseMat.Inverse() * globalInitPosMat;
+            offsetMat                            = bindPoseMat.Inverse() * globalInitPosMat;
+            offsetGlmMat                         = ConvertFbxMatToGlmMat(offsetMat);
+            mesh->m_born.bindPoseInvMat[boneIdx] = glm::inverse(offsetGlmMat);
 
             for (size_t i = 0; i < m_fbxAniMat.size(); i++)
             {
                 for (size_t j = 0; j < m_fbxAniMat[i][boneIdx].size(); j++)
                 {
-                    m_fbxAniMat[i][boneIdx][j] *= ConvertFbxMatToGlmMat(offsetMat);
+                    m_fbxAniMat[i][boneIdx][j] *= offsetGlmMat;
                 }
             }
 

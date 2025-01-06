@@ -4,6 +4,7 @@
 #include "3D/Object3D.h"
 #include "3D/Transform3D.h"
 #include "3D/HeightMapObj.h"
+#include "Test3DObj.h"
 #include "CollisionComponent.h"
 #include "Sound/HSound.h"
 
@@ -28,6 +29,7 @@ namespace HBSoft
     {
     private:
         std::shared_ptr<Mesh>                       m_mesh;
+        std::shared_ptr<Object3D>                   m_socketObj;
         std::shared_ptr<HSound>                     m_sound;
         std::vector<std::shared_ptr<AnimationClip>> m_gooseAnis;
 
@@ -42,8 +44,10 @@ namespace HBSoft
         int   lastFrame    = 0;
         float speed1       = 30.f;
 
-        int  tempStartFrame = 0;
-        int  tempLastFrame  = 0;
+        int tempStartFrame = 0;
+        int tempLastFrame  = 0;
+        int m_socketBornIdx;
+
         vec3 moveDirection;
         vec3 moveVec;
 
@@ -63,6 +67,7 @@ namespace HBSoft
 
         vec3 GetPos();
         void SetHeightMap(std::shared_ptr<HeightMapObj> mapObj);
+        void SetSocket(std::shared_ptr<Object3D> socketObj);
 
         virtual void ProcessCollision(std::shared_ptr<Object3D> obj) override;
     };

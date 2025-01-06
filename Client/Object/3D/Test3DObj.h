@@ -10,9 +10,6 @@ namespace HBSoft
     private:
         std::shared_ptr<Mesh> m_mesh;
 
-        std::vector<mat4> anim;
-
-
     public:
         Test3DObj();
 

@@ -12,6 +12,15 @@ using namespace HBSoft;
 
 QuestGUI::QuestGUI()
 {
+    FontDesc desc;
+    {
+        desc.m_fontName       = L"NotoSansCJKkr-Regular";
+        desc.m_fontLocaleName = L"ko-kr";
+        desc.m_fontSize       = 35.f;
+        desc.m_fontStretch    = DWRITE_FONT_STRETCH_NORMAL;
+        desc.m_fontStyle      = DWRITE_FONT_STYLE_NORMAL;
+        desc.m_fontWeight     = DWRITE_FONT_WEIGHT_NORMAL;
+    }
     m_isTab     = false;
     m_isEsc     = false;
     m_isWorking = false;
@@ -26,7 +35,11 @@ QuestGUI::QuestGUI()
     m_easyRender.SetVSShader(L"2DBasicVS.hlsl");
     m_easyRender.SetPSShader(L"2DBasicPS.hlsl");
     m_easyRender.SetDSS(ERDepthStencilState::DISABLE);
+
+    m_questFont = FontFactory::CreateFontFromDesc(HDEVICE, desc);
 }
+
+void QuestGUI::AddQuest(std::wstring questMsg) {}
 
 void QuestGUI::OnNotice(EventList event, void* entity) {}
 
