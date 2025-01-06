@@ -476,7 +476,7 @@ void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
     {
         if (!m_isInit2)
         {
-            m_transform.AddLocation({0.f, -0.1f, 0.f});
+            m_transform.AddLocation({0.f, -0.2f, 0.f});
             m_isInit2 = true;
         }
     }
@@ -490,7 +490,7 @@ void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
     if (isSocket)
     {
         m_socketObj->m_transform.SetLocation(
-        vec3(m_transform.m_pos.x, m_transform.m_pos.y + 0.3f, m_transform.m_pos.z) +
+        vec3(m_transform.m_pos.x, m_transform.m_pos.y + 0.1f, m_transform.m_pos.z) +
         m_moveDirection * 0.3f);
         m_socketObj = nullptr;
         m_isInit    = true;
