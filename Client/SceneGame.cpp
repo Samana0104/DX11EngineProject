@@ -63,8 +63,8 @@ void SceneGame::Update(float deltaTime)
 
     cube.Update(deltaTime);
     m_grid.Update(deltaTime);
-    m_goose->Update(deltaTime);
     m_gardener.Update(deltaTime);
+    m_goose->Update(deltaTime);
     m_tree.Update(deltaTime);
 
     m_line->Update(deltaTime);

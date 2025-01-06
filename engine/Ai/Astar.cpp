@@ -25,9 +25,9 @@ const std::shared_ptr<Node> node, std::vector<std::vector<std::shared_ptr<Node>>
         int nx = node->x + dx[i];
         int ny = node->y + dy[i];
 
-        if (nx >= 0 && ny >= 0 && nx <= GRID_OFFSET * 2 && ny <= GRID_OFFSET * 2)
+        if (nx >= -GRID_OFFSET && ny >= -GRID_OFFSET && nx < GRID_OFFSET && ny < GRID_OFFSET)
         {
-            auto neighbor = grid[ny][nx];
+            auto neighbor = grid[nx + GRID_OFFSET][ny + GRID_OFFSET];
             if (!neighbor->isObstacle)
             {  // 장애물이 아닌 경우만 추가
                 neighbors.push_back(neighbor);
@@ -42,7 +42,7 @@ std::vector<std::shared_ptr<Node>> Astar::aStar(const std::shared_ptr<Node>     
                                                 const std::shared_ptr<Node>                      goal,
                                                 std::vector<std::vector<std::shared_ptr<Node>>>& grid)
 {
-    // std::vector<std::shared_ptr<Node>> initList;
+     std::vector<std::shared_ptr<Node>> initList;
 
     auto compare = [](const std::shared_ptr<Node> a, const std::shared_ptr<Node> b)
     { return (a->gCost + a->hCost) > (b->gCost + b->hCost); };
@@ -53,8 +53,8 @@ std::vector<std::shared_ptr<Node>> Astar::aStar(const std::shared_ptr<Node>     
     start->hCost = heuristic(start, goal);
     openSet.push(start);
 
-    // initList.push_back(start);
-    // initList.push_back(goal);
+     initList.push_back(start);
+     initList.push_back(goal);
 
     while (!openSet.empty())
     {
@@ -72,19 +72,19 @@ std::vector<std::shared_ptr<Node>> Astar::aStar(const std::shared_ptr<Node>     
 
             std::reverse(path.begin(), path.end());
 
-            // for (auto initPath : initList)
-            //{
-            //     initPath->gCost  = 99999.f;
-            //     initPath->hCost  = 0.f;
-            //     initPath->parent = nullptr;
-            // }
+             for (auto initPath : initList)
+            {
+                 initPath->gCost  = 99999.f;
+                 initPath->hCost  = 0.f;
+                 initPath->parent = nullptr;
+             }
             return std::move(path);
         }
 
         auto neighborSet = std::move(getNeighbors(current, grid));
         for (auto neighbor : neighborSet)
         {
-            // initList.push_back(neighbor);
+             initList.push_back(neighbor);
             float tentativeGCost = current->gCost + distance(current, neighbor);
 
             if (tentativeGCost < neighbor->gCost)
