@@ -224,6 +224,12 @@ void Static3DObj::Update(const float deltaTime)
         m_transform.SetLocation(glm::vec3(3.270f, 1.03f, -1.630f));
         m_transform.SetScale(0.22f);
     }
+    else if (m_key.find("tulipBig") != std::string::npos)
+    {
+        m_transform.SetRotation(glm::vec3(0.0f, 1.57f, 0.0f));
+        m_transform.SetLocation(glm::vec3(0.75f, 0.87f, 1.83f));
+        m_transform.SetScale(0.14f);
+    }
     else if (m_transType == StaticTransformType::Test)
     {
 #ifdef _DEBUG
