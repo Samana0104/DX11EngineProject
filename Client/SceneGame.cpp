@@ -44,6 +44,7 @@ SceneGame::SceneGame()
 
     m_grid.SetCamera(cameraTest);
     m_staticObjs.LoadFromFolder("../res/Mesh/StaticObj", cameraTest, lightTest);
+    m_dynamicObjs.LoadFromFolder("../res/Mesh/DynamicObj", cameraTest, lightTest);
     m_colObjs->LoadRange("../res/collision.txt");
 
     EventHandler::GetInstance().AddEvent(EventList::QUEST_CLEAR, this);
@@ -76,21 +77,34 @@ void SceneGame::Update(float deltaTime)
     {
         hbsc->Update(deltaTime);
     }
+    for (auto& hbdc : m_dynamicObjs.HBSContainer)
+    {
+        hbdc->Update(deltaTime);
+    }
     m_goose->ProcessCollision(m_colObjs);
 
-    for (auto& hbsc : m_staticObjs.HBSContainer)
-    {
-        static auto it = std::find(m_colObjs->m_component.m_collidedAreaNames.begin(),
-                                     m_colObjs->m_component.m_collidedAreaNames.end(),
-                                     hbsc->GetKey());
+    //for (auto& hbsc : m_staticObjs.HBSContainer)
+    //{
+    //    static auto it = std::find(m_colObjs->m_component.m_collidedAreaNames.begin(),
+    //                                 m_colObjs->m_component.m_collidedAreaNames.end(),
+    //                                 hbsc->GetKey());
 
-        if (it != m_colObjs->m_component.m_collidedAreaNames.end()) // collision detecting 된 오브젝트를 찾았을때
+    //    if (it != m_colObjs->m_component.m_collidedAreaNames.end()) // collision detecting 된 오브젝트를 찾았을때
+    //    {
+    //        if (hbsc->GetKey().find("drinkingFountain") != std::string::npos ||
+    //            hbsc->GetKey().find("drinkingFountain") != std::string::npos) // 찾은 오브젝트 key 값이 carrotL or carrotR 일때
+    //        {
+    //            hbsc->m_transform.SetLocation(m_goose->m_transform.m_pos); // 충돌한 오브젝트의 좌표를 Goose 의 좌표와 동기화
+    //        }
+    //    }
+    //}
+
+    if (m_goose->m_component.m_collidedAreaNames.contains("drinkingFountain.hbs"))  // collision detecting 된 충돌 객체의 이름 판별
+    {
+        for (auto& hbdc : m_staticObjs.HBSContainer)
         {
-            if (hbsc->GetKey().find("drinkingFountain") != std::string::npos ||
-                hbsc->GetKey().find("drinkingFountain") != std::string::npos) // 찾은 오브젝트 key 값이 carrotL or carrotR 일때
-            {
-                hbsc->m_transform.SetLocation(m_goose->m_transform.m_pos); // 충돌한 오브젝트의 좌표를 Goose 의 좌표와 동기화
-            }
+            if (hbdc->GetKey().find("drinkingFountain") != std::string::npos)
+                hbdc->m_transform.SetLocation(m_goose->m_transform.m_pos);  // 충돌한 오브젝트의 좌표를 Goose 의 좌표와 동기화
         }
     }
 }
@@ -103,6 +117,9 @@ void SceneGame::Render()
 
     for (auto& hbsc : m_staticObjs.HBSContainer)
         hbsc->Render();
+
+    for (auto& hbdc : m_dynamicObjs.HBSContainer)
+        hbdc->Render();
 
 #ifdef _DEBUG
     m_line->Draw({0.f, 0.f, 0.f}, {1000.f, 0.f, 0.f}, {1.f, 0.f, 0.f, 1.f});
