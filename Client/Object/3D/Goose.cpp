@@ -23,9 +23,6 @@ Goose::Goose()
 
     anim.resize(m_mesh->m_born.bornIndex.size());
 
-    m_transform.SetScale({0.07f, 0.07f, 0.07f});
-    m_transform.SetRotation(vec3(1.0f, 0.f, 0.f), 0.65f * glm::pi<float>());
-
     m_gooseAnis.push_back(HASSET->m_animations[L"fancywalk.skm"]);
     m_gooseAnis.push_back(HASSET->m_animations[L"gooseGallop.skm"]);
     m_gooseAnis.push_back(HASSET->m_animations[L"gooseGallopDown.skm"]);
@@ -44,8 +41,8 @@ Goose::Goose()
     m_gooseCrounching.max = {3.f, 5.f, 2.9f};
     m_component.AddAABBRange(m_gooseStand, "Goose");
 
-    m_socketObj     = nullptr;
     m_socketBornIdx = m_mesh->m_born.objectIndex["beaklower"];
+    Init();
 }
 
 void Goose::Update(float deltaTime)
@@ -74,8 +71,8 @@ void Goose::Update(float deltaTime)
     static bool isRightPressed = false;
     static bool isLeftPressed  = false;
 
-    moveDirection = vec3(0.f);
-    moveVec       = vec3(0.f);
+    vec3 moveDirection = vec3(0.f);
+    moveVec            = vec3(0.f);
 
     if (HINPUT->IsKeyPressed(37) && !isRightPressed)  // VK_LEFT
     {
@@ -329,7 +326,10 @@ void Goose::Update(float deltaTime)
     }
 
     if (glm::length(moveDirection) >= 0.01f)
-        moveDirection = glm::normalize(moveDirection);
+    {
+        moveDirection   = glm::normalize(moveDirection);
+        m_moveDirection = moveDirection;
+    }
 
     moveVec = moveDirection * deltaTime * m_speed1;
 
@@ -341,10 +341,18 @@ void Goose::Update(float deltaTime)
 
     if (m_socketObj)
     {
-        mat4 offsetMat   = anim[m_socketBornIdx] * m_mesh->m_born.bindPoseInvMat[m_socketBornIdx];
-        offsetMat[3][2] -= 1.f;
+        mat4 offsetMat =
+        m_transform.m_worldMat * anim[m_socketBornIdx] * m_mesh->m_born.bindPoseInvMat[m_socketBornIdx];
 
-        m_socketObj->m_transform.m_worldMat = m_transform.m_worldMat * offsetMat;
+        vec3 scale;
+        vec3 pos;
+        quat rot;
+        vec3 dummy1;
+        vec4 dummy2;
+        glm::decompose(offsetMat, scale, rot, pos, dummy1, dummy2);
+
+        m_socketObj->m_transform.SetLocation(pos + m_moveDirection * 0.15f);
+        m_socketObj->m_transform.SetRotation(rot);
     }
 
 
@@ -361,7 +369,11 @@ void Goose::Render()
 
 void Goose::Release() {}
 
-void Goose::Init() {}
+void Goose::Init()
+{
+    m_transform.SetScale({0.07f, 0.07f, 0.07f});
+    m_transform.SetRotation(vec3(1.0f, 0.f, 0.f), 0.65f * glm::pi<float>());
+}
 
 float Goose::GetLocationX()
 {
@@ -392,20 +404,17 @@ void Goose::SetSocket(std::shared_ptr<Object3D> socketObj)
 
 void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
 {
+    bool isSocket = false;
+    if (HINPUT->IsKeyDown(0x5A))
+    {
+        if (m_socketObj)
+            isSocket = true;
+        else
+            SetSocket(obj);
+    }
+
     if (m_component.IsCollision(obj->m_component))
     {
-        // if (HINPUT->IsKeyDown(0x5A))  // zŰ
-        //{
-        //     if (m_socketObj == nullptr)
-        //     {
-        //         SetSocket(obj);
-        //     }
-        //     else
-        //     {
-        //     }
-        //     return;
-        // }
-
         float colMaxY = -9999.f;
         for (size_t i = 0; i < m_component.m_collidedAreas.size(); i++)
         {
@@ -419,8 +428,6 @@ void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
         }
         else
         {
-            // vec3 normal =
-            // m_component.GetTransformedBound(0).ComputeNormal(m_component.m_collidedAreas[0]);
             vec3 reflectVec;
 
 
@@ -439,8 +446,17 @@ void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
 
     float height = m_mapObj->GetHeight(m_transform.m_pos);
     if (m_transform.m_pos.y < height)
-        m_transform.SetLocation(
-        {m_transform.m_pos[0], m_mapObj->GetHeight(m_transform.m_pos), m_transform.m_pos[2]});
+    {
+        m_transform.SetLocation({m_transform.m_pos[0], height, m_transform.m_pos[2]});
+    }
+
+    if (isSocket)
+    {
+        m_socketObj->m_transform.SetLocation(
+        vec3(m_transform.m_pos.x, m_transform.m_pos.y + 0.3f, m_transform.m_pos.z) +
+        m_moveDirection * 0.2f);
+        m_socketObj = nullptr;
+    }
 
     UpdateDefaultCB();
 }

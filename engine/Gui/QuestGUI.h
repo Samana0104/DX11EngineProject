@@ -15,16 +15,24 @@ date: 2025-01-02
 
 namespace HBSoft
 {
-    struct QuestInfo
-    {};
+    enum QuestInfo
+    {
+        CARROT  = 0,
+        PUMPKIN = 1
+    };
 
     class QuestGUI : public Object2D, Observer
-
     {
     private:
         std::shared_ptr<Mesh>    m_squaredMesh;
         std::shared_ptr<Texture> m_questTexture;
         std::shared_ptr<Font>    m_questFont;
+        std::shared_ptr<Font>    m_questLineFont;
+
+        HRect m_textRect;
+
+        bool m_isQuest1Clear;
+        bool m_isQuest2Clear;
 
         bool m_isTab;
         bool m_isEsc;
@@ -32,13 +40,17 @@ namespace HBSoft
 
         float m_openTimer;
 
+        int m_leftCarrotCount;
+        int m_leftPumpkinCount;
+
+        inline static const int MAX_QUESTS = 2;
+
     private:
         virtual void OnNotice(EventList event, void* entity);
 
     public:
         QuestGUI();
-
-        void AddQuest(std::wstring questMsg);
+        ~QuestGUI();
 
         virtual void Update(const float deltaTime) override;
         virtual void Render() override;

@@ -48,7 +48,7 @@ namespace HBSoft
         int tempLastFrame  = 0;
         int m_socketBornIdx;
 
-        vec3 moveDirection;
+        vec3 m_moveDirection;
         vec3 moveVec;
 
         AABB m_gooseStand;
