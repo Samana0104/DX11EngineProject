@@ -110,6 +110,12 @@ void Dynamic3DObj::Init(const std::string& key)
         m_transform.SetLocation(glm::vec3(-0.550f, 0.8f, -0.950f));
         m_transform.SetScale(0.240f);
     }
+    else if (m_key.find("tulipBig") != std::string::npos)
+    {
+        m_transform.SetRotation(glm::vec3(0.0f, 1.57f, 0.0f));
+        m_transform.SetLocation(glm::vec3(0.75f, 0.87f, 1.83f));
+        m_transform.SetScale(0.14f);
+    }
 
     m_mesh = HASSET->m_meshes[HBSoft::ToUnicode(key)];
     m_component.AddAABBRange(m_mesh->m_autoCollision.aabb, key);
@@ -119,6 +125,24 @@ void Dynamic3DObj::Init(const std::string& key)
 
 void Dynamic3DObj::Update(const float deltaTime)
 {
+    if (m_transType == DynamicTransformType::GooseGameTrans)
+    {
+        m_transform.SetRotation(glm::vec3(1.57f, 0.0f, 0.0f));
+        m_transform.SetLocation(glm::vec3(-7.0f, 0.0f, -12.0f));
+    }
+    else if (m_transType == DynamicTransformType::CMTrans)
+    {
+        m_transform.SetRotation(glm::vec3(1.57f, 0.0f, 0.0f));
+        m_transform.SetLocation(glm::vec3(-7.0f, 0.0f, -12.0f));
+        m_transform.SetScale({1 / 100.0f, 1 / 100.0f, 1 / 100.0f});
+    }
+    else if (m_transType == DynamicTransformType::UnityTrans)
+    {
+        m_transform.SetRotation(glm::vec3(1.57f, 0.0f, 0.0f));
+        m_transform.SetLocation(glm::vec3(12.28f, 0.48f, 11.71f));
+        m_transform.SetScale(0.0015f);
+    }
+
     UpdateDefaultCB();
 }
 
