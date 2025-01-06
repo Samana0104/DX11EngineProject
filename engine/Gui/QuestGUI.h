@@ -15,7 +15,11 @@ date: 2025-01-02
 
 namespace HBSoft
 {
+    struct QuestInfo
+    {};
+
     class QuestGUI : public Object2D, Observer
+
     {
     private:
         std::shared_ptr<Mesh>    m_squaredMesh;
@@ -33,6 +37,8 @@ namespace HBSoft
 
     public:
         QuestGUI();
+
+        void AddQuest(std::wstring questMsg);
 
         virtual void Update(const float deltaTime) override;
         virtual void Render() override;

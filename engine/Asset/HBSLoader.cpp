@@ -214,6 +214,10 @@ void HBSLoader::WriteHBSFile(HBSFileHeader& hbsHeader, std::shared_ptr<Mesh> mes
                            sizeof(char) * bornParent.first.size());
     }
 
+    if (mesh->m_born.bornIndex.size() > 0)
+        m_outputFile.write(reinterpret_cast<const char*>(&mesh->m_born.bindPoseInvMat.at(0)),
+                           sizeof(mat4) * mesh->m_born.bindPoseInvMat.size());
+
     m_outputFile.write(reinterpret_cast<const char*>(&mesh->m_autoCollision), sizeof(AutoCollision));
 }
 
@@ -347,6 +351,13 @@ std::shared_ptr<Mesh> HBSLoader::Load(std::shared_ptr<D3Device> device, const ws
                          sizeof(char) * bornHeader.bornNameSize);
 
         mesh->m_born.parentIndex.insert(bornNode);
+    }
+
+    if (mesh->m_born.bornIndex.size() > 0)
+    {
+        mesh->m_born.bindPoseInvMat.resize(mesh->m_born.objectIndex.size());
+        m_inputFile.read(reinterpret_cast<char*>(&mesh->m_born.bindPoseInvMat.at(0)),
+                         sizeof(mat4) * mesh->m_born.objectIndex.size());
     }
 
     m_inputFile.read(reinterpret_cast<char*>(&mesh->m_autoCollision), sizeof(AutoCollision));
