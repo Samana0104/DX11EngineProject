@@ -76,41 +76,12 @@ void SceneGame::Update(float deltaTime)
     {
         hbsc->Update(deltaTime);
     }
+
+    m_goose->ProcessCollision(m_colObjs);
     for (auto& hbdc : m_dynamicObjs.HBSContainer)
     {
+        m_goose->ProcessCollision(hbdc);
         hbdc->Update(deltaTime);
-    }
-    m_goose->ProcessCollision(m_colObjs);
-
-    std::string temp;
-
-    for (int i = 0; i < 4; i++)  // "~pumpkin0.hbs" ~ "~pumpkin3.hbs"
-    {
-        temp = "~pumpkin" + std::to_string(i) + ".hbs";
-
-        if (m_goose->m_component.m_collidedAreaNames.contains(temp))
-        {
-        }
-    }
-
-    for (int i = 0; i < 6; i++)  // "~carrotL0.hbs" ~ "~carrotL5.hbs"
-    {
-        temp = "~carrotL" + std::to_string(i) + ".hbs";
-
-        if (m_goose->m_component.m_collidedAreaNames.contains(temp))
-        {
-            // m_dynamicObjs.FindByName(temp)->get()->GetKey();  // GetKey 부분 대신에 TODO 로 조작
-        }
-    }
-
-    for (int i = 0; i < 4; i++)  // "~carrotR0.hbs" ~ "~carrotR3.hbs"
-    {
-        temp = "~carrotR" + std::to_string(i) + ".hbs";
-
-        if (m_goose->m_component.m_collidedAreaNames.contains(temp))
-        {
-            // m_dynamicObjs.FindByName(temp)->get()->GetKey();  // GetKey 부분 대신에 TODO 로 조작
-        }
     }
 }
 
@@ -124,7 +95,10 @@ void SceneGame::Render()
         hbsc->Render();
 
     for (auto& hbdc : m_dynamicObjs.HBSContainer)
+    {
         hbdc->Render();
+        hbdc->m_component.DrawBoundary(m_line);
+    }
 
 #ifdef _DEBUG
     m_line->Draw({0.f, 0.f, 0.f}, {1000.f, 0.f, 0.f}, {1.f, 0.f, 0.f, 1.f});
