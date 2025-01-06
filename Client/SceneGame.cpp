@@ -137,9 +137,9 @@ void SceneGame::Render()
 
     //m_gardener.Render();
     m_goose->Render();
-    m_grid.Render();
+    //m_grid.Render();
 
-    // m_tree.Render();
+    m_tree.Render();
     cube.Render();
     m_goose->m_component.DrawBoundary(m_line);
     m_colObjs->m_component.DrawBoundary(m_line);
