@@ -237,6 +237,9 @@
     <ClCompile Include="Object\3D\CollisionObj.cpp">
       <Filter>Object\3D</Filter>
     </ClCompile>
+    <ClCompile Include="Object\3D\PicnicRug.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\D3Device.h">
@@ -444,6 +447,9 @@
       <Filter>Object\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Object\3D\CollisionObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\PicnicRug.h">
       <Filter>Object\3D</Filter>
     </ClInclude>
   </ItemGroup>

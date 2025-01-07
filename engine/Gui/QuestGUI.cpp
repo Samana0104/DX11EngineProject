@@ -2,8 +2,8 @@
 author : 변한빛
 description : 탭키 누르면 나오는 퀘스트 GUI 소스파일
 
-version: 1.0.0
-date: 2025-01-02
+version: 1.0.5
+date: 2025-01-07
 */
 
 #include "pch.h"
@@ -53,11 +53,36 @@ QuestGUI::QuestGUI()
     m_questLine2Font->SetVerticalAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
 
     Init();
+
+    EventHandler::GetInstance().AddEvent(EventList::CARROT_DOWN, this);
+    EventHandler::GetInstance().AddEvent(EventList::PUMPKIN_DOWN, this);
 }
 
-QuestGUI::~QuestGUI() {}
+QuestGUI::~QuestGUI()
+{
+    EventHandler::GetInstance().DeleteEvent(EventList::CARROT_DOWN, this);
+    EventHandler::GetInstance().DeleteEvent(EventList::PUMPKIN_DOWN, this);
+}
 
-void QuestGUI::OnNotice(EventList event, void* entity) {}
+void QuestGUI::OnNotice(EventList event, void* entity)
+{
+    PicnicRug* ptr = nullptr;
+
+    switch (event)
+    {
+    case EventList::CARROT_DOWN:
+        ptr = reinterpret_cast<PicnicRug*>(entity);
+
+        m_carrotCount = ptr->m_previousCarrot;
+        break;
+
+    case EventList::PUMPKIN_DOWN:
+        ptr = reinterpret_cast<PicnicRug*>(entity);
+
+        m_pumpkinCount = ptr->m_previousPumpkin;
+        break;
+    }
+}
 
 void QuestGUI::Init()
 {
@@ -67,9 +92,9 @@ void QuestGUI::Init()
     m_isQuest1Clear = false;
     m_isQuest2Clear = false;
 
-    m_openTimer        = 0.f;
-    m_leftCarrotCount  = 5;
-    m_leftPumpkinCount = 5;
+    m_openTimer    = 0.f;
+    m_carrotCount  = 0;
+    m_pumpkinCount = 0;
 
     HPoint windowSize = HWINDOW->GetWindowSize();
     HPoint targetPos  = {m_squaredMesh->m_vertices[0].p.x * m_transform.m_scale.x,
@@ -160,11 +185,39 @@ void QuestGUI::Update(const float deltaTime)
         m_questLine2Font->SetRect(m_textRect);
         for (int i = 0; i < MAX_QUESTS; i++)
         {
+            int leftCarrot  = MAX_CARROT - m_carrotCount;
+            int leftPumpkin = MAX_PUMPKIN - m_pumpkinCount;
+
+            if (leftCarrot <= 0)
+            {
+                leftCarrot      = 0;
+                m_isQuest1Clear = true;
+            }
+            else
+            {
+                m_isQuest1Clear = false;
+            }
+
+            if (leftPumpkin <= 0)
+            {
+                leftPumpkin     = 0;
+                m_isQuest2Clear = true;
+            }
+            else
+            {
+                m_isQuest2Clear = false;
+            }
+
+            if (m_isQuest2Clear && m_isQuest1Clear)
+            {
+                EventHandler::GetInstance().Notify(EventList::QUEST_CLEAR);
+            }
+
             switch (i)
             {
             case QuestInfo::CARROT:
                 m_quest1Font->DrawMsg(L"[Quest1] 돗자리에 당근을 가져오기 | 남은 당근 : " +
-                                      std::to_wstring(m_leftCarrotCount));
+                                      std::to_wstring(leftCarrot));
 
                 if (m_isQuest1Clear)
                     m_questLine1Font->DrawMsg(L"ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
@@ -172,7 +225,7 @@ void QuestGUI::Update(const float deltaTime)
 
             case QuestInfo::PUMPKIN:
                 m_quest2Font->DrawMsg(L"[Quest2] 돗자리에 호박을 가져오기 | 남은 호박 : " +
-                                      std::to_wstring(m_leftPumpkinCount));
+                                      std::to_wstring(leftPumpkin));
 
                 if (m_isQuest2Clear)
                     m_questLine2Font->DrawMsg(L"ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");

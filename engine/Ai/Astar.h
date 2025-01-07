@@ -34,7 +34,7 @@ namespace HBSoft
               parent(nullptr)
         {}
 
-        Node(const Node& copy) { std::cout << "node copy" << std::endl; }
+        Node(const Node& copy) {}
 
     public:
         bool operator>(const Node& other) const { return (gCost + hCost) > (other.gCost + other.hCost); }
@@ -60,7 +60,7 @@ namespace HBSoft
                                                  std::vector<std::vector<std::shared_ptr<Node>>>& grid);
 
         /*int GRID_OFFSET = 80;*/
-        int GRID_OFFSET = 40;
+        int GRID_OFFSET = 80;
         /*  void aStarMain();*/
 
 

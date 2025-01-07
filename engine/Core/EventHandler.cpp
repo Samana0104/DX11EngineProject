@@ -7,6 +7,8 @@ EventHandler::EventHandler()
     m_observers.insert(std::make_pair(EventList::WINDOW_RESIZE, std::list<Observer*>()));
     m_observers.insert(std::make_pair(EventList::DEVICE_CHANGE, std::list<Observer*>()));
     m_observers.insert(std::make_pair(EventList::QUEST_CLEAR, std::list<Observer*>()));
+    m_observers.insert(std::make_pair(EventList::CARROT_DOWN, std::list<Observer*>()));
+    m_observers.insert(std::make_pair(EventList::PUMPKIN_DOWN, std::list<Observer*>()));
 }
 
 EventHandler::~EventHandler()

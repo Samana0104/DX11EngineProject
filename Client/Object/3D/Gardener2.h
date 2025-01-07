@@ -8,31 +8,31 @@
 
 namespace HBSoft
 {
-    enum GardenerState
+    enum GardenerState2
     {
-        walking,
-        working,
-        watering,
-        surprised,
-        stopwalking,
-        slowrun,
-        breathingidle,
-        kick,
-        leftturn,
-        pickingup,
-        rightturn,
-        gettingup,
-        stretching,
+        walking2,
+        working2,
+        watering2,
+        surprised2,
+        stopwalking2,
+        slowrun2,
+        breathingidle2,
+        kick2,
+        leftturn2,
+        pickingup2,
+        rightturn2,
+        gettingup2,
+        stretching2,
     };
 
-    enum struct State
+    enum struct State2
     {
         Idle,     // 평상시 걷는 상태
         Chasing,  // 거위를 쫓는 상태
         Pushing   // 거위를 밀기 시작한 상태
     };
 
-    enum struct Event
+    enum struct Event2
     {
         GooseClose,      // 거위가 가까워짐
         GooseStoleItem,  // 거위가 물건을 훔침
@@ -40,26 +40,26 @@ namespace HBSoft
         maintain
     };
 
-    class Gardener : public Object3D
+    class Gardener2 : public Object3D
     {
     public:
-        State currentState;  // 현재 상태
+        State2 currentState;  // 현재 상태
 
         // 이벤트 처리 함수
-        void onEvent(Event event, float deltaTime);
+        void onEvent(Event2 event, float deltaTime);
 
-        float speed = 0;
+        float speed = 0.f;
 
     private:
         std::shared_ptr<Mesh> m_mesh;
 
         std::vector<mat4> anim;
-        /*  float             m_speed2 = 100.f;*/
+        /* float             m_speed2 = 1.5f;*/
 
         std::vector<std::vector<std::shared_ptr<Node>>> m_grid;
         std::vector<std::shared_ptr<AnimationClip>>     m_gardenerAni;
 
-        GardenerState                 m_animstate;
+        GardenerState2                m_animstate;
         std::shared_ptr<HeightMapObj> m_mapObj;
 
 
@@ -74,18 +74,12 @@ namespace HBSoft
     public:
         Transform3D m_trans;
         Astar       m_astar;
-        int         idx  = 0;
-        int         idx1 = 0;
+        int         idx = 0;
 
         float pathIdx_x  = 0;
         float pathIdx_z  = 0;
         float gardener_x = 0;
         float gardener_z = 0;
-
-        float pathIdx_x1  = 0;
-        float pathIdx_z1  = 0;
-        float gardener_x1 = 0;
-        float gardener_z1 = 0;
 
         float gridLength  = 92.16f;
         int   gridNum     = 160;
@@ -99,18 +93,15 @@ namespace HBSoft
         bool goosestole = false;
 
         std::vector<std::pair<int, int>> idlePath = {
-            {79, 81},
-            {80, 81},
-            {81, 81},
-            {82, 81},
-            {83, 81},
-            {84, 81},
-            {85, 81},
-            {86, 81},
-            {87, 81},
-            {88, 81},
-            {89, 81},
-            {90, 81}
+            {81, 85},
+            {82, 85},
+            {83, 85},
+            {84, 85},
+            {85, 85},
+            {86, 85},
+            {87, 85},
+            {88, 85},
+            {89, 85}
         };
 
         float idlePathX   = 0;
@@ -122,17 +113,11 @@ namespace HBSoft
         float idleGardener_x = 0;
         float idleGardener_z = 0;
 
-        int gardenerIdleX = 0;
-        int gardenerIdleZ = 0;
-        int pathIdleX     = 0;
-        int pathIdleZ     = 0;
-
-
         vec3                   velocity = {0.f, 0.f, 0.f};
         std::shared_ptr<Goose> m_goose1;
 
     public:
-        Gardener();
+        Gardener2();
 
         virtual void Update(const float deltaTime) override;
         virtual void Render() override;

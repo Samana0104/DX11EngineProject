@@ -154,8 +154,9 @@
     <ClCompile Include="Object\3D\CubeMapObj.cpp" />
     <ClCompile Include="Object\3D\Dynamic3DObj.cpp" />
     <ClCompile Include="Object\3D\Gardener.cpp" />
+    <ClCompile Include="Object\3D\Gardener1.cpp" />
+    <ClCompile Include="Object\3D\Gardener2.cpp" />
     <ClCompile Include="Object\3D\Goose.cpp" />
-    <ClCompile Include="Object\3D\PicnicRug.cpp" />
     <ClCompile Include="Object\3D\Static3DObj.cpp" />
     <ClCompile Include="Object\3D\Test3DObj.cpp" />
     <ClCompile Include="pch.cpp">
@@ -168,14 +169,15 @@
     <ClCompile Include="SceneLobby.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="C:\Users\kgca\Documents\カカオトーク受信ファイル\Gardener1.h" />
     <ClInclude Include="HBSAutoLoader.h" />
     <ClInclude Include="Object\2D\GridMap.h" />
     <ClInclude Include="Object\2D\MainTitle.h" />
     <ClInclude Include="Object\3D\CubeMapObj.h" />
     <ClInclude Include="Object\3D\Dynamic3DObj.h" />
     <ClInclude Include="Object\3D\Gardener.h" />
+    <ClInclude Include="Object\3D\Gardener2.h" />
     <ClInclude Include="Object\3D\Goose.h" />
-    <ClInclude Include="Object\3D\PicnicRug.h" />
     <ClInclude Include="Object\3D\Static3DObj.h" />
     <ClInclude Include="Object\3D\Test3DObj.h" />
     <ClInclude Include="pch.h" />
