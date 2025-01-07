@@ -1,8 +1,9 @@
 /*
-author : 정찬빈
+author : 정찬빈, 이지혁
 description :
+1.1.1 - 사운드 추가 (이지혁)
 
-version: 1.1.0
+version: 1.1.1
 date: 2024-11-30
 */
 
@@ -15,6 +16,8 @@ Goose::Goose()
 {
     m_mesh  = HASSET->m_meshes[L"Goose.hbs"];
     m_sound = HASSET->m_sounds[L"goose_honk.wav"];
+    m_soundFootstep_2_5 = HASSET->m_sounds[L"grassFootstep_x2.5.wav"];
+    m_soundFootstep_3_0 = HASSET->m_sounds[L"grassFootstep_x3.wav"];
 
     m_easyRender.SetVSShader(L"BasicAniVS.hlsl");
     m_easyRender.SetPSShader(L"ColorPS.hlsl");
@@ -72,6 +75,7 @@ void Goose::Update(float deltaTime)
     static bool isUpPressed    = false;  // VK_UP 상태 추적
     static bool isRightPressed = false;
     static bool isLeftPressed  = false;
+    static bool isShiftPressed  = false;
 
     vec3 moveDirection = vec3(0.f);
     moveVec            = vec3(0.f);
@@ -95,8 +99,11 @@ void Goose::Update(float deltaTime)
         }
         if (HINPUT->IsKeyPressed(16))  // SHIFT키
         {
+            isShiftPressed = true;
             m_animstate = GooseState::gooseGallop;
         }
+        else
+            isShiftPressed = false;
 
         if (HINPUT->IsKeyPressed(88))  // X키
         {
@@ -112,11 +119,13 @@ void Goose::Update(float deltaTime)
 
             if (HINPUT->IsKeyPressed(16))  // SHIFT키
             {
+                isShiftPressed = true;
                 if (HINPUT->IsKeyPressed(88))  // X키
                     m_animstate = GooseState::gooseGallopDownHalfFlap;
             }
             else
             {
+                isShiftPressed = false;
                 if (HINPUT->IsKeyPressed(88))  // X키
                     m_animstate = GooseState::gooseGallopDownHalfFlap;
             }
@@ -144,15 +153,23 @@ void Goose::Update(float deltaTime)
 
         if (HINPUT->IsKeyPressed(16))  // SHIFT키
         {
+            isShiftPressed = true;
             m_animstate = GooseState::gooseGallop;
         }
+        else
+            isShiftPressed = false;
 
         if (HINPUT->IsKeyPressed(88))  // X키
         {
             m_animstate = GooseState::gooseHalfFlapWalking;
 
             if (HINPUT->IsKeyPressed(16))  // SHIFT키
+            {
+                isShiftPressed = true;
                 m_animstate = GooseState::gooseHalfFlap;
+            }
+            else
+                isShiftPressed = false;
         }
 
         if (HINPUT->IsKeyPressed(17))  // Ctrl키
@@ -161,11 +178,13 @@ void Goose::Update(float deltaTime)
 
             if (HINPUT->IsKeyPressed(16))  // SHIFT키
             {
+                isShiftPressed = true;
                 if (HINPUT->IsKeyPressed(88))  // X키
                     m_animstate = GooseState::gooseGallopDownHalfFlap;
             }
             else
             {
+                isShiftPressed = false;
                 if (HINPUT->IsKeyPressed(88))  // X키
                     m_animstate = GooseState::gooseGallopDownHalfFlap;
             }
@@ -197,8 +216,11 @@ void Goose::Update(float deltaTime)
 
         if (HINPUT->IsKeyPressed(16))  // SHIFT키
         {
-            m_animstate = GooseState::gooseGallop;
+            isShiftPressed = true;
+            m_animstate    = GooseState::gooseGallop;
         }
+        else
+            isShiftPressed = false;
 
         if (HINPUT->IsKeyPressed(88))  // x키
         {
@@ -214,11 +236,13 @@ void Goose::Update(float deltaTime)
 
             if (HINPUT->IsKeyPressed(16))  // SHIFT키
             {
+                isShiftPressed = true;
                 if (HINPUT->IsKeyPressed(88))  // x키
                     m_animstate = GooseState::gooseGallopDownHalfFlap;
             }
             else
             {
+                isShiftPressed = false;
                 if (HINPUT->IsKeyPressed(88))  // X키
                     m_animstate = GooseState::gooseGallopDownHalfFlap;
             }
@@ -249,15 +273,23 @@ void Goose::Update(float deltaTime)
 
         if (HINPUT->IsKeyHold(16))  // SHIFT키
         {
-            m_animstate = GooseState::gooseGallop;
+            isShiftPressed = true;
+            m_animstate    = GooseState::gooseGallop;
         }
+        else
+            isShiftPressed = false;
 
         if (HINPUT->IsKeyPressed(88))  // X키
         {
             m_animstate = GooseState::gooseHalfFlapWalking;
 
             if (HINPUT->IsKeyPressed(16))  // SHIFT키
+            {
+                isShiftPressed = true;
                 m_animstate = GooseState::gooseHalfFlap;
+            }
+            else
+                isShiftPressed = false;
         }
 
         if (HINPUT->IsKeyPressed(17))  // Ctrl키
@@ -266,11 +298,13 @@ void Goose::Update(float deltaTime)
 
             if (HINPUT->IsKeyPressed(16))  // SHIFT키
             {
+                isShiftPressed = true;
                 if (HINPUT->IsKeyPressed(88))  // X키
                     m_animstate = GooseState::gooseGallopDownHalfFlap;
             }
             else
             {
+                isShiftPressed = false;
                 if (HINPUT->IsKeyPressed(88))  // X키
                     m_animstate = GooseState::gooseGallopDownHalfFlap;
             }
@@ -327,6 +361,23 @@ void Goose::Update(float deltaTime)
         isUpPressed = false;
     }
 
+    if (isDownPressed || isUpPressed || isRightPressed || isLeftPressed)
+    {
+        if (isShiftPressed)
+        {
+            if (!m_soundFootstep_2_5->IsPlaying() && !m_soundFootstep_3_0->IsPlaying())
+                m_soundFootstep_3_0->Play();
+        }
+        else
+        {
+            m_soundFootstep_3_0->Stop();
+            if (!m_soundFootstep_2_5->IsPlaying() && !m_soundFootstep_3_0->IsPlaying())
+                m_soundFootstep_2_5->Play();
+        }
+    }
+    else
+        m_soundFootstep_2_5->Stop();
+
     if (glm::length(moveDirection) >= 0.01f)
     {
         moveDirection   = glm::normalize(moveDirection);
@@ -336,7 +387,12 @@ void Goose::Update(float deltaTime)
     moveVec = moveDirection * deltaTime * m_speed1;
 
     if (HINPUT->IsKeyPressed(16))  // SHIFT키
-        moveVec = moveDirection * deltaTime * m_speed1 * 2.f;
+    {
+        isShiftPressed = true;
+        moveVec        = moveDirection * deltaTime * m_speed1 * 2.f;
+    }
+    else
+        isShiftPressed = false;
 
     anim = m_gooseAnis[m_animstate]->GetAnimationMatrix(currentFrame);
     m_transform.AddLocation(moveVec);

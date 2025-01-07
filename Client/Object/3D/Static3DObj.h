@@ -43,7 +43,7 @@ namespace HBSoft
         std::vector<mat4>     m_anim;
         std::string           m_name;
         std::string           m_key;
-        std::shared_ptr<Texture> m_picnicRugTexture;
+        //std::shared_ptr<Texture> m_picnicRugTexture;
         std::shared_ptr<Texture> m_texCube1;
         StaticTransformType            m_transType = StaticTransformType::DefaultTrans;
 

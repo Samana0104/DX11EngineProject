@@ -155,6 +155,7 @@
     <ClCompile Include="Object\3D\Dynamic3DObj.cpp" />
     <ClCompile Include="Object\3D\Gardener.cpp" />
     <ClCompile Include="Object\3D\Goose.cpp" />
+    <ClCompile Include="Object\3D\PicnicRug.cpp" />
     <ClCompile Include="Object\3D\Static3DObj.cpp" />
     <ClCompile Include="Object\3D\Test3DObj.cpp" />
     <ClCompile Include="pch.cpp">
@@ -174,6 +175,7 @@
     <ClInclude Include="Object\3D\Dynamic3DObj.h" />
     <ClInclude Include="Object\3D\Gardener.h" />
     <ClInclude Include="Object\3D\Goose.h" />
+    <ClInclude Include="Object\3D\PicnicRug.h" />
     <ClInclude Include="Object\3D\Static3DObj.h" />
     <ClInclude Include="Object\3D\Test3DObj.h" />
     <ClInclude Include="pch.h" />

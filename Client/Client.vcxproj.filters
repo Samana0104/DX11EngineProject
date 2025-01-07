@@ -52,6 +52,9 @@
     <ClCompile Include="Object\3D\Dynamic3DObj.cpp">
       <Filter>Object\3D</Filter>
     </ClCompile>
+    <ClCompile Include="Object\3D\PicnicRug.cpp">
+      <Filter>Object\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneGame.h">
@@ -86,6 +89,9 @@
       <Filter>Object\2D</Filter>
     </ClInclude>
     <ClInclude Include="Object\3D\Dynamic3DObj.h">
+      <Filter>Object\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\3D\PicnicRug.h">
       <Filter>Object\3D</Filter>
     </ClInclude>
   </ItemGroup>

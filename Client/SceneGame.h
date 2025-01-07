@@ -1,8 +1,9 @@
 /*
 author : 변한빛, 정찬빈, 이지혁
 description : 게임 내부 씬을 정의하는 헤더 파일
+              v1.1.2 : BGM 추가 (이지혁)
 
-version: 1.1.1
+version: 1.1.2
 date: 2024-12-23
 */
 
@@ -19,6 +20,7 @@ date: 2024-12-23
 #include "3D/Test3DObj.h"
 #include "3D/Goose.h"
 #include "3D/Gardener.h"
+#include "3D/PicnicRug.h"
 #include "3D/CollisionObj.h"
 #include "3D/Static3DObj.h"
 #include "3D/Dynamic3DObj.h"
@@ -31,12 +33,16 @@ namespace HBSoft
 {
     class SceneGame : public Scene, Observer
     {
+    private:
+        std::shared_ptr<HSound> m_ingameBGM;
+
     public:
         GameButton                    m_escButton;
         QuestGUI                      m_questGUI;
         CubeMapObj                    cube;
         QuadTree                      m_tree;
         Gardener                      m_gardener;
+        PicnicRug                     m_picnicRug;
         GridMap                       m_grid;
         std::shared_ptr<CollisionObj> m_colObjs;
 

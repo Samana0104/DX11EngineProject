@@ -12,51 +12,53 @@ date: 2025-01-02
 #include "Texture/GeneralTexture.h"
 #include "Font/Font.h"
 #include "Observer.h"
+#include "Sound/HSound.h"
 
 namespace HBSoft
 {
-    enum QuestInfo
-    {
-        CARROT  = 0,
-        PUMPKIN = 1
-    };
+	enum QuestInfo
+	{
+		CARROT = 0,
+		PUMPKIN = 1
+	};
 
-    class QuestGUI : public Object2D, Observer
-    {
-    private:
-        std::shared_ptr<Mesh>    m_squaredMesh;
-        std::shared_ptr<Texture> m_questTexture;
-        std::shared_ptr<Font>    m_quest1Font;
-        std::shared_ptr<Font>    m_quest2Font;
-        std::shared_ptr<Font>    m_questLine1Font;
-        std::shared_ptr<Font>    m_questLine2Font;
+	class QuestGUI : public Object2D, Observer
+	{
+	private:
+		std::shared_ptr<Mesh>    m_squaredMesh;
+		std::shared_ptr<Texture> m_questTexture;
+		std::shared_ptr<Font>    m_quest1Font;
+		std::shared_ptr<Font>    m_quest2Font;
+		std::shared_ptr<Font>    m_questLine1Font;
+		std::shared_ptr<Font>    m_questLine2Font;
+		std::shared_ptr<HSound>  m_paperSound;
 
-        HRect m_textRect;
+		HRect m_textRect;
 
-        bool m_isQuest1Clear;
-        bool m_isQuest2Clear;
+		bool m_isQuest1Clear;
+		bool m_isQuest2Clear;
 
-        bool m_isTab;
-        bool m_isEsc;
-        bool m_isWorking;
+		bool m_isTab;
+		bool m_isEsc;
+		bool m_isWorking;
 
-        float m_openTimer;
+		float m_openTimer;
 
-        int m_leftCarrotCount;
-        int m_leftPumpkinCount;
+		int m_leftCarrotCount;
+		int m_leftPumpkinCount;
 
-        inline static const int MAX_QUESTS = 2;
+		inline static const int MAX_QUESTS = 2;
 
-    private:
-        virtual void OnNotice(EventList event, void* entity);
+	private:
+		virtual void OnNotice(EventList event, void* entity);
 
-    public:
-        QuestGUI();
-        ~QuestGUI();
+	public:
+		QuestGUI();
+		~QuestGUI();
 
-        virtual void Update(const float deltaTime) override;
-        virtual void Render() override;
-        virtual void Init() override;
-        virtual void Release() override;
-    };
+		virtual void Update(const float deltaTime) override;
+		virtual void Render() override;
+		virtual void Init() override;
+		virtual void Release() override;
+	};
 }  // namespace HBSoft

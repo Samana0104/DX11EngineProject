@@ -25,6 +25,7 @@ QuestGUI::QuestGUI()
     m_transform.SetScale({0.6f, 0.8f});
     m_squaredMesh  = HASSET->m_meshes[L"BOX2D"];
     m_questTexture = HASSET->m_textures[L"Äù½ºÆ®.png"];
+    m_paperSound   = HASSET->m_sounds[L"paperSound.mp3"];
     m_easyRender.SetMesh(m_squaredMesh);
     m_easyRender.SetTexture(m_questTexture);
     m_easyRender.SetVSShader(L"2DBasicVS.hlsl");
@@ -128,6 +129,14 @@ void QuestGUI::Update(const float deltaTime)
             m_isWorking = false;
             m_openTimer = 1.f;
         }
+
+        if (m_isWorking)
+        {
+            if (!m_paperSound->IsPlaying())
+                m_paperSound->Play();
+        }
+        else
+            m_paperSound->Stop();
 
         m_transform.SetLocation({m_transform.m_pos.x, glm::lerp(-2.f, -0.3f, m_openTimer)});
     }
