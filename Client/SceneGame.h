@@ -40,7 +40,7 @@ namespace HBSoft
         GridMap                       m_grid;
         std::shared_ptr<CollisionObj> m_colObjs;
 
-        HBSAutoLoader<std::shared_ptr<Static3DObj>> m_staticObjs;
+        HBSAutoLoader<std::shared_ptr<Static3DObj>>  m_staticObjs;
         HBSAutoLoader<std::shared_ptr<Dynamic3DObj>> m_dynamicObjs;
 
 #ifdef _DEBUG
@@ -53,7 +53,10 @@ namespace HBSoft
         std::shared_ptr<LineObj>          m_line;
         std::shared_ptr<Goose>            m_goose;
 
-        bool isWire = false;
+        bool isWire        = false;
+        bool m_isGameClear = false;
+
+        float m_isTimer = 0.f;
 
     public:
         SceneGame();
