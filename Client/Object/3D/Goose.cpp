@@ -17,7 +17,6 @@ Goose::Goose()
     m_mesh  = HASSET->m_meshes[L"Goose.hbs"];
     m_sound = HASSET->m_sounds[L"goose_honk.wav"];
     m_grabSound = HASSET->m_sounds[L"grabSound.mp3"];
-    m_dropSound = HASSET->m_sounds[L"dropSound.wav"];
     m_soundFootstep_2_5 = HASSET->m_sounds[L"grassFootstep_x2.5.wav"];
     m_soundFootstep_3_0 = HASSET->m_sounds[L"grassFootstep_x3.wav"];
 
