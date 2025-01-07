@@ -26,8 +26,10 @@ namespace HBSoft
     private:
         std::shared_ptr<Mesh>    m_squaredMesh;
         std::shared_ptr<Texture> m_questTexture;
-        std::shared_ptr<Font>    m_questFont;
-        std::shared_ptr<Font>    m_questLineFont;
+        std::shared_ptr<Font>    m_quest1Font;
+        std::shared_ptr<Font>    m_quest2Font;
+        std::shared_ptr<Font>    m_questLine1Font;
+        std::shared_ptr<Font>    m_questLine2Font;
 
         HRect m_textRect;
 

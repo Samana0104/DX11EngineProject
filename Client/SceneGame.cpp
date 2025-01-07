@@ -97,7 +97,7 @@ void SceneGame::Render()
     for (auto& hbdc : m_dynamicObjs.HBSContainer)
     {
         hbdc->Render();
-        hbdc->m_component.DrawBoundary(m_line);
+        // hbdc->m_component.DrawBoundary(m_line);
     }
 
 #ifdef _DEBUG
@@ -112,8 +112,8 @@ void SceneGame::Render()
 
     m_tree.Render();
     cube.Render();
-    m_goose->m_component.DrawBoundary(m_line);
-    m_colObjs->m_component.DrawBoundary(m_line);
+    // m_goose->m_component.DrawBoundary(m_line);
+    // m_colObjs->m_component.DrawBoundary(m_line);
     EasyRender::End(MultiRT::MAIN);
 
     // 글자 안나오는 이유 상수 버퍼
@@ -146,8 +146,8 @@ void SceneGame::Start()
 #endif
     m_gardener.m_transform.SetLocation({3.f, 0.6f, 4.f});
     cameraTest->SetPerspective(glm::radians(90.f), 0.5f, 10000.f);
-    cameraTest->LookAt({m_goose->m_transform.m_pos[0] + 0.9f,
-                        m_goose->m_transform.m_pos[1] + 2.6f,
+    cameraTest->LookAt({m_goose->m_transform.m_pos[0] + 1.f,
+                        m_goose->m_transform.m_pos[1] + 2.5f,
                         m_goose->m_transform.m_pos[2]},
                        m_goose->m_transform.m_pos,
                        {0.f, 1.f, 0.f});

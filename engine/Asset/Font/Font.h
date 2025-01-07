@@ -25,8 +25,8 @@ namespace HBSoft
 
     struct FontMsgQueue
     {
-        Font*    font;
-        wstringV msg;
+        Font*        font;
+        std::wstring msg;
     };
 
     class Font : public Observer

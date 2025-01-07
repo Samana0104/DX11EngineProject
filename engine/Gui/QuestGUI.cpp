@@ -16,10 +16,10 @@ QuestGUI::QuestGUI()
     {
         desc.m_fontName       = L"NotoSansCJKkr-Regular";
         desc.m_fontLocaleName = L"ko-kr";
-        desc.m_fontSize       = 35.f;
+        desc.m_fontSize       = 30.f;
         desc.m_fontStretch    = DWRITE_FONT_STRETCH_NORMAL;
         desc.m_fontStyle      = DWRITE_FONT_STYLE_NORMAL;
-        desc.m_fontWeight     = DWRITE_FONT_WEIGHT_NORMAL;
+        desc.m_fontWeight     = DWRITE_FONT_WEIGHT_BOLD;
     }
 
     m_transform.SetScale({0.6f, 0.8f});
@@ -31,42 +31,32 @@ QuestGUI::QuestGUI()
     m_easyRender.SetPSShader(L"2DBasicPS.hlsl");
     m_easyRender.SetDSS(ERDepthStencilState::DISABLE);
 
-    m_questFont = FontFactory::CreateFontFromDesc(HDEVICE, desc);
+    m_quest1Font     = FontFactory::CreateFontFromDesc(HDEVICE, desc);
+    m_quest2Font     = FontFactory::CreateFontFromDesc(HDEVICE, desc);
+    m_questLine1Font = FontFactory::CreateFontFromDesc(HDEVICE, desc);
+    m_questLine2Font = FontFactory::CreateFontFromDesc(HDEVICE, desc);
 
-    desc.m_fontWeight = DWRITE_FONT_WEIGHT_BOLD;
-    m_questLineFont   = FontFactory::CreateFontFromDesc(HDEVICE, desc);
+    m_quest1Font->SetColor({0.f, 0.f, 0.f, 1.f});
+    m_quest2Font->SetColor({0.f, 0.f, 0.f, 1.f});
+    m_questLine1Font->SetColor({0.f, 0.f, 0.f, 1.f});
+    m_questLine2Font->SetColor({0.f, 0.f, 0.f, 1.f});
 
-    m_questFont->SetColor({0.f, 0.f, 0.f, 1.f});
-    m_questLineFont->SetColor({0.f, 0.f, 0.f, 1.f});
+    m_quest1Font->SetHorizontalAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+    m_quest2Font->SetHorizontalAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+    m_questLine1Font->SetHorizontalAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+    m_questLine2Font->SetHorizontalAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
-    m_questFont->SetHorizontalAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
-    m_questLineFont->SetHorizontalAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
-
-    m_questFont->SetVerticalAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
-    m_questLineFont->SetVerticalAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+    m_quest1Font->SetVerticalAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+    m_quest2Font->SetVerticalAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+    m_questLine1Font->SetVerticalAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+    m_questLine2Font->SetVerticalAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
 
     Init();
-    EventHandler::GetInstance().AddEvent(EventList::WINDOW_RESIZE, this);
 }
 
-QuestGUI::~QuestGUI()
-{
-    EventHandler::GetInstance().DeleteEvent(EventList::WINDOW_RESIZE, this);
-}
+QuestGUI::~QuestGUI() {}
 
-void QuestGUI::OnNotice(EventList event, void* entity)
-{
-    switch (event)
-    {
-    case EventList::WINDOW_RESIZE:
-        HPoint windowSize = HWINDOW->GetWindowSize();
-        HPoint targetPos  = {m_squaredMesh->m_vertices[0].p.x * m_transform.m_scale.x,
-                             m_squaredMesh->m_vertices[0].p.y};
-        HPoint screenPos  = Transform2D::ConvertNDCToScreen(windowSize, targetPos);
-        m_textRect        = {screenPos.x, screenPos.y, screenPos.x + 100.f, screenPos.y + 100.f};
-        break;
-    }
-}
+void QuestGUI::OnNotice(EventList event, void* entity) {}
 
 void QuestGUI::Init()
 {
@@ -79,6 +69,18 @@ void QuestGUI::Init()
     m_openTimer        = 0.f;
     m_leftCarrotCount  = 5;
     m_leftPumpkinCount = 5;
+
+    HPoint windowSize = HWINDOW->GetWindowSize();
+    HPoint targetPos  = {m_squaredMesh->m_vertices[0].p.x * m_transform.m_scale.x,
+                         m_squaredMesh->m_vertices[0].p.y * m_transform.m_scale.y};
+    HPoint screenPos  = Transform2D::ConvertNDCToScreen(windowSize, targetPos);
+    m_textRect = {screenPos.x + 10.f, screenPos.y + 20.f, screenPos.x + 10000.f, screenPos.y + 55.f};
+    m_quest1Font->SetRect(m_textRect);
+    m_questLine1Font->SetRect(m_textRect);
+
+    m_textRect = {screenPos.x + 10.f, screenPos.y + 80.f, screenPos.x + 10000.f, screenPos.y + 135.f};
+    m_quest2Font->SetRect(m_textRect);
+    m_questLine2Font->SetRect(m_textRect);
 }
 
 void QuestGUI::Update(const float deltaTime)
@@ -130,23 +132,43 @@ void QuestGUI::Update(const float deltaTime)
         m_transform.SetLocation({m_transform.m_pos.x, glm::lerp(-2.f, -0.3f, m_openTimer)});
     }
 
-    for (int i = 0; i < MAX_QUESTS; i++)
+    if (!m_isEsc && m_isTab || m_isWorking)
     {
-        switch (i)
+        HPoint windowSize = HWINDOW->GetWindowSize();
+        HPoint targetPos  = {
+            m_squaredMesh->m_vertices[0].p.x * m_transform.m_scale.x + m_transform.m_pos.x,
+            m_squaredMesh->m_vertices[0].p.y * m_transform.m_scale.y + m_transform.m_pos.y};
+        HPoint screenPos = Transform2D::ConvertNDCToScreen(windowSize, targetPos);
+        m_textRect = {screenPos.x + 10.f, screenPos.y + 20.f, screenPos.x + 10000.f, screenPos.y + 55.f};
+        m_quest1Font->SetRect(m_textRect);
+        m_questLine1Font->SetRect(m_textRect);
+
+        m_textRect = {screenPos.x + 10.f,
+                      screenPos.y + 80.f,
+                      screenPos.x + 10000.f,
+                      screenPos.y + 135.f};
+        m_quest2Font->SetRect(m_textRect);
+        m_questLine2Font->SetRect(m_textRect);
+        for (int i = 0; i < MAX_QUESTS; i++)
         {
-        case QuestInfo::CARROT:
-            m_questFont->DrawMsg(L"현재 남은 당근 : " + std::to_wstring(m_leftCarrotCount));
+            switch (i)
+            {
+            case QuestInfo::CARROT:
+                m_quest1Font->DrawMsg(L"[Quest1] 돗자리에 당근을 가져오기 | 남은 당근 : " +
+                                      std::to_wstring(m_leftCarrotCount));
 
-            if (m_isQuest1Clear)
-                m_questLineFont->DrawMsg(L"ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-            break;
+                if (m_isQuest1Clear)
+                    m_questLine1Font->DrawMsg(L"ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+                break;
 
-        case QuestInfo::PUMPKIN:
-            m_questFont->DrawMsg(L"현재 남은 호박 : " + std::to_wstring(m_leftPumpkinCount));
+            case QuestInfo::PUMPKIN:
+                m_quest2Font->DrawMsg(L"[Quest2] 돗자리에 호박을 가져오기 | 남은 호박 : " +
+                                      std::to_wstring(m_leftPumpkinCount));
 
-            if (m_isQuest2Clear)
-                m_questLineFont->DrawMsg(L"ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-            break;
+                if (m_isQuest2Clear)
+                    m_questLine2Font->DrawMsg(L"ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+                break;
+            }
         }
     }
     UpdateDefaultCB();

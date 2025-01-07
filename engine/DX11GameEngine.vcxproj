@@ -241,13 +241,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)exe\debug\</OutDir>
-    <IntDir>$(SolutionDir)exe\debug\$(ProjectName)</IntDir>
+    <IntDir>$(SolutionDir)exe\debug\$(ProjectName)\</IntDir>
     <TargetName>DX11EngineLib_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)exe\release\</OutDir>
-    <IntDir>$(SolutionDir)exe\release\$(ProjectName)</IntDir>
+    <IntDir>$(SolutionDir)exe\release\$(ProjectName)\\</IntDir>
     <TargetName>DX11EngineLib_r</TargetName>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
