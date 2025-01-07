@@ -122,6 +122,12 @@ void HSound::VolumneDown(float _volume)
     m_soundChannel->setVolume(m_soundVolume);
 }
 
+void HBSoft::HSound::VolumeSet(float volume)
+{
+    m_soundVolume = volume;
+    m_soundChannel->setVolume(m_soundVolume);
+}
+
 void HSound::Update()
 {
     if (!IsPlaying())

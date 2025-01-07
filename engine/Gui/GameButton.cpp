@@ -1,8 +1,9 @@
 /*
-author : 변한빛
+author : 변한빛, 이지혁
 description : 게임 내부의 버튼을 정의하기 위한 소스파일
+              v1.0.1: 사운드 추가 (이지혁)
 
-version: 1.0.0
+version: 1.0.1
 date: 2024-12-03
 */
 
@@ -12,6 +13,8 @@ using namespace HBSoft;
 
 GameButton::GameButton()
 {
+    m_popupSound = HASSET->m_sounds[L"uiPopup.mp3"];
+
     m_isRender = false;
     SetResumeBtn();
     SetResetBtn();
@@ -84,6 +87,9 @@ void GameButton::Update(const float deltaTime)
 {
     if (HINPUT->IsKeyDown(VK_ESCAPE))
     {
+        if (!m_popupSound->IsPlaying())
+            m_popupSound->Play();
+
         if (m_isRender)
             m_isRender = false;
         else

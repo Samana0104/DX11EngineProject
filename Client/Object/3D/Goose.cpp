@@ -1,7 +1,7 @@
 /*
 author : 정찬빈, 이지혁
-description :
-1.1.1 - 사운드 추가 (이지혁)
+description : Goose 오브젝트를 구현하기 위한 소스 파일
+              1.1.1 - 사운드 추가 (이지혁)
 
 version: 1.1.1
 date: 2024-11-30
@@ -14,8 +14,9 @@ using namespace HBSoft;
 
 Goose::Goose()
 {
-    m_mesh              = HASSET->m_meshes[L"Goose.hbs"];
-    m_sound             = HASSET->m_sounds[L"goose_honk.wav"];
+    m_mesh  = HASSET->m_meshes[L"Goose.hbs"];
+    m_sound = HASSET->m_sounds[L"goose_honk.wav"];
+    m_grabSound = HASSET->m_sounds[L"grabSound.mp3"];
     m_soundFootstep_2_5 = HASSET->m_sounds[L"grassFootstep_x2.5.wav"];
     m_soundFootstep_3_0 = HASSET->m_sounds[L"grassFootstep_x3.wav"];
 
@@ -494,6 +495,9 @@ void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
 
     if (HINPUT->IsKeyDown(0x5A) && !m_isInit)
     {
+        if (!m_grabSound->IsPlaying())
+            m_grabSound->Play();
+
         if (m_socketObj)
         {
             isSocket = true;

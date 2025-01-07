@@ -10,6 +10,7 @@ date: 2024-12-03
 
 #include "Button.h"
 #include "Renderable.h"
+#include "Sound/HSound.h"
 
 namespace HBSoft
 {

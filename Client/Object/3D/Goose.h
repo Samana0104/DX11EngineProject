@@ -1,3 +1,12 @@
+/*
+author : 정찬빈, 이지혁
+description : Goose 오브젝트를 정의하기 위한 헤더 파일
+              1.1.1 - 사운드 추가 (이지혁)
+
+version: 1.1.1
+date: 2024-11-30
+*/
+
 #pragma once
 
 #include "Core.h"
@@ -34,6 +43,7 @@ namespace HBSoft
         std::shared_ptr<HSound>                     m_sound;
         std::shared_ptr<HSound>                     m_soundFootstep_2_5;
         std::shared_ptr<HSound>                     m_soundFootstep_3_0;
+        std::shared_ptr<HSound>                     m_grabSound;
         std::vector<std::shared_ptr<AnimationClip>> m_gooseAnis;
 
         float             m_speed1 = 1.f;
