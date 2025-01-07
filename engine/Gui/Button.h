@@ -10,6 +10,7 @@ date: 2024-11-30
 #include "2D/Object2D.h"
 #include "Factory/MeshFactory.h"
 #include "Observer.h"
+#include "Sound/HSound.h"
 
 namespace HBSoft
 {
@@ -27,6 +28,7 @@ namespace HBSoft
         std::shared_ptr<Mesh>       m_boxMesh;
         std::shared_ptr<Texture>    m_texture;
         std::shared_ptr<LayoutFont> m_font;
+        std::shared_ptr<HSound>     m_clickSound;
 
         HRect m_collisionArea;
 

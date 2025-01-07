@@ -28,6 +28,7 @@ Button::Button()
     m_boxMesh = MeshFactory::Create(HDEVICE, MeshShape::BOX2D);
     m_state   = ButtonState::DEFAULT;
     m_texture = nullptr;
+    m_clickSound = HASSET->m_sounds[L"uiMouseClick.wav"];
     m_easyRender.SetVSShader(L"2DBasicVS.hlsl");
     m_easyRender.SetPSShader(L"2DBasicPS.hlsl");
     m_easyRender.SetDSS(ERDepthStencilState::DISABLE);
@@ -105,9 +106,18 @@ void Button::Update(const float deltaTime)
 {
     m_state = ButtonState::DEFAULT;
 
-
     if (IsCursorInRect())
     {
+        /*if (!m_hoverSound->IsPlaying())
+        {
+            m_hoverSound->Play();
+        }*/
+
+        if (HINPUT->IsKeyDown(VK_LBUTTON))
+        {
+            m_clickSound->Play();
+        }
+
         SetCursor(LoadCursor(nullptr, IDC_HAND));
         m_font->SetUnderline(true);
 
@@ -125,6 +135,7 @@ void Button::Update(const float deltaTime)
     {
         m_font->SetUnderline(false);
     }
+
     UpdateDefaultCB();
 }
 
