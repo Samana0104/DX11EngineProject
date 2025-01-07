@@ -9,6 +9,7 @@ date: 2024-12-03
 #pragma once
 
 #include "Button.h"
+#include "Sound/HSound.h"
 
 namespace HBSoft
 {
@@ -19,6 +20,7 @@ namespace HBSoft
         Button m_resetBtn;
         Button m_optionBtn;
         Button m_quitBtn;
+        std::shared_ptr<HSound> m_popupSound;
 
         bool m_isRender;
 

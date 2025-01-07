@@ -12,6 +12,8 @@ using namespace HBSoft;
 
 GameButton::GameButton()
 {
+    m_popupSound = HASSET->m_sounds[L"uiPopup.mp3"];
+
     m_isRender = false;
     SetResumeBtn();
     SetResetBtn();
@@ -84,6 +86,9 @@ void GameButton::Update(const float deltaTime)
 {
     if (HINPUT->IsKeyDown(VK_ESCAPE))
     {
+        if (!m_popupSound->IsPlaying())
+            m_popupSound->Play();
+
         if (m_isRender)
             m_isRender = false;
         else
