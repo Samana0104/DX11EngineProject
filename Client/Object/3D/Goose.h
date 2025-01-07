@@ -71,6 +71,9 @@ namespace HBSoft
         bool m_isInit2;
 
     public:
+        bool m_isGameClear = false;
+
+    public:
         Goose();
 
         virtual void Update(const float deltaTime) override;

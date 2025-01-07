@@ -63,7 +63,7 @@ bool Frustum::IsFrustumInBox(const Box& box)
         fDistance  = fabs(m_plane[p].a * axisX.x + m_plane[p].b * axisX.y + m_plane[p].c * axisX.z);
         fDistance += fabs(m_plane[p].a * axisY.x + m_plane[p].b * axisY.y + m_plane[p].c * axisY.z);
         fDistance += fabs(m_plane[p].a * axisZ.x + m_plane[p].b * axisZ.y + m_plane[p].c * axisZ.z);
-        if (fPlaneToCenter * 0.4f < -fDistance)
+        if (fPlaneToCenter * 0.3f < -fDistance)
             return false;
     }
     return true;

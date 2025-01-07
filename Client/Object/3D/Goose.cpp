@@ -418,7 +418,8 @@ void Goose::Update(float deltaTime)
 
 
 #ifndef _DEBUG
-    m_camera->Move({m_transform.m_pos[0] + 1.f, m_transform.m_pos[1] + 2.5f, m_transform.m_pos[2]});
+    if (!m_isGameClear)
+        m_camera->Move({m_transform.m_pos[0] + 1.f, m_transform.m_pos[1] + 2.5f, m_transform.m_pos[2]});
 #endif
     m_easyRender.UpdateVSCB((void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
 }

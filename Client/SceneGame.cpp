@@ -66,8 +66,23 @@ void SceneGame::Update(float deltaTime)
 
     cameraTest->Update(deltaTime);
 
-    m_escButton.Update(deltaTime);
-    m_questGUI.Update(deltaTime);
+    if (!m_isGameClear)
+    {
+        m_escButton.Update(deltaTime);
+        m_questGUI.Update(deltaTime);
+    }
+    else
+    {
+        if (m_isTimer <= 6.f)
+        {
+            m_isTimer += deltaTime;
+
+            vec3 cameraEye  = cameraTest->GetEyePos();
+            cameraEye.y    += 0.25f * m_isTimer;
+
+            cameraTest->Move(cameraEye);
+        }
+    }
 
     cube.Update(deltaTime);
     m_grid.Update(deltaTime);
@@ -91,11 +106,16 @@ void SceneGame::Update(float deltaTime)
         m_goose->ProcessCollision(hbdc);
         hbdc->Update(deltaTime);
     }
+
+    if (HINPUT->IsKeyDown(VK_F2))
+    {
+        EventHandler::GetInstance().Notify(EventList::QUEST_CLEAR);
+    }
 }
 
 void SceneGame::Render()
 {
-    EasyRender::Begin(MultiRT::MAIN);
+    EasyRender::Begin(MultiRT::SUB1);
     EasyRender::SetWireFrame(isWire);
 
 
@@ -123,13 +143,16 @@ void SceneGame::Render()
     cube.Render();
     // m_goose->m_component.DrawBoundary(m_line);
     // m_colObjs->m_component.DrawBoundary(m_line);
-    EasyRender::End(MultiRT::MAIN);
+    EasyRender::End(MultiRT::SUB1);
 
     // 글자 안나오는 이유 상수 버퍼
     // 프레임 떨어지는 이유 폰트로
     EasyRender::Begin(MultiRT::GUI);
-    m_questGUI.Render();
-    m_escButton.Render();
+    if (!m_isGameClear)
+    {
+        m_questGUI.Render();
+        m_escButton.Render();
+    }
     EasyRender::End(MultiRT::GUI);
 
     if (HINPUT->IsKeyDown(VK_HOME))
@@ -138,6 +161,7 @@ void SceneGame::Render()
         EasyRender::SaveScreenShot(MultiRT::MAIN, L"Test");
     }
 
+    EasyRender::MergeRenderTarget(MultiRT::MAIN, MultiRT::SUB1);
     EasyRender::MergeRenderTarget(MultiRT::MAIN, MultiRT::GUI);
 }
 
@@ -176,6 +200,14 @@ void SceneGame::OnNotice(EventList event, void* entity)
 {
     if (event == EventList::QUEST_CLEAR)
     {
-        HSCENE.SetCurrentScene(L"Lobby");
+        m_isGameClear          = true;
+        m_goose->m_isGameClear = true;
+
+        cameraTest->LookAt({m_goose->m_transform.m_pos[0] + 0.5f,
+                            m_goose->m_transform.m_pos[1] + 2.5f,
+                            m_goose->m_transform.m_pos[2]},
+                           m_goose->m_transform.m_pos,
+                           {0.f, 1.f, 0.f});
+        // HSCENE.SetCurrentScene(L"Lobby");
     }
 }
