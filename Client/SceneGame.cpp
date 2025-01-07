@@ -40,6 +40,9 @@ SceneGame::SceneGame()
     m_goose->SetHeightMap(mapTest);
     m_goose->SetLight(lightTest);
 
+    m_picnicRug.SetCamera(cameraTest);
+    m_picnicRug.SetLight(lightTest);
+
     mapTest->SetCamera(cameraTest);
     mapTest->SetLight(lightTest);
 
@@ -69,6 +72,7 @@ void SceneGame::Update(float deltaTime)
     m_grid.Update(deltaTime);
     // m_gardener.Update(deltaTime);
     m_goose->Update(deltaTime);
+    m_picnicRug.Update(deltaTime);
     m_tree.Update(deltaTime);
 
     m_line->Update(deltaTime);
@@ -111,6 +115,7 @@ void SceneGame::Render()
 
     // m_gardener.Render();
     m_goose->Render();
+    m_picnicRug.Render();
     //m_grid.Render();
 
     m_tree.Render();

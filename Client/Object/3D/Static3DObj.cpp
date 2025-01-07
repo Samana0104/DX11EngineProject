@@ -91,9 +91,9 @@ void Static3DObj::Init(const std::string& key)
 
     if (key == "_picnicrug.hbs")
     {
-        m_easyRender.SetPSShader(L"BasicPS.hlsl");
+        /*m_easyRender.SetPSShader(L"BasicPS.hlsl");
         m_picnicRugTexture = HASSET->m_textures[L"PicnicRugPattern.png"];
-        m_easyRender.SetTexture(m_picnicRugTexture);
+        m_easyRender.SetTexture(m_picnicRugTexture);*/
     }
     else if (m_key.find("seedling") != std::string::npos)
     {

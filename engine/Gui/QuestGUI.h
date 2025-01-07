@@ -12,6 +12,7 @@ date: 2025-01-02
 #include "Texture/GeneralTexture.h"
 #include "Font/Font.h"
 #include "Observer.h"
+#include "Sound/HSound.h"
 
 namespace HBSoft
 {
@@ -28,6 +29,7 @@ namespace HBSoft
         std::shared_ptr<Texture> m_questTexture;
         std::shared_ptr<Font>    m_questFont;
         std::shared_ptr<Font>    m_questLineFont;
+        std::shared_ptr<HSound>  m_paperSound;
 
         HRect m_textRect;
 
