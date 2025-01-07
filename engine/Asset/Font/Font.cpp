@@ -40,7 +40,7 @@ void Font::OnNotice(EventList event, void* entity)
 
 void Font::Render(std::shared_ptr<D3Device> device, const FontMsgQueue& msgQueue)
 {
-    device->m_2dRtv->DrawText(msgQueue.msg.data(),
+    device->m_2dRtv->DrawText(msgQueue.msg.c_str(),
                               static_cast<UINT32>(msgQueue.msg.size()),
                               m_textFormat.Get(),
                               static_cast<const D2D1_RECT_F>(m_textRect),
@@ -140,7 +140,10 @@ void Font::SetVerticalAlignment(DWRITE_TEXT_ALIGNMENT verticalAlign)
     m_textFormat->SetTextAlignment(m_verticalAlign);
 }
 
-void Font::SetRect(const HRect& rect) {}
+void Font::SetRect(const HRect& rect)
+{
+    m_textRect = rect;
+}
 
 void Font::ProcessQueue(std::shared_ptr<D3Device> device)
 {

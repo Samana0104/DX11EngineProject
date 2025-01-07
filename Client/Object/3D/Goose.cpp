@@ -412,13 +412,13 @@ void Goose::Update(float deltaTime)
         glm::decompose(offsetMat, scale, rot, pos, dummy1, dummy2);
 
         pos.y -= 0.2f;
-        m_socketObj->m_transform.SetLocation(pos + m_moveDirection * 0.15f);
+        m_socketObj->m_transform.SetLocation(pos + m_moveDirection * 0.2f);
         // m_socketObj->m_transform.SetRotation(rot);
     }
 
 
 #ifndef _DEBUG
-    m_camera->Move({m_transform.m_pos[0] + 1.1f, m_transform.m_pos[1] + 2.4f, m_transform.m_pos[2]});
+    m_camera->Move({m_transform.m_pos[0] + 1.f, m_transform.m_pos[1] + 2.5f, m_transform.m_pos[2]});
 #endif
     m_easyRender.UpdateVSCB((void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
 }
@@ -551,7 +551,7 @@ void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
     {
         m_socketObj->m_transform.SetLocation(
         vec3(m_transform.m_pos.x, m_transform.m_pos.y + 0.1f, m_transform.m_pos.z) +
-        m_moveDirection * 0.3f);
+        m_moveDirection * 0.5f);
         m_socketObj = nullptr;
         m_isInit    = true;
     }
