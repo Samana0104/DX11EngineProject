@@ -1,3 +1,12 @@
+/*
+author : 정찬빈, 이지혁
+description : Goose 오브젝트를 정의하기 위한 헤더 파일
+              1.1.1 - 사운드 추가 (이지혁)
+
+version: 1.1.1
+date: 2024-11-30
+*/
+
 #pragma once
 
 #include "Core.h"

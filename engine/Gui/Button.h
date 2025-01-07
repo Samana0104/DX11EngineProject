@@ -1,8 +1,9 @@
 /*
-author : 변한빛
+author : 변한빛, 이지혁
 description : GUI 버튼을 정의하기 위한 헤더 파일
+              v1.0.1 사운드 추가 (이지혁)
 
-version: 1.0.0
+version: 1.0.1
 date: 2024-11-30
 */
 

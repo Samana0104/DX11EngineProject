@@ -1,8 +1,9 @@
 /*
-author : 변한빛
+author : 변한빛, 이지혁
 description : GUI 버튼을 정의하기 위한 소스 파일
+              v1.0.6 사운드 추가 (이지혁)
 
-version: 1.0.5
+version: 1.0.6
 date: 2024-11-30
 */
 
