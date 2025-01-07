@@ -34,6 +34,8 @@ namespace HBSoft
         std::shared_ptr<HSound>                     m_sound;
         std::shared_ptr<HSound>                     m_soundFootstep_2_5;
         std::shared_ptr<HSound>                     m_soundFootstep_3_0;
+        std::shared_ptr<HSound>                     m_grabSound;
+        std::shared_ptr<HSound>                     m_dropSound;
         std::vector<std::shared_ptr<AnimationClip>> m_gooseAnis;
 
         float             m_speed1 = 1.f;

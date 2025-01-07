@@ -39,6 +39,7 @@ namespace HBSoft
         void Paused();
         void VolumeUp(float volume);
         void VolumneDown(float _volume);
+        void VolumeSet(float volume);
 
         void Update();
 

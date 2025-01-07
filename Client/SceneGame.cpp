@@ -16,6 +16,7 @@ SceneGame::SceneGame()
     : m_tree(2)
 {
     m_ingameBGM = HASSET->m_sounds[L"ingameBGM.mp3"];
+    m_ingameBGM->VolumeSet(0.2f);
     
 #ifdef _DEBUG
     cameraTest = std::make_shared<DebugCamera>();
