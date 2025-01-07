@@ -34,8 +34,19 @@ SceneGame::SceneGame()
     cube.SetCamera(cameraTest);
 
     m_gardener.SetCamera(cameraTest);
+    m_gardener.SetHeightMap(mapTest);
     m_gardener.SetLight(lightTest);
     m_gardener.SetGooseObj(m_goose);
+
+    m_gardener1.SetCamera(cameraTest);
+    m_gardener1.SetHeightMap(mapTest);
+    m_gardener1.SetLight(lightTest);
+    m_gardener1.SetGooseObj(m_goose);
+
+    m_gardener2.SetCamera(cameraTest);
+    m_gardener2.SetHeightMap(mapTest);
+    m_gardener2.SetLight(lightTest);
+    m_gardener2.SetGooseObj(m_goose);
 
     m_goose->SetCamera(cameraTest);
     m_goose->SetHeightMap(mapTest);
@@ -49,9 +60,7 @@ SceneGame::SceneGame()
 
     m_tree.SetMapObj(mapTest);
 
-    m_grid.SetCamera(cameraTest);
     m_staticObjs.LoadFromFolder("../res/Mesh/StaticObj", cameraTest, lightTest);
-    m_dynamicObjs.LoadFromFolder("../res/Mesh/DynamicObj", cameraTest, lightTest);
     m_colObjs->LoadRange("../res/collision.txt");
 
     EventHandler::GetInstance().AddEvent(EventList::QUEST_CLEAR, this);
@@ -73,25 +82,39 @@ void SceneGame::Update(float deltaTime)
     }
     else
     {
-        if (m_isTimer <= 6.f)
+        m_isTimer += deltaTime;
+        if (m_isTimer <= 5.f)
         {
-            m_isTimer += deltaTime;
-
             vec3 cameraEye  = cameraTest->GetEyePos();
             cameraEye.y    += 0.25f * m_isTimer;
 
             cameraTest->Move(cameraEye);
         }
+        else
+        {
+            HASSET->m_fonts[L"DEBUG_FONT"]->DrawMsg(
+            L"제작 : 변한빛, 이지혁, 정찬빈 \n\n\n 엔진 : 변한빛 \n 맵 : 이지혁 \n 캐릭터, AI : 정찬빈 "
+            L"\n\n\n 플레이해주셔서 감사합니다.");
+        }
+
+        if (m_isTimer > 10.f)
+        {
+            HSCENE.SetCurrentScene(L"Lobby");
+        }
     }
 
     cube.Update(deltaTime);
-    m_grid.Update(deltaTime);
-    // m_gardener.Update(deltaTime);
+    m_gardener.Update(deltaTime);
+    m_gardener1.Update(deltaTime);
+    m_gardener2.Update(deltaTime);
     m_goose->Update(deltaTime);
+
     m_picnicRug.Update(deltaTime);
     m_tree.Update(deltaTime);
 
+#ifdef _DEBUG
     m_line->Update(deltaTime);
+#endif
 
     m_colObjs->Update(deltaTime);
 
@@ -105,6 +128,11 @@ void SceneGame::Update(float deltaTime)
     {
         m_goose->ProcessCollision(hbdc);
         hbdc->Update(deltaTime);
+    }
+
+    for (auto& hbdc : m_dynamicObjs.HBSContainer)
+    {
+        m_picnicRug.ProcessCollision(hbdc);
     }
 
     if (HINPUT->IsKeyDown(VK_F2))
@@ -134,15 +162,14 @@ void SceneGame::Render()
     m_line->Draw({0.f, 0.f, 0.f}, {0.f, 0.f, 1000.f}, {0.f, 0.f, 1.f, 1.f});
 #endif
 
-    // m_gardener.Render();
+    m_gardener.Render();
+    m_gardener1.Render();
+    m_gardener2.Render();
     m_goose->Render();
     m_picnicRug.Render();
-    //m_grid.Render();
 
     m_tree.Render();
     cube.Render();
-    // m_goose->m_component.DrawBoundary(m_line);
-    // m_colObjs->m_component.DrawBoundary(m_line);
     EasyRender::End(MultiRT::SUB1);
 
     // 글자 안나오는 이유 상수 버퍼
@@ -172,14 +199,18 @@ void SceneGame::Release()
 
 void SceneGame::Start()
 {
-    m_ingameBGM->Play();
+    Dynamic3DObj::flagCarrotL = 0;
+    Dynamic3DObj::flagCarrotR = 0;
 
+    m_dynamicObjs.LoadFromFolder("../res/Mesh/DynamicObj", cameraTest, lightTest);
 #ifdef _DEBUG
     m_goose->m_transform.SetLocation({8.0f, 0.4f, 4.0f});
 #else
     m_goose->m_transform.SetLocation({23.5f, 0.625f, -4.5f});
 #endif
-    m_gardener.m_transform.SetLocation({3.f, 0.6f, 4.f});
+    m_gardener.m_transform.SetLocation({-0.6f, 0.3f, 0.7f});
+    m_gardener1.m_transform.SetLocation({3.f, 0.3f, 5.f});
+    m_gardener2.m_transform.SetLocation({0.37f, 0.3f, 3.f});
     cameraTest->SetPerspective(glm::radians(90.f), 0.5f, 10000.f);
     cameraTest->LookAt({m_goose->m_transform.m_pos[0] + 1.f,
                         m_goose->m_transform.m_pos[1] + 2.5f,
@@ -189,11 +220,14 @@ void SceneGame::Start()
 
     m_goose->Init();
     m_questGUI.Init();
+    m_isTimer     = 0.f;
+    m_isGameClear = false;
 }
 
 void SceneGame::End()
 {
     m_ingameBGM->Stop();
+    m_dynamicObjs.HBSContainer.clear();
 }
 
 void SceneGame::OnNotice(EventList event, void* entity)

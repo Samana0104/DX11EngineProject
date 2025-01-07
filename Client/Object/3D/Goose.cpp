@@ -76,7 +76,7 @@ void Goose::Update(float deltaTime)
     static bool isUpPressed    = false;  // VK_UP 상태 추적
     static bool isRightPressed = false;
     static bool isLeftPressed  = false;
-    static bool isShiftPressed  = false;
+    static bool isShiftPressed = false;
 
     vec3 moveDirection = vec3(0.f);
     moveVec            = vec3(0.f);
@@ -101,7 +101,7 @@ void Goose::Update(float deltaTime)
         if (HINPUT->IsKeyPressed(16))  // SHIFT키
         {
             isShiftPressed = true;
-            m_animstate = GooseState::gooseGallop;
+            m_animstate    = GooseState::gooseGallop;
         }
         else
             isShiftPressed = false;
@@ -155,7 +155,7 @@ void Goose::Update(float deltaTime)
         if (HINPUT->IsKeyPressed(16))  // SHIFT키
         {
             isShiftPressed = true;
-            m_animstate = GooseState::gooseGallop;
+            m_animstate    = GooseState::gooseGallop;
         }
         else
             isShiftPressed = false;
@@ -167,7 +167,7 @@ void Goose::Update(float deltaTime)
             if (HINPUT->IsKeyPressed(16))  // SHIFT키
             {
                 isShiftPressed = true;
-                m_animstate = GooseState::gooseHalfFlap;
+                m_animstate    = GooseState::gooseHalfFlap;
             }
             else
                 isShiftPressed = false;
@@ -287,7 +287,7 @@ void Goose::Update(float deltaTime)
             if (HINPUT->IsKeyPressed(16))  // SHIFT키
             {
                 isShiftPressed = true;
-                m_animstate = GooseState::gooseHalfFlap;
+                m_animstate    = GooseState::gooseHalfFlap;
             }
             else
                 isShiftPressed = false;
@@ -466,6 +466,17 @@ void Goose::SetSocket(std::shared_ptr<Object3D> socketObj)
     // m_socketObj->m_transform.SetRotation({0.f, 0.f, 0.f});
 }
 
+void Goose::UnSocket()
+{
+    if (m_socketObj)
+    {
+        m_socketObj->m_transform.SetLocation(
+        vec3(m_transform.m_pos.x, m_transform.m_pos.y + 0.1f, m_transform.m_pos.z) +
+        m_moveDirection * 0.5f);
+        m_socketObj = nullptr;
+    }
+}
+
 bool Goose::HasSocket() const
 {
     if (m_socketObj)
@@ -550,11 +561,8 @@ void Goose::ProcessCollision(std::shared_ptr<Object3D> obj)
 
     if (isSocket)
     {
-        m_socketObj->m_transform.SetLocation(
-        vec3(m_transform.m_pos.x, m_transform.m_pos.y + 0.1f, m_transform.m_pos.z) +
-        m_moveDirection * 0.5f);
-        m_socketObj = nullptr;
-        m_isInit    = true;
+        UnSocket();
+        m_isInit = true;
     }
 
     UpdateDefaultCB();

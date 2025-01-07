@@ -10,6 +10,7 @@ date: 2025-01-02
 
 #include "pch.h"
 #include "2D/Object2D.h"
+#include "3D/PicnicRug.h"
 #include "Texture/GeneralTexture.h"
 #include "Font/Font.h"
 #include "Observer.h"

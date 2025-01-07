@@ -51,9 +51,7 @@ void Dynamic3DObj::Init(const std::string& key)
     else
         SetTransType(DynamicTransformType::GooseGameTrans);
 
-    static int flagCarrotL = 0;
-    static int flagCarrotR = 0;
-    AABB       aabbCol;
+    AABB aabbCol;
 
     if (m_transType == DynamicTransformType::GooseGameTrans)
     {

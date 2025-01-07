@@ -87,6 +87,7 @@ namespace HBSoft
         vec3 GetPos();
         void SetHeightMap(std::shared_ptr<HeightMapObj> mapObj);
         void SetSocket(std::shared_ptr<Object3D> socketObj);
+        void UnSocket();
 
         bool HasSocket() const;
 

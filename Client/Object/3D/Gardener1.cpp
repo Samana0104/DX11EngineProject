@@ -8,10 +8,10 @@ date: 2025-01-06
 
 
 #include "pch.h"
-#include "Gardener.h"
+#include "Gardener1.h"
 using namespace HBSoft;
 
-Gardener::Gardener()
+Gardener1::Gardener1()
     : m_grid(GRID_ROW, std::vector<std::shared_ptr<Node>>(GRID_COL))
 {
     m_mesh = HASSET->m_meshes[L"Walking.hbs"];
@@ -24,7 +24,7 @@ Gardener::Gardener()
     m_transform.SetScale({0.2f, 0.2f, 0.2f});
     m_transform.SetLocation({3.f, 0.6f, 4.f});
 
-    currentState = State::Idle;
+    currentState = State1::Idle;
 
     for (int x = -GRID_OFFSET; x < GRID_OFFSET; ++x)
     {
@@ -52,12 +52,12 @@ Gardener::Gardener()
     m_gardenerAni.push_back(HASSET->m_animations[L"gettingup.skm"]);
     m_gardenerAni.push_back(HASSET->m_animations[L"stretching.skm"]);
 
-    m_animstate  = GardenerState::walking;
+    m_animstate  = GardenerState1::walking1;
     m_startFrame = m_gardenerAni[m_animstate]->GetStartFrame();
     m_lastFrame  = m_gardenerAni[m_animstate]->GetLastFrame();
 }
 
-void Gardener::Update(const float deltaTime)
+void Gardener1::Update(const float deltaTime)
 {
     /// Walking 속도
     speed = 18.f;
@@ -68,7 +68,7 @@ void Gardener::Update(const float deltaTime)
     /*ImGui::SliderFloat("Gardener speed", &m_speed2, 0.f, 50.f);*/
 #endif
 
-    GardenerState currentState = GardenerState::walking;
+    GardenerState1 currentState = GardenerState1::walking1;
 
     dx       = m_goose1->GetPos().x - m_transform.m_pos[0];
     dz       = m_goose1->GetPos().z - m_transform.m_pos[2];
@@ -77,35 +77,33 @@ void Gardener::Update(const float deltaTime)
     bool isKick = false;
 
     /// 처음 IDLE
-    onEvent(Event::maintain, deltaTime);
-
+    onEvent(Event1::maintain, deltaTime);
 
     /// 거위와 가드너의 거리가 1.f미만이면 가드너가 거위 쫓아옴 // 쫓는상태로 바뀜
-    if (distance < 1.6f)
+    if (distance < 1.8f)
     {
-        onEvent(Event::GooseClose, deltaTime);
+        speed = 0.f;
+        onEvent(Event1::GooseClose, deltaTime);
         m_isPlaying = true;
         m_goose1->UnSocket();
     }
 
-
     /// 가드너와 거위 멀어지면 다시 IDLE
-    if (distance > 1.25f)
+    if (distance > 1.1f)
     {
-        onEvent(Event::GooseFar, deltaTime);
+        onEvent(Event1::GooseFar, deltaTime);
     }
-
-    /*if (m_isPlaying)
-    {
-        if (m_currentFrame + deltaTime * speed < m_lastFrame)
-            currentState = GardenerState::breathingidle;
-        else
-            m_isPlaying = false;
-    }
-    else
-    {
-        currentState = GardenerState::walking;
-    }*/
+    /* if (m_isPlaying)
+     {
+         if (m_currentFrame + deltaTime * speed < m_lastFrame)
+             currentState = GardenerState::kick;
+         else
+             m_isPlaying = false;
+     }
+     else
+     {
+         currentState = GardenerState::walking;
+     }*/
 
 
     if (currentState != m_animstate)
@@ -130,51 +128,50 @@ void Gardener::Update(const float deltaTime)
     m_easyRender.UpdateVSCB((void*)&anim.at(0), sizeof(mat4) * anim.size(), 1);
 }
 
-void Gardener::Render()
+void Gardener1::Render()
 {
     m_easyRender.Draw();
     /*FollowPath(GetPath(path));*/
 }
 
-void Gardener::Init() {}
+void Gardener1::Init() {}
 
-void Gardener::Release() {}
+void Gardener1::Release() {}
 
-float HBSoft::Gardener::GetLocationX()
+float HBSoft::Gardener1::GetLocationX()
 {
     return m_transform.m_pos[0];
 }
 
-float HBSoft::Gardener::GetLocationZ()
+float HBSoft::Gardener1::GetLocationZ()
 {
     return m_transform.m_pos[2];
 }
 
-vec3 HBSoft::Gardener::GetPos()
+vec3 HBSoft::Gardener1::GetPos()
 {
     return m_transform.m_pos;
 }
 
-void HBSoft::Gardener::SetPos(float a, float b)
+void HBSoft::Gardener1::SetPos(float a, float b)
 {
     m_transform.m_pos[0] = a;
     m_transform.m_pos[2] = b;
 }
 
-void Gardener::SetGooseObj(std::shared_ptr<Goose> gooseObj)
+void Gardener1::SetGooseObj(std::shared_ptr<Goose> gooseObj)
 {
     m_goose1 = gooseObj;
 }
 
-void Gardener::onEvent(Event event, float deltaTime)
+void Gardener1::onEvent(Event1 event, float deltaTime)
 {
     switch (currentState)
     {
-    case State::Idle:  //(gridLength / gridNum) + (gridLength / gridNum / 2)
+    case State1::Idle:  //(gridLength / gridNum) + (gridLength / gridNum / 2)
 
+        speed = 21.f;
         // 여기 Idle 행동
-
-        speed = 16.f;
         if (idlePathIdx + 1 < idlePath.size())  // size = 6
         {
             idlePathIdx_x =
@@ -233,12 +230,10 @@ void Gardener::onEvent(Event event, float deltaTime)
                 {
                     m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(90.f));
                 }
-
-
                 m_transform.AddLocation(
                 glm::normalize(
                 vec3(-(idleGardener_x - idlePathIdx_x), 0.f, -(idleGardener_z - idlePathIdx_z))) *
-                deltaTime * 1.3f);
+                deltaTime * 1.5f);
             }
         }
         else
@@ -246,19 +241,18 @@ void Gardener::onEvent(Event event, float deltaTime)
             std::reverse(idlePath.begin(), idlePath.end());
             idlePathIdx = 0;
         }
-
-        if (event == Event::GooseClose)
+        if (event == Event1::GooseClose)
         {
-            currentState = State::Chasing;
+            currentState = State1::Chasing;
         }
-        else if (event == Event::maintain)
+        else if (event == Event1::maintain)
         {
         }
         break;
 
-    case State::Chasing:
+    case State1::Chasing:
         // 시작점과 목표점 설정
-        speed         = 30.f;
+        speed         = 25.f;
         int gardenerX = GRID_OFFSET + glm::floor(m_transform.m_pos.x * ((float)gridNum / gridLength));
         int gardenerZ = glm::floor(m_transform.m_pos.z * ((float)gridNum / gridLength)) + GRID_OFFSET;
         int gooseX    = GRID_OFFSET + glm::floor(m_goose1->GetPos().x * ((float)gridNum / gridLength));
@@ -345,116 +339,34 @@ void Gardener::onEvent(Event event, float deltaTime)
 
                 m_transform.AddLocation(
                 glm::normalize(vec3(-(gardener_x - pathIdx_x), 0.f, -(gardener_z - pathIdx_z))) *
-                deltaTime * 1.1f);
+                deltaTime);
             }
         }
-        if (event == Event::GooseFar)
+        if (event == Event1::GooseFar)
         {
-            gardenerIdleX =
-            glm::floor(m_transform.m_pos.x * ((float)gridNum / gridLength)) + GRID_OFFSET;
-            gardenerIdleZ =
-            glm::floor(m_transform.m_pos.z * ((float)gridNum / gridLength)) + GRID_OFFSET;
-            pathIdleX = idlePath[idlePathIdx + 1].first;
-            pathIdleZ = idlePath[idlePathIdx + 1].second;
-
-
-            auto startIdle = m_grid[gardenerIdleX][gardenerIdleZ];  //  길 움직이는 거에 따른 좌표
-            auto goalIdle = m_grid[pathIdleX][pathIdleZ];  // 가드너 움직이는 거에 따른 좌표
-
-            if (goalIdle->isObstacle)
-            {
-                if (!m_grid[gardenerIdleX][gardenerIdleZ + 1]->isObstacle)
-                    goalIdle = m_grid[gardenerIdleX][gardenerIdleZ + 1];
-                else if (!m_grid[gardenerIdleX][gardenerIdleZ - 1]->isObstacle)
-                    goalIdle = m_grid[gardenerIdleX][gardenerIdleZ - 1];
-                else if (!m_grid[gardenerIdleX - 1][gardenerIdleZ]->isObstacle)
-                    goalIdle = m_grid[gardenerIdleX - 1][gardenerIdleZ];
-                else if (!m_grid[gardenerIdleX + 1][gardenerIdleZ]->isObstacle)
-                    goalIdle = m_grid[gardenerIdleX + 1][gardenerIdleZ];
-            }
-
-            auto path1 = std::move(m_astar.aStar(startIdle, goalIdle, m_grid));
-
-
-            if (idx1 + 1 < path1.size())
-            {
-                pathIdx_x1 = path1[idx1 + 1]->GetLocationX() * (gridLength / gridNum) +
-                             (gridLength / gridNum / 2);  // path의 월드위치
-                pathIdx_z1 = path1[idx1 + 1]->GetLocationY() * (gridLength / gridNum) +
-                             (gridLength / gridNum / 2);  // path의 월드위치
-
-                gardener_x1 = m_transform.m_pos[0];  // 가드너의 현재위치
-                gardener_z1 = m_transform.m_pos[2];  // 가드너의 현재위치
-
-                if (glm::abs(gardener_x1 - pathIdx_x1) < 0.5f &&
-                    glm::abs(gardener_z1 - pathIdx_z1) < 0.5f)
-                {
-                    idx1++;
-                }
-                else
-                {
-                    if (path1[idx1]->GetLocationX() - path1[idx1 + 1]->GetLocationX() > 0 &&
-                        path1[idx1]->GetLocationY() - path1[idx1 + 1]->GetLocationY() > 0)
-                    {
-                        m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(-45.f));
-                    }
-                    else if (path1[idx1]->GetLocationX() - path1[idx1 + 1]->GetLocationX() > 0 &&
-                             path1[idx1]->GetLocationY() - path1[idx1 + 1]->GetLocationY() < 0)
-                    {
-                        m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(-135.f));
-                    }
-                    else if (path1[idx1]->GetLocationX() - path1[idx1 + 1]->GetLocationX() < 0 &&
-                             path1[idx1]->GetLocationY() - path1[idx1 + 1]->GetLocationY() > 0)
-                    {
-                        m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(45.f));
-                    }
-                    else if (path1[idx1]->GetLocationX() - path1[idx1 + 1]->GetLocationX() < 0 &&
-                             path1[idx1]->GetLocationY() - path1[idx1 + 1]->GetLocationY() < 0)
-                    {
-                        m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(135.f));
-                    }
-                    else if (path1[idx1]->GetLocationX() - path1[idx1 + 1]->GetLocationX() == 0 &&
-                             path1[idx1]->GetLocationY() - path1[idx1 + 1]->GetLocationY() > 0)
-                    {
-                        m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(0.f));
-                    }
-                    else if (path1[idx1]->GetLocationX() - path1[idx1 + 1]->GetLocationX() == 0 &&
-                             path1[idx1]->GetLocationY() - path1[idx1 + 1]->GetLocationY() < 0)
-                    {
-                        m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(180.f));
-                    }
-                    else if (path1[idx1]->GetLocationX() - path1[idx1 + 1]->GetLocationX() > 0 &&
-                             path1[idx1]->GetLocationY() - path1[idx1 + 1]->GetLocationY() == 0)
-                    {
-                        m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(-90.f));
-                    }
-                    else if (path1[idx1]->GetLocationX() - path1[idx1 + 1]->GetLocationX() < 0 &&
-                             path1[idx1]->GetLocationY() - path1[idx1 + 1]->GetLocationY() == 0)
-                    {
-                        m_transform.SetRotation(vec3(0.f, 1.f, 0.f), glm::radians(90.f));
-                    }
-
-
-                    m_transform.AddLocation(
-                    glm::normalize(vec3(-(gardener_x1 - pathIdx_x1), 0.f, -(gardener_z1 - pathIdx_z1))) *
-                    deltaTime * 1.3f);
-                }
-            }
-
-
-            currentState = State::Idle;
+            /*std::cout << "정원사가 평상시 걷는 상태로 돌아갑니다.\n";*/
+            currentState = State1::Idle;
         }
+        // else if (event == Event::GooseClose)
+        //{
+        //     vec3 pushForce  = glm::normalize(vec3(dx / distance, 0.f, dz / distance)) * 3.f;
+        //     velocity        = pushForce;
+        //     velocity       *= 0.9f;
 
+        //    m_goose1->AddLoc(velocity * deltaTime);
+        //    /*std::cout << velocity << std::endl;*/
+        //    std::cout << "CHASING : 정원사가 거위를 밀기 시작합니다.\n";
+        //}
         break;
     }
 }
 
-void Gardener::SetHeightMap(std::shared_ptr<HeightMapObj> mapObj)
+void Gardener1::SetHeightMap(std::shared_ptr<HeightMapObj> mapObj)
 {
     m_mapObj = mapObj;
 }
 
-void Gardener::SetGridObstacle()
+void Gardener1::SetGridObstacle()
 {
     // 왼쪽 문부터 벽
     m_grid[-13 + GRID_OFFSET][-2 + GRID_OFFSET]->isObstacle = true;

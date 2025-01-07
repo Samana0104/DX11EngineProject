@@ -13,13 +13,14 @@ date: 2024-12-23
 #include "EventHandler.h"
 #include "Camera/DebugCamera.h"
 #include "Camera/GooseCamera.h"
-#include "2D/GridMap.h"
 #include "3D/LineObj.h"
 #include "3D/CubeMapObj.h"
 #include "3D/QuadTree.h"
 #include "3D/Test3DObj.h"
 #include "3D/Goose.h"
 #include "3D/Gardener.h"
+#include "3D/Gardener1.h"
+#include "3D/Gardener2.h"
 #include "3D/PicnicRug.h"
 #include "3D/CollisionObj.h"
 #include "3D/Static3DObj.h"
@@ -42,8 +43,9 @@ namespace HBSoft
         CubeMapObj                    cube;
         QuadTree                      m_tree;
         Gardener                      m_gardener;
+        Gardener1                     m_gardener1;
+        Gardener2                     m_gardener2;
         PicnicRug                     m_picnicRug;
-        GridMap                       m_grid;
         std::shared_ptr<CollisionObj> m_colObjs;
 
         HBSAutoLoader<std::shared_ptr<Static3DObj>>  m_staticObjs;
