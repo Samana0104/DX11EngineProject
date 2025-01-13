@@ -16,8 +16,8 @@ SceneGame::SceneGame()
     : m_tree(2)
 {
     m_ingameBGM = HASSET->m_sounds[L"ingameBGM.mp3"];
-    m_ingameBGM->VolumeSet(0.15f);
-    
+    m_ingameBGM->VolumeSet(0.5f);
+
 #ifdef _DEBUG
     cameraTest = std::make_shared<DebugCamera>();
 #else
@@ -222,6 +222,8 @@ void SceneGame::Start()
     m_questGUI.Init();
     m_isTimer     = 0.f;
     m_isGameClear = false;
+
+    m_ingameBGM->Play();
 }
 
 void SceneGame::End()

@@ -12,6 +12,8 @@ using namespace HBSoft;
 void SoundFactory::InitFmodSystem()
 {
     FMOD_RESULT hr = FMOD::System_Create(&m_fmodSys);
+    m_fmodSys->setSoftwareFormat(4'4100, FMOD_SPEAKERMODE_STEREO, 0);
+    m_fmodSys->init(32, FMOD_INIT_NORMAL, 0);
 
     hr = m_fmodSys->init(MAX_CHANNELS, FMOD_INIT_NORMAL, nullptr);
 
