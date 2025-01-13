@@ -50,7 +50,7 @@ namespace HBSoft
         int m_pumpkinCount;
 
         inline static const int MAX_QUESTS  = 2;
-        inline static const int MAX_CARROT  = 1;
+        inline static const int MAX_CARROT  = 2;
         inline static const int MAX_PUMPKIN = 1;
 
     private:

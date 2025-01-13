@@ -209,10 +209,6 @@ void QuestGUI::Update(const float deltaTime)
                 m_isQuest2Clear = false;
             }
 
-            if (m_isQuest2Clear && m_isQuest1Clear)
-            {
-                EventHandler::GetInstance().Notify(EventList::QUEST_CLEAR);
-            }
 
             switch (i)
             {
@@ -234,6 +230,12 @@ void QuestGUI::Update(const float deltaTime)
             }
         }
     }
+
+    if (m_isQuest2Clear && m_isQuest1Clear)
+    {
+        EventHandler::GetInstance().Notify(EventList::QUEST_CLEAR);
+    }
+
     UpdateDefaultCB();
 }
 
