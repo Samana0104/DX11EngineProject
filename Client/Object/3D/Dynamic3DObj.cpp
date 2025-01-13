@@ -108,12 +108,6 @@ void Dynamic3DObj::Init(const std::string& key)
         m_transform.SetLocation(glm::vec3(-0.550f, 0.8f, -0.950f));
         m_transform.SetScale(0.240f);
     }
-    else if (m_key.find("tulipBig") != std::string::npos)
-    {
-        m_transform.SetRotation(glm::vec3(0.0f, 1.57f, 0.0f));
-        m_transform.SetLocation(glm::vec3(0.75f, 0.87f, 1.83f));
-        m_transform.SetScale(0.14f);
-    }
 
     m_mesh = HASSET->m_meshes[HBSoft::ToUnicode(key)];
     m_component.AddAABBRange(m_mesh->m_autoCollision.aabb, key);

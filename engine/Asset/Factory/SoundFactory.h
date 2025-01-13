@@ -16,7 +16,7 @@ namespace HBSoft
     class SoundFactory
     {
     private:
-        inline static const int MAX_CHANNELS = 32;
+        inline static const int MAX_CHANNELS = 16;
         inline static FMOD_SYS* m_fmodSys    = nullptr;
 
     private:

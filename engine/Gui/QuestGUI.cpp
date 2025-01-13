@@ -3,8 +3,8 @@ author : 변한빛, 이지혁
 description : 탭키 누르면 나오는 퀘스트 GUI 소스파일
               v1.0.1: 사운드 추가 (이지혁)
 
-version: 1.0.1
-date: 2025-01-02
+version: 1.0.5
+date: 2025-01-07
 */
 
 #include "pch.h"

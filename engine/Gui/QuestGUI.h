@@ -3,8 +3,8 @@ author : 변한빛, 이지혁
 description : 탭키 누르면 나오는 퀘스트 GUI 헤더파일
               v1.0.1: 사운드 추가 (이지혁)
 
-version: 1.0.1
-date: 2025-01-02
+version: 1.0.5
+date: 2025-01-07
 */
 #pragma once
 
@@ -29,14 +29,13 @@ namespace HBSoft
     private:
         std::shared_ptr<Mesh>    m_squaredMesh;
         std::shared_ptr<Texture> m_questTexture;
-        std::shared_ptr<Font>    m_questFont;
-        std::shared_ptr<Font>    m_questLineFont;
+        std::shared_ptr<Font>    m_quest1Font;
+        std::shared_ptr<Font>    m_quest2Font;
+        std::shared_ptr<Font>    m_questLine1Font;
+        std::shared_ptr<Font>    m_questLine2Font;
         std::shared_ptr<HSound>  m_paperSound;
 
         HRect m_textRect;
-
-        bool m_isQuest1Clear;
-        bool m_isQuest2Clear;
 
         bool m_isQuest1Clear;
         bool m_isQuest2Clear;
@@ -47,10 +46,12 @@ namespace HBSoft
 
         float m_openTimer;
 
-        int m_leftCarrotCount;
-        int m_leftPumpkinCount;
+        int m_carrotCount;
+        int m_pumpkinCount;
 
-        inline static const int MAX_QUESTS = 2;
+        inline static const int MAX_QUESTS  = 2;
+        inline static const int MAX_CARROT  = 2;
+        inline static const int MAX_PUMPKIN = 1;
 
     private:
         virtual void OnNotice(EventList event, void* entity);
@@ -58,8 +59,6 @@ namespace HBSoft
     public:
         QuestGUI();
         ~QuestGUI();
-
-        void AddQuest(std::wstring questMsg);
 
         virtual void Update(const float deltaTime) override;
         virtual void Render() override;
